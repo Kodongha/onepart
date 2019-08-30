@@ -3,6 +3,7 @@ package com.kh.onepart.account.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kh.onepart.account.model.service.AccountService;
 import com.kh.onepart.account.model.vo.ResidentVO;
@@ -20,7 +21,6 @@ public class AccountController {
 	@RequestMapping("/moveAccount")
 	public String moveAccountPage() {
 		System.out.println("in account");
-		
 		return "account/login";
 	}
 
@@ -29,8 +29,8 @@ public class AccountController {
 	 * @param requestResidentVO
 	 * @return
 	 */
-	@RequestMapping("/loginCheck")
-	public String loginCheck(ResidentVO requestResidentVO ) {
+	@RequestMapping(value="/loginCheck", method=RequestMethod.POST)
+	public String loginCheck(ResidentVO requestResidentVO) {
 		System.out.println("/loginCheck");
 		
 		System.out.println("requestResidentVO:::" + requestResidentVO);
