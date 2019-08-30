@@ -41,5 +41,40 @@ public class AccountController {
 		
 		return "account/account2";
 	}
+	@RequestMapping("/moveLogin")
+	public String moveLogin() {
+		System.out.println("in account");
+		
+		return "account/login";
+	}
+	
+	@RequestMapping("/moveRegister")
+	public String moveRegister() {
+		System.out.println("in account");
+		
+		return "account/register";
+	}
+	
+	@RequestMapping("/moveFindId")
+	public String moveFindId() {
+		System.out.println("in account");
+		
+		return "account/findId";
+	}
+	
+	@RequestMapping("/moveFindPwd")
+	public String moveFindPwd() {
+		System.out.println("in account");
+		
+		return "account/findPwd";
+	}
+	
+	@RequestMapping("/move")
+	public String move() {
+		System.out.println("in account");
+		
+		return "account/form_wizards_validation";
+	}
+	
 	
 }
