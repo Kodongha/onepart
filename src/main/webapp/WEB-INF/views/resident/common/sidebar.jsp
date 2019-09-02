@@ -29,11 +29,12 @@
 				<li class="has-sub">
 					<a href="javascript:;">
 					 	<b class="caret pull-right"></b>
-						<i class="fa fa-inbox"></i> 
+						<i class="fa fa-inbox"></i>
 						<span>우리 집</span>
 					</a>
 					<ul class="sub-menu">
 					    <li><a id="menuMaintenanceCost">관리비</a></li>
+					    <li><a id="menuMyCar">우리차량</a></li>
 					    <li><a id="menuVisitCar">방문 차량등록</a></li>
 					</ul>
 				</li>
@@ -41,7 +42,7 @@
 					<a href="javascript:;">
 					    <b class="caret pull-right"></b>
 					    <i class="fa fa-suitcase"></i>
-					    <span>따뜻함</span> 
+					    <span>따뜻함</span>
 					</a>
 					<ul class="sub-menu">
 						<li><a id="menuOpenChatting">오픈채팅</a></li>
@@ -52,7 +53,7 @@
 					<a href="javascript:;">
 					    <b class="caret pull-right"></b>
 					    <i class="fa fa-file-o"></i>
-					    <span>편의</span> 
+					    <span>편의</span>
 					</a>
 					<ul class="sub-menu">
 						<li><a id="menuReservateFacility">시설물 예약</a></li>
@@ -89,10 +90,10 @@
 				        <span>선거관리 위원회</span>
 				    </a>
 				    <ul class="sub-menu" style="display: none;">
-						<li><a id="menuSuperintendVote">선거관리</a></li>						        
+						<li><a id="menuSuperintendVote">선거관리</a></li>
 				    </ul>
 				</li>
-				
+
 		        <!-- begin sidebar minify button -->
 				<li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
 		        <!-- end sidebar minify button -->

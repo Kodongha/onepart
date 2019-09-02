@@ -15,7 +15,7 @@
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
-	
+
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 	<link href="${contextPath}/resources/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
@@ -26,14 +26,14 @@
 	<link href="${contextPath}/resources/css/style-responsive.min.css" rel="stylesheet" />
 	<link href="${contextPath}/resources/css/theme/default.css" rel="stylesheet" id="theme" />
 	<!-- ================== END BASE CSS STYLE ================== -->
-	
+
 	<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
 	<link href="${contextPath}/resources/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" />
 	<link href="${contextPath}/resources/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
 	<link href="${contextPath}/resources/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" />
     <link href="${contextPath}/resources/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
 	<!-- ================== END PAGE LEVEL STYLE ================== -->
-	
+
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="${contextPath}/resources/plugins/pace/pace.min.js"></script>
 	<!-- ================== END BASE JS ================== -->
@@ -42,29 +42,29 @@
 	<!-- begin #page-loader -->
 	<div id="page-loader" class="fade in"><span class="spinner"></span></div>
 	<!-- end #page-loader -->
-	
+
 	<!-- begin #page-container -->
 	<div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
-		
+
 		<!-- begin #header -->
 		<jsp:include page="header.jsp"/>
 		<!-- end #header -->
-		
+
 		<!-- sidebar -->
 		<jsp:include page="sidebar.jsp"/>
-		
+
 		<!-- begin #content -->
 		<div id="content" class="content">
-		
+
 		</div>
 		<!-- end #content -->
-		
+
 		<!-- begin scroll to top btn -->
 		<a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
 		<!-- end scroll to top btn -->
 	</div>
 	<!-- end page container -->
-	
+
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="${contextPath}/resources/plugins/jquery/jquery-1.9.1.min.js"></script>
 	<script src="${contextPath}/resources/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
@@ -78,7 +78,7 @@
 	<script src="${contextPath}/resources/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="${contextPath}/resources/plugins/jquery-cookie/jquery.cookie.js"></script>
 	<!-- ================== END BASE JS ================== -->
-	
+
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
 	<script src="${contextPath}/resources/plugins/gritter/js/jquery.gritter.js"></script>
 	<script src="${contextPath}/resources/plugins/flot/jquery.flot.min.js"></script>
@@ -96,42 +96,43 @@
 		$(document).ready(function() {
 			App.init();
 			Dashboard.init();
-			
+
 			/* 우리 아파트 */
 			$("#menuNotice").data("menu-url", "/onepart/resident/menuNotice"); 	// 공지사항
 			$("#menuVote").data("menu-url", "/onepart/resident/menuVote");		// 투표
 			$("#menuSurvey").data("menu-url", "/onepart/resident/menuSurvey");	// 설문조사
-			
+
 			/* 우리 집 */
 			$("#menuMaintenanceCost").data("menu-url", "/onepart/resident/menuMaintenanceCost");	// 관리비
+			$("#menuMyCar").data("menu-url", "/onepart/resident/menuMyCar");	// 우리차량
 			$("#menuVisitCar").data("menu-url", "/onepart/resident/menuVisitCar");				// 방문차량
-			
+
 			/* 따뜻함 */
 			$("#menuOpenChatting").data("menu-url", "/onepart/resident/menuOpenChatting");	// 오픈채팅
 			$("#menuEvent").data("menu-url", "/onepart/resident/menuEvent");					// 이벤트 신청 및 조회
-			
+
 			/* 편의 */
 			$("#menuReservateFacility").data("menu-url", "/onepart/resident/menuReservateFacility");	// 시설물 예약
 			$("#menuOpserveMeeting").data("menu-url", "/onepart/resident/menuOpserveMeeting");		// 회의 참관
 			$("#menuComplaint").data("menu-url", "/onepart/resident/menuComplaint");					// 민원접수
-			
+
 			/* 마이 페이지 */
 			$("#menuModifyInformation").data("menu-url", "/onepart/resident/menuModifyInformation");	// 개인정보 수정
 			$("#menuMyHistory").data("menu-url", "/onepart/resident/menuMyHistory");					// 나의 활동
-			
+
 			/* 입주자 대표 회의 */
 			$("#menuMeetingInfo").data("menu-url", "/onepart/resident/menuMeetingInfo");		// 회의 정보
 			$("#menuAuthorization").data("menu-url", "/onepart/resident/menuAuthorization");	// 권한 부여
-			
+
 			/* 선거관리 위원회 */
 			$("#menuSuperintendVote").data("menu-url", "/onepart/resident/menuSuperintendVote");	// 선거관리
-			
+
 			$(".sub-menu > li > a").click(function(){
 				$("li").removeClass("active");
 				$(this).parents("li").addClass("active");
 				var menuUrl = $(this).data("menu-url");
 				console.log(menuUrl);
-				
+
 				$.ajax({
 					url :menuUrl,
 					dataType : "html",

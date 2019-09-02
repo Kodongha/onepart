@@ -32,6 +32,7 @@
 
 .content {
 	min-width: 800px;
+	padding-bottom: 0px !important;
 }
 
 .content .nav-tabs {
@@ -65,7 +66,7 @@
 .content>.tab-content>div>div {
 	overflow-y: auto;
 	width: auto;
-	height: 480px;
+	height: 400px;
 	text-align: center;
 }
 
@@ -222,7 +223,7 @@
 				<div class="form-group">
 					<label class="control-label">비밀번호 생성</label>
 					<div class="input-group">
-						<span class="input-group-addon"> <input type="checkbox">
+						<span class="input-group-addon"> <input type="checkbox" id="passwordMake">
 						</span> <input id="openChatPwd" type="text" class="form-control"
 							placeholder="비밀번호를 입력하세요.">
 					</div>
@@ -249,29 +250,44 @@
 		</div>
 	</div>
 </body>
+<script>
 
+
+	$("#passwordMake").change(function(){
+		if($("#passwordMake").prop("checked")){
+			$("#openChatPwd").attr("disabled", false);
+		}else{
+			$("#openChatPwd").attr("disabled", true);
+		}
+	});
+
+</script>
 <script>
 	// 모달 창
 	const CustomModal = (function() {
 		function init() {
 			displayInit();
+
 		}
 
 		function displayInit() {
 			$('.custom-modal').addClass('modal-hide');
 			$(document).on('click', '.modal-hide-btn', function() {
 				$('.custom-modal').addClass('modal-hide');
+
 			});
 			$(document).on('click', '.modal-show', function() {
 				const modalId = $(this).data('modal-id');
 				$('#' + modalId).removeClass('modal-hide');
+				$('#openChatRoomNm').val("");
+				$('#openChatPwd').val("");
 			});
 		}
 		return {
 			'init' : init
 		};
 	})();
-	
+
 	// 방 만들기
 	const OpenChatting = (function () {
 
@@ -285,8 +301,8 @@
 			$(document).on('click', '.roomDiv', function () {
 				window.open("${contextPath}/resident/menuOpenChatRoom", "채팅방", "width=450px; height=600px;");
 			});
-			
-			
+
+
 			// 방 만들기 처리
 			$(document).on('submit', '#createRoomForm', function (e) {
 				e.preventDefault();
@@ -308,15 +324,18 @@
 						}else {
 							getRoomListAll();
 							$('.modal-hide-btn').trigger('click'); // 모달창 닫기
+
+
 						}
 					},
 					error : function(err) {
 						alert('방 생성에 실패했습니다.');
+
 					}
 				});
 			});
 		}
-		
+
 		function getRoomListAll() {
 			$.ajax({
 				url : '/onepart/resident/getRoomListAll',
@@ -334,7 +353,7 @@
 				}
 			});
 		}
-		
+
 		function drawRoomList(roomList) {
 			let roomsDiv = $('#roomListLeftTab');
 			roomsDiv.html('');
@@ -351,7 +370,7 @@
 				roomsDiv.append(roomDivFormat);
 			});
 		}
-		
+
 		return {
 			'init' : init,
 			'getRoomListAll' : getRoomListAll
@@ -362,6 +381,7 @@
 		CustomModal.init();
 		OpenChatting.init();
 		OpenChatting.getRoomListAll();
+		$("#openChatPwd").attr("disabled", true);
 	});
 </script>
 

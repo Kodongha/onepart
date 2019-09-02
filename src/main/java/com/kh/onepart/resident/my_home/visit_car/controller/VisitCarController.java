@@ -1,5 +1,8 @@
 package com.kh.onepart.resident.my_home.visit_car.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 @Controller
 public class VisitCarController {
 	
