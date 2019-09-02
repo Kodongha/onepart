@@ -123,6 +123,9 @@
 			$("#menuMeetingInfo").data("menu-url", "/onepart/resident/menuMeetingInfo");		// 회의 정보
 			$("#menuAuthorization").data("menu-url", "/onepart/resident/menuAuthorization");	// 권한 부여
 			
+			/* 선거관리 위원회 */
+			$("#menuSuperintendVote").data("menu-url", "/onepart/resident/menuSuperintendVote");	// 선거관리
+			
 			$(".sub-menu > li > a").click(function(){
 				$("li").removeClass("active");
 				$(this).parents("li").addClass("active");
