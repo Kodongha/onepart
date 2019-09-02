@@ -6,10 +6,11 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.kh.onepart.account.model.vo.ResidentVO" alias="ResidentVO"/>
+		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO" alias="OpenChatVO"/>
 	</typeAliases>
 	
 	<mappers>
-		<mapper resource="mappers/account/account-mapper.xml"/>
+		<mapper resource="mappers/openChat/openChat-mapper.xml"/>
 	</mappers>
 </configuration>
 

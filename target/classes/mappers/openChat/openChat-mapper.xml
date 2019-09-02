@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OpenChat">
+
+	<resultMap type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO" id="openChatVOResultSet">
+		<id property="openChatSeq" column="OPEN_CHAT_SEQ"/>
+		<result property="openChatOpenedDt" column="OPEN_CHAT_OPENED_DT"/>
+		<result property="openChatRoomNm" column="OPEN_CHAT_ROOM_NM"/>
+		<result property="openChatMaxHead" column="OPEN_CHAT_MAX_HEAD"/>
+		<result property="openChatDeleteTf" column="OPEN_CHAT_DELETE_TF"/>
+		<result property="presidentSeq" column="RESIDENT_SEQ"/>
+		<result property="openChatCurrHead" column="OPEN_CHAT_CURR_HEAD"/>
+		<result property="openChatPwd" column="OPEN_CHAT_PWD"/>
+	</resultMap>
+
+	<select id="selectListAll" resultMap="openChatVOResultSet">
+		SELECT * FROM OPEN_CHAT WHERE OPEN_CHAT_DELETE_TF = 'N' ORDER BY OPEN_CHAT_SEQ DESC
+	</select>
+	
+	<select id="selectOneById" resultMap="openChatVOResultSet">
+		SELECT *
+		FROM OPEN_CHAT
+		WHERE OPEN_CHAT_SEQ = #{openChatSeq}
+			AND OPEN_CHAT_DELETE_TF = 'N'
+	</select>
+
+	<insert id="insert" parameterType="OpenChatVO">
+		INSERT INTO OPEN_CHAT
+		(
+			OPEN_CHAT_SEQ,
+			OPEN_CHAT_OPENED_DT,
+			OPEN_CHAT_ROOM_NM,
+			OPEN_CHAT_MAX_HEAD,
+			OPEN_CHAT_DELETE_TF,
+			RESIDENT_SEQ,
+			OPEN_CHAT_CURR_HEAD,
+			OPEN_CHAT_PWD
+		)
+		VALUES
+		(
+			OPEN_CHAT_SEQ.nextval,
+			sysdate,
+			#{openChatRoomNm},
+			#{openChatMaxHead},
+			'N',
+			#{presidentSeq},
+			0,
+			#{openChatPwd}
+		)
+	</insert>
+
+</mapper>
