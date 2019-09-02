@@ -82,6 +82,16 @@
 					    <li><a id="menuAuthorization">권한 부여</a></li>
 					</ul>
 				</li>
+				<li class="has-sub">
+				    <a href="javascript:;">
+				        <b class="caret pull-right"></b>
+				        <i class="fa fa-cubes"></i>
+				        <span>선거관리 위원회</span>
+				    </a>
+				    <ul class="sub-menu" style="display: none;">
+						<li><a id="menuSuperintendVote">선거관리</a></li>						        
+				    </ul>
+				</li>
 				
 		        <!-- begin sidebar minify button -->
 				<li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
