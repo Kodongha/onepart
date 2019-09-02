@@ -2,15 +2,17 @@
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
-  
+
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.kh.onepart.account.model.vo.ResidentVO" alias="ResidentVO"/>
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO" alias="OpenChatVO"/>
+		<typeAlias type="com.kh.onepart.resident.my_home.my_car.model.vo.MyCar" alias="MyCar"/>
 	</typeAliases>
-	
+
 	<mappers>
 		<mapper resource="mappers/openChat/openChat-mapper.xml"/>
+		<mapper resource="mappers/myCar/myCar-mapper.xml"/>
 	</mappers>
 </configuration>
 

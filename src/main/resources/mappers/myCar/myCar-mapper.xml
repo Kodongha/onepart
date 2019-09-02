@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MyCar">
+
+	<resultMap type="com.kh.onepart.resident.my_home.my_car.model.vo.MyCar" id="myCarResultSet">
+
+		<id property="residentEnrollCar" column="RESIDENT_ENROLL_CAR"/>
+		<id property="residentNm" column="RESIDENT_NM"/>
+		<result property="residentSeq" column="RESIDENT_SEQ"/>
+		<result property="carType" column="CAR_TYPE"/>
+		<result property="carNm" column="CAR_NM"/>
+		<result property="enrollPurpose" column="ENROLL_PURPOSE"/>
+		<result property="enrollDt" column="ENROLL_DT"/>
+		<result property="carNum" column="CAR_NUM"/>
+		<result property="bdNm" column="BD_NM"/>
+		<result property="rmNm" column="RM_NM"/>
+	</resultMap>
+
+	<select id="selectListAll" resultMap="myCarResultSet">
+		SELECT ADI.BD_NM, ADI.RM_NM, R.RESIDENT_NM, REC.CAR_TYPE, REC.CAR_NM, REC.ENROLL_PURPOSE,  REC.CAR_NUM
+		FROM RESIDENT_ENROLL_CAR REC
+		JOIN RESIDENT R ON(REC.RESIDENT_SEQ = R.RESIDENT_SEQ)
+		JOIN APT_DETAIL_INFO ADI ON (R.APT_DETAIL_INFO_SEQ = ADI.APT_DETAIL_INFO_SEQ)
+		WHERE REC.RESIDENT_SEQ = #{residentSeq}
+	</select>
+
+
+</mapper>
