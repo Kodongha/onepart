@@ -17,11 +17,15 @@ public class ResidentVO {
 	private String residentNm;
 	private String residentPhone;
 	private String residentEmail;
-	private int aptDetailInfoSeq;
+	private String aptDetailInfoSeq;
 	private int householdAuthType;
 	private Date residentEnrollDt;
 	private String leaveTf;
 	private int aptAuthCd;
 	private Date leaveDt;
+	private String residentBirth;
+	private String confirmTf;
+	private String residentGender;
+
 
 }

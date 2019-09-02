@@ -24,5 +24,19 @@
 		AND		RESIDENT_PWD = #{residentPwd}
 		AND		LEAVE_TF = 'N'
 	</select>
+	 <!-- 암호화된 비밀번호 로그인용(조회용) 메소드 -->
+   <select id="selectPwd" parameterType="java.lang.String" resultType="java.lang.String">
+	   	SELECT RESIDENT_PWD
+	   	FROM RESIDENT
+	   	WHERE RESIDENT_ID = #{residentId}
+	   	AND LEAVE_TF = 'N'
+   </select>
+   <!--  비밀번호 일치 시 회원 정보 조회용 메소드 -->
+   <select id="selectLoginUser" resultMap="residentVOResultSet" parameterType="ResidentVO">
+	   	SELECT *
+	   	FROM RESIDENT
+	   	WHERE RESIDENT_ID = #{residentId}
+	   	AND LEAVE_TF = 'N'
+   </select>
 
 </mapper>

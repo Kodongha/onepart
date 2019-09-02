@@ -14,7 +14,7 @@
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
-	
+
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 	<link href="${contextPath}/resources/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
@@ -25,12 +25,12 @@
 	<link href="${contextPath}/resources/css/style-responsive.min.css" rel="stylesheet" />
 	<link href="${contextPath}/resources/css/theme/default.css" rel="stylesheet" id="theme" />
 	<!-- ================== END BASE CSS STYLE ================== -->
-	
+
 	<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
 	<link href="${contextPath}/resources/plugins/bootstrap-wizard/css/bwizard.min.css" rel="stylesheet" />
 	<link href="${contextPath}/resources/plugins/parsley/src/parsley.css" rel="stylesheet" />
 	<!-- ================== END PAGE LEVEL STYLE ================== -->
-	
+
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="${contextPath}/resources/plugins/pace/pace.min.js"></script>
 	<!-- ================== END BASE JS ================== -->
@@ -39,16 +39,16 @@
 	<!-- begin #page-loader -->
 	<div id="page-loader" class="fade in"><span class="spinner"></span></div>
 	<!-- end #page-loader -->
-	
+
 	<!-- begin #page-container -->
 	<div id="page-container" class="fade">
 		<!-- begin #content -->
 		<!-- <div id="content" class="content"> -->
 			<div class="register register-with-news-feed" style="width: 70%; margin: auto;">
 		<!-- 반응형 시작 -->
- 			<div class="col-md-6"> 
+ 			<div class="col-md-6">
 				<ul class="nav nav-tabs">
-					<li class=""><a href="#default-tab-1" data-toggle="tab" aria-expanded="false">아이디 찾기</a></li>
+					<li class=""><a href="${contextPath }/moveFindId" data-toggle="tab" aria-expanded="false">아이디 찾기</a></li>
 					<li class="active"><a href="#default-tab-2" data-toggle="tab" aria-expanded="true">비밀번호 찾기</a></li>
 				</ul>
 				<!-- 아이디 찾기, 비밀번호 찾기 탭 시작 -->
@@ -58,7 +58,7 @@
 					<!-- 아이디 찾기 끝 -->
 					<!-- 비밀번호 찾기 시작 -->
 					<div class="tab-pane fade active in" id="default-tab-2">
-						
+
 						<h3 class="m-t-10">
 							<i class="fa fa-cog"></i> 비밀번호 찾기
 						</h3>
@@ -68,13 +68,13 @@
 						    <div class="col-md-12">
 						        <!-- begin panel -->
 			                    <div class="panel panel-inverse">
-			                        
+
 			                        <div class="panel-body">
 			                            <form action="/" method="POST" data-parsley-validate="true" name="form-wizard">
 											<div id="wizard" >
 												<ol>
 													<li style="width: 26%">
-													    아이디 입력 
+													    아이디 입력
 													    <small>비밀번호를 찾고자 하는 아이디를 입력해 주세요.</small>
 													</li>
 													<li style="width: 27%">
@@ -202,7 +202,7 @@
 			            <!-- end 위자드 -->
 			        </div>
 			    	<!-- 비밀번호 찾기 끝 -->
-			    </div>  
+			    </div>
             	<!-- 아이디 찾기, 비밀번호 찾기 탭 끝 -->
 			</div>
 		<!-- 반응형 끝 -->
@@ -211,7 +211,7 @@
 		<!-- end #content -->
 	<!-- </div> -->
 	<!-- end page container -->
-	
+
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="${contextPath}/resources/plugins/jquery/jquery-1.9.1.min.js"></script>
 	<script src="${contextPath}/resources/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
@@ -225,14 +225,14 @@
 	<script src="${contextPath}/resources/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="${contextPath}/resources/plugins/jquery-cookie/jquery.cookie.js"></script>
 	<!-- ================== END BASE JS ================== -->
-	
+
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
 	<script src="${contextPath}/resources/plugins/parsley/dist/parsley.js"></script>
 	<script src="${contextPath}/resources/plugins/bootstrap-wizard/js/bwizard.js"></script>
 	<script src="${contextPath}/resources/js/form-wizards-validation.demo.min.js"></script>
 	<script src="${contextPath}/resources/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
-	
+
 	<script>
 		$(document).ready(function() {
 			App.init();
