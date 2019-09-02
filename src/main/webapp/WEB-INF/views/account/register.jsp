@@ -52,7 +52,7 @@
 						<i class="fa fa-edit text-success"></i> 원파트에서 스마트 홈라이프를 누리세요!
 					</h4>
 					<p>아파트 입주민 여러분 환영합니다. <br>
-					원파트는 보다 원활한 소통과 편의를 위해 스마트한 아파트 생활을 더욱더 편리하게 살 수 있는 기능을 담아,<br> 
+					원파트는 보다 원활한 소통과 편의를 위해 스마트한 아파트 생활을 더욱더 편리하게 살 수 있는 기능을 담아,<br>
 					입주민들 간 커뮤니케이션을 용이하게 만든 아파트 생활밀착 서비스입니다.
 					</p>
 				</div>
@@ -74,16 +74,16 @@
 						<div class="row m-b-15" style="margin-bottom: 0%;">
 <!-- 						<div class="row row-space-10"> -->
 							<div class="col-md-12">
-								<input type="text" class="form-control" placeholder="아이디(영문, 숫자만 가능)" style="width: 77%; display: inline-block;" />&nbsp;
+								<input name="residentId" id="residentId" type="text" class="form-control" placeholder="아이디(영문, 숫자만 가능)" style="width: 77%; display: inline-block;" />&nbsp;
 								<button type="button" class="btn btn-default m-r-5 m-b-5">중복확인</button>
 							</div>
 						</div>
-						
+
 						<label class="control-label">비밀번호</label>
 						<!-- <div class="row m-b-15" style="margin-bottom: 0%;"> -->
 						<div class="row row-space-10">
 							<div class="col-md-12">
-								<input type="password" class="form-control" placeholder="비밀번호" style="margin-bottom: 1%;" />
+								<input name="residentPwd" id="residentPwd" type="password" class="form-control" placeholder="비밀번호" style="margin-bottom: 1%;" />
 								<p style="color: graytext; margin-bottom: 0%;">&nbsp;비밀번호는
 									최소 8자 이상, 영문과 숫자 혼합하여 설정</p>
 							</div>
@@ -91,22 +91,22 @@
 						<label class="control-label">비밀번호 확인</label>
 						<div class="row m-b-15">
 							<div class="col-md-12">
-								<input type="password" class="form-control" placeholder="비밀번호 재입력" />
+								<input name="residentPwd2" id="residentPwd2" type="password" class="form-control" placeholder="비밀번호 재입력" />
 							</div>
 						</div>
 
 						<label class="control-label">이름</label>
 						<div class="row m-b-15">
 							<div class="col-md-12">
-								<input type="text" class="form-control" placeholder="실명 입력" />
+								<input name="residentNm" id="residentNm" type="text" class="form-control" placeholder="실명 입력" />
 							</div>
 						</div>
-						
+
 						<label class="control-label">주민등록번호</label>
 						<div class="row m-b-15">
 							<div class="col-md-12">
-          			<input type="text" class="form-control" placeholder="" name="birthDay" size="6" maxlength="6" style="width: 20%; text-align:center; display: inline-block;" />&nbsp;&nbsp;-&nbsp;&nbsp;
-								<input type="text" class="form-control" placeholder="" name="gender" size="1" maxlength="1" style="width: 5%; text-align:center; display: inline-block; padding: 6px 1px;" />&nbsp;******&nbsp;
+          						<input name="residentBirth" id="residentBirth" type="text" class="form-control" placeholder="" name="birthDay" size="6" maxlength="6" style="width: 20%; text-align:center; display: inline-block;" />&nbsp;&nbsp;-&nbsp;&nbsp;
+								<input name="residentGender" id="residentGender" type="text" class="form-control" placeholder="" name="gender" size="1" maxlength="1" style="width: 5%; text-align:center; display: inline-block; padding: 6px 1px;" />&nbsp;******&nbsp;
 								<p style="color: graytext; margin-bottom: 0%;">&nbsp;전자투표에 필요한 정보입니다.</p>
 							</div>
 						</div>
@@ -114,7 +114,7 @@
 						<label class="control-label">휴대전화번호 인증</label>
 						<div class="row m-b-15">
 							<div class="col-md-12">
-								<input type="tel" class="form-control" placeholder="휴대전화번호 입력" style="width: 77%; display: inline-block;" />&nbsp;
+								<input name="residentPhone" id="residentPhone" type="tel" class="form-control" placeholder="휴대전화번호 입력" style="width: 77%; display: inline-block;" />&nbsp;
 								<button type="button" class="btn btn-default m-r-5 m-b-5">인증번호</button>
 								<br>**인증번호 클릭 시 아래 창 생김 or 새창<br> <input type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
 								<button type="button" class="btn btn-default m-r-5 m-b-5">확인</button>
@@ -124,7 +124,7 @@
 						<label class="control-label">이메일</label>
 						<div class="row m-b-15">
 							<div class="col-md-12">
-								<input type="email" class="form-control" placeholder="이메일 주소" style="width: 77%; display: inline-block;" />&nbsp;
+								<input name="residentEmail" id="residentEmail" type="email" class="form-control" placeholder="이메일 주소" style="width: 77%; display: inline-block;" />&nbsp;
 								<!-- <button type="button" class="btn btn-default m-r-5 m-b-5">인증번호</button>
 								<br>**인증번호 클릭 시 아래 창 생김 or 새창<br> <input type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
 								<button type="button" class="btn btn-default m-r-5 m-b-5">확인</button> -->
@@ -134,12 +134,12 @@
 						<h3><label class="control-label">아파트 정보</label></h3>
 						<div class="row row-space-10">
 							<div class="col-md-12">
-								<input type="text" class="form-control" placeholder="아파트명 검색" style="width: 77%; display: inline-block;" />&nbsp;
+								<input name="residentNm" id="residentNm" type="text" class="form-control" placeholder="아파트명 검색" style="width: 77%; display: inline-block;" />&nbsp;
 								<button type="button" class="btn btn-default m-r-5 m-b-5" style="background-color: black;">검색</button>
 								<p style="color: blue; margin-bottom: 0%;">예) 서울시 송파구 신천동 잠실5단지의 경우 '신천동'이라고 입력하세요.</p>
 								<br>
-								<input type="text" class="form-control" placeholder="동 입력" style="width: 30%; display: inline-block;" />&nbsp;동&nbsp;&nbsp;
-								<input type="text" class="form-control" placeholder="호수 입력" style="width: 30%; display: inline-block;" />&nbsp;호&nbsp;
+								<input name="aptDetailInfoSeq" id="aptDetailInfoSeq" type="text" class="form-control" placeholder="동 입력" style="width: 30%; display: inline-block;" />&nbsp;동&nbsp;&nbsp;
+								<input name="aptDetailInfoSeq" id="aptDetailInfoSeq" type="text" class="form-control" placeholder="호수 입력" style="width: 30%; display: inline-block;" />&nbsp;호&nbsp;
 							</div>
 						</div>
 						<br>

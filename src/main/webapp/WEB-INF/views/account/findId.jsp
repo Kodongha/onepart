@@ -50,7 +50,7 @@
 			<div class="col-md-6">
 				<ul class="nav nav-tabs">
 					<li class="active"><a href="#default-tab-1" data-toggle="tab" aria-expanded="false">아이디 찾기</a></li>
-					<li class=""><a href="#default-tab-2" data-toggle="tab" aria-expanded="true">비밀번호 찾기</a></li>
+					<li class=""><a href="${contextPath}/moveFindPwd" data-toggle="tab" aria-expanded="true">비밀번호 찾기</a></li>
 				</ul>
 				<!-- 아이디 찾기, 비밀번호 찾기 탭 시작 -->
 				<div class="tab-content">
@@ -78,7 +78,7 @@
 														<input type="text" class="form-control" placeholder="실명 입력" style="width: 77%;" />
 													</div>
 												</div>
-	
+
 												<label class="control-label">휴대전화번호 인증</label>
 												<div class="row m-b-15">
 													<div class="col-md-12">
@@ -108,7 +108,7 @@
 														<input type="text" class="form-control" placeholder="실명 입력" style="width: 77%;" />
 													</div>
 												</div>
-	
+
 												<label class="control-label">이메일</label>
 												<div class="row m-b-15">
 													<div class="col-md-12">
