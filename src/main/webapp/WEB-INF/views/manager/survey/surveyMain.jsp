@@ -5,10 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="${contextPath}/resources/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+<link href="${contextPath}/resources/plugins/switchery/switchery.min.css" rel="stylesheet" />
+<link href="${contextPath}/resources/plugins/powerange/powerange.min.css" rel="stylesheet" />
+<%--
 <script type="text/javascript" src="${ contextPath }/resources/js/daterangepicker.js"></script>
 <script type="text/javascript" src="${ contextPath }/resources/js/moment.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${ contextPath }/resources/css/daterangepicker.css" />
+ --%>
 <style type="text/css">
 	#buttonArea{
 		margin-top: 2%;
@@ -38,6 +41,19 @@
 		padding-bottom: 5%;
 	}
 
+	#modal-message{
+		height: 97%;
+	}
+
+	.addBtn {
+	 background: #009900;
+	}
+
+	.defaultTemplate{
+		display: none;
+	}
+
+
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -48,20 +64,26 @@
 			$('#defaultOption').attr("selected", "selected");
 		});
 
-
+/*
 		// 데이터 레인지 피커 사용
 		$('input[name="surveyPeriod"]').daterangepicker({
 		   opens: 'left'
 		}, function(start, end, label) {
 		   console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 		});
+ */
 
-		// surveyType 변경 시 폼 변경
-		$('input[name="surveyType"]').changed(function(){
-			console.log("change");
-			$('.modal-body').append("abc");
+ 		// + 버튼 클릭 시 폼 추가
+		$('.addBtn').click(function(){
+
+			var clone = $('.defaultTemplate').clone(true);
+			clone.removeClass("defaultTemplate");
+			clone.addClass("questionArea");
+
+			$(this).before(clone);
 
 		});
+
 
 	});
 
@@ -178,7 +200,7 @@
 
 
 	<!-- #modal-message -->
-	<div class="modal modal-message fade" id="modal-message">
+	<div class="modal fade" id="modal-message">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -186,27 +208,24 @@
 					<div id="writeSurvey">
 						<h3 class="modal-title">설문조사 작성</h3>
 					</div>
-
 					<h4><i class="fa fa-calendar"></i> 설문기간 설정</h4>
-
 					<input type="text" class="form-control" placeholder="설문 기간을 설정해주세요." id="surveyPeriod" name="surveyPeriod">
-
-
 				</div>
+
+				<!-- Body -->
 				<div class="modal-body">
 					<div id="surveySimpleIntroArea">
 						<h4>간단설명</h4>
-						<textarea class="form-control" placeholder="Textarea" rows="5" name="surveySimpleIntro" id="surveySimpleIntro"></textarea>
+						<textarea class="form-control" placeholder="설문조사에 대한 간단한 설명을 입력해주세요." rows="5" name="surveySimpleIntro" id="surveySimpleIntro"></textarea>
 						<hr>
 					</div>
 
-					<div id="questionArea">
-
-						<div class="col-md-6">
-							<input type="text" class="form-control" placeholder="1번 문제의 제목을 입력해주세요." id="surveyPeriod" name="surveyPeriod">
+					<!-- Default Template -->
+					<div class="defaultTemplate">
+						<div class="col-md-9">
+							<input type="text" class="form-control" placeholder="설문조사 문제의 제목을 입력해주세요." id="surveyPeriod" name="surveyPeriod">
 						</div>
-
-						<div class="col-md-6">
+						<div class="col-md-3">
 							<select class="form-control selectpicker" data-size="10" data-live-search="true" data-style="btn-inverse" name="surveyType" id="surveyType">
 							    <option value="1" selected="selected">단답형</option>
 							    <option value="2">장문형</option>
@@ -214,11 +233,56 @@
 							    <option value="4">체크박스</option>
 							</select>
 						</div>
+						<br clear="all"><br>
+
+						<div class="col-md-9 questionDetailArea">
+							<input type="text" class="form-control" placeholder="질문 내용을 입력해주세요." id="surveyPeriod" name="surveyPeriod">
+						</div>
+						<div class="col-md-3">
+							<div class="panel-body">
+							<input type="checkbox" data-render="switchery" data-theme="default" checked />
+							</div>
+						</div>
+						<br clear="all"><br>
+						<a href="javascript:;" class="btn btn-danger btn-block delteBtn">- 삭제</a>
+						<hr>
+					</div>
+
+
+
+					<div class="questionArea">
+						<div class="col-md-9">
+							<input type="text" class="form-control" placeholder="설문조사 문제의 제목을 입력해주세요." id="surveyPeriod" name="surveyPeriod">
+						</div>
+
+						<div class="col-md-3">
+							<select class="form-control selectpicker" data-size="10" data-live-search="true" data-style="btn-inverse" name="surveyType" id="surveyType">
+							    <option value="1" selected="selected">단답형</option>
+							    <option value="2">장문형</option>
+							    <option value="3">객관식</option>
+							    <option value="4">체크박스</option>
+							</select>
+
+						</div>
+						<br clear="all"><br>
+
+						<div class="col-md-9 questionDetailArea">
+							<input type="text" class="form-control" placeholder="질문 내용을 입력해주세요.">
+						</div>
+
+						<div class="col-md-3">
+							<div class="panel-body">
+								<input type="checkbox" data-render="switchery" data-theme="default" checked />
+							</div>
+						</div>
+						<br clear="all"><br>
+
+						<a href="javascript:;" class="btn btn-danger btn-block delteBtn">- 삭제</a>
 
 						<hr>
-
-
 					</div>
+					<a class="btn btn-info btn-block addBtn" data-toggle="modal">+ 추가</a>
+
 
 
 				</div>
@@ -229,6 +293,36 @@
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		// surveyType 변경 시 폼 변경
+		$('select[name="surveyType"]').change(function(){
+
+			$(this).parents('.questionArea').children('.questionDetailArea').eq(0).children().remove();
+
+			var optionValue = $(this).val();
+
+
+			// 단답형
+			if(optionValue == 1){
+				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).prepend('<input type="text" class="form-control" placeholder="단답형의 질문입니다.">');
+
+			// 장문형
+			} else if(optionValue == 2){
+				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).prepend('<textarea class="form-control" placeholder="장문형의 질문입니다." rows="5"></textarea>');
+
+			} else if(optionValue == 3){
+
+			} else if(optionValue == 4){
+
+			}
+
+
+
+		});
+
+
+	</script>
 
 
 </body>
