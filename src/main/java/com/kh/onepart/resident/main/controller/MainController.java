@@ -2,6 +2,7 @@ package com.kh.onepart.resident.main.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 public class MainController {
@@ -11,5 +12,6 @@ public class MainController {
 		System.out.println("/resident/main");
 		return "/resident/common/residentTemplate";
 	}
-	
+
+
 }

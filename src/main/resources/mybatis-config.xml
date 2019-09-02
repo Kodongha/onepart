@@ -10,6 +10,7 @@
 	</typeAliases>
 	
 	<mappers>
+		<mapper resource="mappers/account/account-mapper.xml"/>
 		<mapper resource="mappers/openChat/openChat-mapper.xml"/>
 	</mappers>
 </configuration>

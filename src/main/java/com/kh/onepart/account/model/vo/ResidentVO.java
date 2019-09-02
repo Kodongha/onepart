@@ -23,5 +23,9 @@ public class ResidentVO {
 	private String leaveTf;
 	private int aptAuthCd;
 	private Date leaveDt;
+	private String residentBirth;
+	private String confirmTf;
+	private String residentGender;
+
 
 }
