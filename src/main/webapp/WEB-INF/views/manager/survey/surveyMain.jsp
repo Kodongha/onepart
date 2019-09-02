@@ -53,15 +53,44 @@
 		display: none;
 	}
 
+	input[name='checkboxOption']{
+		border-left-width:0;
+		border-right:0;
+		border-top:0;
+		boder-bottom:1px;
+	}
+
 
 </style>
 <script type="text/javascript">
 	$(function(){
 
+		/* 검색 관련 */
 		// 리셋버튼 클릭시 입력 폼 초기화
 		$('#resetBtn').click(function(){
 			$('#surveyTitle').val('');
 			$('#defaultOption').attr("selected", "selected");
+		});
+
+		$('#searchBtn').click(function(){
+
+
+
+			var surveyTitleValue = $('#surveyTitle').val();
+			var surveyStatusValue = $('#surveyStatus').val();
+
+			$.ajax({
+				url:'searchSurvey',
+				type:'get',
+				data:{'surveyTitle':surveyTitleValue, 'surveyStatus':surveyStatusValue},
+				success:function(data){
+					console.log("succ");
+				},
+				error:function(){
+					console.log("fail");
+				}
+			});
+
 		});
 
 /*
@@ -72,18 +101,6 @@
 		   console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 		});
  */
-
- 		// + 버튼 클릭 시 폼 추가
-		$('.addBtn').click(function(){
-
-			var clone = $('.defaultTemplate').clone(true);
-			clone.removeClass("defaultTemplate");
-			clone.addClass("questionArea");
-
-			$(this).before(clone);
-
-		});
-
 
 	});
 
@@ -113,8 +130,8 @@
 
 					<div class="col-md-6">
 						<h4 class="m-t-10">상태</h4>
-						<select class="form-control" id="surveyStatus" name="surveyStatus">
-							<option selected="selected" disabled="disabled" id="defaultOption">상태를 입력하세요.</option>
+						<select class="form-control" id="surveyStatus" name="surveyType">
+							<option id="defaultOption" value="0">전체</option>
 							<option value="1">진행 중</option>
 							<option value="2">진행 예정</option>
 							<option value="3">종료</option>
@@ -126,7 +143,7 @@
 					<div id="buttonArea">
 						<p class="text-right m-b-0">
 							<a href="javascript:;" class="btn btn-white m-r-5" id="resetBtn">초기화</a>
-							<a href="javascript:;" class="btn btn-primary">검색</a>
+							<a class="btn btn-primary" id="searchBtn">검색</a>
 						</p>
 					</div>
 				</div>
@@ -198,131 +215,9 @@
 	</div>
 	<div class="col-md-1"></div>
 
+	<!-- modal include -->
+	<jsp:include page="surveyMainModal.jsp"/>
 
-	<!-- #modal-message -->
-	<div class="modal fade" id="modal-message">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<div id="writeSurvey">
-						<h3 class="modal-title">설문조사 작성</h3>
-					</div>
-					<h4><i class="fa fa-calendar"></i> 설문기간 설정</h4>
-					<input type="text" class="form-control" placeholder="설문 기간을 설정해주세요." id="surveyPeriod" name="surveyPeriod">
-				</div>
-
-				<!-- Body -->
-				<div class="modal-body">
-					<div id="surveySimpleIntroArea">
-						<h4>간단설명</h4>
-						<textarea class="form-control" placeholder="설문조사에 대한 간단한 설명을 입력해주세요." rows="5" name="surveySimpleIntro" id="surveySimpleIntro"></textarea>
-						<hr>
-					</div>
-
-					<!-- Default Template -->
-					<div class="defaultTemplate">
-						<div class="col-md-9">
-							<input type="text" class="form-control" placeholder="설문조사 문제의 제목을 입력해주세요." id="surveyPeriod" name="surveyPeriod">
-						</div>
-						<div class="col-md-3">
-							<select class="form-control selectpicker" data-size="10" data-live-search="true" data-style="btn-inverse" name="surveyType" id="surveyType">
-							    <option value="1" selected="selected">단답형</option>
-							    <option value="2">장문형</option>
-							    <option value="3">객관식</option>
-							    <option value="4">체크박스</option>
-							</select>
-						</div>
-						<br clear="all"><br>
-
-						<div class="col-md-9 questionDetailArea">
-							<input type="text" class="form-control" placeholder="질문 내용을 입력해주세요." id="surveyPeriod" name="surveyPeriod">
-						</div>
-						<div class="col-md-3">
-							<div class="panel-body">
-							<input type="checkbox" data-render="switchery" data-theme="default" checked />
-							</div>
-						</div>
-						<br clear="all"><br>
-						<a href="javascript:;" class="btn btn-danger btn-block delteBtn">- 삭제</a>
-						<hr>
-					</div>
-
-
-
-					<div class="questionArea">
-						<div class="col-md-9">
-							<input type="text" class="form-control" placeholder="설문조사 문제의 제목을 입력해주세요." id="surveyPeriod" name="surveyPeriod">
-						</div>
-
-						<div class="col-md-3">
-							<select class="form-control selectpicker" data-size="10" data-live-search="true" data-style="btn-inverse" name="surveyType" id="surveyType">
-							    <option value="1" selected="selected">단답형</option>
-							    <option value="2">장문형</option>
-							    <option value="3">객관식</option>
-							    <option value="4">체크박스</option>
-							</select>
-
-						</div>
-						<br clear="all"><br>
-
-						<div class="col-md-9 questionDetailArea">
-							<input type="text" class="form-control" placeholder="질문 내용을 입력해주세요.">
-						</div>
-
-						<div class="col-md-3">
-							<div class="panel-body">
-								<input type="checkbox" data-render="switchery" data-theme="default" checked />
-							</div>
-						</div>
-						<br clear="all"><br>
-
-						<a href="javascript:;" class="btn btn-danger btn-block delteBtn">- 삭제</a>
-
-						<hr>
-					</div>
-					<a class="btn btn-info btn-block addBtn" data-toggle="modal">+ 추가</a>
-
-
-
-				</div>
-				<div class="modal-footer">
-					<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-					<a href="javascript:;" class="btn btn-sm btn-primary">Save Changes</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<script type="text/javascript">
-		// surveyType 변경 시 폼 변경
-		$('select[name="surveyType"]').change(function(){
-
-			$(this).parents('.questionArea').children('.questionDetailArea').eq(0).children().remove();
-
-			var optionValue = $(this).val();
-
-
-			// 단답형
-			if(optionValue == 1){
-				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).prepend('<input type="text" class="form-control" placeholder="단답형의 질문입니다.">');
-
-			// 장문형
-			} else if(optionValue == 2){
-				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).prepend('<textarea class="form-control" placeholder="장문형의 질문입니다." rows="5"></textarea>');
-
-			} else if(optionValue == 3){
-
-			} else if(optionValue == 4){
-
-			}
-
-
-
-		});
-
-
-	</script>
 
 
 </body>

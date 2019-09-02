@@ -8,11 +8,25 @@
 		<typeAlias type="com.kh.onepart.account.model.vo.ResidentVO" alias="ResidentVO"/>
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO" alias="OpenChatVO"/>
 		<typeAlias type="com.kh.onepart.resident.my_home.my_car.model.vo.MyCar" alias="MyCar"/>
+
+		<!-- manager -->
+		<typeAlias type="com.kh.onepart.manager.survey.model.SurveyVO" alias="SurveyVO"/>
+
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappers/openChat/openChat-mapper.xml"/>
 		<mapper resource="mappers/myCar/myCar-mapper.xml"/>
+
+
+
+
+
+		<!-- Manager -->
+		<mapper resource="mappers/manager/survey/manager-survey-mapper.xml"/>
+
+
+
 	</mappers>
 </configuration>
 
