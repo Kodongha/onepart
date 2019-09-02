@@ -5,11 +5,11 @@
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if !IE]><!-->
-<html>
+<html lang="en">
 <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-	<title>Color Admin | Login Page</title>
+	<title>OnePart(원파트) | Login Page</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
@@ -29,72 +29,66 @@
 	<script src="${contextPath}/resources/plugins/pace/pace.min.js"></script>
 	<!-- ================== END BASE JS ================== -->
 </head>
-<body class="pace-top bg-white">
+<body class="pace-top">
 	<!-- begin #page-loader -->
 	<div id="page-loader" class="fade in"><span class="spinner"></span></div>
 	<!-- end #page-loader -->
 	
+	<div class="login-cover">
+	    <div class="login-cover-image"><img src="${contextPath}/resources/img/login-bg/bg-1.jpg" data-id="login-cover-image" alt="" /></div>
+	    <div class="login-cover-bg"></div>
+	</div>
 	<!-- begin #page-container -->
 	<div id="page-container" class="fade">
 	    <!-- begin login -->
-        <div class="login login-with-news-feed">
-            <!-- begin news-feed -->
-            <div class="news-feed">
-                <div class="news-image">
-                    <img src="${contextPath}/resources/img/login-bg/bg-7.jpg" data-id="login-cover-image" alt="" />
+        <div class="login login-v2" data-pageload-addclass="animated fadeIn">
+            <!-- begin brand -->
+            <div class="login-header">
+                <div class="brand">
+                    <span class="logo"></span> OnePart(원파트)
+                    <small>아파트 스마트 홈라이프의 시작</small>
                 </div>
-                <div class="news-caption">
-                    <h4 class="caption-title"><i class="fa fa-diamond text-success"></i> Announcing the Color Admin app</h4>
-                    <p>
-                        Download the Color Admin app for iPhone®, iPad®, and Android™. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </p>
+                <div class="icon">
+                    <i class="fa fa-sign-in"></i>
                 </div>
             </div>
-            <!-- end news-feed -->
-            <!-- begin right-content -->
-            <div class="right-content">
-                <!-- begin login-header -->
-                <div class="login-header">
-                    <div class="brand">
-                        <span class="logo"></span> Color Admin
-                        <small>responsive bootstrap 3 admin template</small>
+            <!-- end brand -->
+            <div class="login-content">
+                <form action="index.html" method="POST" class="margin-bottom-0">
+                    <div class="form-group m-b-20">
+                        <input type="text" class="form-control input-lg" placeholder="아이디를 입력하세요." />
                     </div>
-                    <div class="icon">
-                        <i class="fa fa-sign-in"></i>
+                    <div class="form-group m-b-20">
+                        <input type="text" class="form-control input-lg" placeholder="비밀번호를 입력하세요." />
                     </div>
-                </div>
-                <!-- end login-header -->
-                <!-- begin login-content -->
-                <div class="login-content">
-                    <form action="${ contextPath }/loginCheck" method="POST" class="margin-bottom-0">
-                        <div class="form-group m-b-15">
-                            <input type="text" class="form-control input-lg" placeholder="Email Address" name="residentId" id="residentId"/>
-                        </div>
-                        <div class="form-group m-b-15">
-                            <input type="text" class="form-control input-lg" placeholder="Password" name="residentPwd" id="residentPwd" />
-                        </div>
-                        <div class="checkbox m-b-30">
-                            <label>
-                                <input type="checkbox" /> Remember Me
-                            </label>
-                        </div>
-                        <div class="login-buttons">
-                            <button type="submit" class="btn btn-success btn-block btn-lg">Sign me in</button>
-                        </div>
-                        <div class="m-t-20 m-b-40 p-b-40">
-                            Not a member yet? Click <a href="register_v3.html" class="text-success">here</a> to register.
-                        </div>
-                        <hr />
-                        <p class="text-center text-inverse">
-                            &copy; Color Admin All Right Reserved 2015
-                        </p>
-                    </form>
-                </div>
-                <!-- end login-content -->
+                    <div class="checkbox m-b-20">
+                        <label>
+                            <input type="checkbox" /> 자동 로그인
+                        </label>
+                    </div>
+                    <div class="login-buttons">
+                        <button type="submit" class="btn btn-success btn-block btn-lg">로그인</button>
+                    </div>
+                    <div class="m-t-20" style="">
+                        회원가입을 하시려면 <a href="#">여기</a>를 클릭하세요.
+                    </div>
+                    <div class="m-t-20" style="margin-top: 1%!important">
+                        <a href="#">아이디</a>,<a href="#">비밀번호</a>를 잃어버리셨습니까?
+                    </div>
+                    
+                </form>
             </div>
-            <!-- end right-container -->
         </div>
         <!-- end login -->
+        
+        <ul class="login-bg-list">
+            <li class="active"><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-1.jpg" alt="" /></a></li>
+            <li><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-9.jpg" alt="" /></a></li>
+            <li><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-10.jpg" alt="" /></a></li>
+            <li><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-4.jpg" alt="" /></a></li>
+            <li><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-5.jpg" alt="" /></a></li>
+            <li><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-6.jpg" alt="" /></a></li>
+        </ul>
         
         <!-- begin theme-panel -->
         <div class="theme-panel">
@@ -174,7 +168,7 @@
         <!-- end theme-panel -->
 	</div>
 	<!-- end page container -->
-	 
+	
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="${contextPath}/resources/plugins/jquery/jquery-1.9.1.min.js"></script>
 	<script src="${contextPath}/resources/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
@@ -190,12 +184,14 @@
 	<!-- ================== END BASE JS ================== -->
 	
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	<script src="${contextPath}/resources/js/login-v2.demo.min.js"></script>
 	<script src="${contextPath}/resources/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
 
 	<script>
 		$(document).ready(function() {
 			App.init();
+			LoginV2.init();
 		});
 	</script>
 </body>
