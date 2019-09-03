@@ -152,7 +152,7 @@
 		<ul id="ioniconsTab" class="nav nav-tabs">
 			<li class="active"><a href="#leftTab" data-toggle="tab"> <span
 					class="hidden-xs m-l-3">모든 채팅방<span
-						class="badge badge-inverse m-l-3">252</span></span>
+						class="badge badge-inverse m-l-3" id="allroom"></span></span>
 			</a></li>
 			<li><a href="#rightTab" data-toggle="tab"> <span
 					class="hidden-xs m-l-3">참여중인 채팅방<span
@@ -281,6 +281,8 @@
 				$('#' + modalId).removeClass('modal-hide');
 				$('#openChatRoomNm').val("");
 				$('#openChatPwd').val("");
+				$("#passwordMake").prop("checked", false)
+				$("#openChatPwd").attr("disabled", true);
 			});
 		}
 		return {
@@ -349,6 +351,7 @@
 					if(data.result == "success") {
 						let roomList = data.openChatRoomList;
 						drawRoomList(roomList);
+						$("#allroom").text(data.countChatRoom);
 					}
 				},
 				error : function(err) {

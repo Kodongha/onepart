@@ -16,4 +16,6 @@ public interface OpenChatDao {
 
 	public void setCurrHead(SqlSessionTemplate sqlSession, int openChatSeq);
 	public List<ResidentVO> selectListByOpenChatSeq(SqlSessionTemplate sqlSession, int openChatSeq);
+	public int countChatRoom(SqlSessionTemplate sqlSession);
+
 }
