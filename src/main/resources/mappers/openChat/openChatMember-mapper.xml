@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OpenChatMember">
+
+	<resultMap type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO" id="openChatMemberVOResultSet">
+		<id property="openChatMemberSeq" column="OPEN_CHAT_MEMBER_SEQ"/>
+		<result property="openChatSeq" column="OPEN_CHAT_SEQ"/>
+		<result property="residentSeq" column="RESIDENT_SEQ"/>
+		<result property="openChatMemberPrtcptDt" column="OPEN_CHAT_MEMBER_PRTCPT_DT"/>
+	</resultMap>
+
+	<select id="selectCountByOpenChatSeqAndResidentSeq" resultType="Integer" parameterType="OpenChatMemberVO">
+		SELECT count(*)
+		FROM OPEN_CHAT_MEMBER
+		WHERE OPEN_CHAT_SEQ = #{openChatSeq}
+			AND RESIDENT_SEQ = #{residentSeq}
+	</select>
+
+	<insert id="insert" parameterType="OpenChatMemberVO">
+		INSERT INTO OPEN_CHAT_MEMBER
+			(OPEN_CHAT_MEMBER_SEQ, OPEN_CHAT_SEQ, RESIDENT_SEQ, OPEN_CHAT_MEMBER_PRTCPT_DT)
+		VALUES
+			(OPEN_CHAT_MEMBER_SEQ.nextval, #{openChatSeq}, #{residentSeq}, sysdate)
+	</insert>
+</mapper>

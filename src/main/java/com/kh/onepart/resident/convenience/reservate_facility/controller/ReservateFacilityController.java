@@ -2,6 +2,8 @@ package com.kh.onepart.resident.convenience.reservate_facility.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +18,24 @@ public class ReservateFacilityController {
 	private ReservationService rs;
 
 	@RequestMapping("/resident/menuReservateFacility")
-	public ModelAndView moveReservation(ModelAndView mv) {
+	public ModelAndView moveReservation(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("/menuReservateFacility");
-		
+
 		// 단지내 모든 시설물 리스트 불러오는 메소드
-		ArrayList<Reservation> list = rs.selectAllReservation();
+		ArrayList list = rs.selectAllReservation();
+
+		mv.addObject("list", list);
+		mv.setViewName("/resident/convenience/reservate_facility/reservation_main");
+
+		return mv;
+	}
+
+	@RequestMapping("/resident/returnMain")
+	public ModelAndView returnMain(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/menuReservateFacility");
+
+		// 단지내 모든 시설물 리스트 불러오는 메소드
+		ArrayList list = rs.selectAllReservation();
 
 		mv.addObject("list", list);
 		mv.setViewName("/resident/convenience/reservate_facility/reservation_main");
@@ -29,14 +44,30 @@ public class ReservateFacilityController {
 	}
 
 	@RequestMapping("/resident/reservateGeneral")
-	public String moveReservation_reservateGeneral() {
+	public ModelAndView moveReservation_reservateGeneral(ModelAndView mv, int facSeq) {
 		System.out.println("/menuVote");
-		return "/resident/convenience/reservate_facility/reservation_general";
+
+		//해당 시설물번호의 상세정보 불러오는 메소드
+		Reservation reserv = rs.selectOneReservation(facSeq);
+
+		System.out.println("reserv : " + reserv);
+
+		mv.addObject("reserv", reserv);
+		mv.setViewName("/resident/convenience/reservate_facility/reservation_general");
+
+		return mv;
 	}
 
 	@RequestMapping("/resident/reservatenSeat")
-	public String moveReservation_reservatenSeat() {
+	public ModelAndView moveReservation_reservatenSeat(ModelAndView mv, int facSeq) {
 		System.out.println("/menuVote");
-		return "/resident/convenience/reservate_facility/reservation_seat";
+
+		//해당 시설물번호의 상세정보 불러오는 메소드
+		Reservation reserv = rs.selectOneReservation(facSeq);
+
+		mv.addObject("reserv", reserv);
+		mv.setViewName("/resident/convenience/reservate_facility/reservation_seat");
+
+		return mv;
 	}
 }

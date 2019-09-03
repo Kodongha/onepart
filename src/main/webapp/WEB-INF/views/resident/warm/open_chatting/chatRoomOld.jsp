@@ -15,11 +15,11 @@
 	.chats .message { margin-left: 12px; }
 	.panel-inverse>.panel-heading { background: rgb(237,169,0) !important; }
 	.badge.badge-success, .label.label-success { background: rgb(69, 206, 52) !important; }
-
+	
 	html, body { height: 100%; }
 	.chat-content .panel-heading { position: fixed; top: 0; width: 100%; }
 	.chat-content .panel-heading.notice { height: 60px; position: fixed; top: 40px; width: 100%; background-color: #000 !important; opacity: 0.7; z-index: 90; border-radius: 0;}
-
+	
 	/* 채팅방  */
 	.chat-content.panel { height: 100%; margin-bottom: 0; padding-top: 40px; padding-bottom: 50px; }
 	.chat-content .slimScrollDiv { padding: 0 15px; }
@@ -27,7 +27,7 @@
 	.chat-content .panel-body { height: 100%; padding: 0; }
 	.chat-content .panel-footer { position: fixed; bottom: 0; z-index: 110; }
 	.chat-content .chats>li+li { margin-bottom: 7px; }
-
+	
 	.chat-content ul.chats { padding: 0; }
 	.chat-content .chats li:nth-child(1) { margin-top: 70px; }
 	.chat-content .chats li { width: 100%; }
@@ -38,11 +38,11 @@
 	.chat-content .chats li.right { text-align: right; }
 	.chat-content .chats li.right div.message {   margin-right: 5px; }
 	.chat-content .chats li.right div.time { padding-right: 5px; }
-
+	
 	.chat-content .chats li.left { text-align: left; }
 	.chat-content .chats li.left div.message {  margin-left: 5px; }
 	.chat-content .chats li.left div.time { padding-left: 5px; }
-
+	
 	/* 채팅방 참여자 목록 */
 	.member-content { background: rgba(0,0,0, 0.2); position: fixed; top: 40px; right: 0; height: 100%; padding: 10px; padding-bottom: 180px; }
 	.member-content { width: 200px; opacity: 1;  z-index: 100; transition-property: width; transition-duration: 0.5s; }
@@ -66,13 +66,13 @@
 
 	.member-content.modal-hide table td span,
 		.member-content.modal-hide .member-title span { opacity: 0; transition-property: opacity; transition-duration: 0.5s; }
-
+	
 	.member-content #exitBtn { font-size: 12px; width: -webkit-fill-available; margin-top: 10px; }
 	.member-content #exitBtn { opacity: 1; transition-property: opacity; transition-duration: 0.3s; }
 	.member-content.modal-hide #exitBtn { opacity:0; transition-property: opacity; transition-duration: 0.3s; }
 	.format { display: none; }
 </style>
-
+	
 
 
 <!-- ================== BEGIN BASE CSS STYLE ================== -->
@@ -158,7 +158,7 @@
 	<script>
 		$(document).ready(function() {
 			App.init();
-
+			
 		});
 	</script>
 
@@ -167,7 +167,7 @@
 			function init() {
 				displayInit();
 			}
-
+			
 			function displayInit() {
 				$('.custom-modal').addClass('modal-hide');
 				$(document).on('click', '.modal-hide-btn', function(){
@@ -194,11 +194,11 @@
 				<div class="noticeicon">
 					<i class="ion-android-clipboard fa-2x text-inverse"></i>
 				</div>
-
+				
 				<span class="label label-success pull-right" id="chatpeople">
 					<button class="modal-show" data-modal-id="memberContentDiv">20/25</button>
 				</span>
-			</h4>
+			</h4> 
 		</div>
 		<div class="panel-heading notice">
 			<h4 class="panel-title">
@@ -244,7 +244,7 @@
 		</div>
 	</div>
 	<!-- end 채팅창 -->
-
+	
 	<!-- begin 채팅자 목록  -->
 	<div id="memberContentDiv" class="member-content custom-modal modal-hide" >
 		<div class="member-title">
@@ -395,9 +395,8 @@
 	</div>
 	<!-- end 채팅자 목록 -->
 </body>
+ 
 
-
-<script src="${contextPath}/resources/js/SockJs.min.js"></script>
 <script>
 	let webSocket;
 
@@ -417,7 +416,7 @@
 			$(document).on('submit', '#sendMessageForm', function(e) {
 				// 기존 이벤트 제거
 				e.preventDefault();
-
+				
 				// 전송 버튼 클릭 이벤트 발생
 				$("#sendMessageBtn").trigger('click');
 			});
@@ -426,13 +425,12 @@
 			$(document).on('click', '#sendMessageBtn', function() {
 				const msg = $('#inputMsg').val();
 				sendMessage(msg);
-
+				
 				// 지우기
 				$('#inputMsg').val('');
 			});
 
-			webSocket = new SockJS('/onepart/menuOpenChatRoom');
-
+			webSocket = new WebSocket('ws://127.0.0.1:8001/onepart/resident/menuOpenChatRoom');
 			console.log(webSocket);
 
 			webSocket.onerror = function(event) {
@@ -451,21 +449,21 @@
 				addMessage(sender, msg, date, isMe);
 			};
 		}
-
+		
 		function addMessage(sender, msg, date, isMe) {
 			let msgFormat = (isMe)? $('#chatMsgFormat').find('li.right').clone() :  $('#chatMsgFormat').find('li.left').clone();
 			msgFormat.find('.name').text(sender);
 			msgFormat.find('.message').html(msg);
 			msgFormat.find('.date-time').text(date);
-
+			
 			$('ul.chats').append(msgFormat);
-
+			
 			// 스크롤바 가장 하에 위치
 			if(isScrollBottom(msgFormat.height())) {
 				scrollBottom();
 			}
 		}
-
+		
 		function sendMessage(msg) {
 			let data = {
 				'act': 'sendMsg',
@@ -474,7 +472,7 @@
 			};
 			webSocket.send(JSON.stringify(data));
 		}
-
+		
 		// scrollBar 맨 아래 여부
 		function isScrollBottom(ignoreHeight) {
 	        const scrollT = $('#chatDiv .slimScrollDiv > div').scrollTop(); //스크롤바의 상단위치
@@ -483,7 +481,7 @@
 
 	        return (scrollT + scrollH + ignoreHeight >= contentH)
 		}
-
+		
 		// 맨 아래 고정
 		function scrollBottom() {
 			let divHeight = $('#chatDiv').height();										// 채팅창 높이
@@ -491,7 +489,7 @@
 			$('#chatDiv .slimScrollDiv > div').scrollTop($('#chatDiv ul').height());	// 채팅창 높이 - 채팅창 원래 스크롤바 상단 높이
 			$('#chatDiv .slimScrollBar').css('top', divHeight-scrollBarHeight); 		// 채팅창 높이 - 채팅창 템플릿 스크롤바 상단 높이
 		}
-
+		
 		return {
 			'init' : init,
 			'sendMessage' : sendMessage,

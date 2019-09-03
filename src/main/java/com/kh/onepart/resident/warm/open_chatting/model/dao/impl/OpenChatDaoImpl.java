@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.warm.open_chatting.model.dao.OpenChatDao;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO;
 
@@ -36,5 +37,16 @@ public class OpenChatDaoImpl implements OpenChatDao {
 	@Override
 	public void deleteById(SqlSessionTemplate sqlSession, int openChatSeq) {
 		sqlSession.delete("OpenChat.deleteById", openChatSeq);
+	}
+
+	@Override
+	public void setCurrHead(SqlSessionTemplate sqlSession, int openChatSeq) {
+		sqlSession.update("OpenChat.setCurrHead", openChatSeq);
+	}
+
+	@Override
+	public List<ResidentVO> selectListByOpenChatSeq(SqlSessionTemplate sqlSession, int openChatSeq) {
+
+		return sqlSession.selectList("OpenChat.selectListByOpenChatSeq", openChatSeq);
 	}
 }

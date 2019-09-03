@@ -18,11 +18,19 @@ public class ReservationServiceImpl implements ReservationService{
 
 	// 단지내 모든 시설물 리스트 불러오는 메소드
 	@Override
-	public ArrayList<Reservation> selectAllReservation() {
+	public ArrayList selectAllReservation() {
 
-		ArrayList<Reservation> list = rd.selectAllReservation(sqlSession);
+		ArrayList list = rd.selectAllReservation(sqlSession);
 
 		return list;
+	}
+	//해당 시설물번호의 상세정보 불러오는 메소드
+	@Override
+	public Reservation selectOneReservation(int facSeq) {
+
+		Reservation reserv = rd.selectOneReservation(sqlSession, facSeq);
+
+		return reserv;
 	}
 
 }

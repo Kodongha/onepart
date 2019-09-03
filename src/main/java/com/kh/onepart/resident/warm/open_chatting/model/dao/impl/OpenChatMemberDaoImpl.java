@@ -24,21 +24,29 @@ public class OpenChatMemberDaoImpl implements OpenChatMemberDao {
 	}
 
 	@Override
+	public int selectCountByOpenChatSeqAndResidentSeq(SqlSessionTemplate sqlSession, OpenChatMemberVO openChatMemberVO) {
+
+		System.out.println(openChatMemberVO);
+
+		return sqlSession.selectOne("OpenChatMember.selectCountByOpenChatSeqAndResidentSeq", openChatMemberVO);
+	}
+
+	@Override
 	public void insert(SqlSessionTemplate sqlSession, OpenChatMemberVO openChatMemberVO) {
-		// TODO Auto-generated method stub
-		
+
+		sqlSession.insert("OpenChatMember.insert", openChatMemberVO);
 	}
 
 	@Override
 	public void update(SqlSessionTemplate sqlSession, OpenChatMemberVO openChatMemberVO) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteById(SqlSessionTemplate sqlSession, int openChatMemberSeq) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
