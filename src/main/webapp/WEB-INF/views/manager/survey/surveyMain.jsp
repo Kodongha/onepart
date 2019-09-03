@@ -130,7 +130,7 @@
 
 					<div class="col-md-6">
 						<h4 class="m-t-10">상태</h4>
-						<select class="form-control" id="surveyStatus" name="surveyType">
+						<select class="form-control" id="surveyStatus" name="surveyStatus">
 							<option id="defaultOption" value="0">전체</option>
 							<option value="1">진행 중</option>
 							<option value="2">진행 예정</option>
