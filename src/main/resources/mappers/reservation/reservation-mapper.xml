@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reservation">
+	<resultMap type="reservation" id="reservationResultSet">
+		<id property="facSeq" column="FAC_SEQ"></id>
+		<result property="facNm" column="FAC_NM"/>
+		<result property="facPosition" column="FAC_POSITION"/>
+		<result property="facAvailWeekOfDay" column="FAC_AVAIL_WEEK_OF_DAY"/>
+		<result property="facAvailTm" column="FAC_AVAIL_TM"/>
+		<result property="facDefaultFee" column="FAC_DEFAULT_FEE"/>
+		<result property="facMaxHead" column="FAC_MAX_HEAD"/>
+		<result property="facSquareMeasure" column="FAC_SQUARE_MEASURE"/>
+		<result property="qrImgPath" column="QR_IMG_PATH"/>
+		<result property="facDetailInfo" column="FAC_DETAIL_INFO"/>
+		<result property="facRsrvInfo" column="FAC_RSRV_INFO"/>
+		<result property="facUseInfo" column="FAC_USE_INFO"/>
+		<result property="facCaution" column="FAC_CAUTION"/>
+		<result property="facType" column="FAC_TYPE"/>
+		<result property="facDelTf" column="FAC_DEL_TF"/>
+		<result property="fileType" column="FILE_TYPE"/>
+		<result property="originNm" column="ORIGIN_NM"/>
+		<result property="changeNm" column="CHANGE_NM"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="uploadDt" column="UPLOAD_DT"/>
+		<result property="messengerSeq" column="MESSENGER_SEQ"/>
+		<result property="openChatCommSeq" column="OPEN_CHAT_COMM_SEQ"/>
+	</resultMap>
+
+
+	<select id="selectAllReservation" resultMap="reservationResultSet">
+		SELECT *
+		FROM FAC F
+		JOIN IMAGE I ON (F.FAC_SEQ = I.FAC_SEQ)
+		WHERE F.FAC_DEL_TF = 'N'
+	</select>
+
+	<select id="selectOneReservation" resultMap="reservationResultSet" parameterType="_int">
+		SELECT *
+		FROM FAC F
+		JOIN IMAGE I ON (F.FAC_SEQ = I.FAC_SEQ)
+		WHERE F.FAC_DEL_TF = 'N'
+		AND F.FAC_SEQ = #{facSeq}
+	</select>
+
+</mapper>
