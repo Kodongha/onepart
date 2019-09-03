@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="managerSurvey">
+
+	<resultMap type="com.kh.onepart.manager.survey.model.SurveyVO" id="surveyVOResultSet">
+		<id property="surveySeq" column="SURVEY_SEQ"/>
+		<result property="surveyTitle" column="SURVEY_TITLE"/>
+		<result property="surveyStatus" column="SURVEY_STATUS"/>
+		<result property="surveyType" column="SURVEY_TYPE"/>
+		<result property="surveySimpleIntro" column="SURVEY_SIMPLE_INTRO"/>
+		<result property="surveyPeriod" column="SURVEY_PERIOD"/>
+		<result property="surveyEnrollDt" column="SURVEY_ENROLL_DT"/>
+		<result property="surveyDelTf" column="SURVEY_DEL_TF"/>
+	</resultMap>
+
+	<select id="selectSearchSurveyList" parameterType="surveyVO" resultMap="surveyVOResultSet">
+		SELECT  *
+		FROM SURVEY
+		<where>
+		<if test="surveyTitle != ''">
+		SURVEY_TITLE LIKE '%' || #{surveyTitle} || '%'
+		</if>
+		<if test="surveyStatus != 0">
+		AND SURVEY_TYPE = #{surveyType}
+		</if>
+		AND SURVEY_DEL_TF = 'N'
+		</where>
+	</select>
+
+</mapper>
