@@ -33,5 +33,13 @@ public class AccountDaoImpl implements AccountDao {
 	public ResidentVO selectResident(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO) {
 		return sqlSession.selectOne("Account.selectLoginUser", requestResidentVO);
 	}
+	//회원 가입용 메소드
+	@Override
+	public int insertResident(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO) {
+		System.out.println("sqlSession in daoImpl : " + sqlSession);
+		System.out.println("requestResidentVO in daoImpl : " + requestResidentVO);
+//System.out.println("result in daoImle : " + sqlSession.insert("Account.insertResident", requestResidentVO));
+		return sqlSession.insert("Account.insertResident", requestResidentVO);
+	}
 
 }

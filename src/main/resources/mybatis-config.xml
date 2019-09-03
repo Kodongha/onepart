@@ -17,6 +17,9 @@
 	</typeAliases>
 
 	<mappers>
+    
+    <mapper resource="mappers/account/account-mapper.xml"/>
+    
 		<mapper resource="mappers/openChat/openChat-mapper.xml"/>
 		<mapper resource="mappers/myCar/myCar-mapper.xml"/>
     <mapper resource="mappers/openChat/openChatMember-mapper.xml"/>

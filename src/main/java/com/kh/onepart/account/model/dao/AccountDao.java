@@ -14,4 +14,6 @@ public interface AccountDao {
 
 	ResidentVO selectResident(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO);
 
+	int insertResident(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO);
+
 }

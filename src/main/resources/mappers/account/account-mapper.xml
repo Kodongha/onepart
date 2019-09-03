@@ -39,4 +39,18 @@
 	   	AND LEAVE_TF = 'N'
    </select>
 
+	<insert id="insertResident" parameterType="ResidentVO">
+      INSERT INTO RESIDENT (RESIDENT_SEQ, RESIDENT_ID,RESIDENT_PWD, RESIDENT_NM,
+		RESIDENT_PHONE, RESIDENT_EMAIL, APT_DETAIL_INFO_SEQ, HOUSEHOLD_AUTH_TYPE,
+		RESIDENT_ENROLL_DT, LEAVE_TF, APT_AUTH_CD, RESIDENT_BIRTH,
+		CONFIRM_TF, RESIDENT_GENDER )
+      VALUES(
+         RESIDENT_SEQ.NEXTVAL, #{residentId}, #{residentPwd}, #{residentNm}, #{residentPhone}
+         , #{residentEmail}, #{aptDetailInfoSeq}, #{householdAuthType}, SYSDATE, DEFAULT
+         , DEFAULT, #{residentBirth}, DEFAULT, #{residentGender}
+      )
+   </insert>
+
+
+
 </mapper>

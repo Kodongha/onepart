@@ -17,7 +17,7 @@ public class ResidentVO {
 	private String residentNm;
 	private String residentPhone;
 	private String residentEmail;
-	private String aptDetailInfoSeq;
+	private String aptDetailInfoSeq;//
 	private int householdAuthType;
 	private Date residentEnrollDt;
 	private String leaveTf;
@@ -26,6 +26,7 @@ public class ResidentVO {
 	private String residentBirth;
 	private String confirmTf;
 	private String residentGender;
+	//private String aptNm; // APT_INFO_SEQ 이 있어야 하는거
 
 
 }

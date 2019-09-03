@@ -4,6 +4,7 @@ import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,9 @@ public class AccountController {
 	private AccountService accountService;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private DataSourceTransactionManager transactionManager;
+
 	/**
 	 * 로그인 페이지 이동
 	 * @return
@@ -41,28 +45,7 @@ public class AccountController {
 	 * @param requestResidentVO
 	 * @return
 	 */
-	@RequestMapping(value="/loginCheck", method=RequestMethod.POST)
-	public String loginCheck(ResidentVO requestResidentVO, Model model) {
-		System.out.println("/loginCheck");
-		System.out.println("requestResidentVO in Controller:::" + requestResidentVO);
-		passwordEncoder.encode(requestResidentVO.getResidentPwd());
-		System.out.println("암호화된 비번 : " + passwordEncoder.encode(requestResidentVO.getResidentPwd()));
-//		ResidentVO responseResidentVO= accountService.loginCheck(requestResidentVO);
-//
-//		System.out.println("ctrl responseResidentVO ::::" + responseResidentVO);
-//
-//		return "account/account2";
 
-		try {
-			ResidentVO loginUser = accountService.loginCheck(requestResidentVO);
-			model.addAttribute("loginUser", loginUser);
-			System.out.println("loginUser in controller" + loginUser);
-			return "redirect:resident/main";
-		} catch (LoginException e) {
-			model.addAttribute("msg", e.getMessage());
-			return "common/errorPage";
-		}
-	}
 	@RequestMapping("/moveLogin")
 	public String moveLogin() {
 		System.out.println("in account");
@@ -91,18 +74,59 @@ public class AccountController {
 		return "account/findPwd";
 	}
 
+
+	@RequestMapping(value="/loginCheck", method=RequestMethod.POST)
+	public String loginCheck(ResidentVO requestResidentVO, Model model) {
+		System.out.println("/loginCheck");
+		System.out.println("requestResidentVO in Controller:::" + requestResidentVO);
+//		passwordEncoder.encode(requestResidentVO.getResidentPwd());
+//		System.out.println("암호화된 비번 : " + passwordEncoder.encode(requestResidentVO.getResidentPwd()));
+//		ResidentVO responseResidentVO= accountService.loginCheck(requestResidentVO);
+//		System.out.println("ctrl responseResidentVO ::::" + responseResidentVO);
+//		return "account/account2";
+
+		try {
+			ResidentVO loginUser = accountService.loginCheck(requestResidentVO);
+			model.addAttribute("loginUser", loginUser);
+			System.out.println("loginUser in controller" + loginUser);
+			return "redirect:resident/main";
+		} catch (LoginException e) {
+			model.addAttribute("msg", e.getMessage());
+			return "common/errorPage";
+		}
+	}
+
 	@RequestMapping("/logout")
 	public String logout(SessionStatus status) {
 		System.out.println("in resident");
-
 		//System.out.println("before : " + request.getSession().getAttribute("loginUser"));
-
 		status.setComplete();
-
-
 
 		return "redirect:resident/main";
 	}
 
+	@RequestMapping("/register")
+	public String register(ResidentVO requestResidentVO, Model model) {
+		String encPassword = passwordEncoder.encode(requestResidentVO.getResidentPwd());
+		System.out.println("encPassword in ctr: " + encPassword);
+		requestResidentVO.setResidentPwd(encPassword);
+
+		if(requestResidentVO.getResidentGender().equals("1") || requestResidentVO.getResidentGender().equals("3")) {
+			requestResidentVO.setResidentGender("M");
+		}else {
+			requestResidentVO.setResidentGender("F");
+		}
+		System.out.println("requestResidentVO in ctr : " + requestResidentVO);
+		int result = accountService.insertResident(requestResidentVO);
+		System.out.println("result in ctr : " + result);
+
+		if(result > 0) {
+			return "redirect:moveAccount";
+		}else {
+			model.addAttribute("msg", "회원 가입 실패!");
+			return "common/errorPage";
+		}
+
+	}
 
 }

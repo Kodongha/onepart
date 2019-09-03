@@ -8,6 +8,8 @@ public interface AccountService {
 	//로그인 정보 확인용 메소드
 	ResidentVO loginCheck(ResidentVO requestResidentVO) throws LoginException;
 
+	int insertResident(ResidentVO requestResidentVO);
+
 
 
 }
