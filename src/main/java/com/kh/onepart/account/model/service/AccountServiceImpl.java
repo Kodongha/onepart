@@ -47,5 +47,13 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 
+	@Override
+	public int insertResident(ResidentVO requestResidentVO) {
+		System.out.println("requestResidentVO in svcImpl : " + requestResidentVO);
+		System.out.println("return in svcImpl : " + accountDao.insertResident(sqlSession, requestResidentVO));
+		return accountDao.insertResident(sqlSession, requestResidentVO);
+	}
+
+
 
 }

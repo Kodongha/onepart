@@ -10,7 +10,7 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>Color Admin | Register Page</title>
+	<title>원파트</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
@@ -28,6 +28,7 @@
 
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="${contextPath}/resources/plugins/pace/pace.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<!-- ================== END BASE JS ================== -->
 </head>
 
@@ -69,7 +70,7 @@
 				<!-- end register-header -->
 				<!-- begin register-content -->
 				<div class="register-content">
-					<form action="index.html" method="POST" class="margin-bottom-0">
+					<form action="${ contextPath }/register" method="POST" class="margin-bottom-0">
 						<label class="control-label">아이디</label>
 						<div class="row m-b-15" style="margin-bottom: 0%;">
 <!-- 						<div class="row row-space-10"> -->
@@ -116,7 +117,7 @@
 							<div class="col-md-12">
 								<input name="residentPhone" id="residentPhone" type="tel" class="form-control" placeholder="휴대전화번호 입력" style="width: 77%; display: inline-block;" />&nbsp;
 								<button type="button" class="btn btn-default m-r-5 m-b-5">인증번호</button>
-								<br>**인증번호 클릭 시 아래 창 생김 or 새창<br> <input type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
+								<br><!-- **인증번호 클릭 시 아래 창 생김 or 새창 --><br> <input type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
 								<button type="button" class="btn btn-default m-r-5 m-b-5">확인</button>
 							</div>
 						</div>
@@ -134,28 +135,45 @@
 						<h3><label class="control-label">아파트 정보</label></h3>
 						<div class="row row-space-10">
 							<div class="col-md-12">
-								<input name="residentNm" id="residentNm" type="text" class="form-control" placeholder="아파트명 검색" style="width: 77%; display: inline-block;" />&nbsp;
+								<input name="aptNm" id="aptNm" type="text" class="form-control" placeholder="아파트명 검색" style="width: 77%; display: inline-block;" />&nbsp;
 								<button type="button" class="btn btn-default m-r-5 m-b-5" style="background-color: black;">검색</button>
 								<p style="color: blue; margin-bottom: 0%;">예) 서울시 송파구 신천동 잠실5단지의 경우 '신천동'이라고 입력하세요.</p>
 								<br>
-								<input name="aptDetailInfoSeq" id="aptDetailInfoSeq" type="text" class="form-control" placeholder="동 입력" style="width: 30%; display: inline-block;" />&nbsp;동&nbsp;&nbsp;
-								<input name="aptDetailInfoSeq" id="aptDetailInfoSeq" type="text" class="form-control" placeholder="호수 입력" style="width: 30%; display: inline-block;" />&nbsp;호&nbsp;
+
+								<input name="aptDetailInfoSeq" id="aptDetailInfoSeq" type="hidden">
+								<input name="dong" id="dong" type="text" class="form-control" placeholder="동 입력" style="width: 30%; display: inline-block;" />&nbsp;동&nbsp;&nbsp;
+								<input name="ho" id="ho" type="text" class="form-control" placeholder="호수 입력" style="width: 30%; display: inline-block;" />&nbsp;호&nbsp;
 							</div>
 						</div>
+						<script type="text/javascript">
+							$(document).ready(function(){
+
+								var aptDetailInfoSeqVal = $("#dong").val() + "-" + $("#ho").val();
+								console.log("aptDetailInfoSeq : " + aptDetailInfoSeqVal);
+								$("#aptDetailInfoSeq").val(aptDetailInfoSeqVal);
+								console.log("#aptDetailInfoSeq : " + $("#aptDetailInfoSeq").val());
+							});
+						</script>
 						<br>
 						<br>
 						<h3><label class="control-label">세대주 여부</label></h3>
 						<div class="radio">
-							<label> <input type="radio" name="radiorequired" value="foo" id="radio-required" data-parsley-required="true"
+							<label> <input type="radio" name="householdAuthType" value="1" data-parsley-required="true"
 								 data-parsley-multiple="radiorequired" data-parsley-id="2688">
 								세대주
 							</label>
 							<ul class="parsley-errors-list" id="parsley-id-multiple-radiorequired"></ul>
 						</div>
 						<div class="radio">
-							<label> <input type="radio" name="radiorequired" id="radio-required2" value="bar" data-parsley-multiple="radiorequired"
+							<label> <input type="radio" name="householdAuthType" value="2" data-parsley-multiple="radiorequired"
 								 data-parsley-id="2688">
 								세대원
+							</label>
+						</div>
+						<div class="radio">
+							<label> <input type="radio" name="householdAuthType" value="3" data-parsley-multiple="radiorequired"
+								 data-parsley-id="2688">
+								복수 세대주 대표
 							</label>
 						</div>
 						<br>
@@ -173,7 +191,7 @@
 									</div>
 									<div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
 										<div class="panel-body">
-											<textarea rows="15" cols="48%" id="textarea">
+											<textarea rows="15" cols="48%" id="generalRules">
 제 1 장 총칙
 
 제 1조 목적
@@ -266,7 +284,7 @@
 									</div>
 									<div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
 										<div class="panel-body">
-											<textarea rows="15" cols="48%" id="textarea">
+											<textarea rows="15" cols="48%" id="privacyPolicy">
 
 1. 인사말 및 서비스 명의 정의
 원파트 이용자 여러분 반갑습니다!

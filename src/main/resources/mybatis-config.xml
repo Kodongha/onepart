@@ -13,6 +13,7 @@
 	<mappers>
 		<mapper resource="mappers/openChat/openChat-mapper.xml"/>
 		<mapper resource="mappers/myCar/myCar-mapper.xml"/>
+		<mapper resource="mappers/account/account-mapper.xml"/>
 	</mappers>
 </configuration>
 
