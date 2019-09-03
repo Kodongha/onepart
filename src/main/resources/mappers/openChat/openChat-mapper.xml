@@ -8,15 +8,30 @@
 		<result property="openChatRoomNm" column="OPEN_CHAT_ROOM_NM"/>
 		<result property="openChatMaxHead" column="OPEN_CHAT_MAX_HEAD"/>
 		<result property="openChatDeleteTf" column="OPEN_CHAT_DELETE_TF"/>
-		<result property="presidentSeq" column="RESIDENT_SEQ"/>
+		<result property="residentSeq" column="RESIDENT_SEQ"/>
 		<result property="openChatCurrHead" column="OPEN_CHAT_CURR_HEAD"/>
 		<result property="openChatPwd" column="OPEN_CHAT_PWD"/>
+	</resultMap>
+
+	<resultMap type="com.kh.onepart.account.model.vo.ResidentVO" id="residentVOResultSet">
+		<id property="residentSeq" column="RESIDENT_SEQ"/>
+		<result property="residentId" column="RESIDENT_ID"/>
+		<result property="residentPwd" column="RESIDENT_PWD"/>
+		<result property="residentNm" column="RESIDENT_NM"/>
+		<result property="residentPhone" column="RESIDENT_PHONE"/>
+		<result property="residentEmail" column="RESIDENT_EMAIL"/>
+		<result property="aptDetailInfoSeq" column="APT_DETAIL_INFO_SEQ"/>
+		<result property="householdAuthType" column="HOUSEHOLD_AUTH_TYPE"/>
+		<result property="residentEnrollDt" column="RESIDENT_ENROLL_DT"/>
+		<result property="leaveTf" column="LEAVE_TF"/>
+		<result property="aptAuthCd" column="APT_AUTH_CD"/>
+		<result property="leaveDt" column="LEAVE_DT"/>
 	</resultMap>
 
 	<select id="selectListAll" resultMap="openChatVOResultSet">
 		SELECT * FROM OPEN_CHAT WHERE OPEN_CHAT_DELETE_TF = 'N' ORDER BY OPEN_CHAT_SEQ DESC
 	</select>
-	
+
 	<select id="selectOneById" resultMap="openChatVOResultSet">
 		SELECT *
 		FROM OPEN_CHAT
@@ -43,10 +58,23 @@
 			#{openChatRoomNm},
 			#{openChatMaxHead},
 			'N',
-			#{presidentSeq},
+			#{residentSeq},
 			0,
 			#{openChatPwd}
 		)
 	</insert>
 
+	<update id="setCurrHead" parameterType="Integer">
+		UPDATE OPEN_CHAT
+		SET OPEN_CHAT_CURR_HEAD = (
+			SELECT count(*) FROM OPEN_CHAT_MEMBER WHERE OPEN_CHAT_SEQ = #{openChatSeq}
+		)
+		WHERE OPEN_CHAT_SEQ = #{openChatSeq}
+	</update>
+
+	<select id="selectListByOpenChatSeq" resultMap="residentVOResultSet">
+		SELECT *
+		FROM RESIDENT
+		WHERE RESIDENT_SEQ IN (SELECT RESIDENT_SEQ FROM OPEN_CHAT_MEMBER WHERE OPEN_CHAT_SEQ = #{openChatSeq})
+	</select>
 </mapper>

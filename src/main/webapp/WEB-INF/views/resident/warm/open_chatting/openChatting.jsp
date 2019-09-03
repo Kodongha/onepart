@@ -299,7 +299,10 @@
 
 			// 방 참가
 			$(document).on('click', '.roomDiv', function () {
-				window.open("${contextPath}/resident/menuOpenChatRoom", "채팅방", "width=450px; height=600px;");
+				const openChatSeq = $(this).data('open-chat-seq');
+				let url = "${contextPath}/resident/menuOpenChatRoom/"+openChatSeq;
+
+				window.open(url, "채팅방", "width=450px; height=600px;");
 			});
 
 
@@ -363,6 +366,7 @@
 				roomDivFormat.removeClass('format');
 				roomDivFormat.show();
 
+				roomDivFormat.data('open-chat-seq', roomInfo.openChatSeq);
 				roomDivFormat.find('.roomNm').text(roomInfo.openChatRoomNm);
 				roomDivFormat.find('.currHead').text(roomInfo.openChatCurrHead);
 				roomDivFormat.find('.maxHead').text(roomInfo.openChatMaxHead);
