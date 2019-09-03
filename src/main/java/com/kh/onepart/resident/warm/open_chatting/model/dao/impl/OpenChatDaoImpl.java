@@ -49,4 +49,11 @@ public class OpenChatDaoImpl implements OpenChatDao {
 
 		return sqlSession.selectList("OpenChat.selectListByOpenChatSeq", openChatSeq);
 	}
+
+	@Override
+	public int countChatRoom(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("OpenChat.countChatRoom");
+	}
+
+
 }

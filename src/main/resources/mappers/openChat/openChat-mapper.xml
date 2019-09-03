@@ -39,7 +39,7 @@
 			AND OPEN_CHAT_DELETE_TF = 'N'
 	</select>
 
-	<insert id="insert" parameterType="OpenChatVO">
+	<insert id="insert" parameterType="OpenChatVO" >
 		INSERT INTO OPEN_CHAT
 		(
 			OPEN_CHAT_SEQ,
@@ -62,6 +62,9 @@
 			0,
 			#{openChatPwd}
 		)
+		<selectKey keyProperty="openChatSeq" resultType="Integer" order="AFTER">
+			SELECT OPEN_CHAT_SEQ.currval FROM DUAL
+		</selectKey>
 	</insert>
 
 	<update id="setCurrHead" parameterType="Integer">
@@ -76,5 +79,11 @@
 		SELECT *
 		FROM RESIDENT
 		WHERE RESIDENT_SEQ IN (SELECT RESIDENT_SEQ FROM OPEN_CHAT_MEMBER WHERE OPEN_CHAT_SEQ = #{openChatSeq})
+	</select>
+
+	<select id="countChatRoom" resultType="Integer">
+		SELECT count(*)
+	   	FROM OPEN_CHAT
+        WHERE OPEN_CHAT_DELETE_TF = 'N'
 	</select>
 </mapper>

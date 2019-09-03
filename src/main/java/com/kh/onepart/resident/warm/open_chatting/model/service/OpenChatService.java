@@ -10,4 +10,7 @@ public interface OpenChatService {
 	public List<OpenChatVO> getRoomListAll();
 	public void setCurrHead(int openChatSeq);
 	public List<ResidentVO> getResidentList(int openChatSeq);
+	public OpenChatVO selectOneById(int openChatSeq);
+	public int countChatRoom();
+
 }

@@ -9,6 +9,22 @@
 		<result property="openChatMemberPrtcptDt" column="OPEN_CHAT_MEMBER_PRTCPT_DT"/>
 	</resultMap>
 
+	<resultMap type="com.kh.onepart.account.model.vo.ResidentVO" id="residentVOResultSet">
+		<id property="residentSeq" column="RESIDENT_SEQ"/>
+		<result property="residentId" column="RESIDENT_ID"/>
+		<result property="residentPwd" column="RESIDENT_PWD"/>
+		<result property="residentNm" column="RESIDENT_NM"/>
+		<result property="residentPhone" column="RESIDENT_PHONE"/>
+		<result property="residentEmail" column="RESIDENT_EMAIL"/>
+		<result property="aptDetailInfoSeq" column="APT_DETAIL_INFO_SEQ"/>
+		<result property="householdAuthType" column="HOUSEHOLD_AUTH_TYPE"/>
+		<result property="residentEnrollDt" column="RESIDENT_ENROLL_DT"/>
+		<result property="leaveTf" column="LEAVE_TF"/>
+		<result property="aptAuthCd" column="APT_AUTH_CD"/>
+		<result property="leaveDt" column="LEAVE_DT"/>
+	</resultMap>
+
+
 	<select id="selectCountByOpenChatSeqAndResidentSeq" resultType="Integer" parameterType="OpenChatMemberVO">
 		SELECT count(*)
 		FROM OPEN_CHAT_MEMBER
@@ -22,4 +38,7 @@
 		VALUES
 			(OPEN_CHAT_MEMBER_SEQ.nextval, #{openChatSeq}, #{residentSeq}, sysdate)
 	</insert>
+
+
+
 </mapper>

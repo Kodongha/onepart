@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.warm.open_chatting.model.dao.OpenChatMemberDao;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO;
 
@@ -48,5 +49,7 @@ public class OpenChatMemberDaoImpl implements OpenChatMemberDao {
 		// TODO Auto-generated method stub
 
 	}
+
+	
 
 }
