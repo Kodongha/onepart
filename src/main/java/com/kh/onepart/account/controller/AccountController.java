@@ -45,36 +45,32 @@ public class AccountController {
 	 * @param requestResidentVO
 	 * @return
 	 */
-
+	//이동 로그인 화면
 	@RequestMapping("/moveLogin")
 	public String moveLogin() {
 		System.out.println("in account");
-
 		return "account/login";
 	}
-
+	//이동 회원가입 화면
 	@RequestMapping("/moveRegister")
 	public String moveRegister() {
 		System.out.println("in account");
-
 		return "account/register";
 	}
-
+	//이동 아이디찾기 화면
 	@RequestMapping("/moveFindId")
 	public String moveFindId() {
 		System.out.println("in account");
-
 		return "account/findId";
 	}
-
+	//이동 비밀번호 찾기 화면
 	@RequestMapping("/moveFindPwd")
 	public String moveFindPwd() {
 		System.out.println("in account");
-
 		return "account/findPwd";
 	}
 
-
+	//로그인용 메소드
 	@RequestMapping(value="/loginCheck", method=RequestMethod.POST)
 	public String loginCheck(ResidentVO requestResidentVO, Model model) {
 		System.out.println("/loginCheck");
@@ -95,7 +91,7 @@ public class AccountController {
 			return "common/errorPage";
 		}
 	}
-
+	//로그아웃
 	@RequestMapping("/logout")
 	public String logout(SessionStatus status) {
 		System.out.println("in resident");
@@ -104,7 +100,7 @@ public class AccountController {
 
 		return "redirect:resident/main";
 	}
-
+	//회원 가입용 메소드
 	@RequestMapping("/register")
 	public String register(ResidentVO requestResidentVO, Model model) {
 		String encPassword = passwordEncoder.encode(requestResidentVO.getResidentPwd());

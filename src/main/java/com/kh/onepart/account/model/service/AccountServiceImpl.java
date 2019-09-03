@@ -22,7 +22,7 @@ public class AccountServiceImpl implements AccountService{
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
-
+	//로그인용 메소드
 	@Override
 	public ResidentVO loginCheck(ResidentVO requestResidentVO) throws LoginException {
 		System.out.println("account service");
@@ -46,11 +46,10 @@ public class AccountServiceImpl implements AccountService{
 		return loginUser;
 	}
 
-
+	//회원 가입용 메소드
 	@Override
 	public int insertResident(ResidentVO requestResidentVO) {
 		System.out.println("requestResidentVO in svcImpl : " + requestResidentVO);
-		System.out.println("return in svcImpl : " + accountDao.insertResident(sqlSession, requestResidentVO));
 		return accountDao.insertResident(sqlSession, requestResidentVO);
 	}
 

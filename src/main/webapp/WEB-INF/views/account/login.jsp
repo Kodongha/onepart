@@ -35,7 +35,7 @@
 	<!-- end #page-loader -->
 
 	<div class="login-cover">
-	    <div class="login-cover-image"><img src="${contextPath}/resources/img/login-bg/bg-1.jpg" data-id="login-cover-image" alt="" /></div>
+	    <div class="login-cover-image"><img src="${contextPath}/resources/img/login-bg/bg-11.jpg" data-id="login-cover-image" alt="" /></div>
 	    <div class="login-cover-bg"></div>
 	</div>
 	<!-- begin #page-container -->
@@ -82,12 +82,11 @@
         <!-- end login -->
 
         <ul class="login-bg-list">
-            <li class="active"><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-1.jpg" alt="" /></a></li>
-            <li><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-9.jpg" alt="" /></a></li>
-            <li><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-10.jpg" alt="" /></a></li>
-            <li><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-4.jpg" alt="" /></a></li>
-            <li><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-5.jpg" alt="" /></a></li>
-            <li><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-6.jpg" alt="" /></a></li>
+            <li class="active"><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-11.jpg" alt="" /></a></li>
+            <li><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-12.jpg" alt="" /></a></li>
+            <li><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-14.jpeg" alt="" /></a></li>
+            <li><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-8.jpg" alt="" /></a></li>
+            <li><a href="#" data-click="change-bg"><img src="${contextPath}/resources/img/login-bg/bg-1.jpg" alt="" /></a></li>
         </ul>
 
         <!-- begin theme-panel -->
