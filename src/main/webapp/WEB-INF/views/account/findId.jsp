@@ -65,12 +65,12 @@
 									<div class="panel panel-inverse overflow-hidden">
 										<div class="panel-heading">
 											<h3 class="panel-title">
-												<a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion"
-												 href="#collapseOne" aria-expanded="false"> <i class="fa fa-plus-circle pull-right"></i> 회원정보에 등록한 휴대전화로 인증
+												<a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion"
+												 href="#collapseOne" aria-expanded="true"> <i class="fa fa-plus-circle pull-right"></i> 회원정보에 등록한 휴대전화로 인증
 												</a>
 											</h3>
 										</div>
-										<div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+										<div id="collapseOne" class="panel-collapse collapse in" aria-expanded="true" style="height: 234px;">
 											<div class="panel-body">
 												<label class="control-label">이름</label>
 												<div class="row m-b-15">

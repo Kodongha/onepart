@@ -145,15 +145,6 @@
 								<input name="ho" id="ho" type="text" class="form-control" placeholder="호수 입력" style="width: 30%; display: inline-block;" />&nbsp;호&nbsp;
 							</div>
 						</div>
-						<script type="text/javascript">
-							$(document).ready(function(){
-
-								var aptDetailInfoSeqVal = $("#dong").val() + "-" + $("#ho").val();
-								console.log("aptDetailInfoSeq : " + aptDetailInfoSeqVal);
-								$("#aptDetailInfoSeq").val(aptDetailInfoSeqVal);
-								console.log("#aptDetailInfoSeq : " + $("#aptDetailInfoSeq").val());
-							});
-						</script>
 						<br>
 						<br>
 						<h3><label class="control-label">세대주 여부</label></h3>
@@ -269,11 +260,6 @@
 										</div>
 									</div>
 								</div>
-								<!-- <script type="text/javascript">
-	var str = document.getElementById("textarea").value;
-	str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
-	document.getElementById("result").value = str;
-</script> -->
 								<div class="panel panel-inverse overflow-hidden">
 									<div class="panel-heading">
 										<h3 class="panel-title">
@@ -324,10 +310,10 @@
 							</label>
 						</div>
 						<div class="register-buttons">
-							<button type="submit" class="btn btn-primary btn-block btn-lg">가입하기</button>
+							<button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBtn">가입하기</button>
 						</div>
 						<div class="m-t-20 m-b-40 p-b-40">
-							이미 회원이신가요? <a href="login_v3.html">여기를</a> 클릭하셔서 로그인하세요.
+							이미 회원이신가요? <a href="moveAccount">여기를</a> 클릭하셔서 로그인하세요.
 						</div>
 						<hr />
 						<p class="text-center text-inverse">&copy; Color Admin All
@@ -454,6 +440,17 @@
 			App.init();
 		});
 	</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+
+		$('#submitBtn').click(function(){
+			var aptDetailInfoSeqVal = $("#dong").val() + "-" + $("#ho").val();
+			console.log("aptDetailInfoSeq : " + aptDetailInfoSeqVal);
+			$("#aptDetailInfoSeq").val(aptDetailInfoSeqVal);
+			console.log("#aptDetailInfoSeq : " + $("#aptDetailInfoSeq").val());
+		});
+	});
+</script>
 </body>
 
 </html>
