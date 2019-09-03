@@ -3,6 +3,9 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
+<c:if test="${ !empty sessionScope.loginUser }">
+	<c:set var="loginUser" value="${ sessionScope.loginUser }"/>
+</c:if>
 
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
@@ -97,6 +100,7 @@
 			App.init();
 			Dashboard.init();
 
+
 			/* 우리 아파트 */
 			$("#menuNotice").data("menu-url", "/onepart/resident/menuNotice"); 	// 공지사항
 			$("#menuVote").data("menu-url", "/onepart/resident/menuVote");		// 투표
@@ -112,7 +116,7 @@
 			$("#menuEvent").data("menu-url", "/onepart/resident/menuEvent");					// 이벤트 신청 및 조회
 
 			/* 편의 */
-			$("#menuReservateFacility").data("menu-url", "/onepart/resident/menuReservateFacility");	// 시설물 예약
+			$("#menuReservateFacility").data("menu-url", "/onepart/resident/menuReservateFacility")	// 시설물 예약
 			$("#menuOpserveMeeting").data("menu-url", "/onepart/resident/menuOpserveMeeting");		// 회의 참관
 			$("#menuComplaint").data("menu-url", "/onepart/resident/menuComplaint");					// 민원접수
 
@@ -142,6 +146,22 @@
 				});
 			});
 		});
+
+		/* function menuReservateFacility(residentSeq) {
+			$("li").removeClass("active");
+			$(this).parents("li").addClass("active");
+
+			console.log("시설물예약 클릭")
+
+			$.ajax({
+				url :"/onepart/resident/menuReservateFacility",
+				dataType : "html",
+				data:{residentSeq:residentSeq},
+				success:function(result){
+					$("#content").html(result);
+				}
+			});
+		} */
 	</script>
 </body>
 </html>

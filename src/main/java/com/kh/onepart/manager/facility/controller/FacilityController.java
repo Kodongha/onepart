@@ -1,15 +1,48 @@
 package com.kh.onepart.manager.facility.controller;
 
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.onepart.manager.facility.model.service.FacliltyService;
+import com.kh.onepart.manager.facility.model.vo.FacReservation;
 
 @Controller
 public class FacilityController {
+	@Autowired
+	private FacliltyService fs;
 
 	@RequestMapping("/manager/menuFacility")
-	public String menuFacility() {
+	public ModelAndView menuFacility(ModelAndView mv) {
 		System.out.println("/menuFacility");
-		return "/manager/facility/facility_main";
+
+		//아파트 시설물 리스트 불러오는 메소드
+		ArrayList list = fs.selectAllReservation();
+
+		//모든시설물 예약 리스트 불러오는 메소드
+		ArrayList reservationList = fs.selectAllUserReservation();
+
+		mv.addObject("reservationList", reservationList);
+		mv.addObject("list", list);
+		mv.setViewName("/manager/facility/facility_main");
+
+		return mv;
+	}
+
+	@RequestMapping("/manager/facility_reservationDetail")
+	public ModelAndView facility_reservationDetail(ModelAndView mv, int facRsrvSeq) {
+		System.out.println("facRsrvSeq : " + facRsrvSeq);
+
+		//해당 시설물 예약 내역 불러오는 메소드
+		FacReservation fr = fs.selectOneUserReservation(facRsrvSeq);
+
+		mv.addObject("fr", fr);
+		mv.setViewName("/manager/facility/facility_detail");
+
+		return mv;
 	}
 
 	@RequestMapping("/manager/newFacility_general")
