@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh.onepart.manager.survey.model.SurveyVO;
+import com.kh.onepart.manager.survey.model.vo.SurveyVO;
 
 @Repository
 public class ManagerSurveyDaoImple implements ManagerSurveyDao{

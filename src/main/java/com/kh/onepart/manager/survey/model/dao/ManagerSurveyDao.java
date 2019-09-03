@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
-import com.kh.onepart.manager.survey.model.SurveyVO;
+import com.kh.onepart.manager.survey.model.vo.SurveyVO;
 
 public interface ManagerSurveyDao {
 

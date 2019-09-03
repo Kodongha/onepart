@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="managerSurvey">
 
-	<resultMap type="com.kh.onepart.manager.survey.model.SurveyVO" id="surveyVOResultSet">
+	<resultMap type="com.kh.onepart.manager.survey.model.vo.SurveyVO" id="surveyVOResultSet">
 		<id property="surveySeq" column="SURVEY_SEQ"/>
 		<result property="surveyTitle" column="SURVEY_TITLE"/>
 		<result property="surveyStatus" column="SURVEY_STATUS"/>

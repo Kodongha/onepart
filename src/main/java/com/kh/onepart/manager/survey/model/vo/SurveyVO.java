@@ -1,4 +1,4 @@
-package com.kh.onepart.manager.survey.model;
+package com.kh.onepart.manager.survey.model.vo;
 
 import java.sql.Date;
 
@@ -19,5 +19,4 @@ public class SurveyVO {
 	private String surveyPeriod;
 	private Date surveyEnrollDt;
 	private String surveyDelTf;
-
 }

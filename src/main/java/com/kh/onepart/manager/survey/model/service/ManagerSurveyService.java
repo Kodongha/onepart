@@ -2,7 +2,7 @@ package com.kh.onepart.manager.survey.model.service;
 
 import java.util.ArrayList;
 
-import com.kh.onepart.manager.survey.model.SurveyVO;
+import com.kh.onepart.manager.survey.model.vo.SurveyVO;
 
 public interface ManagerSurveyService {
 

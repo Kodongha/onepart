@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kh.onepart.manager.survey.model.SurveyVO;
 import com.kh.onepart.manager.survey.model.service.ManagerSurveyService;
+import com.kh.onepart.manager.survey.model.vo.RequestSurveyAndSurveyQstnVO;
+import com.kh.onepart.manager.survey.model.vo.SurveyVO;
 
 @Controller
 public class ManagerSurveyController {
@@ -37,6 +38,20 @@ public class ManagerSurveyController {
 		System.out.println("requestSurveyVO:::" + requestSurveyVO);
 
 		ArrayList<SurveyVO> surveyVOList = surveyService.searchSurvey(requestSurveyVO);
+
+		return "";
+	}
+
+	/**
+	 * 설문조사 등록
+	 * @param resultJson
+	 * @return
+	 */
+	@RequestMapping(value="/manager/insertSurvey")
+	public String insertSurvey(RequestSurveyAndSurveyQstnVO requestSurveyVO) {
+		System.out.println("in manager/insertSurvey");
+
+		System.out.println("resultJson :: " + requestSurveyVO);
 
 		return "";
 	}
