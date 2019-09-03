@@ -24,8 +24,8 @@
 		});
 
 
-		// surveyType 변경 시 폼 변경
-		$('select[name="surveyType"]').change(function(){
+		// surveyQstnType 변경 시 폼 변경
+		$('select[name="surveyQstnType"]').change(function(){
 
 			$(this).parents('.questionArea').children('.questionDetailArea').eq(0).children().remove();
 
@@ -130,8 +130,62 @@
 
 		});
 
-
+		/*
+		{
+			제목
+			간단 소개
+			설문 기간
+			질문
+			{
+				질문 번호
+				질문 제목
+			}
+		}*/
 		/* 등록버튼 클릭 */
+		$('#enrollBtn').click(function(){
+
+			var inputSurveyTitle = $('#inputSurveyTitle').val();
+			var surveySimpleIntro = $('#surveySimpleIntro').val();
+			var surveyPeriod = $('#surveyPeriod').val();
+
+			var surveyQstnNum = 0;
+
+			var resultJson = new Object(); // json 객체
+			var questionArray = new Array();
+
+			resultJson = {
+				surveyTitle : inputSurveyTitle,
+				surveySimpleIntro :  surveySimpleIntro,
+				surveyPeriod : surveyPeriod,
+
+			};
+
+
+
+			$('.questionArea').each(function(){
+				surveyQstnNum++;
+
+				console.log($(this));
+				var surveyQstnTitle = $(this).children().find('#surveyQstnTitle').val();
+				var surveyQstnType = $(this).children().find('#surveyQstnType').val();
+				var surveyQstnNece = $(this).children().find('#surveyQstnNece').val();
+
+				var surveyQstn = {
+					surveyQstnNum : surveyQstnNum,
+					surveyQstnTitle : surveyQstnTitle,
+					surveyQstnType : surveyQstnType,
+					surveyQstnNece : surveyQstnNece
+				}
+
+
+
+
+				console.log(surveyQstn);
+			});
+
+		});
+
+		/*
 		$('#enrollBtn').click(function(){
 
 			var inputSurveyTitle = $('#inputSurveyTitle').val();
@@ -142,21 +196,21 @@
 			console.log("surveyPeriod::" + surveyPeriod);
 
 			var surveyQstnTitle = "";
-			var surveyType = "";
+			var surveyQstnType = "";
 
 			$("input[name='surveyQstnTitle']").each(function(){
 				surveyQstnTitle += $(this).val() + "§§"
 			});
 
-			$("select[name='surveyType']").each(function(){
-				surveyType += $(this).val() + "§§"
+			$("select[name='surveyQstnType']").each(function(){
+				surveyQstnType += $(this).val() + "§§"
 			});
 
 			console.log("surveyQstnTitle::" + surveyQstnTitle);
-			console.log("surveyType::" + surveyType);
+			console.log("surveyQstnType::" + surveyQstnType);
 
 		});
-
+		 */
 
  	});
 
@@ -257,7 +311,7 @@
 							<input type="text" class="form-control" placeholder="설문조사 항목의 타이틀을 입력해주세요." id="surveyQstnTitle" name="surveyQstnTitle">
 						</div>
 						<div class="col-md-3">
-							<select class="form-control selectpicker" data-size="10" data-live-search="true" data-style="btn-inverse" name="surveyType" id="surveyType">
+							<select class="form-control selectpicker" data-size="10" data-live-search="true" data-style="btn-inverse" name="surveyQstnType" id="surveyQstnType">
 							    <option value="1" selected="selected">단답형</option>
 							    <option value="2">장문형</option>
 							    <option value="3">객관식</option>
@@ -274,7 +328,7 @@
 						</div>
 						<div class="col-md-3">
 							<div class="panel-body">
-							<input type="checkbox" data-render="switchery" data-theme="default" checked />
+							<input type="checkbox" data-render="switchery" data-theme="default" checked name="surveyQstnNece" id="surveyQstnNece"/>
 							</div>
 						</div>
 						<br clear="all"><br>
