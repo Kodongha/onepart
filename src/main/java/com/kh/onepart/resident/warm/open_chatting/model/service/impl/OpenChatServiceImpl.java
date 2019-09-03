@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.warm.open_chatting.model.dao.OpenChatDao;
 import com.kh.onepart.resident.warm.open_chatting.model.service.OpenChatService;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO;
@@ -25,6 +26,16 @@ public class OpenChatServiceImpl implements OpenChatService {
 	@Override
 	public List<OpenChatVO> getRoomListAll() {
 		return openChatDao.selectListAll(sqlSession);
+	}
+
+	@Override
+	public void setCurrHead(int openChatSeq) {
+		openChatDao.setCurrHead(sqlSession, openChatSeq);
+	}
+
+	@Override
+	public List<ResidentVO> getResidentList(int openChatSeq) {
+		return openChatDao.selectListByOpenChatSeq(sqlSession, openChatSeq);
 	}
 
 }
