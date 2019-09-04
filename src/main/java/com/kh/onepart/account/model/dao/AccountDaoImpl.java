@@ -50,11 +50,11 @@ public class AccountDaoImpl implements AccountDao {
 		System.out.println("requestResidentVO::" + requestResidentVO);
 
 		ResidentVO findId = sqlSession.selectOne("Account.selectFindId", requestResidentVO);
-		System.out.println(findId);
+		System.out.println("findId in dao : " + findId);
 
-		if(findId == null) {
-			throw new findIdException("일치하는 아이디가 존재하지 않습니다.");
-		}
+//		if(findId == null) {
+//			throw new findIdException("일치하는 아이디가 존재하지 않습니다.");
+//		}
 		return findId;
 	}
 
