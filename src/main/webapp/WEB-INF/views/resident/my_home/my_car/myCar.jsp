@@ -185,13 +185,11 @@
 
 </body>
 <script>
-$(function() {
-	getMyCarList();
-});
+
 function getMyCarList() {
 			$.ajax({
 				url : '/onepart/resident/getMyCarList',
-				type : 'post',
+				type : 'get',
 				data : {},
 				dataType: 'json',
 				success : function(data) {
@@ -228,5 +226,9 @@ function drawMyCarList(carList) {
 		listDiv.append(carDivFormat);
 	});
 }
+$(function() {
+	getMyCarList();
+
+});
 </script>
 </html>

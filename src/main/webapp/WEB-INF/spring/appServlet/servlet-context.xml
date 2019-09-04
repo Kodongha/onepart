@@ -61,4 +61,5 @@
 
 		<bean id="openChatRoom" class="com.kh.onepart.resident.warm.open_chatting.controller.SpringChatWebsocket"/>
 	</beans>
+
 </beans:beans>

@@ -12,11 +12,15 @@ import com.kh.onepart.resident.my_home.my_car.model.vo.MyCar;;
 @Repository
 public class MyCarDaoImpl implements MyCarDao {
 
-
 	@Override
-	public List<MyCar> selectListAll(SqlSessionTemplate sqlSession, ResidentVO loginResident) {
-
+	public List<MyCar> selectListAll(SqlSessionTemplate sqlSession, int residentSeq) {
 		return sqlSession.selectList("MyCar.selectListAll");
+
 	}
+
+
+
+
+
 
 }

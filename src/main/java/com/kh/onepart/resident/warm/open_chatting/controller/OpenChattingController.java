@@ -43,17 +43,17 @@ public class OpenChattingController {
 	public String moveOpenChatRoom(@PathVariable("openChatSeq") int openChatSeq, HttpSession session,Model model) {
 		ResidentVO loginResident = (ResidentVO)session.getAttribute("loginUser");
 
-
 		if(loginResident != null) {
-			List<ResidentVO> residentList = openChatService.getResidentList(openChatSeq);
-			OpenChatVO openChatVO = openChatService.selectOneById(openChatSeq);
-			System.out.println("현제 클릭한 방 정보 : " + openChatVO);
 			int residentSeq = loginResident.getResidentSeq();
 			openChatMemberService.addOpenChatMember(openChatSeq, residentSeq);
 			openChatService.setCurrHead(openChatSeq);
 
+			List<ResidentVO> residentList = openChatService.getResidentList(openChatSeq);
+			OpenChatVO openChatVO = openChatService.selectOneById(openChatSeq);
+
 			model.addAttribute("openChatVO", openChatVO);
 			model.addAttribute("residentList",residentList);
+
 			return "/resident/warm/open_chatting/chatRoom";
 		}
 
@@ -65,13 +65,13 @@ public class OpenChattingController {
 	@ResponseBody
 	public String createRoom(OpenChatVO openChatVO, HttpSession session) throws JsonProcessingException {
 		ResidentVO loginResident = (ResidentVO)session.getAttribute("loginUser");
-		int residentSeq = loginResident.getResidentSeq();
 		Map<String, Object> result = new HashMap<>();
 		if(loginResident == null) {
 			result.put("result", "failure");
 			result.put("msg", "로그인을 먼저 해주세요.");
 		}else {
-			openChatVO.setResidentSeq(loginResident.getResidentSeq());
+			int residentSeq = loginResident.getResidentSeq();
+			openChatVO.setResidentSeq(residentSeq);
 			openChatService.createRoom(openChatVO);
 
 			int openChatSeq = (int) openChatVO.getOpenChatSeq();

@@ -73,8 +73,6 @@
 	.format { display: none; }
 </style>
 
-
-
 <!-- ================== BEGIN BASE CSS STYLE ================== -->
 <link href="${contextPath}/resources/plugins/simple-line-icons/simple-line-icons.css" rel="stylesheet" />
 	<link href="${contextPath}/resources/plugins/ionicons/css/ionicons.min.css" rel="stylesheet" />
@@ -154,13 +152,6 @@
 	<script src="${contextPath}/resources/js/dashboard.min.js"></script>
 	<script src="${contextPath}/resources/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
-
-	<script>
-		$(document).ready(function() {
-			App.init();
-
-		});
-	</script>
 
 	<script>
 		const CustomModal = (function(){
@@ -317,21 +308,20 @@
 
 			webSocket = new SockJS('/onepart/menuOpenChatRoom');
 
-			console.log(webSocket);
-
 			webSocket.onerror = function(event) {
 				alert(event.data);
 			};
 			webSocket.onopen = function(event) {
-				console.log('websocket connection success...')
+				console.log('websocket connection success...');
+				enterRoom();
 			};
 			webSocket.onmessage = function(event) {
-				console.log(event.data);
 				let resultData = JSON.parse(event.data);
 				const sender = resultData.sender;
 				const msg = resultData.message;
 				const date = resultData.date;
 				const isMe = resultData.isMe;
+
 				addMessage(sender, msg, date, isMe);
 			};
 		}
@@ -350,10 +340,26 @@
 			}
 		}
 
+		// 방에 참가
+		function enterRoom() {
+			let urlPathArr = location.href.split('/');
+			let openChatSeq = urlPathArr[urlPathArr.length-1];
+			let data = {
+				'act': 'enterRoom',
+				'sender' : '${ sessionScope.loginUser.residentSeq }',
+				'openChatSeq' : openChatSeq
+			};
+			webSocket.send(JSON.stringify(data));
+		}
+
+		// 메세지 전송
 		function sendMessage(msg) {
+			let urlPathArr = location.href.split('/');
+			let openChatSeq = urlPathArr[urlPathArr.length-1];
 			let data = {
 				'act': 'sendMsg',
-				'sender' : '${ sessionScope.loginUser.residentId }',
+				'sender' : '${ sessionScope.loginUser.residentSeq }',
+				'openChatSeq' : openChatSeq,
 				'message' : msg
 			};
 			webSocket.send(JSON.stringify(data));
@@ -365,7 +371,7 @@
 	        const scrollH = $('#chatDiv').height();	//스크롤바를 갖는 div의 높이
 	        const contentH = $('#chatDiv ul').height();	//문서 전체 내용을 갖는 div의 높이
 
-	        return (scrollT + scrollH + ignoreHeight >= contentH)
+	        return (scrollT + scrollH + ignoreHeight >= contentH);
 		}
 
 		// 맨 아래 고정

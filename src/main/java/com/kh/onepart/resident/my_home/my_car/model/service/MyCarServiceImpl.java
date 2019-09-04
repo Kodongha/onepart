@@ -21,8 +21,8 @@ public class MyCarServiceImpl  implements MyCarService{
 
 
 	@Override
-	public List<MyCar> getMyCarList(ResidentVO loginResident) {
-		return MyCarDao.selectListAll(sqlSession, loginResident);
+	public List<MyCar> getMyCarList(int residentSeq) {
+		return MyCarDao.selectListAll(sqlSession, residentSeq);
 	}
 
 

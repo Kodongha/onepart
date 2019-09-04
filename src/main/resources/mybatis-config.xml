@@ -4,6 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+	<settings>
+	<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
 	<typeAliases>
 		<typeAlias type="com.kh.onepart.account.model.vo.ResidentVO" alias="ResidentVO"/>
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO" alias="OpenChatVO"/>
@@ -12,6 +15,7 @@
 		<typeAlias type="com.kh.onepart.resident.my_home.my_car.model.vo.MyCar" alias="MyCar"/>
 	  <typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.Reservation" alias="reservation"/>
     <typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacReservation" alias="facReservation"/>
+
 
 		<!-- manager -->
 		<typeAlias type="com.kh.onepart.manager.survey.model.vo.SurveyVO" alias="SurveyVO"/>

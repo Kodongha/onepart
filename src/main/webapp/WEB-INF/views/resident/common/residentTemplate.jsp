@@ -96,9 +96,78 @@
 	<script src="${contextPath}/resources/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
 	<script>
+
+		const PageHtmlLoader = (function () {
+
+			// 세션에 저장된 URL이 있는 경우 그 URL의 html을 그려준다.
+			function load() {
+				$.ajax({
+					url :'/onepart/getMenu',
+					method: 'post',
+					success:function(menuId){
+						if(menuId!= "none") {
+							// 메뉴 그리기
+							drawMenu(menuId);
+
+							// 화면 그리기
+							drawHtml(menuId);
+
+						}
+					}
+				});
+
+				// 메뉴 그리기
+				function drawMenu(menuId) {
+					// 기존 선택되어있는 메뉴 선택 해제
+					$('li.has-sub').removeClass('expand');
+					$('li').removeClass('active');
+
+					// 상위 메뉴 열기
+					$('#'+menuId).closest('li.has-sub').addClass('expand').addClass('active');
+
+					// 하위 메뉴 선택
+					$('#'+menuId).closest('li').addClass('active');
+				}
+			}
+
+			// 세션에 메뉴 URL을 저장시킨다.
+			function setMenuId(menuId) {
+				$.ajax({
+					url :'/onepart/setMenu',
+					method: 'post',
+					data : { menuId : menuId },
+					success:function(){}
+				});
+			}
+
+			// #content에 ajax로 가져온 html을 그려준다.
+			function drawHtml(menuId) {
+				PageHtmlLoader.setMenuId(menuId);
+
+				let menuUrl = $('#'+menuId).data("menu-url");
+				$.ajax({
+					url :menuUrl,
+					dataType : "html",
+					success:function(result){
+						$("#content").html(result);
+							console.log(menuUrl);
+
+
+					}
+				});
+			}
+
+			return {
+				'load' : load,
+				'setMenuId' : setMenuId,
+				'drawHtml' : drawHtml
+			};
+		})();
+
 		$(document).ready(function() {
 			App.init();
 			Dashboard.init();
+			PageHtmlLoader.load();
 
 
 			/* 우리 아파트 */
@@ -134,17 +203,12 @@
 			$(".sub-menu > li > a").click(function(){
 				$("li").removeClass("active");
 				$(this).parents("li").addClass("active");
-				var menuUrl = $(this).data("menu-url");
-				console.log(menuUrl);
+				let menuId = this.id;
 
-				$.ajax({
-					url :menuUrl,
-					dataType : "html",
-					success:function(result){
-						$("#content").html(result);
-					}
-				});
+				PageHtmlLoader.drawHtml(menuId);
 			});
+
+
 		});
 
 		/* function menuReservateFacility(residentSeq) {

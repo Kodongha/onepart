@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class MyCar {
 	private int residentEnrollCar;
 	private int residentSeq;
-	private int carType;
+	private String carType;
 	private String carNm;
 	private String enrollPurpose;
 	private Date enrollDt;
