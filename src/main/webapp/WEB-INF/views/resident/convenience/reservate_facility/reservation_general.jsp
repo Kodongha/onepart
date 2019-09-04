@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,14 +71,30 @@ $(document).ready(function() {
 
 	/* 데이트피커 값 변할 때 마다 이용날짜 값 변동 */
 	$("#testDatepicker").change(function(){
+		var facSeq = $("#facSeq").val();
 		var testDatepicker = $("#testDatepicker").val();
 		var first = testDatepicker.substr(6,10);
 		var second = testDatepicker.substr(0,5);
-		var result = first + "/" + second;
-		$("#propUseDt").val(result);
+		var propUseDt = first + "/" + second;
+		$("#propUseDt").val(propUseDt);
+		$.ajax({
+			url:"/onepart/resident/selectDdayReservation",
+			type:"post",
+			data:{facSeq:facSeq, propUseDt:propUseDt},
+			success:function(data){
+				console.log(data.resultList);
+				var list = data.resultList
+				//console.log(list[i]);
+				$("input[type='checkbox'][name='timeCheckbox']").each(function(){
+					console.log("aaa  : " + list.indexOf($(this).val()))
+					if(list.indexOf($(this).val()) == -1){
+						$(this).removeAttr("disabled");
+					}else{
+					}
+				});
 
-		$("input[type='checkbox'][name='timeCheckbox']").each(function(){
-			$(this).removeAttr("disabled");
+			}
+
 		});
 
 	});
@@ -85,6 +103,8 @@ $(document).ready(function() {
 		var time = new Array();
 		$("input[type='checkbox'][name='timeCheckbox']").change(function(){
 			console.log($(this).val())
+
+			//선택된값 시간대 배열에 담아 input에 출력
 			if($(this).is(":checked")){
 				console.log("checked!!");
 				time.push($(this).val())
@@ -95,9 +115,9 @@ $(document).ready(function() {
 				time.splice(time.indexOf($(this).val()), 1);
 				$("#propUseTm").val(time);
 			}
-
+			//총사용시간 input에 출력
 			$("#allUserTm").val(time.length);
-
+			//이용금액 input에 출력
 			var price = time.length * $("#facDefaultFee").val();
 			$("#toalFee").val(price);
 
@@ -150,10 +170,10 @@ function applyReservation() {
 				<br><br><br>
 					 <ul class="result-list">
                             <li>
-                                <div class="result-image">
+                                <div class="result-image" style="width:20%">
                                     <a href="javascript:;"><img src="${ contextPath }/resources/uploadFiles/reservation/${ reserv.changeNm }" alt="" /></a>
                                 </div>
-                                <div class="result-info" style="width:50%">
+                                <div class="result-info" style="width:65%">
                                 	<br>
                                     <h4 class="title"><a href="javascript:;">${ reserv.facNm }</a></h4>
                                     <br>
@@ -276,18 +296,14 @@ function applyReservation() {
 																			<td style="width:30%"><input type="text" id="testDatepicker" placeholder="클릭하세요" name="test" class="form-control pull-right" data-parsley-group="wizard-step-2" style="width:100%; height:100%"></td>
 																			<td style="width:5%"></td>
 																			<td>
-																				<input type="checkbox" name="timeCheckbox" disabled value="09:00"> 09:00
-																				<input type="checkbox" name="timeCheckbox" disabled value="10:00"> 10:00
-																				<input type="checkbox" name="timeCheckbox" disabled value="11:00"> 11:00
-																				<input type="checkbox" name="timeCheckbox" disabled value="12:00"> 12:00
-																				<input type="checkbox" name="timeCheckbox" disabled value="13:00"> 13:00
-																				<input type="checkbox" name="timeCheckbox" disabled value="14:00"> 14:00
-																				<input type="checkbox" name="timeCheckbox" disabled value="15:00"> 15:00
-																				<input type="checkbox" name="timeCheckbox" disabled value="16:00"> 16:00
-																				<input type="checkbox" name="timeCheckbox" disabled value="17:00"> 17:00
-																				<input type="checkbox" name="timeCheckbox" disabled value="18:00"> 18:00
-																				<input type="checkbox" name="timeCheckbox" disabled value="19:00"> 19:00
-																				<input type="checkbox" name="timeCheckbox" disabled value="20:00"> 20:00
+																				<c:set var="time" value="${ reserv.facAvailTm }"></c:set>
+																				<c:set var="result1" value="${fn:substring(time,0,2) }"></c:set>
+																				<c:set var="result2" value="${ fn:substring(time,8,10) }"></c:set>
+																				<fmt:parseNumber var="start" type="number" value="${ result1 }"/>
+																				<fmt:parseNumber var="end" type="number" value="${ result2 }"/>
+																				<c:forEach begin="${ start }" end="${ end }" var="result">
+																				<input type="checkbox" name="timeCheckbox" disabled value="${ result }:00"> ${ result }:00
+																				</c:forEach>
 																			</td>
 																		</tr>
 																	</table>

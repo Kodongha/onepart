@@ -12,7 +12,7 @@
 $(document).ready(function() {
 
 	/* 시설물 예약 상세보기 */
-	$("#facility_reservationDetail").data("menu-url", "/onepart/manager/facility_reservationDetail");
+	//$("#facility_reservationDetail").data("menu-url", "/onepart/manager/facility_reservationDetail");
 	/* 새 시설물 등록 (예약) */
 	$("#newFacility_general").data("menu-url", "/onepart/manager/newFacility_general");
 	/* 새 시설물 등록 (좌석) */
@@ -78,12 +78,65 @@ $(document).ready(function() {
 		});
 	});
 });
+
+/* 시설물 예약 상세보기 */
+function detailReservation(facRsrvSeq) {
+	console.log(facRsrvSeq);
+	$.ajax({
+		url:"/onepart/manager/facility_reservationDetail",
+		dataType:"html",
+		data:{facRsrvSeq:facRsrvSeq},
+		success:function(result){
+			$("#content").html(result);
+		}
+	});
+}
+
+/* 예약 완료처리 */
+function successReservation(facRsrvSeq) {
+	if(confirm("해당 예약내역을 완료처리 하시겠습니까?")){
+		$.ajax({
+			url:"/onepart/manager/successReservation",
+			data:{facRsrvSeq:facRsrvSeq},
+			success:function(result){
+				$.ajax({
+					url:"/onepart/manager/menuFacility",
+					dataType:"html",
+					success:function(result){
+						$("#content").html(result);
+					}
+				});
+			}
+		});
+	}
+}
+
+/* 예약 반료처리 */
+function failReservation(facRsrvSeq) {
+	if(confirm("해당 예약내역을 반려처리 하시겠습니까?")){
+		$.ajax({
+			url:"/onepart/manager/failReservation",
+			data:{facRsrvSeq:facRsrvSeq},
+			success:function(result){
+				$.ajax({
+					url:"/onepart/manager/menuFacility",
+					dataType:"html",
+					success:function(result){
+						$("#content").html(result);
+					}
+				});
+			}
+		});
+	}
+}
 </script>
 
 <!-- 타이틀 -->
-<div style="width:95%; margin:0 auto">
+<div style="width:85%; margin:0 auto">
+	<br>
 	<h2>시설물 관리</h2>
-	<br><br><br>
+	<hr>
+	<br>
 </div>
 </body>
 </html>

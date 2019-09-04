@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacReservation;
 import com.kh.onepart.resident.convenience.reservate_facility.model.vo.Reservation;
 
 @Repository
@@ -24,5 +25,39 @@ public class ReservationDaoImpl implements ReservationDao{
 		Reservation reserv = sqlSession.selectOne("reservation.selectOneReservation", facSeq);
 
 		return reserv;
+	}
+	// 해당 예약 insert하는 메소드
+	@Override
+	public int insertReservation(SqlSessionTemplate sqlSession, FacReservation fr) {
+
+		int result = sqlSession.insert("reservation.insertReservation", fr);
+
+		System.out.println("몇행 insert : " + result);
+
+		return result;
+	}
+	//로그인 유저의 예약리스트 불러오는 메소드
+	@Override
+	public ArrayList selectUserReservation(SqlSessionTemplate sqlSession, int residentSeq) {
+
+		ArrayList reservationList = (ArrayList) sqlSession.selectList("reservation.selectUserReservation", residentSeq);
+
+		return reservationList;
+	}
+	//해당 예약번호의 예약건을 삭제하는 메소드
+	@Override
+	public int deleteUserReservation(SqlSessionTemplate sqlSession, int facRsrvSeq) {
+
+		int result = sqlSession.delete("reservation.deleteUserReservation", facRsrvSeq);
+
+		return result;
+	}
+	//해당 날짜 해당 시설물의 예약건 리스트를 불러오는 메소드
+	@Override
+	public ArrayList selectDdayReservation(SqlSessionTemplate sqlSession, FacReservation fr) {
+
+		ArrayList dayReservationList = (ArrayList) sqlSession.selectList("reservation.selectDdayReservation", fr);
+
+		return dayReservationList;
 	}
 }

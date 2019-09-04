@@ -7,15 +7,19 @@
 	<typeAliases>
 		<typeAlias type="com.kh.onepart.account.model.vo.ResidentVO" alias="ResidentVO"/>
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO" alias="OpenChatVO"/>
-    	<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO" alias="OpenChatMemberVO"/>
-		<typeAlias type="com.kh.onepart.resident.my_home.my_car.model.vo.MyCar" alias="MyCar"/>
-	    <typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.Reservation" alias="reservation"/>
 
+    <typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO" alias="OpenChatMemberVO"/>
+		<typeAlias type="com.kh.onepart.resident.my_home.my_car.model.vo.MyCar" alias="MyCar"/>
+	  <typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.Reservation" alias="reservation"/>
+    <typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacReservation" alias="facReservation"/>
 
 		<!-- manager -->
 		<typeAlias type="com.kh.onepart.manager.survey.model.vo.SurveyVO" alias="SurveyVO"/>
 		<typeAlias type="com.kh.onepart.manager.survey.model.vo.RequestSurveyVO" alias="RequestSurveyVO"/>
 		<typeAlias type="com.kh.onepart.manager.survey.model.vo.RequestSurveyQstn" alias="RequestSurveyQstn"/>
+    <typeAlias type="com.kh.onepart.manager.facility.model.vo.Reservation" alias="manager_reservation"/>
+    <typeAlias type="com.kh.onepart.manager.facility.model.vo.FacReservation" alias="manager_facReservation"/>
+
 
 	</typeAliases>
 
@@ -25,11 +29,13 @@
 
 		<mapper resource="mappers/openChat/openChat-mapper.xml"/>
 		<mapper resource="mappers/myCar/myCar-mapper.xml"/>
-    <mapper resource="mappers/openChat/openChatMember-mapper.xml"/>
-    <mapper resource="mappers/reservation/reservation-mapper.xml"/>
+    	<mapper resource="mappers/openChat/openChatMember-mapper.xml"/>
+    	<mapper resource="mappers/reservation/reservation-mapper.xml"/>
 
 		<!-- Manager -->
 		<mapper resource="mappers/manager/survey/manager-survey-mapper.xml"/>
+		<mapper resource="mappers/manager/Faclilty/manager-faclilty-mapper.xml"/>
+
 
 	</mappers>
 </configuration>

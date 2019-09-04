@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +21,7 @@
 $(document).ready(function() {
 
 	/* 메인으로 */
-	$("#returnMain").data("menu-url", "/onepart/resident/returnMain");
+	/* $("#returnMain").data("menu-url", "/onepart/resident/returnMain");
 
 	$("#returnMain").click(function(){
 		var voteUrl = $(this).data("menu-url");
@@ -29,7 +32,36 @@ $(document).ready(function() {
 				$("#content").html(result);
 			}
 		});
+	}); */
+
+	$("input[type='checkbox'][name='agreeCheck']").click(function(){
+		console.log("click");
+		if($(this).prop("checked")){
+			console.log("true");
+			$("input[type='checkbox'][name='agreeCheck']").prop("checked", false);
+			$(this).prop("checked", true);
+		}
 	});
+
+	var date = new Date();
+	var day = date.getDate() + "";
+	var year = date.getFullYear();
+	var month = date.getMonth() + 1 + "";
+	var day2;
+	if(day.length == 1){
+		day2 = "0" + day;
+	}else{
+		day2 = day
+	}
+	var month2;
+	if(month.length == 1){
+		month2 = "0" + month;
+	}else{
+		month2 = month
+	}
+	var result = year + "/" + month2 + "/" + day2
+	$("#propUseDt").val(result);
+
 });
 </script>
 
@@ -43,10 +75,10 @@ $(document).ready(function() {
 				<br><br><br>
 					 <ul class="result-list">
                             <li>
-                                <div class="result-image">
+                                <div class="result-image" style="width:20%">
                                     <a href="javascript:;"><img src="${ contextPath }/resources/uploadFiles/reservation/${ reserv.changeNm }" alt="" /></a>
                                 </div>
-                                <div class="result-info" style="width:50%">
+                                <div class="result-info" style="width:65%">
                                 	<br>
                                     <h4 class="title"><a href="javascript:;">${ reserv.facNm }</a></h4>
                                     <br>
@@ -63,7 +95,7 @@ $(document).ready(function() {
                                         	수용인원 : ${ reserv.facMaxHead }명
                                     </p>
                                     <p class="desc" style="margin-bottom:5px">
-                                        	면적 : ${ reser.vfacSquareMeasure }m^
+                                        	면적 : ${ reserv.facSquareMeasure }m^
                                     </p>
                                     <br>
                                 </div>
@@ -139,10 +171,10 @@ $(document).ready(function() {
 																		<tr>
 																			<td style="font-weight:bold;">위 내용을 충분히 숙지하였으며 약관 동의 후 예약을 진행하시겠습니까?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 																			<td>
-																				<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;예&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																				<input type="checkbox" name="agreeCheck"data-parsley-group="wizard-step-1" required>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;예&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 																			</td>
 																			<td>
-																				<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아니요
+																				<input type="checkbox" name="agreeCheck" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아니요
 																			</td>
 																		</tr>
 																	</table>
@@ -163,7 +195,7 @@ $(document).ready(function() {
 			                                                <div style="width:90%; margin:0 auto;">
 			                                                	<div class="form-group block1">
 					                                                <br>
-																	<label style="font-weight:bold">예약날짜 설정</label>
+																	<label style="font-weight:bold">좌석 선택</label>
 																	<input type="text" name="datetimes" class="form-control pull-right" data-parsley-group="wizard-step-2">
 																</div>
 																<br><br>
@@ -189,46 +221,13 @@ $(document).ready(function() {
 																</div>
 																<br>
 			                                                    <div class="form-group">
-			                                                        <label style="font-weight:bold">이용날짜</label>
+			                                                        <label style="font-weight:bold">이용날짜 ***오늘날짜 넣기</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-2" required />
+			                                                            <input type="text" id="propUseDt" class="form-control" data-parsley-group="wizard-step-2" required readonly="readonly"/>
 			                                                        </div>
 			                                                    </div>
 			                                                    <br>
-			                                                    <div class="form-group">
-			                                                        <label style="font-weight:bold">이용시간</label>
-			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-2" required />
-			                                                        </div>
-			                                                    </div>
 			                                                    <br>
-			                                                    <div class="form-group">
-			                                                        <label style="font-weight:bold">총 사용시간</label>
-			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-2" required />
-			                                                        </div>
-			                                                    </div>
-			                                                    <br>
-			                                                    <div class="form-group">
-			                                                        <label style="font-weight:bold">사용료 (원)</label>
-			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-2" required />
-			                                                        </div>
-			                                                    </div>
-			                                                    <br>
-			                                                    <div class="form-group">
-			                                                        <label style="font-weight:bold">사용목적</label>
-			                                                        <div class="controls">
-			                                                            <textarea style="resize:none" rows="10" cols="50" name="username" class="form-control" data-parsley-group="wizard-step-2" required></textarea>
-			                                                        </div>
-			                                                    </div>
-			                                                    <br>
-			                                                    <div class="form-group">
-			                                                        <label style="font-weight:bold">기타사항</label>
-			                                                        <div class="controls">
-			                                                            <textarea style="resize:none" rows="10" cols="50" name="username" class="form-control" data-parsley-group="wizard-step-2" required></textarea>
-			                                                        </div>
-			                                                    </div>
 			                                                </div>
 			                                                <!-- end col-6 -->
 			                                            </div>
@@ -244,20 +243,8 @@ $(document).ready(function() {
 			                                            <div class="row">
 			                                                <!-- begin col-4 -->
 			                                                <div style="width:90%; margin:0 auto;">
-			                                                	 <div class="form-group">
-			                                                        <label style="font-weight:bold">개인 / 단체</label>
-			                                                        <div class="controls">
-			                                                            <input type="checkbox" name="username" class="form-control" data-parsley-group="wizard-step-3" required />
-			                                                        </div>
-			                                                    </div>
-			                                                    <div class="form-group">
-			                                                        <label style="font-weight:bold">사용인원 (명)</label>
-			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required />
-			                                                        </div>
-			                                                    </div>
 			                                                     <div class="form-group">
-			                                                        <label style="font-weight:bold">신청인 / 신청단체 명</label>
+			                                                        <label style="font-weight:bold">신청인 명</label>
 			                                                        <div class="controls">
 			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required />
 			                                                        </div>
