@@ -1,4 +1,4 @@
-package com.kh.onepart.resident.convenience.reservate_facility.model.vo;
+package com.kh.onepart.manager.facility.model.vo;
 
 import java.sql.Date;
 
@@ -27,5 +27,6 @@ public class FacReservation {
 	private int propSeat;
 	private String rsrvPhone;
 	private String facNm;
+	private String residentNm;
 
 }

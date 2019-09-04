@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="reservation">
-	<resultMap type="reservation" id="reservationResultSet">
+<mapper namespace="faclilty">
+	<resultMap type="manager_reservation" id="manager_reservationReseultSet">
 		<id property="facSeq" column="FAC_SEQ"></id>
 		<result property="facNm" column="FAC_NM"/>
 		<result property="facPosition" column="FAC_POSITION"/>
@@ -28,7 +28,7 @@
 		<result property="openChatCommSeq" column="OPEN_CHAT_COMM_SEQ"/>
 	</resultMap>
 
-	<resultMap type="facReservation" id="facReservationResultSet">
+	<resultMap type="manager_facReservation" id="manager_facReservationResultSet">
 		<id property="facRsrvSeq" column="FAC_RSRV_SEQ"/>
 		<result property="facSeq" column="FAC_SEQ"/>
 		<result property="propUseDt" column="PROP_USE_DT"/>
@@ -45,48 +45,41 @@
 		<result property="propSeat" column="PROP_SEAT"/>
 		<result property="rsrvPhone" column="RSRV_PHONE"/>
 		<result property="facNm" column="FAC_NM"/>
+		<result property="residentNm" column="RESIDENT_NM"/>
 	</resultMap>
 
-
-	<select id="selectAllReservation" resultMap="reservationResultSet">
+	<select id="selectAllReservation" resultMap="manager_reservationReseultSet">
 		SELECT *
 		FROM FAC F
 		JOIN IMAGE I ON (F.FAC_SEQ = I.FAC_SEQ)
 		WHERE F.FAC_DEL_TF = 'N'
 	</select>
 
-	<select id="selectOneReservation" resultMap="reservationResultSet" parameterType="_int">
+	<select id="selectAllUserReservation" resultMap="manager_facReservationResultSet">
 		SELECT *
-		FROM FAC F
-		JOIN IMAGE I ON (F.FAC_SEQ = I.FAC_SEQ)
-		WHERE F.FAC_DEL_TF = 'N'
-		AND F.FAC_SEQ = #{facSeq}
-	</select>
-
-	<insert id="insertReservation" parameterType="facReservation">
-		INSERT INTO FAC_RSRV
-		VALUES (FAC_RSRV_SEQ.NEXTVAL, #{facSeq}, TO_DATE(#{propUseDt}, 'YYYY/MM/DD'), #{propUseTm}, #{residentSeq}, 1, #{toalFee}, #{useHeadCount}, #{usePurpose}, #{etc}, #{rsrvGroupType}, #{rsrvNm}, SYSDATE, #{useHeadCount}, #{rsrvPhone})
-	</insert>
-
-	<select id="selectUserReservation" resultMap="facReservationResultSet" parameterType="_int">
-		SELECT R.FAC_RSRV_SEQ, R.FAC_SEQ, TO_CHAR(R.PROP_USE_DT, 'YYYY/MM/DD') PROP_USE_DT, R.PROP_USE_TM, R.RESIDENT_SEQ, R.PROP_STATUS, R.TOAL_FEE, R.USE_HEAD_COUNT, R.USE_PURPOSE,
-        		R.ETC, R.RSRV_GROUP_TYPE, R.RSRV_NM, R.ENROLL_DT, R.PROP_SEAT, R.RSRV_PHONE, F.FAC_NM
 		FROM FAC_RSRV R
 		JOIN FAC F ON (R.FAC_SEQ = F.FAC_SEQ)
-		WHERE R.RESIDENT_SEQ = #{residentSeq}
+		JOIN RESIDENT RS ON (R.RESIDENT_SEQ = RS.RESIDENT_SEQ)
 	</select>
 
-	<delete id="deleteUserReservation" parameterType="_int">
-		DELETE FAC_RSRV
+	<select id="selectOneUserReservation" resultMap="manager_facReservationResultSet" parameterType="_int">
+		SELECT *
+		FROM FAC_RSRV R
+		JOIN FAC F ON (R.FAC_SEQ = F.FAC_SEQ)
+		JOIN RESIDENT RS ON (R.RESIDENT_SEQ = RS.RESIDENT_SEQ)
 		WHERE FAC_RSRV_SEQ = #{facRsrvSeq}
-	</delete>
-
-	<select id="selectDdayReservation" resultMap="facReservationResultSet" parameterType="facReservation">
-		SELECT PROP_USE_TM
-		FROM FAC_RSRV
-		WHERE FAC_SEQ = #{facSeq}
-		AND PROP_USE_DT = TO_DATE(#{propUseDt}, 'YYYY/MM/DD')
-		AND PROP_STATUS = 2
 	</select>
+
+	<update id="updatesuccessReservation" parameterType="_int">
+		UPDATE FAC_RSRV
+		SET PROP_STATUS = 2
+		WHERE FAC_RSRV_SEQ = #{facRsrvSeq}
+	</update>
+
+	<update id="updatefailReservation" parameterType="_int">
+		UPDATE FAC_RSRV
+		SET PROP_STATUS = 3
+		WHERE FAC_RSRV_SEQ = #{facRsrvSeq}
+	</update>
 
 </mapper>

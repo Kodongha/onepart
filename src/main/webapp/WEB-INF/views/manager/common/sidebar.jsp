@@ -5,6 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+   a:hover {
+      cursor:pointer;
+   }
+</style>
 </head>
 <body>
 	<!-- begin #sidebar -->

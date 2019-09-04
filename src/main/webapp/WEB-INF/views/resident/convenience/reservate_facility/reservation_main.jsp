@@ -45,10 +45,9 @@
 				<div style="width:85%; margin:0 auto">
 				<br>
 				<h2>시설물 예약하기</h2>
+				<hr>
 				<br>
 					<h4>나의 예약현황</h4>
-					<hr>
-					<br>
 					<div class="panel-body" style="background:white">
                             <table class="table table-hover" style="text-align:center;">
                                 <thead>
@@ -63,51 +62,33 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   <tr>
-                                   		<td>1</td>
-                                   		<td>은혜아파트 공동 대 강당</td>
-                                   		<td>2019-08-30</td>
-                                   		<td>09:00~12:00</td>
-                                   		<td>2019-08-28</td>
-                                   		<td>예약대기</td>
-                                   		<td><a href="#modal-dialog" class="btn btn-danger btn-icon btn-circle btn-xs cancelBtn" data-toggle="modal"><i class="fa fa-times"></i></a></td>
-                                   </tr>
-                                    <tr>
-                                   		<td>2</td>
-                                   		<td>은혜아파트 공동 대 강당</td>
-                                   		<td>2019-08-30</td>
-                                   		<td>09:00~12:00</td>
-                                   		<td>2019-08-28</td>
-                                   		<td>예약완료</td>
-                                   		<td></td>
-                                   </tr>
-                                    <tr>
-                                   		<td>3</td>
-                                   		<td>은혜아파트 공동 대 강당</td>
-                                   		<td>2019-08-30</td>
-                                   		<td>09:00~12:00</td>
-                                   		<td>2019-08-28</td>
-                                   		<td>예약반려</td>
-                                   		<td></td>
-                                   </tr>
-                                   <tr>
-                                   		<td>4</td>
-                                   		<td>은혜아파트 공동 대 강당</td>
-                                   		<td>2019-08-30</td>
-                                   		<td>09:00~12:00</td>
-                                   		<td>2019-08-28</td>
-                                   		<td>예약반려</td>
-                                   		<td></td>
-                                   </tr>
-                                   <tr>
-                                   		<td>5</td>
-                                   		<td>은혜아파트 공동 대 강당</td>
-                                   		<td>2019-08-30</td>
-                                   		<td>09:00~12:00</td>
-                                   		<td>2019-08-28</td>
-                                   		<td>예약반려</td>
-                                   		<td></td>
-                                   </tr>
+                                	<c:forEach var="reservationList" items="${ reservationList }">
+									<tr>
+										<td>${ reservationList.facRsrvSeq }</td>
+										<td>${ reservationList.facNm }</td>
+										<td>${ reservationList.propUseDt }</td>
+										<td>${ reservationList.propUseTm }</td>
+										<td>${ reservationList.enrollDt }</td>
+										<td>
+											<c:if test="${ reservationList.propStatus == 1}">
+												예약대기
+											</c:if>
+											<c:if test="${ reservationList.propStatus == 2}">
+												예약완료
+											</c:if>
+											<c:if test="${ reservationList.propStatus == 3}">
+												예약반려
+											</c:if>
+										</td>
+										<td>
+											<c:if test="${ reservationList.propStatus == 1}">
+												<a href="#modal-dialog" class="btn btn-danger btn-icon btn-circle btn-xs cancelBtn" data-toggle="modal" onclick="cancelReservation(${ reservationList.facRsrvSeq });">
+													<i class="fa fa-times"></i>
+												</a>
+											</c:if>
+										</td>
+									</tr>
+                                	</c:forEach>
                                 </tbody>
                             </table>
                         </div>
@@ -119,8 +100,6 @@
 					<!-- 공공시설물 리스트 div -->
 					<div style="width:85%; margin:0 auto">
 					<h4>우리아파트 공공시설물</h4>
-					<hr>
-					<br>
                             <ul class="result-list">
                             <c:forEach var="list" items="${ list }">
                             	<li>
@@ -169,12 +148,35 @@
 											취소완료 후에는 복구가 불가능 하며, 재예약을 진행하셔야 합니다.
 										</div>
 										<div class="modal-footer">
-											<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-											<a href="javascript:;" class="btn btn-sm btn-success">Action</a>
+											<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">닫기</a>
+											<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal" onclick="deleteReservation(${ sessionScope.loginUser.residentSeq });">예약취소</a>
 										</div>
 									</div>
 								</div>
 							</div>
+<script type="text/javascript">
+	var facRsrvSeq;
+
+	function cancelReservation(num) {
+		facRsrvSeq = num;
+		console.log(facRsrvSeq);
+	}
+
+	function deleteReservation(residentSeq) {
+		console.log("취소할 예약번호 : " + facRsrvSeq);
+
+		$.ajax({
+			url:"/onepart/resident/deleteUserReservation",
+			type:"post",
+			dataType:"html",
+			data:{facRsrvSeq:facRsrvSeq, residentSeq:residentSeq},
+			success:function(result){
+				$("#content").html(result);
+
+			}
+		});
+	}
+</script>
 
 </body>
 </html>
