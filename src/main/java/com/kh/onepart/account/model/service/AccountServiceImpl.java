@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kh.onepart.account.model.dao.AccountDao;
+import com.kh.onepart.account.model.exception.findIdException;
 import com.kh.onepart.account.model.vo.ResidentVO;
 
 @Service
@@ -52,6 +53,23 @@ public class AccountServiceImpl implements AccountService{
 		System.out.println("requestResidentVO in svcImpl : " + requestResidentVO);
 		return accountDao.insertResident(sqlSession, requestResidentVO);
 	}
+
+	//아이디 찾기용 메소드
+	@Override
+	public ResidentVO findId(ResidentVO requestResidentVO) throws findIdException {
+		System.out.println("account service");
+		System.out.println("requestResidentVO in Service:" + requestResidentVO);
+
+		ResidentVO findId = null;
+		findId = accountDao.findId(sqlSession, requestResidentVO);
+		System.out.println("loginUser in Service : " + findId);
+
+		return findId;
+	}
+
+
+
+
 
 
 

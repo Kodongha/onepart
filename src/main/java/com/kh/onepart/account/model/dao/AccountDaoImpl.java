@@ -5,6 +5,7 @@ import javax.security.auth.login.LoginException;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.onepart.account.model.exception.findIdException;
 import com.kh.onepart.account.model.vo.ResidentVO;
 
 @Repository
@@ -38,8 +39,23 @@ public class AccountDaoImpl implements AccountDao {
 	public int insertResident(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO) {
 		System.out.println("sqlSession in daoImpl : " + sqlSession);
 		System.out.println("requestResidentVO in daoImpl : " + requestResidentVO);
-//System.out.println("result in daoImle : " + sqlSession.insert("Account.insertResident", requestResidentVO));
+		//System.out.println("result in daoImle : " + sqlSession.insert("Account.insertResident", requestResidentVO));
 		return sqlSession.insert("Account.insertResident", requestResidentVO);
+	}
+
+	//아이디 찾기용 메소드
+	@Override
+	public ResidentVO findId(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO) throws findIdException {
+		System.out.println("account dao");
+		System.out.println("requestResidentVO::" + requestResidentVO);
+
+		ResidentVO findId = sqlSession.selectOne("Account.selectFindId", requestResidentVO);
+		System.out.println(findId);
+
+		if(findId == null) {
+			throw new findIdException("일치하는 아이디가 존재하지 않습니다.");
+		}
+		return findId;
 	}
 
 }

@@ -7,6 +7,7 @@
 	<settings>
 	<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
+
 	<typeAliases>
 		<typeAlias type="com.kh.onepart.account.model.vo.ResidentVO" alias="ResidentVO"/>
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO" alias="OpenChatVO"/>

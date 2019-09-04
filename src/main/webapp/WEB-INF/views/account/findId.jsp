@@ -32,6 +32,8 @@
 	<!-- ================== END PAGE LEVEL STYLE ================== -->
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="${contextPath}/resources/plugins/pace/pace.min.js"></script>
+	<!-- 제이쿼리 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<!-- ================== END BASE JS ================== -->
 </head>
 
@@ -50,7 +52,7 @@
 			<div class="col-md-6">
 				<ul class="nav nav-tabs">
 					<li class="active"><a href="#default-tab-1" data-toggle="tab" aria-expanded="false">아이디 찾기</a></li>
-					<li class=""><a href="${contextPath}/moveFindPwd" data-toggle="tab" aria-expanded="true">비밀번호 찾기</a></li>
+					<li class=""><a href="moveFindPwd" aria-expanded="true">비밀번호 찾기</a></li>
 				</ul>
 				<!-- 아이디 찾기, 비밀번호 찾기 탭 시작 -->
 				<div class="tab-content">
@@ -60,7 +62,7 @@
 							<i class="fa fa-cog"></i> 아이디 찾기
 						</h3>
 						<div class="col-md-6">
-							<form action="index.html" method="POST" class="margin-bottom-0">
+							<form  method="POST" class="margin-bottom-0" id="findIdForm">
 								<div class="panel-group" id="accordion">
 									<div class="panel panel-inverse overflow-hidden">
 										<div class="panel-heading">
@@ -75,14 +77,14 @@
 												<label class="control-label">이름</label>
 												<div class="row m-b-15">
 													<div class="col-md-12">
-														<input type="text" class="form-control" placeholder="실명 입력" style="width: 77%;" />
+														<input name="residentNm" id="residentNm" type="text" class="form-control" placeholder="실명 입력" style="width: 77%;" />
 													</div>
 												</div>
 
 												<label class="control-label">휴대전화번호 인증</label>
 												<div class="row m-b-15">
 													<div class="col-md-12">
-														<input type="tel" class="form-control" placeholder="휴대전화번호 입력" style="width: 77%; display: inline-block;" />&nbsp;
+														<input name="residentPhone" id="residentPhone" type="tel" class="form-control" placeholder="휴대전화번호 입력" style="width: 77%; display: inline-block;" />&nbsp;
 														<button type="button" class="btn btn-default m-r-5 m-b-5">인증번호</button>
 														<br><br>
 														<input type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
@@ -105,17 +107,16 @@
 												<label class="control-label">이름</label>
 												<div class="row m-b-15">
 													<div class="col-md-12">
-														<input type="text" class="form-control" placeholder="실명 입력" style="width: 77%;" />
+														<input name="residentNm2" id="residentNm2" type="text" class="form-control" placeholder="실명 입력" style="width: 77%;" />
 													</div>
 												</div>
 
 												<label class="control-label">이메일</label>
 												<div class="row m-b-15">
 													<div class="col-md-12">
-														<input type="email" class="form-control" placeholder="이메일 주소" style="width: 77%; display: inline-block;" />&nbsp;
+													<input name="residentEmail" id="residentEmail" type="email" class="form-control" placeholder="이메일 주소" style="width: 77%; display: inline-block;" />&nbsp;
 														<button type="button" class="btn btn-default m-r-5 m-b-5">인증번호</button>
 														<br><br> <input type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
-														<button type="button" class="btn btn-default m-r-5 m-b-5">확인</button>
 													</div>
 												</div>
 											</div>
@@ -123,8 +124,32 @@
 									</div>
 								</div>
 							<p class="text-center m-b-0">
-								<a href="javascript:;" class="btn btn-white m-r-5">취소</a> <a href="javascript:;" class="btn btn-primary">찾기</a>
+								<!-- <a href="javascript:;" class="btn btn-white m-r-5">취소</a> <a href="javascript:;" class="btn btn-primary">찾기</a> -->
+								<button type="reset" class="btn btn-white m-r-5">취소</button> &nbsp; &nbsp;
+								<!-- <button type="submit" class="btn btn-primary">찾기</button> -->
+								<input type="button" value="찾기" class="btn btn-primary" onclick="showId(); return false;">
+								<!-- 시작 모달로 결과 보내기 버튼 -->
+									<a href="#modal-dialog" class="btn btn-sm btn-success" data-toggle="modal" onclick="showId()">Demo</a>
 							</p>
+									<div class="modal fade" id="modal-dialog" aria-hidden="true" style="display: none;">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+												<h4 class="modal-title">아이디 찾기 결과</h4>
+											</div>
+											<div class="modal-body">
+												${ sessionScope.findId.residentNm } 님 환영합니다.
+											</div>
+											<div class="modal-footer">
+												<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+												<a href="javascript:;" class="btn btn-sm btn-success">Action</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!--  모달로 결과 보내기 버튼 -->
 							</form>
 						</div>
 					</div>
@@ -168,7 +193,26 @@
 		$(document).ready(function () {
 			App.init();
 		});
+
+		//아이디 찾기 결과 보여주는 함수
+		function showId() {
+			var findIdForm =$("#findIdForm").serialize();
+
+  		$.ajax({
+  			url:"findId",
+  			type:"post",
+  			data:{findIdForm:findIdForm},
+  			success:function(data){
+  				var jsonObj = JSON.parse(data);
+  			},
+  			error:function(xhr, status){
+  				alert(xhr + " : " + status);
+  			}
+  		});
+
+		}
 	</script>
+
 </body>
 
 </html>

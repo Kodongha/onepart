@@ -2,6 +2,7 @@ package com.kh.onepart.account.controller;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.onepart.account.model.exception.findIdException;
 import com.kh.onepart.account.model.service.AccountService;
 import com.kh.onepart.account.model.vo.ResidentVO;
 
@@ -39,7 +42,6 @@ public class AccountController {
 
 		return "account/login";
 	}
-
 	/**
 	 * 로그인 요청 계정 확인 및 로그인
 	 * @param requestResidentVO
@@ -122,7 +124,46 @@ public class AccountController {
 			model.addAttribute("msg", "회원 가입 실패!");
 			return "common/errorPage";
 		}
-
 	}
+
+//	//아이디 찾기용 메소드
+//		@RequestMapping(value="/findId", method=RequestMethod.POST)
+//		public String findId(ResidentVO requestResidentVO, Model model) {
+//			System.out.println("/findId");
+//			System.out.println("requestResidentVO in Controller:::" + requestResidentVO);
+//
+//			ResidentVO findId;
+//			try {
+//				findId = accountService.findId(requestResidentVO);
+//				model.addAttribute("findId", findId);
+//				System.out.println("findId in controller" + findId);
+//				return "redirect: account/findId";
+//			} catch (findIdException e) {
+//				model.addAttribute("msg", e.getMessage());
+//				return "common/errorPage";
+//			}
+//		}
+
+		//아이디 찾기용 메소드
+		@RequestMapping(value="/findId", method=RequestMethod.POST)
+		public ModelAndView findId(ResidentVO requestResidentVO, ModelAndView mv, HttpSession session) {
+			System.out.println("/findId");
+			System.out.println("requestResidentVO in Controller:::" + requestResidentVO);
+
+			ResidentVO findId;
+			try {
+				findId = accountService.findId(requestResidentVO);
+				mv.addObject("findId", findId);
+				mv.setViewName("jsonView");
+
+			} catch (findIdException e) {
+				mv.addObject("msg", e.getMessage());
+				mv.setViewName("common/errorPage");
+			}
+
+			return mv;
+		}
+
+
 
 }
