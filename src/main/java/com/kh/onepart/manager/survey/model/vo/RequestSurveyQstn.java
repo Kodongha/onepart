@@ -9,12 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequestSurveyQstn {
 
+	private int surveySeq;
+	private int surveyQstnSeq;
 	private int surveyQstnNum;
 	private String surveyQstnTitle;
-	private String[] surveyQstnNece;
+	private String surveyQstnNece;
 	private int surveyQstnType;
-	private RequestSurveyQstnOption[] surveyQstnOption;
-
-
-
 }

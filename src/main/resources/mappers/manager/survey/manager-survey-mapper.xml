@@ -13,6 +13,7 @@
 		<result property="surveyDelTf" column="SURVEY_DEL_TF"/>
 	</resultMap>
 
+	<!-- 설문조사 검색 -->
 	<select id="selectSearchSurveyList" parameterType="surveyVO" resultMap="surveyVOResultSet">
 		SELECT  *
 		FROM SURVEY
@@ -26,5 +27,53 @@
 		AND SURVEY_DEL_TF = 'N'
 		</where>
 	</select>
+
+	<!-- 설문조사 등록 - INSERT SURVEY -->
+	<insert id="insertSurvey" parameterType="RequestSurveyVO">
+		INSERT INTO SURVEY
+		VALUES(
+			SURVEY_SEQ.NEXTVAL,
+			#{surveyTitle},
+			1,
+			#{surveyType},
+			#{surveySimpleIntro},
+			#{surveyPeriod},
+			SYSDATE,
+			'N'
+		)
+
+		<selectKey keyProperty="surveySeq" resultType="Integer" order="AFTER">
+			SELECT SURVEY_SEQ.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<!-- 설문조사 등록 - INSERT SURVEY_QSTN -->
+	<insert id="insertSurveyQstn" parameterType="RequestSurveyQstn">
+		INSERT INTO SURVEY_QSTN
+		VALUES(
+			SURVEY_QSTN_SEQ.NEXTVAL,
+			#{surveySeq},
+			#{surveyQstnNum},
+			#{surveyQstnTitle},
+			#{surveyQstnNece},
+			#{surveyQstnType}
+		)
+
+		<selectKey keyProperty="surveyQstnSeq" resultType="Integer" order="AFTER">
+			SELECT SURVEY_QSTN_SEQ.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<!-- 설문조사 등록 - INSERT SURVEY_QSTN_OPTION -->
+	<insert id="insertSurveyQstnOption" parameterType="RequestSurveyQstn">
+		INSERT INTO SURVEY_QSTN_OPTION
+		VALUES(
+			SURVEY_QSTN_OPTION_SEQ.NEXTVAL,
+			#{surveyQstnOptionNum},
+			#{surveyQstnOptionContent},
+			#{surveyQstnSeq}
+		)
+		
+	</insert>
 
 </mapper>

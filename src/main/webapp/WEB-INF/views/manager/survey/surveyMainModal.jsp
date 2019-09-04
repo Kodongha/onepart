@@ -179,8 +179,8 @@
 					surveyQstnOption.push(surveyQstnOptionNum);
 					surveyQstnOption.push($(this).val());
 
-					optionArray.push(surveyQstnOption);
 				});
+				optionArray.push(surveyQstnOption);
 
 				var surveyQstnArray = {
 					surveyQstnNum : surveyQstnNum,
@@ -194,14 +194,14 @@
 
 			});
 			resultJson.surveyQstn = questionArray;
-			JSON.stringify(resultJson);
-			console.log(resultJson);
+			var resultJsonStr = JSON.stringify(resultJson);
+			console.log(resultJsonStr);
 
 			/* AJAX */
 			$.ajax({
 				url : 'insertSurvey',
 				method : 'post',
-				data : resultJson,
+				data : {resultJsonStr:resultJsonStr},
 				success : function(data){
 					console.log("succ");
 				},

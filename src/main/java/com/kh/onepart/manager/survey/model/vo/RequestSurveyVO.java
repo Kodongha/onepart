@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestSurveyAndSurveyQstnVO {
+public class RequestSurveyVO {
 
 	// SURVEY
 	private int surveySeq;
@@ -22,5 +22,5 @@ public class RequestSurveyAndSurveyQstnVO {
 	private String surveyDelTf;
 
 	// SURVEY_QSTN
-	private RequestSurveyQstn[] surveyQstn;
+	// private RequestSurveyQstn[] surveyQstns;
 }

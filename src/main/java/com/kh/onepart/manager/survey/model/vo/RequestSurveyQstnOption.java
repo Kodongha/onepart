@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequestSurveyQstnOption {
 
-	private int urveyQstnOptionSeq;
-	private int urveyQstnOptionNum;
-	private String urveyQstnOptionContent;
-	private int urveyQstnSeq;
-
+	private int surveyQstnOptionSeq;
+	private int surveyQstnOptionNum;
+	private String surveyQstnOptionContent;
+	private int surveyQstnSeq;
+	private int surveyQstnNum;
 }
