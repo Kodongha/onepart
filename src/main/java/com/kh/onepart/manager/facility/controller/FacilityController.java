@@ -1,10 +1,12 @@
 package com.kh.onepart.manager.facility.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.onepart.manager.facility.model.service.FacliltyService;
@@ -46,8 +48,15 @@ public class FacilityController {
 	}
 
 	@RequestMapping("/manager/newFacility_general")
-	public String newFacility_general() {
+	public String newFacility_general(MultipartHttpServletRequest req) {
 		System.out.println("/menuFacility");
+		//System.out.println("reservation : " + Reservation);
+		Iterator<String> itr =  req.getFileNames();
+
+		if(itr.hasNext()) {
+			System.out.println("파일명 : " + itr);
+		}
+
 		return "/manager/facility/facility_new_general";
 	}
 
@@ -67,5 +76,29 @@ public class FacilityController {
 	public String facility_modify_seat() {
 		System.out.println("/menuFacility");
 		return "/manager/facility/facility_modify_seat";
+	}
+
+	@RequestMapping("/manager/successReservation")
+	public ModelAndView successReservation(ModelAndView mv, int facRsrvSeq) {
+		System.out.println("/menuFacility");
+
+		//해당 예약건 예약완료 처리하는 메소드
+		int result = fs.updatesuccessReservation(facRsrvSeq);
+
+		mv.setViewName("jsonView");
+
+		return mv;
+	}
+
+	@RequestMapping("/manager/failReservation")
+	public ModelAndView failReservation(ModelAndView mv, int facRsrvSeq) {
+		System.out.println("/menuFacility");
+
+		//해당 예약건 예약반려 처리하는 메소드
+		int result = fs.updatefailReservation(facRsrvSeq);
+
+		mv.setViewName("jsonView");
+
+		return mv;
 	}
 }

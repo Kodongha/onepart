@@ -41,5 +41,23 @@ public class FacliltyServiceImpl implements FacliltyService{
 		return fr;
 
 	}
+	//해당 예약건 예약완료 처리하는 메소드
+	@Override
+	public int updatesuccessReservation(int facRsrvSeq) {
+
+		int result = fd.updatesuccessReservation(sqlSession, facRsrvSeq);
+
+		return result;
+
+	}
+	//해당 예약건 예약반려 처리하는 메소드
+	@Override
+	public int updatefailReservation(int facRsrvSeq) {
+
+		int result = fd.updatefailReservation(sqlSession, facRsrvSeq);
+
+		return result;
+
+	}
 
 }

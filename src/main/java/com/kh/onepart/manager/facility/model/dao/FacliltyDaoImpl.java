@@ -34,5 +34,22 @@ public class FacliltyDaoImpl implements FacliltyDao{
 
 		return fr;
 	}
+	//해당 예약건 예약완료 처리하는 메소드
+	@Override
+	public int updatesuccessReservation(SqlSessionTemplate sqlSession, int facRsrvSeq) {
+
+		int result = sqlSession.update("faclilty.updatesuccessReservation", facRsrvSeq);
+
+		return result;
+	}
+	//해당 예약건 예약반려 처리하는 메소드
+	@Override
+	public int updatefailReservation(SqlSessionTemplate sqlSession, int facRsrvSeq) {
+
+		int result = sqlSession.update("faclilty.updatefailReservation", facRsrvSeq);
+
+		return result;
+
+	}
 
 }

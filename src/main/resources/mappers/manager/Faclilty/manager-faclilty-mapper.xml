@@ -70,4 +70,16 @@
 		WHERE FAC_RSRV_SEQ = #{facRsrvSeq}
 	</select>
 
+	<update id="updatesuccessReservation" parameterType="_int">
+		UPDATE FAC_RSRV
+		SET PROP_STATUS = 2
+		WHERE FAC_RSRV_SEQ = #{facRsrvSeq}
+	</update>
+
+	<update id="updatefailReservation" parameterType="_int">
+		UPDATE FAC_RSRV
+		SET PROP_STATUS = 3
+		WHERE FAC_RSRV_SEQ = #{facRsrvSeq}
+	</update>
+
 </mapper>

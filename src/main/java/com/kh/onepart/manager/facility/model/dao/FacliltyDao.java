@@ -13,5 +13,9 @@ public interface FacliltyDao {
 	ArrayList selectAllUserReservation(SqlSessionTemplate sqlSession);
 	//해당 시설물 예약 내역 불러오는 메소드
 	FacReservation selectOneUserReservation(SqlSessionTemplate sqlSession, int facRsrvSeq);
+	//해당 예약건 예약완료 처리하는 메소드
+	int updatesuccessReservation(SqlSessionTemplate sqlSession, int facRsrvSeq);
+	//해당 예약건 예약반려 처리하는 메소드
+	int updatefailReservation(SqlSessionTemplate sqlSession, int facRsrvSeq);
 
 }

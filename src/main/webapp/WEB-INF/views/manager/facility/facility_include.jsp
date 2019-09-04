@@ -79,6 +79,7 @@ $(document).ready(function() {
 	});
 });
 
+/* 시설물 예약 상세보기 */
 function detailReservation(facRsrvSeq) {
 	console.log(facRsrvSeq);
 	$.ajax({
@@ -89,6 +90,44 @@ function detailReservation(facRsrvSeq) {
 			$("#content").html(result);
 		}
 	});
+}
+
+/* 예약 완료처리 */
+function successReservation(facRsrvSeq) {
+	if(confirm("해당 예약내역을 완료처리 하시겠습니까?")){
+		$.ajax({
+			url:"/onepart/manager/successReservation",
+			data:{facRsrvSeq:facRsrvSeq},
+			success:function(result){
+				$.ajax({
+					url:"/onepart/manager/menuFacility",
+					dataType:"html",
+					success:function(result){
+						$("#content").html(result);
+					}
+				});
+			}
+		});
+	}
+}
+
+/* 예약 반료처리 */
+function failReservation(facRsrvSeq) {
+	if(confirm("해당 예약내역을 반려처리 하시겠습니까?")){
+		$.ajax({
+			url:"/onepart/manager/failReservation",
+			data:{facRsrvSeq:facRsrvSeq},
+			success:function(result){
+				$.ajax({
+					url:"/onepart/manager/menuFacility",
+					dataType:"html",
+					success:function(result){
+						$("#content").html(result);
+					}
+				});
+			}
+		});
+	}
 }
 </script>
 

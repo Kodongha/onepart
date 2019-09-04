@@ -10,17 +10,19 @@
 </head>
 <body>
 <jsp:include page="../facility/facility_include.jsp"></jsp:include>
-<div style="width:95%; margin:0 auto">
+<div style="width:85%; margin:0 auto">
 			<!-- 전체 div -->
 			<div>
 			<!-- 시설물예약 상세보기 div -->
 			<div>
 				<h4>시설물 예약 신청 상세보기</h4>
-				<hr>
-				<br>
-				<h2>예약 No. ${ fr.facRsrvSeq }</h2>
-				<div class="panel-body">
-                     <table class="table table-hover" style="text-align:center;">
+				<div class="panel-body" style="background:white">
+				<table style="width:95%; margin:0 auto;">
+					<tr>
+						<td><h2 style="width:95%">예약 No. ${ fr.facRsrvSeq }</h2></td>
+					</tr>
+				</table>
+                     <table class="table table-hover" style="text-align:center; width:95%; margin:0 auto;">
                          <tbody>
                             <tr>
                             		<td style="font-weight:bold; width:30%">시설명</td>
@@ -87,15 +89,26 @@
                             </tr>
                          </tbody>
                      </table>
-                </div>
-                <!-- 예약처리 버튼 div -->
-                <div>
-                	<table style="width:100%; margin:0 auto;">
-						<tr>
-							<td><a  class="btn btn-white" style="width:90%">예약 완료처리</a></td>
-							<td><a  class="btn btn-white" style="width:90%">예약 반료처리</a></td>
-						</tr>
+                     <br><br>
+                	<table style="width:100%; margin:0 auto; text-align:center;">
+                		<c:if test="${ fr.propStatus == 1}">
+                			<tr>
+								<td><a onclick="successReservation(${ fr.facRsrvSeq })" class="btn btn-success" style="width:90%">예약 완료처리</a></td>
+								<td><a onclick="failReservation(${ fr.facRsrvSeq })" class="btn btn-danger" style="width:90%">예약 반료처리</a></td>
+                			</tr>
+                		</c:if>
+						<c:if test="${ fr.propStatus == 2 || fr.propStatus == 3}">
+							<tr>
+								<td>
+									<br>
+									<h5>현재 보고계신 예약건은 예약 현황처리가 완료된 예약입니다.</h5>
+								</td>
+							</tr>
+						</c:if>
 					</table>
+					<br><br>
+                </div>
+                <div>
                 </div>
 			</div>
 			</div>
