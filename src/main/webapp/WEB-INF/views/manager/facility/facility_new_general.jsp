@@ -14,20 +14,21 @@
 			<div>
 				<!-- 새 시설물 등록 (예약) div -->
 				<div>
+				<form action="" method="post" enctype="multipart/form-data" id="fileUploadForm">
 					<h4>새 시설물 등록 (예약)</h4>
 					<div align="center" style="background:white">
 						<br><br>
 						<table style="width:90%">
 							<tr>
 								<td style="font-weight:bold; width:20%; font-size:1.2em">시설명</td>
-								<td colspan="3"><input type="text" class="form-control" placeholder="Default input" id="facNm"></td>
+								<td colspan="3"><input type="text" class="form-control" placeholder="Default input" id="facNm" name="facNm"></td>
 							</tr>
 							<tr>
 								<td style="height:10px"></td>
 							</tr>
 							<tr>
 								<td style="font-weight:bold; font-size:1.2em">위치</td>
-								<td colspan="3"><input type="text" class="form-control" placeholder="Default input" id="facPosition"></td>
+								<td colspan="3"><input type="text" class="form-control" placeholder="Default input" id="facPosition" name="facPosition"></td>
 							</tr>
 							<tr>
 								<td style="height:10px"></td>
@@ -56,6 +57,7 @@
 	                                  	<option>토</option>
 	                                  	<option>일</option>
 	                           		</select>
+	                           		<input type="text" id="facAvailWeekOfDay" name="facAvailWeekOfDay">
 								</td>
 							</tr>
 							<tr>
@@ -99,6 +101,7 @@
 	                               		<option>22:00</option>
 	                               		<option>23:00</option>
 	                           		</select>
+	                           		<input type="text" id="facAvailTm" name="facAvailTm">
 								</td>
 							</tr>
 							<tr>
@@ -106,21 +109,21 @@
 							</tr>
 							<tr>
 								<td style="font-weight:bold; font-size:1.2em">이용료</td>
-								<td colspan="3"><input type="text" class="form-control" placeholder="Default input" id="facDefaultFee"></td>
+								<td colspan="3"><input type="text" class="form-control" placeholder="Default input" id="facDefaultFee" name="facDefaultFee"></td>
 							</tr>
 							<tr>
 								<td style="height:10px"></td>
 							</tr>
 							<tr>
 								<td style="font-weight:bold; font-size:1.2em">수용인원</td>
-								<td colspan="3"><input type="text" class="form-control" placeholder="Default input" id="facMaxHead"></td>
+								<td colspan="3"><input type="text" class="form-control" placeholder="Default input" id="facMaxHead" name="facMaxHead"></td>
 							</tr>
 							<tr>
 								<td style="height:10px"></td>
 							</tr>
 							<tr>
 								<td style="font-weight:bold; font-size:1.2em">면적</td>
-								<td colspan="3"><input type="text" class="form-control" placeholder="Default input" id="facSquareMeasure"></td>
+								<td colspan="3"><input type="text" class="form-control" placeholder="Default input" id="facSquareMeasure" name="facSquareMeasure"></td>
 							</tr>
 							<tr>
 								<td style="height:60px"></td>
@@ -130,7 +133,7 @@
 							</tr>
 							<tr>
 								<td colspan="4">
-									<textarea id="facDetailInfo" class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;"></textarea>
+									<textarea id="facDetailInfo" name="facDetailInfo" class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;"></textarea>
 								</td>
 							</tr>
 							<tr>
@@ -141,7 +144,7 @@
 							</tr>
 							<tr>
 								<td colspan="4">
-									<textarea id="facRsrvInfo" class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;"></textarea>
+									<textarea id="facRsrvInfo" name="facRsrvInfo" class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;"></textarea>
 								</td>
 							</tr>
 							<tr>
@@ -152,7 +155,7 @@
 							</tr>
 							<tr>
 								<td colspan="4">
-									<textarea id="facUseInfo" class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;"></textarea>
+									<textarea id="facUseInfo" name="facUseInfo" class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;"></textarea>
 								</td>
 							</tr>
 							<tr>
@@ -161,7 +164,6 @@
 						</table>
 						<!-- 사진첨부 div -->
 						<br><br><br><br>
-						<form name="frmList" id="frmList" >
 						<table style="width:90%">
 							<tr>
 								<td colspan="2" style="font-weight:bold; font-size:1.2em">시설 사진 등록</td>
@@ -172,10 +174,10 @@
 	                                    <i class="fa fa-plus" id="icon"></i>
 	                                    <span id="text">Add files...</span>
 	                                </span>
-                                    <input type="file" name="files[]" id="fileInsert">
+                                    <input multiple="multiple" type="file" name="files" id="fileInsert">
 								</td>
 								<td style="width:5%">
-									<button class="btn btn-default" id="plusfileinputSpan" style="width:90%" onclick="plusImage();">
+									<button class="btn btn-default" id="plusfileinputSpan" style="width:90%" onclick="return plusImage();">
 	                                    <span>+</span>
 	                                </button>
 								</td>
@@ -184,11 +186,10 @@
 								<td style="height:20px"></td>
 							</tr>
 						</table>
-						</form>
 						<br><br><br><br>
 						<table style="width:90%; margin:0 auto;">
 							<tr>
-								<td><a class="btn btn-success" style="width:100%" onclick="insertNewGeneral();">등록</a></td>
+								<td><a class="btn btn-success" style="width:100%" id="btnSubmit">등록</a></td>
 								<td style="width:5%"></td>
 								<td><a class="btn btn-danger" style="width:100%">취소</a></td>
 							</tr>
@@ -198,7 +199,17 @@
 					<br><br>
 					<!-- 등록 버튼 div -->
 					<!-- 첨부파일 추가 input 추가 script -->
-					<script type="text/javascript">
+
+					<!-- 예약처리 버튼 div -->
+	                <div>
+
+	                </div>
+	                </form>
+				</div>
+			</div>
+			</div>
+		<br><br><br>
+<script type="text/javascript">
 						var result = 1;
 
 						function plusImage() {
@@ -211,7 +222,7 @@
 							var fileinputSpan = $("<span class='btn btn-default fileinput-button' id='fileinputSpan'>").css("width", "95%");
 							var icon = $("<i class='fa fa-plus'>");
 							var text = $("<span>").text("Add files...");
-							var inputFile = $("<input type='file' name='files[]' id='fileInsert'>").hide();
+							var inputFile = $("<input multiple='multiple' type='file' name='files' id='fileInsert'>").hide();
 
 							fileinputSpan.id = 'fileinputSpan';
 
@@ -235,10 +246,14 @@
 								$("#plusfileinputSpan").prop("disabled", true);
 							}
 
+							return false;
+
 						}
 
 						$(function(){
 							$("#fileInsert").hide();
+							$("#facAvailWeekOfDay").hide();
+							$("#facAvailTm").hide();
 
 							$("#fileinputSpan").click(function(){
 								console.log("click!!")
@@ -250,7 +265,8 @@
 							});
 						});
 
-						function insertNewGeneral() {
+
+						/* function insertNewGeneral() {
 							console.log("insertNewGeneral");
 							var facNm = $("#facNm").val();
 							var facPosition = $("#facPosition").val();
@@ -273,6 +289,10 @@
 								imgArr.push($(this).text());
 							});
 
+							var form = $('#fileUploadForm')[0];
+
+					        var data = new FormData(form);
+
 							var Reservation = {
 									facNm:facNm,
 									facPosition:facPosition,
@@ -288,30 +308,81 @@
 
 							console.log(Reservation);
 
-							$("#frmList").ajaxForm({
-								url:"/onepart/manager/newFacility_general",
-								enctype:"multipart/form-data",
-								data:{Reservation:Reservation},
-								dataType:"json",
-								success:function(){
-									console.log("insert 성공");
-								}
-							});
+							$.ajax({
+					            type: "POST",
+					            enctype: 'multipart/form-data',
+					            url: "/onepart/manager/newFacility_general",
+					            data: data,
+					            processData: false,
+					            contentType: false,
+					            cache: false,
+					            timeout: 600000,
+					            success: function (data) {
+					                alert("complete");
+					                $("#btnSubmit").prop("disabled", false);
+					            },
+					            error: function (e) {
+					                console.log("ERROR : ", e);
+					                $("#btnSubmit").prop("disabled", false);
+					                alert("fail");
+					            }
+					        });
 
-							$("#frmList").submit();
+							return false;
 
 
 
-						}
+						} */
+
+						$(function(){
+
+
+							$("#btnSubmit").click(function (event) {
+						        event.preventDefault();
+						        var facAvailWeekOfDayStart = $("#facAvailWeekOfDayStart").val();
+								var facAvailWeekOfDayEnd = $("#facAvailWeekOfDayEnd").val();
+								var facAvailWeekOfDay = facAvailWeekOfDayStart + " ~ " + facAvailWeekOfDayEnd;
+								$("#facAvailWeekOfDay").val(facAvailWeekOfDay);
+								console.log($("#facAvailWeekOfDay").val())
+								var facAvailTmStart = $("#facAvailTmStart").val();
+								var facAvailTmEnd = $("#facAvailTmEnd").val();
+								var facAvailTm = facAvailTmStart + " ~ " + facAvailTmEnd;
+								$("#facAvailTm").val(facAvailTm);
+								console.log($("#facAvailTm").val())
+
+
+						        var form = $('#fileUploadForm')[0];
+
+						        var data = new FormData(form);
+
+						        $("#btnSubmit").prop("disabled", true);
+
+						        $.ajax({
+						            type: "POST",
+						            enctype: 'multipart/form-data',
+						            url: "/onepart/manager/insert_newFacility_general",
+						            data: data,
+						            processData: false,
+						            contentType: false,
+						            cache: false,
+						            timeout: 600000,
+						            success: function (data) {
+						            	$.ajax({
+						        			url:"/onepart/manager/menuFacility",
+						        			dataType:"html",
+						        			success:function(result){
+						        				$("#content").html(result);
+						        			}
+						        		});
+						            },
+						            error: function (e) {
+
+						            }
+						        });
+
+						    });
+						});
+
 					</script>
-					<!-- 예약처리 버튼 div -->
-	                <div>
-
-	                </div>
-				</div>
-			</div>
-			</div>
-		<br><br><br>
-
 </body>
 </html>

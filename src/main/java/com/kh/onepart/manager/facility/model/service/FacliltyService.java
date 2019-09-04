@@ -3,6 +3,8 @@ package com.kh.onepart.manager.facility.model.service;
 import java.util.ArrayList;
 
 import com.kh.onepart.manager.facility.model.vo.FacReservation;
+import com.kh.onepart.manager.facility.model.vo.Image;
+import com.kh.onepart.manager.facility.model.vo.Reservation;
 
 public interface FacliltyService {
 	//아파트 시설물 리스트 불러오는 메소드
@@ -15,5 +17,13 @@ public interface FacliltyService {
 	int updatesuccessReservation(int facRsrvSeq);
 	//해당 예약건 예약반려 처리하는 메소드
 	int updatefailReservation(int facRsrvSeq);
+	//예약 시설물 insert하는 메소드
+	int insertReservationGeneral(Reservation reserv, ArrayList<Image> imgArr);
+	//해당 시설물 리스트 불러오는 메소드
+	Reservation selectOneGeneralReservation(int facSeq);
+	//해당 시설물 수정하는 메소드
+	int updateFacilityGeneral(Reservation reserv);
+	//해당 시설물 삭제하는 메소드
+	int deleteFacliltyGeneral(int facSeq);
 
 }

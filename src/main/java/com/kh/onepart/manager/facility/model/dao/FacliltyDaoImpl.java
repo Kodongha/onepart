@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.onepart.manager.facility.model.vo.FacReservation;
+import com.kh.onepart.manager.facility.model.vo.Image;
+import com.kh.onepart.manager.facility.model.vo.Reservation;
 
 @Repository
 public class FacliltyDaoImpl implements FacliltyDao{
@@ -50,6 +52,55 @@ public class FacliltyDaoImpl implements FacliltyDao{
 
 		return result;
 
+	}
+	//시설물 정보 insert하는 메소드
+	@Override
+	public int insertReservationInfo(SqlSessionTemplate sqlSession, Reservation reserv) {
+
+		sqlSession.insert("faclilty.insertReservationInfo", reserv);
+		int facSeq = reserv.getFacSeq();
+		return facSeq;
+	}
+	//대표사진 insert하는 메소드
+	@Override
+	public int insertReservationImgFirst(SqlSessionTemplate sqlSession, Image image) {
+
+		int result = sqlSession.insert("faclilty.insertReservationImgFirst", image);
+
+		return result;
+	}
+	//서브사진 insert하는 메소드
+	@Override
+	public int insertReservationImgSecond(SqlSessionTemplate sqlSession, Image image) {
+
+		int result = sqlSession.insert("faclilty.insertReservationImgSecond", image);
+
+		return result;
+
+	}
+	//해당 시설물 리스트 불러오는 메소드
+	@Override
+	public Reservation selectOneGeneralReservation(SqlSessionTemplate sqlSession, int facSeq) {
+
+		Reservation rs = sqlSession.selectOne("faclilty.selectOneGeneralReservation", facSeq);
+
+		return rs;
+	}
+	//해당 시설물 수정하는 메소드
+	@Override
+	public int updateFacilityGeneral(SqlSessionTemplate sqlSession, Reservation reserv) {
+
+		int result = sqlSession.update("faclilty.updateFacilityGeneral", reserv);
+
+		return result;
+	}
+	//해당 시설물 삭제하는 메소드
+	@Override
+	public int deleteFacliltyGeneral(SqlSessionTemplate sqlSession, int facSeq) {
+
+		int result = sqlSession.delete("faclilty.deleteFacliltyGeneral", facSeq);
+
+		return result;
 	}
 
 }

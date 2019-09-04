@@ -13,6 +13,7 @@ $(document).ready(function() {
 
 	/* 시설물 예약 상세보기 */
 	//$("#facility_reservationDetail").data("menu-url", "/onepart/manager/facility_reservationDetail");
+
 	/* 새 시설물 등록 (예약) */
 	$("#newFacility_general").data("menu-url", "/onepart/manager/newFacility_general");
 	/* 새 시설물 등록 (좌석) */
