@@ -2,12 +2,12 @@ package com.kh.onepart.manager.survey.model.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.manager.survey.model.dao.ManagerSurveyDao;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyQstn;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyQstnOption;
@@ -23,9 +23,31 @@ public class ManagerSurveyServiceImpl implements ManagerSurveyService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+
+	/** 설문조사 메인화면 */
+	@Override
+	public ArrayList<SurveyVO> getSurveyList(PageInfo pi) {
+		// TODO Auto-generated method stub
+
+		ArrayList<SurveyVO> surveyVOList = managerSurveyDao.selectSurveyList(sqlSession, pi);
+
+		return surveyVOList;
+	}
+
+
+	/** 설문조사 리스트 전체 카운트 */
+	@Override
+	public int surveyListCount() {
+		// TODO Auto-generated method stub
+
+		int surveyListCount = managerSurveyDao.selectSurveyListCount(sqlSession);
+
+		return surveyListCount;
+	}
+
 	/** 설문조사 검색*/
 	@Override
-	public ArrayList<SurveyVO> searchSurvey(SurveyVO requestSurveyVO) {
+	public ArrayList<SurveyVO> getSearchSurvey(PageInfo pi, SurveyVO requestSurveyVO){
 		// TODO Auto-generated method stub
 
 		ArrayList<SurveyVO> surveyVOList = managerSurveyDao.selectSearchSurveyList(sqlSession, requestSurveyVO);
@@ -67,4 +89,6 @@ public class ManagerSurveyServiceImpl implements ManagerSurveyService{
 
 		} // end for i
 	}
+
+
 }

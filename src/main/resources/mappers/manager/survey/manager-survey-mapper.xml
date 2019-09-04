@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="managerSurvey">
+<mapper namespace="ManagerSurvey">
 
 	<resultMap type="com.kh.onepart.manager.survey.model.vo.SurveyVO" id="surveyVOResultSet">
 		<id property="surveySeq" column="SURVEY_SEQ"/>
@@ -12,6 +12,24 @@
 		<result property="surveyEnrollDt" column="SURVEY_ENROLL_DT"/>
 		<result property="surveyDelTf" column="SURVEY_DEL_TF"/>
 	</resultMap>
+
+	<!-- 설문조사 리스트 총 개수 -->
+	<select id="selectSurveyListCount" resultType="_int">
+		SELECT  COUNT(*)
+		FROM    SURVEY
+		WHERE   SURVEY_DEL_TF = 'N'
+	</select>
+
+	<!-- 설문조사 리스트 -->
+	<select id="selectSurveyList" resultMap="surveyVOResultSet">
+		SELECT  *
+		FROM    SURVEY
+		WHERE   SURVEY_DEL_TF = 'N'
+		ORDER BY SURVEY_ENROLL_DT DESC
+	</select>
+
+
+
 
 	<!-- 설문조사 검색 -->
 	<select id="selectSearchSurveyList" parameterType="surveyVO" resultMap="surveyVOResultSet">
@@ -73,7 +91,7 @@
 			#{surveyQstnOptionContent},
 			#{surveyQstnSeq}
 		)
-		
+
 	</insert>
 
 </mapper>

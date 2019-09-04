@@ -202,42 +202,24 @@
 				url : 'insertSurvey',
 				method : 'post',
 				data : {resultJsonStr:resultJsonStr},
-				success : function(data){
+				success : function(result){
 					console.log("succ");
+					$('#modal-message').remove();
+					$('.modal-backdrop').remove();
+					$("#content").html(result);
 				},
 				error : function(){
 					console.log("fail");
 				}
 			});
 
-		});
-
-		/*
-		$('#enrollBtn').click(function(){
-
-			var inputSurveyTitle = $('#inputSurveyTitle').val();
-			var surveyPeriod = $('#surveyPeriod').val();
-			var surveySimpleIntro = $('#surveySimpleIntro').val();
-
-			console.log("inputSurveyTitle::" + inputSurveyTitle);
-			console.log("surveyPeriod::" + surveyPeriod);
-
-			var surveyQstnTitle = "";
-			var surveyQstnType = "";
-
-			$("input[name='surveyQstnTitle']").each(function(){
-				surveyQstnTitle += $(this).val() + "§§"
-			});
-
-			$("select[name='surveyQstnType']").each(function(){
-				surveyQstnType += $(this).val() + "§§"
-			});
-
-			console.log("surveyQstnTitle::" + surveyQstnTitle);
-			console.log("surveyQstnType::" + surveyQstnType);
 
 		});
-		 */
+
+		$('#close').click(function(){
+
+		});
+
 
  	});
 
@@ -380,7 +362,7 @@
 
 				</div>
 				<div class="modal-footer">
-					<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">닫기</a>
+					<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal" id="close">닫기</a>
 					<a class="btn btn-sm btn-primary" id="enrollBtn">설문 등록</a>
 				</div>
 			</div>
