@@ -29,14 +29,16 @@ public class MyCarController {
 	}
 
 
-	@RequestMapping(value="/resident/getMyCarList", method = {RequestMethod.POST},produces = "application/text; charset=utf8")
+	@RequestMapping(value="/resident/getMyCarList", method = RequestMethod.GET, produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String getMyCarList(HttpSession session) throws JsonProcessingException {
-		ResidentVO loginResident = (ResidentVO)session.getAttribute("loginResident");
+		ResidentVO loginResident = (ResidentVO)session.getAttribute("loginUser");
+		int residentSeq = loginResident.getResidentSeq();
+		System.out.println("현재로그인하고있는 : " + residentSeq);
 		Map<String, Object> result = new HashMap<>();
 		result.put("result", "success");
-		result.put("getMyCarList", MyCarService.getMyCarList(loginResident));
-
+		result.put("getMyCarList", MyCarService.getMyCarList(residentSeq));
+		System.out.println("RESULT : " + result);
 		return new ObjectMapper().writeValueAsString(result);
 
 	}

@@ -7,6 +7,6 @@ import com.kh.onepart.resident.my_home.my_car.model.vo.MyCar;
 public interface MyCarService {
 
 
-	public List<MyCar> getMyCarList(ResidentVO loginResident);
+	public List<MyCar> getMyCarList(int residentSeq);
 
 }
