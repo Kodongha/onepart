@@ -96,6 +96,9 @@
 	<script src="${contextPath}/resources/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
 	<script>
+		// 채팅 목록 가져오는 timeoutID
+		let OpenChatRoomListTimeoutEnable = true;
+		let OpenChatRoomListTimeoutManage = "";
 
 		const PageHtmlLoader = (function () {
 
@@ -150,9 +153,18 @@
 					dataType : "html",
 					success:function(result){
 						$("#content").html(result);
-							console.log(menuUrl);
+						console.log(menuUrl);
 
-
+						// ajax 멈춤
+						if( menuUrl != "/onepart/resident/menuOpenChatting" ) {
+							if(OpenChatRoomListTimeoutManage != "") {
+								OpenChatRoomListTimeoutEnable = false;
+								clearTimeout(OpenChatRoomListTimeoutManage);
+							}
+						}else {
+							OpenChatRoomListTimeoutEnable = true;
+							OpenChatting.getRoomListAll();
+						}
 					}
 				});
 			}

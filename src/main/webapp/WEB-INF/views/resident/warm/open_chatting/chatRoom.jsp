@@ -311,18 +311,28 @@
 			webSocket.onerror = function(event) {
 				alert(event.data);
 			};
+			// 연결 성공 시
 			webSocket.onopen = function(event) {
 				console.log('websocket connection success...');
+				// 방에 참여
 				enterRoom();
+				// 이전대화 호출
+				getPrevMessages();
 			};
 			webSocket.onmessage = function(event) {
 				let resultData = JSON.parse(event.data);
-				const sender = resultData.sender;
-				const msg = resultData.message;
-				const date = resultData.date;
-				const isMe = resultData.isMe;
 
-				addMessage(sender, msg, date, isMe);
+				if(resultData.act == "sendMsg") {
+					const senderId = resultData.senderId;
+					const msg = resultData.message;
+					const date = resultData.date;
+					const isMe = resultData.isMe;
+
+					addMessage(senderId, msg, date, isMe);
+				}
+				else if(resultData.act == "getPrevMessages") {
+					console.log(resultData);
+				}
 			};
 		}
 
@@ -346,7 +356,17 @@
 			let openChatSeq = urlPathArr[urlPathArr.length-1];
 			let data = {
 				'act': 'enterRoom',
-				'sender' : '${ sessionScope.loginUser.residentSeq }',
+				'openChatSeq' : openChatSeq
+			};
+			webSocket.send(JSON.stringify(data));
+		}
+
+		// 이전대화 호출
+		function getPrevMessages() {
+			let urlPathArr = location.href.split('/');
+			let openChatSeq = urlPathArr[urlPathArr.length-1];
+			let data = {
+				'act': 'getPrevMessages',
 				'openChatSeq' : openChatSeq
 			};
 			webSocket.send(JSON.stringify(data));
@@ -359,6 +379,7 @@
 			let data = {
 				'act': 'sendMsg',
 				'sender' : '${ sessionScope.loginUser.residentSeq }',
+				'senderId' : '${ sessionScope.loginUser.residentId }',
 				'openChatSeq' : openChatSeq,
 				'message' : msg
 			};

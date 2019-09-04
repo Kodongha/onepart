@@ -14,7 +14,7 @@ public class MyCarDaoImpl implements MyCarDao {
 
 	@Override
 	public List<MyCar> selectListAll(SqlSessionTemplate sqlSession, int residentSeq) {
-		return sqlSession.selectList("MyCar.selectListAll");
+		return sqlSession.selectList("MyCar.selectListAll", residentSeq);
 
 	}
 

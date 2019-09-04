@@ -12,32 +12,13 @@ import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatCommVO;
 public class OpenChatCommDaoImpl implements OpenChatCommDao {
 
 	@Override
-	public List<OpenChatCommVO> selectListAll(SqlSessionTemplate sqlSession) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public List<OpenChatCommVO> selectListByOpenChatSeq(SqlSessionTemplate sqlSession, int openChatSeq) {
 
-	@Override
-	public OpenChatCommVO selectOneById(SqlSessionTemplate sqlSession, int openChatSeq) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList("OpenChatComm.selectListByOpenChatSeq", openChatSeq);
 	}
 
 	@Override
 	public void insert(SqlSessionTemplate sqlSession, OpenChatCommVO openChatCommVO) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update(SqlSessionTemplate sqlSession, OpenChatCommVO openChatCommVO) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteById(SqlSessionTemplate sqlSession, int openChatSeq) {
-		// TODO Auto-generated method stub
-		
+		sqlSession.insert("OpenChatComm.insert", openChatCommVO);
 	}
 }

@@ -17,6 +17,7 @@ public class MyCar {
 	private String enrollPurpose;
 	private Date enrollDt;
 	private String carNum;
+
 	private String residentNm;
 	private int bdNm;
 	private int rmNm;
