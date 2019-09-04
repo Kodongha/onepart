@@ -18,6 +18,7 @@
 		<result property="residentBirth" column="RESIDENT_BIRTH"/>
 		<result property="confirmTf" column="CONFIRM_TF"/>
 		<result property="residentGender" column="RESIDENT_GENDER"/>
+		<result property="residentNm2" column="RESIDENT_NM"/>
 	</resultMap>
 
 	<select id="selectCheckLogin" resultMap="residentVOResultSet" parameterType="ResidentVO">
@@ -43,7 +44,7 @@
 	   	WHERE RESIDENT_ID = #{residentId}
 	   	AND LEAVE_TF = 'N'
    </select>
-
+	<!-- 회원 가입용 메소드 -->
 	<insert id="insertResident" parameterType="ResidentVO">
       INSERT INTO RESIDENT (RESIDENT_SEQ, RESIDENT_ID, RESIDENT_PWD, RESIDENT_NM, RESIDENT_PHONE
       	, RESIDENT_EMAIL, APT_DETAIL_INFO_SEQ, HOUSEHOLD_AUTH_TYPE, RESIDENT_ENROLL_DT, LEAVE_TF
@@ -54,6 +55,26 @@
          , DEFAULT, #{residentBirth}, DEFAULT, #{residentGender}
       )
    </insert>
+   <!--  아이디 찾기용 메소드 -->
+   <select id="selectFindId" resultMap="residentVOResultSet" parameterType="ResidentVO">
+	   	SELECT RESIDENT_SEQ, RESIDENT_ID, RESIDENT_NM, RESIDENT_PHONE, RESIDENT_EMAIL
+	   	FROM RESIDENT
+	   	WHERE
+	   	<choose>
+	   		<when test="residentNm != ''">
+	   		RESIDENT_NM = #{residentNm}
+		   	AND RESIDENT_PHONE = #{residentPhone}
+	   		</when>
+	   	<!-- 	<when test="residentNm == ''">
+	   		RESIDENT_NM = #{residentNm2}
+			RESIDENT_EMAIL = #{residentEmail}
+	   		</when> -->
+			<otherwise>
+			RESIDENT_NM = #{residentNm2}
+			AND RESIDENT_EMAIL = #{residentEmail}
+			</otherwise>
+	   	</choose>
+   </select>
 
 
 

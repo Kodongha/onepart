@@ -26,6 +26,7 @@ public class ResidentVO {
 	private String residentBirth;
 	private String confirmTf;
 	private String residentGender;
+	private String residentNm2;
 	//private String aptNm; // APT_INFO_SEQ 이 있어야 하는거
 
 

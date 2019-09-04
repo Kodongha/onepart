@@ -33,6 +33,8 @@
 
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="${contextPath}/resources/plugins/pace/pace.min.js"></script>
+	<!-- 제이쿼리 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<!-- ================== END BASE JS ================== -->
 </head>
 <body class="pace-top">
@@ -48,7 +50,7 @@
 		<!-- 반응형 시작 -->
  			<div class="col-md-6">
 				<ul class="nav nav-tabs">
-					<li class=""><a href="${contextPath }/moveFindId" data-toggle="tab" aria-expanded="false">아이디 찾기</a></li>
+					<li class=""><a href="${contextPath }/moveFindId"  aria-expanded="false">아이디 찾기</a></li>
 					<li class="active"><a href="#default-tab-2" data-toggle="tab" aria-expanded="true">비밀번호 찾기</a></li>
 				</ul>
 				<!-- 아이디 찾기, 비밀번호 찾기 탭 시작 -->
