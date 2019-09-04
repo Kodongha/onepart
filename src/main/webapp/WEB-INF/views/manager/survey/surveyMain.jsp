@@ -30,7 +30,7 @@
 	}
 
 	#writeSurvey {
-		margin-bottom: 2%;
+		margin-bottom: 5%;
 	}
 
 	textarea {
@@ -51,6 +51,7 @@
 
 	.defaultTemplate{
 		display: none;
+		margin-top: 1%;
 	}
 
 	input[name='checkboxOption']{
