@@ -1,9 +1,12 @@
 package com.kh.onepart.resident.warm.open_chatting.model.service.impl;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.warm.open_chatting.model.dao.OpenChatMemberDao;
 import com.kh.onepart.resident.warm.open_chatting.model.service.OpenChatMemberService;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO;
@@ -28,5 +31,7 @@ public class OpenChatMemberServiceImpl implements OpenChatMemberService{
 			openChatMemberDao.insert(sqlSession, openChatMemberVO);
 		}
 	}
+
+	
 
 }

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +13,13 @@
 <script type="text/javascript" src="${contextPath}/resources/js/moment.min.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/js/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/daterangepicker.css" /> --%>
+<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+
+
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 </head>
 
 <body class="pace-top">
@@ -17,8 +27,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-	/* 메인으로 */
-	$("#returnMain").data("menu-url", "/onepart/resident/returnMain");
+	 /* 메인으로 */
+	/* $("#returnMain").data("menu-url", "/onepart/resident/insertReservation");
 
 	$("#returnMain").click(function(){
 		var voteUrl = $(this).data("menu-url");
@@ -29,8 +39,125 @@ $(document).ready(function() {
 				$("#content").html(result);
 			}
 		});
+	});  */
+	$("input[type='checkbox'][name='agreeCheck']").click(function(){
+		console.log("click");
+		if($(this).prop("checked")){
+			console.log("true");
+			$("input[type='checkbox'][name='agreeCheck']").prop("checked", false);
+			$(this).prop("checked", true);
+		}
 	});
+
+	$("input[type='checkbox'][name='choiceCheck']").click(function(){
+		console.log("click");
+		if($(this).prop("checked")){
+			console.log("true");
+			$("input[type='checkbox'][name='choiceCheck']").prop("checked", false);
+			$(this).prop("checked", true);
+		}
+
+		if($(this).val() == 'more'){
+			$("#hiddenDiv").show();
+		}else{
+			$("#hiddenDiv").hide();
+		}
+	});
+
+	$("#hiddenDiv").hide();
+
+	$( "#testDatepicker" ).datepicker({
+    });
+
+	/* 데이트피커 값 변할 때 마다 이용날짜 값 변동 */
+	$("#testDatepicker").change(function(){
+		var facSeq = $("#facSeq").val();
+		var testDatepicker = $("#testDatepicker").val();
+		var first = testDatepicker.substr(6,10);
+		var second = testDatepicker.substr(0,5);
+		var propUseDt = first + "/" + second;
+		$("#propUseDt").val(propUseDt);
+		$.ajax({
+			url:"/onepart/resident/selectDdayReservation",
+			type:"post",
+			data:{facSeq:facSeq, propUseDt:propUseDt},
+			success:function(data){
+				console.log(data.resultList);
+				var list = data.resultList
+				//console.log(list[i]);
+				$("input[type='checkbox'][name='timeCheckbox']").each(function(){
+					console.log("aaa  : " + list.indexOf($(this).val()))
+					if(list.indexOf($(this).val()) == -1){
+						$(this).removeAttr("disabled");
+					}else{
+					}
+				});
+
+			}
+
+		});
+
+	});
+
+	/* 시간대가 선택되었을때  이용시간 값 변동*/
+		var time = new Array();
+		$("input[type='checkbox'][name='timeCheckbox']").change(function(){
+			console.log($(this).val())
+
+			//선택된값 시간대 배열에 담아 input에 출력
+			if($(this).is(":checked")){
+				console.log("checked!!");
+				time.push($(this).val())
+				$("#propUseTm").val(time);
+			}else{
+				console.log("unchecked!!")
+				var remove = $(this).val();
+				time.splice(time.indexOf($(this).val()), 1);
+				$("#propUseTm").val(time);
+			}
+			//총사용시간 input에 출력
+			$("#allUserTm").val(time.length);
+			//이용금액 input에 출력
+			var price = time.length * $("#facDefaultFee").val();
+			$("#toalFee").val(price);
+
+
+		});
+
+
 });
+
+function applyReservation() {
+	var facSeq = $("#facSeq").val();
+	var propUseDt = $("#propUseDt").val();
+	var propUseTm = $("#propUseTm").val();
+	var residentSeq = $("#residentSeq").val();
+	var toalFee = $("#toalFee").val();
+	var useHeadCount = $("#useHeadCount").val();
+	var usePurpose = $("#usePurpose").val();
+	var etc = $("#etc").val();
+	var rsrvGroupType;
+	$("input[name=choiceCheck]:checked").each(function(){
+		rsrvGroupType = $(this).val();
+	});
+	var rsrvNm = $("#rsrvNm").val();
+	var rsrvPhone = $("#rsrvPhone").val();
+
+	$.ajax({
+		url:"/onepart/resident/insertReservation",
+		dataType:"html",
+		type:"post",
+		data:{facSeq:facSeq, propUseDt:propUseDt, propUseTm:propUseTm, toalFee:toalFee
+			,useHeadCount:useHeadCount, usePurpose:usePurpose, etc:etc, rsrvNm:rsrvNm
+			,rsrvPhone:rsrvPhone, residentSeq:residentSeq, rsrvGroupType:rsrvGroupType},
+		success:function(result){
+			$("#content").html(result);
+		}
+	});
+
+	return false;
+}
+
 </script>
 
 <!-- begin #content -->
@@ -43,10 +170,10 @@ $(document).ready(function() {
 				<br><br><br>
 					 <ul class="result-list">
                             <li>
-                                <div class="result-image">
+                                <div class="result-image" style="width:20%">
                                     <a href="javascript:;"><img src="${ contextPath }/resources/uploadFiles/reservation/${ reserv.changeNm }" alt="" /></a>
                                 </div>
-                                <div class="result-info" style="width:50%">
+                                <div class="result-info" style="width:65%">
                                 	<br>
                                     <h4 class="title"><a href="javascript:;">${ reserv.facNm }</a></h4>
                                     <br>
@@ -63,7 +190,7 @@ $(document).ready(function() {
                                         	수용인원 : ${ reserv.facMaxHead }명
                                     </p>
                                     <p class="desc" style="margin-bottom:5px">
-                                        	면적 : ${ reser.vfacSquareMeasure }m^
+                                        	면적 : ${ reserv.facSquareMeasure }m^
                                     </p>
                                     <br>
                                 </div>
@@ -88,7 +215,7 @@ $(document).ready(function() {
 		                            <h4 class="panel-title">예약 진행하기</h4>
 		                        </div>
 			                        <div class="panel-body">
-			                            <form action="/" method="POST" data-parsley-validate="true" name="form-wizard">
+			                            <form action="" method="POST" data-parsley-validate="true" name="form-wizard">
 											<div id="wizard" >
 												<ol style="padding-left:0px">
 													<li style="width: 26%">
@@ -139,10 +266,10 @@ $(document).ready(function() {
 																		<tr>
 																			<td style="font-weight:bold;">위 내용을 충분히 숙지하였으며 약관 동의 후 예약을 진행하시겠습니까?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 																			<td>
-																				<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;예&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																				<input type="checkbox" name="agreeCheck"data-parsley-group="wizard-step-1" required>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;예&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 																			</td>
 																			<td>
-																				<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아니요
+																				<input type="checkbox" name="agreeCheck" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아니요
 																			</td>
 																		</tr>
 																	</table>
@@ -164,7 +291,22 @@ $(document).ready(function() {
 			                                                	<div class="form-group block1">
 					                                                <br>
 																	<label style="font-weight:bold">예약날짜 설정</label>
-																	<input type="text" name="datetimes" class="form-control pull-right" data-parsley-group="wizard-step-2">
+																	<table style="width:100%">
+																		<tr>
+																			<td style="width:30%"><input type="text" id="testDatepicker" placeholder="클릭하세요" name="test" class="form-control pull-right" data-parsley-group="wizard-step-2" style="width:100%; height:100%"></td>
+																			<td style="width:5%"></td>
+																			<td>
+																				<c:set var="time" value="${ reserv.facAvailTm }"></c:set>
+																				<c:set var="result1" value="${fn:substring(time,0,2) }"></c:set>
+																				<c:set var="result2" value="${ fn:substring(time,8,10) }"></c:set>
+																				<fmt:parseNumber var="start" type="number" value="${ result1 }"/>
+																				<fmt:parseNumber var="end" type="number" value="${ result2 }"/>
+																				<c:forEach begin="${ start }" end="${ end }" var="result">
+																				<input type="checkbox" name="timeCheckbox" disabled value="${ result }:00"> ${ result }:00
+																				</c:forEach>
+																			</td>
+																		</tr>
+																	</table>
 																</div>
 																<br><br>
 																<div>
@@ -191,42 +333,45 @@ $(document).ready(function() {
 			                                                    <div class="form-group">
 			                                                        <label style="font-weight:bold">이용날짜</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-2" required />
+			                                                            <input type="text" id="propUseDt" class="form-control" data-parsley-group="wizard-step-2" required readonly/>
 			                                                        </div>
 			                                                    </div>
 			                                                    <br>
 			                                                    <div class="form-group">
 			                                                        <label style="font-weight:bold">이용시간</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-2" required />
+			                                                            <input type="text" id="propUseTm" class="form-control" data-parsley-group="wizard-step-2" required readonly/>
 			                                                        </div>
 			                                                    </div>
 			                                                    <br>
 			                                                    <div class="form-group">
 			                                                        <label style="font-weight:bold">총 사용시간</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-2" required />
+			                                                            <input type="text" id="allUserTm" class="form-control" data-parsley-group="wizard-step-2" required readonly/>
+			                                                            <input type="hidden" id="facDefaultFee" value="${ reserv.facDefaultFee }"/>
+			                                                            <input type="hidden" id="facSeq" value="${ reserv.facSeq }"/>
+			                                                            <input type="hidden" id="residentSeq" value="${ sessionScope.loginUser.residentSeq }"/>
 			                                                        </div>
 			                                                    </div>
 			                                                    <br>
 			                                                    <div class="form-group">
 			                                                        <label style="font-weight:bold">사용료 (원)</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-2" required />
+			                                                            <input type="text" id="toalFee" class="form-control" data-parsley-group="wizard-step-2" required readonly/>
 			                                                        </div>
 			                                                    </div>
 			                                                    <br>
 			                                                    <div class="form-group">
 			                                                        <label style="font-weight:bold">사용목적</label>
 			                                                        <div class="controls">
-			                                                            <textarea style="resize:none" rows="10" cols="50" name="username" class="form-control" data-parsley-group="wizard-step-2" required></textarea>
+			                                                            <textarea id="usePurpose" style="resize:none" rows="10" cols="50" name="username" class="form-control" data-parsley-group="wizard-step-2" required></textarea>
 			                                                        </div>
 			                                                    </div>
 			                                                    <br>
 			                                                    <div class="form-group">
 			                                                        <label style="font-weight:bold">기타사항</label>
 			                                                        <div class="controls">
-			                                                            <textarea style="resize:none" rows="10" cols="50" name="username" class="form-control" data-parsley-group="wizard-step-2" required></textarea>
+			                                                            <textarea id="etc" style="resize:none" rows="10" cols="50" name="username" class="form-control" data-parsley-group="wizard-step-2" required></textarea>
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
@@ -247,25 +392,26 @@ $(document).ready(function() {
 			                                                	 <div class="form-group">
 			                                                        <label style="font-weight:bold">개인 / 단체</label>
 			                                                        <div class="controls">
-			                                                            <input type="checkbox" name="username" class="form-control" data-parsley-group="wizard-step-3" required />
+			                                                            <input type="checkbox" id="rsrvGroupType" name="choiceCheck" data-parsley-group="wizard-step-3" required value="one"/> 개인 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			                                                            <input type="checkbox" id="rsrvGroupType" name="choiceCheck" data-parsley-group="wizard-step-3" required value="more"/> 단체
 			                                                        </div>
 			                                                    </div>
-			                                                    <div class="form-group">
+			                                                    <div class="form-group" id="hiddenDiv">
 			                                                        <label style="font-weight:bold">사용인원 (명)</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required />
+			                                                            <input type="text" id="useHeadCount"/>
 			                                                        </div>
 			                                                    </div>
 			                                                     <div class="form-group">
 			                                                        <label style="font-weight:bold">신청인 / 신청단체 명</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required />
+			                                                            <input type="text" id="rsrvNm" class="form-control" data-parsley-group="wizard-step-3" required />
 			                                                        </div>
 			                                                    </div>
 			                                                     <div class="form-group">
 			                                                        <label style="font-weight:bold">연락처</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required />
+			                                                            <input type="text" id="rsrvPhone" class="form-control" data-parsley-group="wizard-step-3" required />
 			                                                        </div>
 			                                                    </div>
 			                                                     <div class="form-group">
@@ -289,9 +435,9 @@ $(document).ready(function() {
 												<!-- begin wizard step-4 -->
 												<div>
 												    <div class="jumbotron m-b-0 text-center">
-			                                            <h1>예약 완료!</h1>
-			                                            <p>예약이 완료되었습니다. 관리자가 확인 후 승인처리 해드립니다.</p>
-			                                            <p id="returnMain"><a class="btn btn-success btn-lg">시설물 예약페이지로 이동</a></p>
+			                                            <h1>작성 완료!</h1>
+			                                            <p>예약신청서 작성 완료되었습니다 제출버튼 클릭 시 관리자에게 전송되고 메인페이지로 돌아갑니다.</p>
+			                                            <p id="returnMain"><a class="btn btn-success btn-lg" onclick="return applyReservation();">제출</a></p>
 			                                        </div>
 												</div>
 												<!-- end wizard step-4 -->
@@ -303,12 +449,16 @@ $(document).ready(function() {
 			                </div>
 			                <!-- end col-12 -->
 			            </div>
+
 			            <!-- end 위자드 -->
 			        </div>
 			    	<!-- 비밀번호 찾기 끝 -->
             	<!-- 아이디 찾기, 비밀번호 찾기 탭 끝 -->
 		<!-- 반응형 끝 -->
 			</div>
+
+
+
 
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="${contextPath}/resources/plugins/jquery/jquery-1.9.1.min.js"></script>
@@ -331,18 +481,6 @@ $(document).ready(function() {
 			App.init();
 			FormWizardValidation.init();
 		});
-
-		$(function() {
-			console.log("AAAA");
-			  $('input[name="datetimes"]').daterangepicker({
-			    timePicker: true,
-			    startDate: moment().startOf('hour'),
-			    endDate: moment().startOf('hour').add(32, 'hour'),
-			    locale: {
-			      format: 'M/DD hh:mm A'
-			    }
-			  });
-			});
 
 
 	</script>

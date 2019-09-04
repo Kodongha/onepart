@@ -126,6 +126,7 @@
 .createRoomDiv .form-group>div.buttons .btn-cancel:hover {
 	background-color: #BBB;
 }
+.roomDiv { cursor: pointer; }
 </style>
 </head>
 <body>
@@ -152,7 +153,7 @@
 		<ul id="ioniconsTab" class="nav nav-tabs">
 			<li class="active"><a href="#leftTab" data-toggle="tab"> <span
 					class="hidden-xs m-l-3">모든 채팅방<span
-						class="badge badge-inverse m-l-3">252</span></span>
+						class="badge badge-inverse m-l-3" id="allroom"></span></span>
 			</a></li>
 			<li><a href="#rightTab" data-toggle="tab"> <span
 					class="hidden-xs m-l-3">참여중인 채팅방<span
@@ -177,7 +178,9 @@
 			<div class="tab-pane fade in active" id="leftTab">
 				<div id="roomListLeftTab">
 					<!-- 모든 채팅방 동적 생성 -->
+
 				</div>
+
 			</div>
 			<!-- end tab-pane -->
 			<!-- begin tab-pane -->
@@ -189,6 +192,7 @@
 				</div>
 			</div>
 			<!-- end tab-pane -->
+
 		</div>
 		<!-- end tab-content -->
 
@@ -196,6 +200,7 @@
 			<strong class="roomNm"></strong>
 			<br>
 			<span class="currHead"></span><span>/</span><span class="maxHead"></span>
+
 		</div>
 
 		<div class="roomDiv RightTab format alert alert-success fade in m-b-15">
@@ -281,6 +286,8 @@
 				$('#' + modalId).removeClass('modal-hide');
 				$('#openChatRoomNm').val("");
 				$('#openChatPwd').val("");
+				$("#passwordMake").prop("checked", false)
+				$("#openChatPwd").attr("disabled", true);
 			});
 		}
 		return {
@@ -293,9 +300,7 @@
 
 		function init() {
 			// 방 목록 불러오기
-			var intervalID = setInterval(function(){
-				getRoomListAll();
-			}, 5000);
+			getRoomListAll();
 
 			// 방 참가
 			$(document).on('click', '.roomDiv', function () {
@@ -327,8 +332,6 @@
 						}else {
 							getRoomListAll();
 							$('.modal-hide-btn').trigger('click'); // 모달창 닫기
-
-
 						}
 					},
 					error : function(err) {
@@ -349,7 +352,15 @@
 					if(data.result == "success") {
 						let roomList = data.openChatRoomList;
 						drawRoomList(roomList);
+						$("#allroom").text(data.countChatRoom);
 					}
+					// 방 목록 불러오기
+					var timer =setTimeout(function(){
+						getRoomListAll();
+					}, 5000);
+
+
+
 				},
 				error : function(err) {
 					alert('방 목록 가져오기에 실패했습니다.');
@@ -386,6 +397,9 @@
 		OpenChatting.init();
 		OpenChatting.getRoomListAll();
 		$("#openChatPwd").attr("disabled", true);
+
+
+
 	});
 </script>
 

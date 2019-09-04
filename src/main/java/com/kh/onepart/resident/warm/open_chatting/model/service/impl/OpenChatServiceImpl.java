@@ -20,6 +20,7 @@ public class OpenChatServiceImpl implements OpenChatService {
 
 	@Override
 	public void createRoom(OpenChatVO openChatVO) {
+
 		openChatDao.insert(sqlSession, openChatVO);
 	}
 
@@ -36,6 +37,16 @@ public class OpenChatServiceImpl implements OpenChatService {
 	@Override
 	public List<ResidentVO> getResidentList(int openChatSeq) {
 		return openChatDao.selectListByOpenChatSeq(sqlSession, openChatSeq);
+	}
+
+	@Override
+	public OpenChatVO selectOneById(int openChatSeq) {
+		return openChatDao.selectOneById(sqlSession, openChatSeq);
+	}
+
+	@Override
+	public int countChatRoom() {
+		return openChatDao.countChatRoom(sqlSession);
 	}
 
 }

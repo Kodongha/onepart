@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if !IE]><!-->
@@ -72,8 +72,6 @@
 	.member-content.modal-hide #exitBtn { opacity:0; transition-property: opacity; transition-duration: 0.3s; }
 	.format { display: none; }
 </style>
-
-
 
 <!-- ================== BEGIN BASE CSS STYLE ================== -->
 <link href="${contextPath}/resources/plugins/simple-line-icons/simple-line-icons.css" rel="stylesheet" />
@@ -156,13 +154,6 @@
 	<!-- ================== END PAGE LEVEL JS ================== -->
 
 	<script>
-		$(document).ready(function() {
-			App.init();
-
-		});
-	</script>
-
-	<script>
 		const CustomModal = (function(){
 			function init() {
 				displayInit();
@@ -190,13 +181,13 @@
 	<div class="chat-content panel panel-inverse" data-sortable-id="index-2">
 		<div class="panel-heading">
 			<h4 class="panel-title">
-				<strong>뜨개질 환영 뜨개질 환영뜨개질 환영</strong>
+				<strong>${ openChatVO.openChatRoomNm }</strong>
 				<div class="noticeicon">
 					<i class="ion-android-clipboard fa-2x text-inverse"></i>
 				</div>
 
 				<span class="label label-success pull-right" id="chatpeople">
-					<button class="modal-show" data-modal-id="memberContentDiv">20/25</button>
+					<button class="modal-show" data-modal-id="memberContentDiv">${ openChatVO.openChatCurrHead }/${ openChatVO.openChatMaxHead }</button>
 				</span>
 			</h4>
 		</div>
@@ -235,9 +226,9 @@
 			<form id="sendMessageForm" name="send_message_form" data-id="message-form">
 				<div class="input-group">
 					<input id="inputMsg" type="text" class="form-control input-sm" name="message"
-						placeholder="Enter your message here."> <span
+						placeholder="보낼 메세지를 작성하시오."> <span
 						class="input-group-btn">
-						<button id="sendMessageBtn" class="btn btn-primary btn-sm" type="button">Send</button>
+						<button id="sendMessageBtn" class="btn btn-primary btn-sm" type="button">보내기</button>
 					</span>
 				</div>
 			</form>
@@ -258,134 +249,18 @@
 		<div data-scrollbar="true" data-height="100%">
 			<table id="memberTable " class="table table-striped table-bordered">
 				<tbody>
-					<tr>
+					<c:forEach var="residentVO" items="${residentList}">
+						<tr>
 						<td>
-							<span>김동주</span>
+							<span><c:out value="${residentVO.residentId}" /></span>
 						</td>
 						<td>
 							<i class="icon-close"></i>
 						</td>
 					</tr>
-					<tr>
-						<td>
-							<span>김동주</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>김동주</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>김동주</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>김동주</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>김동주</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>김동주</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>김동주</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>김동주</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>김동주</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>김동주</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>김동주</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>김동주</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>김동주</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>김동주</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>맨아래</span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
+					</c:forEach>
+
+
 				</tbody>
 			</table>
 		</div>
@@ -433,21 +308,20 @@
 
 			webSocket = new SockJS('/onepart/menuOpenChatRoom');
 
-			console.log(webSocket);
-
 			webSocket.onerror = function(event) {
 				alert(event.data);
 			};
 			webSocket.onopen = function(event) {
-				console.log('websocket connection success...')
+				console.log('websocket connection success...');
+				enterRoom();
 			};
 			webSocket.onmessage = function(event) {
-				console.log(event.data);
 				let resultData = JSON.parse(event.data);
 				const sender = resultData.sender;
 				const msg = resultData.message;
 				const date = resultData.date;
 				const isMe = resultData.isMe;
+
 				addMessage(sender, msg, date, isMe);
 			};
 		}
@@ -466,10 +340,26 @@
 			}
 		}
 
+		// 방에 참가
+		function enterRoom() {
+			let urlPathArr = location.href.split('/');
+			let openChatSeq = urlPathArr[urlPathArr.length-1];
+			let data = {
+				'act': 'enterRoom',
+				'sender' : '${ sessionScope.loginUser.residentSeq }',
+				'openChatSeq' : openChatSeq
+			};
+			webSocket.send(JSON.stringify(data));
+		}
+
+		// 메세지 전송
 		function sendMessage(msg) {
+			let urlPathArr = location.href.split('/');
+			let openChatSeq = urlPathArr[urlPathArr.length-1];
 			let data = {
 				'act': 'sendMsg',
-				'sender' : 'djkim',
+				'sender' : '${ sessionScope.loginUser.residentSeq }',
+				'openChatSeq' : openChatSeq,
 				'message' : msg
 			};
 			webSocket.send(JSON.stringify(data));
@@ -481,7 +371,7 @@
 	        const scrollH = $('#chatDiv').height();	//스크롤바를 갖는 div의 높이
 	        const contentH = $('#chatDiv ul').height();	//문서 전체 내용을 갖는 div의 높이
 
-	        return (scrollT + scrollH + ignoreHeight >= contentH)
+	        return (scrollT + scrollH + ignoreHeight >= contentH);
 		}
 
 		// 맨 아래 고정
