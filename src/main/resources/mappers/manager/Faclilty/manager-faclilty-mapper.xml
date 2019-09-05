@@ -61,6 +61,7 @@
 		FROM FAC_RSRV R
 		JOIN FAC F ON (R.FAC_SEQ = F.FAC_SEQ)
 		JOIN RESIDENT RS ON (R.RESIDENT_SEQ = RS.RESIDENT_SEQ)
+		WHERE PROP_SEAT IS NULL
 	</select>
 
 	<select id="selectOneUserReservation" resultMap="manager_facReservationResultSet" parameterType="_int">

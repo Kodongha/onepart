@@ -27,5 +27,6 @@ public class FacReservation {
 	private int propSeat;
 	private String rsrvPhone;
 	private String facNm;
+	private String facPositionNum;
 
 }

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.convenience.reservate_facility.model.service.ReservationService;
 import com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacReservation;
+import com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacSeatInfo;
 import com.kh.onepart.resident.convenience.reservate_facility.model.vo.Reservation;
 
 @Controller
@@ -106,6 +107,33 @@ public class ReservateFacilityController {
 		//해당 시설물번호의 상세정보 불러오는 메소드
 		Reservation reserv = rs.selectOneReservation(facSeq);
 
+		//해당 시설물번호의 좌석정보 불러오는 메소드
+		ArrayList<FacSeatInfo> seatList = rs.selectOneReservationSeatList(facSeq);
+		int maxNumber = seatList.get(0).getFacSeatMaxNum();
+		int widthSize = 100 / maxNumber;
+
+		//해당 시설물번호의 좌석예약 상태 불러오는 메소드
+		ArrayList<FacReservation> propSeatList =  rs.selectOnePropSeatList(facSeq);
+
+		if(seatList.size() != 0 && propSeatList.size() != 0) {
+			for(int i = 0; i < seatList.size(); i++) {
+				for(int j = 0; j < propSeatList.size(); j++) {
+					if(seatList.get(i).getFacPositionNum().equals(propSeatList.get(j).getFacPositionNum())) {
+						seatList.remove(i);
+					}
+				}
+			}
+		}
+
+
+		for(int i = 0; i < seatList.size(); i++) {
+			System.out.println("결과리스트 : " + seatList.get(i).getFacPositionNum());
+		}
+
+		mv.addObject("widthSize", widthSize);
+		mv.addObject("maxNumber", maxNumber);
+		mv.addObject("propSeatList", propSeatList);
+		mv.addObject("seatList", seatList);
 		mv.addObject("reserv", reserv);
 		mv.setViewName("/resident/convenience/reservate_facility/reservation_seat");
 

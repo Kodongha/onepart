@@ -45,6 +45,15 @@
 		<result property="propSeat" column="PROP_SEAT"/>
 		<result property="rsrvPhone" column="RSRV_PHONE"/>
 		<result property="facNm" column="FAC_NM"/>
+		<result property="facPositionNum" column="FAC_POSITION_NUM"/>
+	</resultMap>
+
+	<resultMap type="facSeatInfo" id="facSeatInfoResultSet">
+		<id property="facSeatSeq" column="FAC_SEAT_SEQ"/>
+		<result property="facSeatNum" column="FAC_SEAT_NUM"/>
+		<result property="facSeq" column="FAC_SEQ"/>
+		<result property="facPositionNum" column="FAC_POSITION_NUM"/>
+		<result property="facSeatMaxNum" column="FAC_SEAT_MAX_NUM"/>
 	</resultMap>
 
 
@@ -67,7 +76,7 @@
 
 	<insert id="insertReservation" parameterType="facReservation">
 		INSERT INTO FAC_RSRV
-		VALUES (FAC_RSRV_SEQ.NEXTVAL, #{facSeq}, TO_DATE(#{propUseDt}, 'YYYY/MM/DD'), #{propUseTm}, #{residentSeq}, 1, #{toalFee}, #{useHeadCount}, #{usePurpose}, #{etc}, #{rsrvGroupType}, #{rsrvNm}, SYSDATE, #{useHeadCount}, #{rsrvPhone})
+		VALUES (FAC_RSRV_SEQ.NEXTVAL, #{facSeq}, TO_DATE(#{propUseDt}, 'YYYY/MM/DD'), #{propUseTm}, #{residentSeq}, 1, #{toalFee}, #{useHeadCount}, #{usePurpose}, #{etc}, #{rsrvGroupType}, #{rsrvNm}, SYSDATE, NULL, #{rsrvPhone})
 	</insert>
 
 	<select id="selectUserReservation" resultMap="facReservationResultSet" parameterType="_int">
@@ -76,6 +85,7 @@
 		FROM FAC_RSRV R
 		JOIN FAC F ON (R.FAC_SEQ = F.FAC_SEQ)
 		WHERE R.RESIDENT_SEQ = #{residentSeq}
+		AND R.PROP_SEAT IS NULL
 	</select>
 
 	<delete id="deleteUserReservation" parameterType="_int">
@@ -89,6 +99,21 @@
 		WHERE FAC_SEQ = #{facSeq}
 		AND PROP_USE_DT = TO_DATE(#{propUseDt}, 'YYYY/MM/DD')
 		AND PROP_STATUS = 2
+	</select>
+
+	<select id="selectOneReservationSeatList" parameterType="_int" resultMap="facSeatInfoResultSet">
+		SELECT *
+		FROM FAC_SEAT
+		WHERE FAC_SEQ = #{facSeq}
+	</select>
+
+	<select id="selectOnePropSeatList" parameterType="_int" resultMap="facReservationResultSet">
+		SELECT *
+		FROM FAC_RSRV R
+		JOIN FAC_SEAT S ON (S.FAC_SEAT_SEQ = R.PROP_SEAT)
+		JOIN FAC F ON (R.FAC_SEQ = F.FAC_SEQ)
+		WHERE R.FAC_SEQ = #{facSeq}
+		AND TO_DATE(TO_CHAR(PROP_USE_DT, 'YYYYMMDD'), 'YYYY/MM/DD') = TO_DATE(TO_CHAR(SYSDATE, 'YYYYMMDD'), 'YYYY/MM/DD')
 	</select>
 
 </mapper>
