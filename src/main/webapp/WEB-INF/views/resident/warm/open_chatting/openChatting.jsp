@@ -14,7 +14,7 @@
 }
 
 .alert.alert-success {
-	background: rgb(237, 169, 0) !important;
+	background: #00acac !important;
 	color: black !important;
 	height: 66px !important;
 	padding: 15px !important;
@@ -26,7 +26,7 @@
 }
 
 .alert.alert-success:hover {
-	background: #AE8B59 !important;
+	background: #008a8a!important;
 	-webkit-transition: background 0.2s;
 }
 
@@ -36,13 +36,20 @@
 }
 
 .content .nav-tabs {
-	background: rgb(237, 169, 0) !important;
+	background: #00acac !important;
 }
 
 /* page-header */
 .content>table.header button {
 	margin-left: 20px;
 	margin-bottom: 20px;
+	    background: #00acac;
+    border-color: #00acac;
+}
+.content>table.header button:hover {
+
+	    background: #008a8a;
+    border-color: #008a8a;
 }
 
 /* nav-tabs */
@@ -308,7 +315,7 @@
 				const openChatSeq = $(this).data('open-chat-seq');
 				let url = "${contextPath}/resident/menuOpenChatRoom/"+openChatSeq;
 
-				window.open(url, "채팅방", "width=450px; height=600px;");
+				window.open(url, "채팅방"+openChatSeq, "width=450px; height=600px;");
 			});
 
 
@@ -359,7 +366,7 @@
 					OpenChatRoomListTimeoutManage = setTimeout(function(){
 						if(OpenChatRoomListTimeoutEnable)
 							getRoomListAll();
-					}, 5000000);
+					}, 5000);
 				},
 				error : function(err) {
 					alert('방 목록 가져오기에 실패했습니다.');

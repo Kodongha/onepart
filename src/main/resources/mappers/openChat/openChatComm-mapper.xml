@@ -8,20 +8,19 @@
 		<result property="openChatCommSendDt" column="OPEN_CHAT_COMM_SEND_DT"/>
 		<result property="openChatCommAttchTf" column="OPEN_CHAT_COMM_ATTCH_TF"/>
 		<result property="openChatCommImgTf" column="OPEN_CHAT_COMM_IMG_TF"/>
+
+		<result property="openChatSeq" column="OPEN_CHAT_SEQ"/>
+		<result property="residentSeq" column="RESIDENT_SEQ"/>
 		<result property="residentId" column="RESIDENT_ID"/>
 	</resultMap>
 
 	<select id="selectListByOpenChatSeq" resultMap="openChatCommVOResultSet" parameterType="Integer">
-        SELECT
-			OCC.*,
-			OCM.RESIDENT_SEQ, OCM.OPEN_CHAT_SEQ,
-			(SELECT RESIDENT_ID FROM RESIDENT WHERE RESIDENT_SEQ = OCM.RESIDENT_SEQ) AS RESIDENT_ID
-		FROM
-			OPEN_CHAT_COMM occ
-        LEFT JOIN
-        	OPEN_CHAT_MEMBER ocm
-        	ON occ.OPEN_CHAT_MEMBER_SEQ = ocm.OPEN_CHAT_MEMBER_SEQ AND OPEN_CHAT_SEQ = #{openChatSeq}
-		ORDER BY OPEN_CHAT_COMM_SEND_DT ASC
+		SELECT OCC.*,	OCM.RESIDENT_SEQ, OCM.OPEN_CHAT_SEQ, RESIDENT_ID
+		FROM OPEN_CHAT_COMM OCC
+		JOIN OPEN_CHAT_MEMBER OCM ON (occ.OPEN_CHAT_MEMBER_SEQ = ocm.OPEN_CHAT_MEMBER_SEQ)
+		JOIN RESIDENT R ON ( R.RESIDENT_SEQ =  ocm.RESIDENT_SEQ)
+		WHERE OPEN_CHAT_SEQ = #{openChatSeq}
+		ORDER BY OPEN_CHAT_COMM_SEQ ASC
 	</select>
 
 	<insert id="insert" parameterType="OpenChatCommVO">
@@ -47,7 +46,7 @@
 			 WHERE OPEN_CHAT_SEQ = #{openChatSeq}
 			 AND RESIDENT_SEQ = #{residentSeq}),
 		</if>
-			#{openChatCommSendDt},
+			sysdate,
 			#{openChatCommAttchTf},
 			#{openChatCommImgTf}
 		)

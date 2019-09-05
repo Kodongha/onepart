@@ -63,18 +63,24 @@ public class SpringChatWebsocket extends TextWebSocketHandler {
 					String nowTime = dateFormat.format(date);
 					msg.put("date", nowTime);
 
+
+
 					// Java Object To JSON
 					String resultData = new ObjectMapper().writeValueAsString(msg);
 
 					OpenChatCommVO openChatCommVO = new OpenChatCommVO();
 
-					openChatCommVO.setOpenChatCommSendDt(new java.sql.Date(date.getTime()));
+					openChatCommVO.setOpenChatCommSendDt(new java.sql.Timestamp(date.getTime()));
 					openChatCommVO.setOpenChatCommContent((String)msg.get("message"));
 					openChatCommVO.setOpenChatCommAttchTf("N");
 					openChatCommVO.setOpenChatCommImgTf("N");
 					openChatCommVO.setResidentSeq(Integer.parseInt((String)msg.get("sender")));
 					openChatCommVO.setOpenChatSeq(Integer.parseInt((String)msg.get("openChatSeq")));
-					openChatCommService.saveOpenChatComm(openChatCommVO);
+					if(msg.get("isMe").equals(true)) {
+						openChatCommService.saveOpenChatComm(openChatCommVO);
+					}
+
+
 					System.out.println(openChatCommVO);
 
 					// 결과 전송
