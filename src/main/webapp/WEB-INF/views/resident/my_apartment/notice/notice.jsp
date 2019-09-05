@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 <br>
@@ -36,10 +38,13 @@ Notice
 									href="#collapseOne" aria-expanded="true"> <i
 									class="fa fa-plus-circle pull-right"></i>
 									<table>
-										<tr>
-											<td>2019. 09. 18</td>
-										</tr>
-									</table> 아파트 공지사항 #1
+										<tbody>
+											<td>${noticeVo.noticeSeq}</td>
+											<td>${noticeVo.noticeTitle}</td>
+											<td>${noticeVo.noticeContent}</td>
+											<td>${noticeVo.noticeEnrollDt}</td>
+										</tbody>
+									</table>
 								</a>
 							</h3>
 						</div>
