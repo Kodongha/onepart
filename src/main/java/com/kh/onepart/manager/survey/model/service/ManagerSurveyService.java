@@ -41,5 +41,12 @@ public interface ManagerSurveyService {
 	void insertSurvey(RequestSurveyVO requestSurveyVO, ArrayList<RequestSurveyQstn> requestSurveyQstn,
 			List<RequestSurveyQstnOption> surveyQstnOption);
 
+	/**
+	 * 설문조사 상세정보
+	 * @param surveySeq
+	 * @return
+	 */
+	ArrayList<Object> selectSurveyDetail(int surveySeq);
+
 
 }

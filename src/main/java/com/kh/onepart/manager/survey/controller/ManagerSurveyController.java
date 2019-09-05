@@ -23,6 +23,8 @@ import com.kh.onepart.manager.survey.model.service.ManagerSurveyService;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyQstn;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyQstnOption;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyVO;
+import com.kh.onepart.manager.survey.model.vo.SurveyQstn;
+import com.kh.onepart.manager.survey.model.vo.SurveyQstnOption;
 import com.kh.onepart.manager.survey.model.vo.SurveyVO;
 
 @Controller
@@ -191,5 +193,23 @@ public class ManagerSurveyController {
 		return modelAndView;
 	}
 
+
+	@RequestMapping("/manager/surveyDetail")
+	public ModelAndView moveSurveyDetail(int surveySeq, ModelAndView modelAndView) {
+		System.out.println("/manager/surveyDetail in");
+		System.out.println("request surveySeq :::" + surveySeq);
+		modelAndView.setViewName("manager/survey/surveyDetail");
+
+		ArrayList<Object> surveyDetailList = surveyService.selectSurveyDetail(surveySeq);
+		SurveyVO surveyVO = (SurveyVO) surveyDetailList.get(0);
+		ArrayList<SurveyQstn> surveyQstnList = (ArrayList<SurveyQstn>) surveyDetailList.get(0);
+		ArrayList<SurveyQstnOption> surveyQstnOptionList = (ArrayList<SurveyQstnOption>) surveyDetailList.get(0);
+
+		modelAndView.addObject("surveyVO", surveyVO);
+		modelAndView.addObject("surveyQstnList", surveyQstnList);
+		modelAndView.addObject("surveyQstnOptionList", surveyQstnOptionList);
+
+		return modelAndView;
+	}
 
 }
