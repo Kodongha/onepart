@@ -4,12 +4,21 @@ import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyQstn;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyQstnOption;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyVO;
 import com.kh.onepart.manager.survey.model.vo.SurveyVO;
 
 public interface ManagerSurveyDao {
+
+	/**
+	 * 설문조사 메인화면
+	 * @param sqlSession
+	 * @param pi
+	 * @return
+	 */
+	ArrayList<SurveyVO> selectSurveyList(SqlSessionTemplate sqlSession, PageInfo pi);
 
 	/**
 	 * 설문조사 검색
@@ -40,5 +49,12 @@ public interface ManagerSurveyDao {
 	 * @param requestSurveyQstnOption
 	 */
 	void insertSurveyQstnOption(SqlSessionTemplate sqlSession, RequestSurveyQstnOption requestSurveyQstnOption);
+
+	/**
+	 * 설문조사 리스트 전체 카운트
+	 * @param sqlSession
+	 * @return
+	 */
+	int selectSurveyListCount(SqlSessionTemplate sqlSession);
 
 }
