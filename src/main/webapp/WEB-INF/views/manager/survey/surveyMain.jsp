@@ -86,15 +86,16 @@
 
 		$('#searchBtn').click(function(){
 
-
-
 			var surveyTitleValue = $('#surveyTitle').val();
 			var surveyStatusValue = $('#surveyStatus').val();
 
 			$.ajax({
 				url:'searchSurvey',
 				type:'get',
-				data:{'surveyTitle':surveyTitleValue, 'surveyStatus':surveyStatusValue},
+				data:{
+					'surveyTitle':surveyTitleValue,
+					'surveyStatus':surveyStatusValue
+					},
 				success:function(data){
 					console.log("succ");
 				},
@@ -123,7 +124,6 @@
  				data:{surveySeq:surveySeq},
  				success:function(result){
 					console.log('succ');
-					console.log(result);
 					$("#content").html(result);
  				},
  				error:function(error){
@@ -138,6 +138,18 @@
 	/* Paging 처리 */
 	function paging(requestPage){
 		console.log(requestPage + " click");
+		$.ajax({
+				url : 'menuSurvey',
+				type:'post',
+				data:{currentPage:requestPage},
+				success:function(result){
+				console.log('succ');
+				$("#content").html(result);
+				},
+				error:function(error){
+					console.log(error);
+				}
+			});
 	}
 
 
@@ -228,16 +240,14 @@
 						<td>${surveyVO.surveyPeriod }</td>
 						<td></td>
 					</tr>
-
 					</c:forEach>
-
 				</tbody>
 			</table>
 
 			<div id="pageingBtnArea">
 				<ul class="pagination m-t-0 m-b-10">
 					<c:if test="${ pi.currentPage <= 1 }">
-						<li class="disabled"><a href="javascript:;">«</a></li>
+						<li class="disabled"><a href="javascript:paging(${ pi.currentPage-1 });">«</a></li>
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
 						<li><a href="javascript:paging(${ p });">«</a></li>
@@ -252,10 +262,10 @@
 						</c:if>
 					</c:forEach>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
-						<li><a href="javascript:paging(${ p });">»</a></li>
+						<li><a href="javascript:paging(${ pi.maxPage });">»</a></li>
 					</c:if>
 					<c:if test="${ pi.currentPage >= pi.maxPage }">
-						<li class="disabled"><a href="javascript:;">»</a></li>
+						<li class="disabled"><a>»</a></li>
 					</c:if>
 				</ul>
 			</div>

@@ -55,12 +55,12 @@
 		FROM SURVEY
 		<where>
 		<if test="surveyTitle != ''">
-		SURVEY_TITLE LIKE '%' || #{surveyTitle} || '%'
+			SURVEY_TITLE LIKE '%' || #{surveyTitle} || '%'
 		</if>
 		<if test="surveyStatus != 0">
-		AND SURVEY_TYPE = #{surveyType}
+			AND SURVEY_TYPE = #{surveyType}
 		</if>
-		AND SURVEY_DEL_TF = 'N'
+			AND SURVEY_DEL_TF = 'N'
 		</where>
 	</select>
 
