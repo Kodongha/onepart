@@ -153,8 +153,13 @@ public class AccountController {
 			ResidentVO findId;
 			try {
 				findId = accountService.findId(requestResidentVO);
-				mv.addObject("findId", findId);
-				mv.setViewName("jsonView");
+				System.out.println("findId in ctr: " + findId);
+				if(findId != null) {
+					mv.addObject("findId", findId);
+					mv.setViewName("jsonView");
+				}else {
+					return null;
+				}
 
 			} catch (findIdException e) {
 				mv.addObject("msg", e.getMessage());

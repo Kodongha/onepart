@@ -75,19 +75,19 @@
 			                            <form action="/" method="POST" data-parsley-validate="true" name="form-wizard">
 											<div id="wizard" >
 												<ol>
-													<li style="width: 26%">
-													    아이디 입력
+													<li style="width: 26%" >
+													    아이디  입력
 													    <small>비밀번호를 찾고자 하는 아이디를 입력해 주세요.</small>
 													</li>
-													<li style="width: 27%">
+													<li style="width: 26%">
 													    본인 확인
 													    <small>회원정보에 등록한 휴대전화로 인증</small>
 													</li>
-													<li style="width: 28%">
+													<li style="width: 26%">
 													    비밀번호 재설정
 													    <small>새로운 비밀번호 설정</small>
 													</li>
-													<li style="width: 19%">
+													<li style="width: 22%">
 													    완료!
 													    <small>비밀번호 변경 완료</small>
 													</li>
@@ -102,7 +102,7 @@
 			                                                <div class="col-md-4">
 																<div class="form-group block1">
 																	<label>아이디</label>
-																	<input type="text" name="firstname" placeholder="아이디를 입력하세요." class="form-control" data-parsley-group="wizard-step-1" required />
+																	<input name="residentId" id="residentId" type="text" placeholder="아이디 입력" class="form-control" data-parsley-group="wizard-step-1" required />
 																</div>
 			                                                </div>
 			                                            </div>
@@ -116,6 +116,16 @@
 														<legend class="pull-left width-full">본인 확인</legend>
 			                                            <!-- begin row -->
 			                                            <div class="row">
+			                                            	<!-- begin col-4 -->
+			                                                <div class="col-md-4">
+			                                                    <div class="form-group">
+			                                                        <label>사용자 이름</label>
+			                                                        <div class="controls">
+			                                                            <input type="text" name="username" placeholder="실명 입력" class="form-control" data-parsley-group="wizard-step-2" required />
+			                                                        </div>
+			                                                    </div>
+			                                                </div>
+			                                                <!-- end col-4 -->
 			                                                <!-- begin col-6 -->
 			                                                <div class="col-md-6">
 																<div class="form-group">
@@ -123,7 +133,7 @@
 																	<tr><label>휴대전화번호 인증</label></tr>
 																	<tr>
 																		<td>
-																		<input type="text" name="phone" placeholder="' - ' 없이 숫자만 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" required style="width: 420px; display: inline-block;"/></td>
+																		<input name="residentPhone" id="residentPhone" type="tel" placeholder="' - ' 없이 숫자만 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" style="width: 300px; display: inline-block;" required/></td>
 																		<td>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default m-r-5 m-b-5" style="display: inline-block; align-self: flex-start;">인증번호</button></td>
 																	</tr>
 																</table>
@@ -134,7 +144,7 @@
 			                                                <div class="col-md-6">
 																<div class="form-group">
 																	<label>인증번호</label>
-																	<input type="text" name="vNumber" placeholder="인증번호를 입력하세요" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" required style="width: 50%;" />
+																	<input type="text" name="vNumber" placeholder="인증번호 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" style="width: 50%;" required />
 																</div>
 			                                                </div>
 			                                                <!-- end col-6 -->
@@ -152,19 +162,9 @@
 			                                                <!-- begin col-4 -->
 			                                                <div class="col-md-4">
 			                                                    <div class="form-group">
-			                                                        <label>사용자 이름</label>
-			                                                        <div class="controls">
-			                                                            <input type="text" name="username" placeholder="예) 홍길동" class="form-control" data-parsley-group="wizard-step-3" required />
-			                                                        </div>
-			                                                    </div>
-			                                                </div>
-			                                                <!-- end col-4 -->
-			                                                <!-- begin col-4 -->
-			                                                <div class="col-md-4">
-			                                                    <div class="form-group">
 			                                                        <label>새 비밀번호</label>
 			                                                        <div class="controls">
-			                                                            <input type="password" name="password" placeholder="새로운 비밀번호 입력" class="form-control" data-parsley-group="wizard-step-3" required />
+			                                                            <input type="password" name="residentPwd" id="residentPwd" placeholder="새로운 비밀번호 입력" class="form-control" data-parsley-group="wizard-step-3" required />
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
@@ -174,7 +174,7 @@
 			                                                    <div class="form-group">
 			                                                        <label>새 비밀번호 확인</label>
 			                                                        <div class="controls">
-			                                                            <input type="password" name="password2" placeholder="새로운 비밀번호 확인" class="form-control" />
+			                                                            <input type="password" name="residentPwd2" id="residentPwd2" placeholder="새로운 비밀번호 확인" class="form-control" />
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
