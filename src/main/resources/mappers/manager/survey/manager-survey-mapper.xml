@@ -13,6 +13,24 @@
 		<result property="surveyDelTf" column="SURVEY_DEL_TF"/>
 	</resultMap>
 
+	<resultMap type="com.kh.onepart.manager.survey.model.vo.SurveyQstn" id="surveyQstnResultSet">
+		<id property="surveyQstnSeq" column="SURVEY_QSTN_SEQ"/>
+		<result property="surveySeq" column="SURVEY_SEQ"/>
+		<result property="surveyQstnNum" column="SURVEY_QSTN_NUM"/>
+		<result property="surveyQstnTitle" column="SURVEY_QSTN_TITLE"/>
+		<result property="surveyQstnNece" column="SURVEY_QSTN_NECE"/>
+		<result property="surveyQstnType" column="SURVEY_QSTN_TYPE"/>
+	</resultMap>
+
+	<resultMap type="com.kh.onepart.manager.survey.model.vo.SurveyQstnOption" id="surveyQstnOptionResultSet">
+		<id property="surveyQstnOptionSeq" column="SURVEY_QSTN_OPTION_SEQ"/>
+		<result property="surveyQstnOptionNum" column="SURVEY_QSTN_OPTION_NUM"/>
+		<result property="surveyQstnOptionContent" column="SURVEY_QSTN_OPTION_CONTENT"/>
+		<result property="surveyQstnSeq" column="SURVEY_QSTN_SEQ"/>
+	</resultMap>
+
+
+
 	<!-- 설문조사 리스트 총 개수 -->
 	<select id="selectSurveyListCount" resultType="_int">
 		SELECT  COUNT(*)
@@ -61,7 +79,8 @@
 		)
 
 		<selectKey keyProperty="surveySeq" resultType="Integer" order="AFTER">
-			SELECT SURVEY_SEQ.CURRVAL FROM DUAL
+			SELECT 	SURVEY_SEQ.CURRVAL
+			FROM 	DUAL
 		</selectKey>
 	</insert>
 
@@ -91,7 +110,32 @@
 			#{surveyQstnOptionContent},
 			#{surveyQstnSeq}
 		)
-
 	</insert>
+
+	<!-- 설문조사 상세정보 - 기본정보 -->
+	<select id="selectSurveyBasicInfo" parameterType="Integer" resultMap="surveyVOResultSet">
+		SELECT	*
+		FROM	SURVEY
+		WHERE	SURVEY_SEQ = #{surveySeq}
+	</select>
+
+	<!-- 설문조사 상세정보 - 문제정보 -->
+	<select id="selectSurveyQstnInfo" parameterType="Integer" resultMap="surveyQstnResultSet">
+		SELECT	*
+		FROM	SURVEY_QSTN
+		WHERE	SURVEY_SEQ = #{surveySeq}
+	</select>
+
+	<!-- 설문조사 상세정보 - 옵션정보 -->
+	<select id="selectsurveyQstnOptionList" parameterType="list" resultMap="surveyQstnOptionResultSet">
+		SELECT	*
+		FROM	SURVEY_QSTN_OPTION
+		WHERE	SURVEY_QSTN_SEQ IN (
+		<foreach item="item" collection="list" separator=",">
+			#{item.surveyQstnSeq}
+		</foreach>
+		)
+	</select>
+
 
 </mapper>

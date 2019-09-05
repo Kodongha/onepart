@@ -12,6 +12,8 @@ import com.kh.onepart.manager.survey.model.dao.ManagerSurveyDao;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyQstn;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyQstnOption;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyVO;
+import com.kh.onepart.manager.survey.model.vo.SurveyQstn;
+import com.kh.onepart.manager.survey.model.vo.SurveyQstnOption;
 import com.kh.onepart.manager.survey.model.vo.SurveyVO;
 
 @Service
@@ -84,10 +86,37 @@ public class ManagerSurveyServiceImpl implements ManagerSurveyService{
 					}
 
 				} // end for j
-
 			} // end if
-
 		} // end for i
+	}
+
+	/** 설문조사 상세정보 */
+	@Override
+	public ArrayList<Object> selectSurveyDetail(int surveySeq) {
+		// TODO Auto-generated method stub
+
+		ArrayList<Object> surveyDetailList = new ArrayList<Object>();
+
+		// 설문조사 기본 정보
+		SurveyVO surveyVO = managerSurveyDao.selectSurveyBasicInfo(sqlSession, surveySeq);
+
+		// 설문조사 문제 정보
+		ArrayList<SurveyQstn> surveyQstnList = managerSurveyDao.selectSurveyQstnList(sqlSession, surveySeq);
+
+		// 설문조사 옵션 정보
+		ArrayList<SurveyQstnOption> surveyQstnOptionList = managerSurveyDao.selectsurveyQstnOptionList(sqlSession, surveyQstnList);
+
+
+		System.out.println("==================== 상세정보 ====================");
+		System.out.println("surveyVO ::: " + surveyVO);
+		System.out.println("surveyQstnList ::: " + surveyQstnList);
+		System.out.println("surveyQstnOptionList ::: " + surveyQstnOptionList);
+
+		surveyDetailList.add(surveyVO);
+		surveyDetailList.add(surveyQstnList);
+		surveyDetailList.add(surveyQstnOptionList);
+
+		return surveyDetailList;
 	}
 
 

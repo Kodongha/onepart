@@ -8,6 +8,8 @@ import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyQstn;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyQstnOption;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyVO;
+import com.kh.onepart.manager.survey.model.vo.SurveyQstn;
+import com.kh.onepart.manager.survey.model.vo.SurveyQstnOption;
 import com.kh.onepart.manager.survey.model.vo.SurveyVO;
 
 public interface ManagerSurveyDao {
@@ -56,5 +58,29 @@ public interface ManagerSurveyDao {
 	 * @return
 	 */
 	int selectSurveyListCount(SqlSessionTemplate sqlSession);
+
+	/**
+	 * 설문조사 기본 정보 가져오기
+	 * @param sqlSession
+	 * @param surveySeq
+	 * @return
+	 */
+	SurveyVO selectSurveyBasicInfo(SqlSessionTemplate sqlSession, int surveySeq);
+
+	/**
+	 * 설문조사 문제 정보 가져오기
+	 * @param sqlSession
+	 * @param surveySeq
+	 * @return
+	 */
+	ArrayList<SurveyQstn> selectSurveyQstnList(SqlSessionTemplate sqlSession, int surveySeq);
+
+	/**
+	 * 설문조사 옵션 정보 가져오기
+	 * @param sqlSession
+	 * @param surveyQstnList
+	 * @return
+	 */
+	ArrayList<SurveyQstnOption> selectsurveyQstnOptionList(SqlSessionTemplate sqlSession, ArrayList<SurveyQstn> surveyQstnList);
 
 }

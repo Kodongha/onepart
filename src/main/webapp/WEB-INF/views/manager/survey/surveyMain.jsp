@@ -114,6 +114,25 @@
 		});
  */
 
+ 		$('#surveyList > tbody > tr').click(function(){
+ 			var surveySeq = $(this).children().eq(0).text();
+
+ 			$.ajax({
+ 				url:'surveyDetail',
+ 				type:'post',
+ 				data:{surveySeq:surveySeq},
+ 				success:function(result){
+					console.log('succ');
+					console.log(result);
+					$("#content").html(result);
+ 				},
+ 				error:function(error){
+ 					console.log(error);
+ 				}
+
+ 			});
+ 		});
+
 	});
 
 	/* Paging 처리 */
@@ -170,9 +189,10 @@
 
 	<div class="col-md-10" id="tableArea">
 		<div class="panel-body">
-			<table class="table">
+			<table class="table" id="surveyList">
 				<thead>
 					<tr>
+						<th>번호</th>
 						<th>제목</th>
 						<th>상태</th>
 						<th>설문 타입</th>
@@ -185,6 +205,7 @@
 					<c:forEach var="surveyVO" items="${surveyList }">
 					<tr>
 						<td>${surveyVO.surveySeq }</td>
+						<td>${surveyVO.surveyTitle }</td>
 
 						<!-- 상태 -->
 						<c:if test="${surveyVO.surveyStatus == 1 }">
