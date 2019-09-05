@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.onepart.account.model.dao.AccountDao;
 import com.kh.onepart.account.model.exception.findIdException;
+import com.kh.onepart.account.model.exception.findPwdException;
 import com.kh.onepart.account.model.vo.ResidentVO;
 
 @Service
@@ -62,9 +63,22 @@ public class AccountServiceImpl implements AccountService{
 
 		ResidentVO findId = null;
 		findId = accountDao.findId(sqlSession, requestResidentVO);
-		System.out.println("loginUser in Service : " + findId);
+		System.out.println("findId in Service : " + findId);
 
 		return findId;
+	}
+
+	//비밀번호 찾기용 정보조회 메소드
+	@Override
+	public ResidentVO findPwd(ResidentVO requestResidentVO) throws findPwdException {
+		System.out.println("account service");
+		System.out.println("requestResidentVO in Service:" + requestResidentVO);
+
+		ResidentVO findPwd = null;
+		findPwd = accountDao.findPwd(sqlSession, requestResidentVO);
+		System.out.println("findPwd in Service : " + findPwd);
+
+		return findPwd;
 	}
 
 

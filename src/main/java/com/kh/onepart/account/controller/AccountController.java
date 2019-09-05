@@ -16,6 +16,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.onepart.account.model.exception.findIdException;
+import com.kh.onepart.account.model.exception.findPwdException;
 import com.kh.onepart.account.model.service.AccountService;
 import com.kh.onepart.account.model.vo.ResidentVO;
 
@@ -168,6 +169,31 @@ public class AccountController {
 
 			return mv;
 		}
+
+		//비밀번호 찾기용 정보조회 메소드
+				@RequestMapping(value="/findPwd", method=RequestMethod.POST)
+				public ModelAndView findPwd(ResidentVO requestResidentVO, ModelAndView mv, HttpSession session) {
+					System.out.println("/findPwd");
+					System.out.println("requestResidentVO in Controller:::" + requestResidentVO);
+
+					ResidentVO findPwd;
+					try {
+						findPwd = accountService.findPwd(requestResidentVO);
+						System.out.println("findPwd in ctr: " + findPwd);
+						if(findPwd != null) {
+							mv.addObject("findPwd", findPwd);
+							mv.setViewName("jsonView");
+						}else {
+							return null;
+						}
+
+					} catch (findPwdException e) {
+						mv.addObject("msg", e.getMessage());
+						mv.setViewName("common/errorPage");
+					}
+
+					return mv;
+				}
 
 
 
