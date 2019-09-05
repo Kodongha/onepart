@@ -268,6 +268,7 @@
 
 </script>
 <script>
+
 	// 모달 창
 	const CustomModal = (function() {
 		function init() {
@@ -355,12 +356,10 @@
 						$("#allroom").text(data.countChatRoom);
 					}
 					// 방 목록 불러오기
-					var timer =setTimeout(function(){
-						getRoomListAll();
-					}, 5000);
-
-
-
+					OpenChatRoomListTimeoutManage = setTimeout(function(){
+						if(OpenChatRoomListTimeoutEnable)
+							getRoomListAll();
+					}, 5000000);
 				},
 				error : function(err) {
 					alert('방 목록 가져오기에 실패했습니다.');
@@ -395,11 +394,7 @@
 	$(function() {
 		CustomModal.init();
 		OpenChatting.init();
-		OpenChatting.getRoomListAll();
 		$("#openChatPwd").attr("disabled", true);
-
-
-
 	});
 </script>
 

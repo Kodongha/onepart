@@ -14,4 +14,5 @@ public class OpenChatMemberVO {
 	private int		openChatSeq;				// 오픈채팅 방 고유번호
 	private int		residentSeq;				// 입주민 고유번호(맴버)
 	private Date	openChatMemberPrtcptDt;		// 참여일자
+
 }

@@ -16,4 +16,8 @@ public class OpenChatCommVO {
 	private Date	openChatCommSendDt;		// 발신 일자
 	private String	openChatCommAttchTf;	// 첨부파일 여부
 	private String	openChatCommImgTf;		// 이미지 여부
+
+	private int openChatSeq; //고유 방 번호
+	private int residentSeq; //회원 번호
+	private int residentId; //회원 ID
 }

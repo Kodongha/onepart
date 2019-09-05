@@ -40,6 +40,7 @@
 }
 
 #pricing-table #most-popular {
+	display: inherit !important;
 	padding-bottom: 7px !important;
 	z-index: 2;
 	top: -13px;
@@ -195,8 +196,9 @@ function getMyCarList() {
 				success : function(data) {
 						console.log(data)
 					if(data.result == "success") {
-						let carList = data.myCarList;
+						let carList = data.getMyCarList;
 						drawMyCarList(carList);
+						console.log(carList);
 					}
 				},
 				error : function(err) {
@@ -208,24 +210,28 @@ function getMyCarList() {
 
 function drawMyCarList(carList) {
 	let listDiv = $('#pricing-table');
-	listDiv.html('');
+	console.log("carList:::" + carList);
 
 	carList.forEach(carInfo => {
-		let carDivFormat = $('.plan format').clone();
+
+		let carDivFormat = $('.format').clone();
 		carDivFormat.removeClass('format');
 		carDivFormat.show();
 
-		carDivFormat.find('.carNum').text(carInfo.carNm);
-		carDivFormat.find('.bdNm').text(carInfo.openChatCurrHead);
-		carDivFormat.find('.rmNm').text(carInfo.openChatCurrHead);
-		carDivFormat.find('.residentNm').text(carInfo.openChatCurrHead);
-		carDivFormat.find('.carType').text(carInfo.openChatCurrHead);
-		carDivFormat.find('.carNm').text(carInfo.openChatCurrHead);
-		carDivFormat.find('.enrollPurpose').text(carInfo.openChatCurrHead);
+		carDivFormat.find('.carNum').text(carInfo.carNum);
+		carDivFormat.find('.bdNm').text(carInfo.bdNm);
+		carDivFormat.find('.rmNm').text(carInfo.rmNm);
+		carDivFormat.find('.residentNm').text(carInfo.residentNm);
+		carDivFormat.find('.carType').text(carInfo.carType);
+		carDivFormat.find('.carNm').text(carInfo.carNm);
+		carDivFormat.find('.enrollPurpose').text(carInfo.enrollPurpose);
 
 		listDiv.append(carDivFormat);
 	});
+
+
 }
+
 $(function() {
 	getMyCarList();
 
