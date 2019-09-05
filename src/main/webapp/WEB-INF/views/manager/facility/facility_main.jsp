@@ -59,9 +59,9 @@
 				<div>
 					<table style="width:100%; margin:0 auto;">
 						<tr>
-							<td style="width:47%"><a id="newFacility_general" class="btn btn-white" style="width:100%">새 시설물 등록&nbsp;(예약)</a></td>
+							<td style="width:47%"><a id="newFacility_general" class="btn btn-warning " style="width:100%">새 시설물 등록&nbsp;(예약)</a></td>
 							<td></td>
-							<td style="width:47%"><a id="newFacility_seat" class="btn btn-white" style="width:100%">새 시설물 등록&nbsp;(좌석)</a></td>
+							<td style="width:47%"><a id="newFacility_seat" class="btn btn-warning" style="width:100%">새 시설물 등록&nbsp;(좌석)</a></td>
 						</tr>
 					</table>
 				</div>
@@ -109,5 +109,37 @@
 				</div>
 			</div>
 </div>
+<script type="text/javascript">
+	function modifyGeneral(facSeq) {
+		$.ajax({
+			url:"/onepart/manager/facility_modify_general",
+			dataType:"html",
+			data:{facSeq:facSeq},
+			success:function(result){
+				$("#content").html(result);
+			}
+		});
+	}
+
+	function deleteGeneral(facSeq) {
+
+		if(confirm("해당 시설물을 삭제처리 하시겠습니까?")){
+			$.ajax({
+				url:"/onepart/manager/facility_delete_general",
+				dataType:"html",
+				data:{facSeq:facSeq},
+				success:function(result){
+					$.ajax({
+	        			url:"/onepart/manager/menuFacility",
+	        			dataType:"html",
+	        			success:function(result){
+	        				$("#content").html(result);
+	        			}
+	        		});
+				}
+			});
+		}
+	}
+</script>
 </body>
 </html>

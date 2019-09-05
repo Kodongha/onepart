@@ -6,14 +6,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.kh.onepart.common.PageInfo;
+import com.kh.onepart.common.Pagination;
 import com.kh.onepart.manager.survey.model.service.ManagerSurveyService;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyQstn;
 import com.kh.onepart.manager.survey.model.vo.RequestSurveyQstnOption;
@@ -31,9 +36,27 @@ public class ManagerSurveyController {
 	 * @return
 	 */
 	@RequestMapping("/manager/menuSurvey")
-	public String moveAccountPage() {
+	public ModelAndView moveAccountPage(HttpServletRequest request, ModelAndView modelAndView) {
 		System.out.println("in manager/menuSurvey");
-		return "manager/survey/surveyMain";
+
+		int currentPage = 1;
+
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+
+
+		int surveyListCount = surveyService.surveyListCount();
+
+		PageInfo pi = Pagination.getPageInfo(currentPage, surveyListCount);
+
+		ArrayList<SurveyVO> surveyList = surveyService.getSurveyList(pi);
+
+		modelAndView.addObject("surveyList", surveyList);
+		modelAndView.addObject("pi", pi);
+		modelAndView.setViewName("manager/survey/surveyMain");
+
+		return modelAndView;
 	}
 
 
@@ -43,13 +66,28 @@ public class ManagerSurveyController {
 	 * @return
 	 */
 	@RequestMapping(value="/manager/searchSurvey")
-	public String searchSurvey(SurveyVO requestSurveyVO) {
+	public ModelAndView searchSurvey(HttpServletRequest request, SurveyVO requestSurveyVO, ModelAndView modelAndView) {
 		System.out.println("in manager/searchSurvey");
-		System.out.println("requestSurveyVO:::" + requestSurveyVO);
 
-		ArrayList<SurveyVO> surveyVOList = surveyService.searchSurvey(requestSurveyVO);
 
-		return "";
+		int currentPage = 1;
+
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+
+
+		int surveyListCount = surveyService.surveyListCount();
+
+		PageInfo pi = Pagination.getPageInfo(currentPage, surveyListCount);
+
+		ArrayList<SurveyVO> surveyList = surveyService.getSearchSurvey(pi, requestSurveyVO);
+
+		modelAndView.addObject("surveyList", surveyList);
+		modelAndView.addObject("pi", pi);
+		modelAndView.setViewName("manager/survey/surveyMain");
+
+		return modelAndView;
 	}
 
 	/**
@@ -58,7 +96,7 @@ public class ManagerSurveyController {
 	 * @return
 	 */
 	@RequestMapping(value="/manager/insertSurvey")
-	public String insertSurvey(String resultJsonStr) {
+	public ModelAndView insertSurvey(String resultJsonStr, ModelAndView modelAndView) {
 
 		System.out.println("resultJsonStr :: " + resultJsonStr);
 
@@ -149,7 +187,8 @@ public class ManagerSurveyController {
 			e.printStackTrace();
 		}
 
-		return "";
+		modelAndView.setViewName("redirect:menuSurvey");
+		return modelAndView;
 	}
 
 

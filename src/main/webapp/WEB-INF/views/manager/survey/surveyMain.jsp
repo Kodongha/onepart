@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,6 +62,16 @@
 		boder-bottom:1px;
 	}
 
+	.table {
+		text-align: center;
+	}
+
+	thead th {
+		text-align: center;
+	}
+
+
+
 
 </style>
 <script type="text/javascript">
@@ -105,14 +116,16 @@
 
 	});
 
+	/* Paging 처리 */
+	function paging(requestPage){
+		console.log(requestPage + " click");
+	}
 
 
 </script>
 
 </head>
 <body>
-
-
 	<!-- begin row -->
 	<div class="row">
 	    <div class="col-md-1"></div>
@@ -169,42 +182,60 @@
 					</tr>
 				</thead>
 				<tbody>
+					<c:forEach var="surveyVO" items="${surveyList }">
 					<tr>
-						<td>1</td>
-						<td>Nicky Almera</td>
-						<td>nicky@hotmail.com</td>
-						<td>nicky@hotmail.com</td>
-						<td>nicky@hotmail.com</td>
-						<td>nicky@hotmail.com</td>
+						<td>${surveyVO.surveySeq }</td>
+
+						<!-- 상태 -->
+						<c:if test="${surveyVO.surveyStatus == 1 }">
+							<td>진행 예정</td>
+						</c:if>
+						<c:if test="${surveyVO.surveyStatus == 2 }">
+							<td>진행 중</td>
+						</c:if>
+						<c:if test="${surveyVO.surveyStatus == 3 }">
+							<td>종료</td>
+						</c:if>
+
+						<c:if test="${surveyVO.surveyType == 1 }">
+							<td>일반 설문</td>
+						</c:if>
+						<c:if test="${surveyVO.surveyType == 2 }">
+							<td>세대별 설문</td>
+						</c:if>
+						<td></td>
+						<td>${surveyVO.surveyPeriod }</td>
+						<td></td>
 					</tr>
-					<tr>
-						<td>1</td>
-						<td>Nicky Almera</td>
-						<td>nicky@hotmail.com</td>
-						<td>nicky@hotmail.com</td>
-						<td>nicky@hotmail.com</td>
-						<td>nicky@hotmail.com</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>Nicky Almera</td>
-						<td>nicky@hotmail.com</td>
-						<td>nicky@hotmail.com</td>
-						<td>nicky@hotmail.com</td>
-						<td>nicky@hotmail.com</td>
-					</tr>
+
+					</c:forEach>
+
 				</tbody>
 			</table>
 
 			<div id="pageingBtnArea">
 				<ul class="pagination m-t-0 m-b-10">
-					<li class="disabled"><a href="javascript:;">«</a></li>
-					<li class="active"><a href="javascript:;">1</a></li>
-					<li><a href="javascript:;">2</a></li>
-					<li><a href="javascript:;">3</a></li>
-					<li><a href="javascript:;">4</a></li>
-					<li><a href="javascript:;">5</a></li>
-					<li><a href="javascript:;">»</a></li>
+					<c:if test="${ pi.currentPage <= 1 }">
+						<li class="disabled"><a href="javascript:;">«</a></li>
+					</c:if>
+					<c:if test="${ pi.currentPage > 1 }">
+						<li><a href="javascript:paging(${ p });">«</a></li>
+					</c:if>
+					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+
+						<c:if test="${ p eq pi.currentPage }">
+							<li class="active"><a>${ p }</a></li>
+						</c:if>
+						<c:if test="${ p ne pi.currentPage }">
+							<li><a  href="javascript:paging(${ p });">${ p }</a></li>
+						</c:if>
+					</c:forEach>
+					<c:if test="${ pi.currentPage < pi.maxPage }">
+						<li><a href="javascript:paging(${ p });">»</a></li>
+					</c:if>
+					<c:if test="${ pi.currentPage >= pi.maxPage }">
+						<li class="disabled"><a href="javascript:;">»</a></li>
+					</c:if>
 				</ul>
 			</div>
 

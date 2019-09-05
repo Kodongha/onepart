@@ -32,22 +32,13 @@
 			alias="facReservation" />
 
 
-		<!-- manager -->
-		<typeAlias
-			type="com.kh.onepart.manager.survey.model.vo.SurveyVO"
-			alias="SurveyVO" />
-		<typeAlias
-			type="com.kh.onepart.manager.survey.model.vo.RequestSurveyVO"
-			alias="RequestSurveyVO" />
-		<typeAlias
-			type="com.kh.onepart.manager.survey.model.vo.RequestSurveyQstn"
-			alias="RequestSurveyQstn" />
-		<typeAlias
-			type="com.kh.onepart.manager.facility.model.vo.Reservation"
-			alias="manager_reservation" />
-		<typeAlias
-			type="com.kh.onepart.manager.facility.model.vo.FacReservation"
-			alias="manager_facReservation" />
+
+		<typeAlias type="com.kh.onepart.manager.survey.model.vo.SurveyVO" alias="SurveyVO"/>
+		<typeAlias type="com.kh.onepart.manager.survey.model.vo.RequestSurveyVO" alias="RequestSurveyVO"/>
+		<typeAlias type="com.kh.onepart.manager.survey.model.vo.RequestSurveyQstn" alias="RequestSurveyQstn"/>
+    <typeAlias type="com.kh.onepart.manager.facility.model.vo.Reservation" alias="manager_reservation"/>
+    <typeAlias type="com.kh.onepart.manager.facility.model.vo.FacReservation" alias="manager_facReservation"/>
+    <typeAlias type="com.kh.onepart.manager.facility.model.vo.Image" alias="manager_img"/>
 
 
 	</typeAliases>

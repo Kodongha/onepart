@@ -84,7 +84,7 @@
 												<label class="control-label">휴대전화번호 인증</label>
 												<div class="row m-b-15">
 													<div class="col-md-12">
-														<input name="residentPhone" id="residentPhone" type="tel" class="form-control" placeholder="휴대전화번호 입력" style="width: 77%; display: inline-block;" />&nbsp;
+														<input name="residentPhone" id="residentPhone" type="tel" class="form-control" placeholder="' - ' 없이 숫자만 입력" style="width: 77%; display: inline-block;" />&nbsp;
 														<button type="button" class="btn btn-default m-r-5 m-b-5">인증번호</button>
 														<br><br>
 														<input type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
@@ -127,11 +127,11 @@
 								<!-- <a href="javascript:;" class="btn btn-white m-r-5">취소</a> <a href="javascript:;" class="btn btn-primary">찾기</a> -->
 								<button type="reset" class="btn btn-white m-r-5">취소</button> &nbsp; &nbsp;
 								<!-- <button type="submit" class="btn btn-primary">찾기</button> -->
-								<input type="button" value="찾기" class="btn btn-primary" onclick="showId(); return false;">
-								<!-- 시작 모달로 결과 보내기 버튼 -->
-									<a href="#modal-dialog" class="btn btn-sm btn-success" data-toggle="modal" onclick="showId()">Demo</a>
+								<!-- 모달로 결과 보내기 버튼 -->
+								<a href="#modal-dialog" class="btn btn-primary" data-toggle="modal" onclick="showId(); return false;">찾기</a>
 							</p>
-									<div class="modal fade" id="modal-dialog" aria-hidden="true" style="display: none;">
+								<!-- 시작 아이디찾기 결과 모달 -->
+								<div class="modal fade" id="modal-dialog" aria-hidden="true" style="display: none;">
 									<div class="modal-dialog">
 										<div class="modal-content">
 											<div class="modal-header">
@@ -139,17 +139,17 @@
 												<h4 class="modal-title">아이디 찾기 결과</h4>
 											</div>
 											<div class="modal-body">
-												${ sessionScope.findId.residentNm } 님 환영합니다.
+												<span id="showResultId"></span>
 											</div>
 											<div class="modal-footer">
 												<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-												<a href="javascript:;" class="btn btn-sm btn-success">Action</a>
+												<a href="moveFindPwd" class="btn btn-sm btn-success">비밀번호 찾기</a>
+												<a href="moveAccount" class="btn btn-sm btn-success">로그인 하기</a>
 											</div>
 										</div>
 									</div>
 								</div>
-
-								<!--  모달로 결과 보내기 버튼 -->
+								<!-- 끝 아이디찾기 결과 모달 -->
 							</form>
 						</div>
 					</div>
@@ -201,9 +201,19 @@
   		$.ajax({
   			url:"findId",
   			type:"post",
-  			data:{findIdForm:findIdForm},
+  			data:findIdForm,
   			success:function(data){
-  				var jsonObj = JSON.parse(data);
+				/* var jsonObj = JSON.parse(data); */
+				console.log("data : " + data);
+				$("#showResultId").empty();
+
+				if(data == ''){
+				$("#showResultId").append("<h3>"+"일치하는 아이디가 존재하지 않습니다.");
+				}else{
+					/* console.log(data.findId.residentId); */
+					var resultId = data.findId.residentId;
+					$("#showResultId").append("<h3>"+"회원님의 아이디는 '" + resultId + "' 입니다.</h3>");
+				}
   			},
   			error:function(xhr, status){
   				alert(xhr + " : " + status);
