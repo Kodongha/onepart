@@ -60,4 +60,21 @@ public class ReservationDaoImpl implements ReservationDao{
 
 		return dayReservationList;
 	}
+	//해당 시설물번호의 좌석정보 불러오는 메소드
+	@Override
+	public ArrayList selectOneReservationSeatList(SqlSessionTemplate sqlSession, int facSeq) {
+
+		ArrayList seatList = (ArrayList) sqlSession.selectList("reservation.selectOneReservationSeatList", facSeq);
+
+		return seatList;
+
+	}
+	//해당 시설물번호의 좌석예약 상태 불러오는 메소드
+	@Override
+	public ArrayList selectOnePropSeatList(SqlSessionTemplate sqlSession, int facSeq) {
+
+		ArrayList propSeatList = (ArrayList) sqlSession.selectList("reservation.selectOnePropSeatList", facSeq);
+
+		return propSeatList;
+	}
 }

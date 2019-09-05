@@ -22,6 +22,7 @@
 		<typeAlias type="com.kh.onepart.resident.my_home.my_car.model.vo.MyCar" alias="MyCar" />
 		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.Reservation" alias="reservation" />
 		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacReservation" alias="facReservation" />
+		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacSeatInfo" alias="facSeatInfo" />
 
 
 

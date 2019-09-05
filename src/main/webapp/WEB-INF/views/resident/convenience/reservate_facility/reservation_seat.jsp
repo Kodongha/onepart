@@ -196,9 +196,48 @@ $(document).ready(function() {
 			                                                	<div class="form-group block1">
 					                                                <br>
 																	<label style="font-weight:bold">좌석 선택</label>
+																</div>
+																<!-- 좌석선택 div -->
+																<table style="width:100%">
+																	<tr>
+																		<td style="width:70%">
+																			<div style="border:1px solid lightgray; width:80%; height:500px">
+																				<table border="1" style="width:100%; height:100%" id="selectTable">
+																					<c:forEach begin="1" end="${ maxNumber }" var="num1">
+																						<tr style="text-align:center">
+																							<c:forEach begin="1" end="${ maxNumber }" var="num2">
+																							<c:set var="set" value="${ num1 }_${ num2 }"></c:set>
+																								<td id="${ set }" style="width:${ widthSize }%;">
+																									<c:forEach var="propSeatList" items="${ propSeatList }">
+																										<c:if test="${ propSeatList.facPositionNum eq set}">
+																											<i class="fa fa-2x fa-exclamation"></i>
+																										</c:if>
+																									</c:forEach>
+																									<c:forEach var="seatList" items="${ seatList }">
+																										<c:if test="${ seatList.facPositionNum eq set}">
+																											<i class="fa fa-2x fa-heart-o" id="nonSelect"></i>
+																										</c:if>
+																									</c:forEach>
+																								</td>
+																							</c:forEach>
+																						</tr>
+																					</c:forEach>
+																				</table>
+																			</div>
+																		</td>
+																		<td>
+																			<i class="fa fa-2x fa-exclamation"></i><label>&nbsp;&nbsp;사용불가&nbsp;&nbsp;&nbsp;&nbsp;</label>
+																			<i class="fa fa-2x fa-heart-o"></i><label>&nbsp;&nbsp;사용가능&nbsp;&nbsp;&nbsp;&nbsp;</label>
+																			<i class="fa fa-2x fa-heart"></i><label>&nbsp;&nbsp;선택 좌석</label>
+																		</td>
+																	</tr>
+																</table>
+																<br><br>
+																<div class="form-group block1">
+					                                                <br>
+																	<label style="font-weight:bold">선택된 좌석</label>
 																	<input type="text" name="datetimes" class="form-control pull-right" data-parsley-group="wizard-step-2">
 																</div>
-																<br><br>
 																<div>
 																	<label style="font-weight:bold">상세정보</label>
 																	<div>
@@ -296,6 +335,33 @@ $(document).ready(function() {
             	<!-- 아이디 찾기, 비밀번호 찾기 탭 끝 -->
 		<!-- 반응형 끝 -->
 			</div>
+
+			<script type="text/javascript">
+				/* 좌석선택 script */
+
+				var result = 1;
+
+
+				$(document).on('click', '#selectTable .fa-heart-o', function(){
+					console.log("클릭");
+					if(result == 1){
+						$(this).removeClass("fa-heart-o");
+						$(this).addClass("fa-heart");
+						result++;
+					}
+				});
+
+				$(document).on('click', '#selectTable .fa-heart', function(){
+					console.log("선택좌석 해제");
+					if(result > 1){
+						$(this).removeClass("fa-heart");
+						$(this).addClass("fa-heart-o");
+						result = 1;
+					}
+				});
+
+
+			</script>
 
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="${contextPath}/resources/plugins/jquery/jquery-1.9.1.min.js"></script>

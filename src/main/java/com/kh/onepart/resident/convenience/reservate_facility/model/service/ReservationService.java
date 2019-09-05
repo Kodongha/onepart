@@ -18,5 +18,9 @@ public interface ReservationService {
 	int deleteUserReservation(int facRsrvSeq);
 	//해당 날짜 해당 시설물의 예약건 리스트를 불러오는 메소드
 	ArrayList selectDdayReservation(FacReservation fr);
+	//해당 시설물번호의 좌석정보 불러오는 메소드
+	ArrayList selectOneReservationSeatList(int facSeq);
+	//해당 시설물번호의 좌석예약 상태 불러오는 메소드
+	ArrayList selectOnePropSeatList(int facSeq);
 
 }

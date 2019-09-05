@@ -66,5 +66,21 @@ public class ReservationServiceImpl implements ReservationService{
 
 		return dayReservationList;
 	}
+	//해당 시설물번호의 좌석정보 불러오는 메소드
+	@Override
+	public ArrayList selectOneReservationSeatList(int facSeq) {
+
+		ArrayList seatList = rd.selectOneReservationSeatList(sqlSession, facSeq);
+
+		return seatList;
+	}
+	//해당 시설물번호의 좌석예약 상태 불러오는 메소드
+	@Override
+	public ArrayList selectOnePropSeatList(int facSeq) {
+
+		ArrayList propSeatList = rd.selectOnePropSeatList(sqlSession, facSeq);
+
+		return propSeatList;
+	}
 
 }
