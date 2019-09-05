@@ -8,12 +8,12 @@
 <!--<![endif]-->
 <head>
 <style type="text/css">
-	.panel-inverse>.panel-heading { height: 40px; }
-	.panel-heading .label.pull-left, .panel-heading .label.pull-right { position: relative; top: -20px; }
+	.panel-inverse>.panel-heading { height: 40px; background: #00acac !important; }
+	.panel-heading .label.pull-left, .panel-heading .label.pull-right {    background-color: #8a6d3b !important; position: relative; top: -20px; }
 	.ion-android-clipboard:before { display: inline-block; position: absolute; right: 80px; top: 9px; cursor: pointer;}
 
 	.chats .message { margin-left: 12px; }
-	.panel-inverse>.panel-heading { background: rgb(237,169,0) !important; }
+
 	.badge.badge-success, .label.label-success { background: rgb(69, 206, 52) !important; }
 
 	html, body { height: 100%; }
@@ -47,7 +47,7 @@
 	.member-content { background: rgba(0,0,0, 0.2); position: fixed; top: 40px; right: 0; height: 100%; padding: 10px; padding-bottom: 180px; }
 	.member-content { width: 200px; opacity: 1;  z-index: 100; transition-property: width; transition-duration: 0.5s; }
 	.member-content.modal-hide {  width: 0px; opacity: 0; z-index: 0; transition-property: width, opacity; transition-duration: 0.5s; }
-	.member-content .member-title { white-space: nowrap; border-color: #e2e7eb; padding: 10px 15px; background: #45ce34; color: #FFF; }
+	.member-content .member-title { white-space: nowrap; border-color: #e2e7eb; padding: 10px 15px; background: #348fe2; color: #FFF; }
 	.member-content .member-title div { display: inline-block; width: 50%; }
 	.member-content .member-title div:nth-child(2) { text-align: right; }
 	.member-content .member-title div i.icon-arrow-right { cursor:pointer; color: #FFF; }
@@ -249,6 +249,7 @@
 		<div data-scrollbar="true" data-height="100%">
 			<table id="memberTable " class="table table-striped table-bordered">
 				<tbody>
+
 					<c:forEach var="residentVO" items="${residentList}">
 						<tr>
 						<td>
@@ -259,7 +260,6 @@
 						</td>
 					</tr>
 					</c:forEach>
-
 
 				</tbody>
 			</table>
@@ -283,6 +283,10 @@
 
 		ChatMessage.init();
 		ChatMessage.scrollBottom();
+		setTimeout(function(){
+			$("#memberContentDiv").load(window.location.href + "#memberContentDiv");
+		}, 5000);
+
 	});
 
 	const ChatMessage = (function() {
@@ -331,7 +335,33 @@
 					addMessage(senderId, msg, date, isMe);
 				}
 				else if(resultData.act == "getPrevMessages") {
-					console.log(resultData);
+
+
+					resultData.prevMessageList.forEach(PrevMessages => {
+						const msg = PrevMessages.openChatCommContent;
+						const senderId = PrevMessages.residentId;
+
+
+						function formatDate(date) {
+							const Month = 	(date.getMonth() + 1)>10?(date.getMonth() + 1):'0'+(date.getMonth() + 1)
+						    const Date = date.getDate()>10?date.getDate():'0'+date.getDate()
+						   const Hours =  date.getHours()>10?date.getHours():'0'+date.getHours()
+						   const Minutes =  date.getMinutes()>10?date.getMinutes():'0'+date.getMinutes();
+
+						    return Month + '/' + Date + ' ' + Hours + ':'+ Minutes
+							}
+
+
+						const date = formatDate(new Date(PrevMessages.openChatCommSendDt));  // 2017년 3월 11일 11시 30분
+
+
+
+						const isMe = '${ sessionScope.loginUser.residentId }' == senderId? true:false;
+						addMessage(senderId, msg, date, isMe);
+					});
+
+
+
 				}
 			};
 		}
@@ -358,6 +388,7 @@
 				'act': 'enterRoom',
 				'openChatSeq' : openChatSeq
 			};
+			console.log(openChatSeq);
 			webSocket.send(JSON.stringify(data));
 		}
 
@@ -365,10 +396,12 @@
 		function getPrevMessages() {
 			let urlPathArr = location.href.split('/');
 			let openChatSeq = urlPathArr[urlPathArr.length-1];
+
 			let data = {
 				'act': 'getPrevMessages',
 				'openChatSeq' : openChatSeq
 			};
+
 			webSocket.send(JSON.stringify(data));
 		}
 
