@@ -44,6 +44,29 @@
 				href="javascript:;" class="btn btn-primary btn-sm m-l-5">작성</a>
 		</div>
 	</div>
+	<script>
+	$(function(){
+		$("#menuComplaint").data("menu-url", "/onepart/resident/menuComplaint");
+
+		$("#menuComplaint").click(function(){
+			var menuUrl = $(this).data("menu-url");
+			console.log(menuUrl);
+
+			$.ajax({
+				url :menuUrl,
+				dataType : "html",
+				success:function(result){
+					$("#content").html(result);
+				}
+
+			});
+		});
+
+	});
+	$(function(){
+		$("#menuNotice")
+	})
+	</script>
 
 </body>
 </html>

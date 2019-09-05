@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 </head>
 <body>
 	Complaint
@@ -19,81 +19,20 @@
 					<th>작성자</th>
 					<th>제목</th>
 					<th>등록일</th>
-					<th>상태</th>
+				 	<th>상태</th>
 					<button id="moveComplaintWrite" type="button" class="btn btn-success m-r-5 m-b-5">민원접수</button>
 				</tr>
 			</thead>
 			<tbody>
+			<c:forEach items="${list}" var="complaintVo">
 				<tr>
-					<td>1</td>
-					<td>John</td>
-					<td id="moveComplaintDetail">가로등좀 고쳐주세요</td>
-					<td>2019/08/29</td>
-					<td>반려</td>
+					<td>${complaintVo.complaintSeq}</td>
+					<td>${complaintVo.residentSeq}</td>
+					<td id="moveComplaintDetail">${complaintVo.complaintTitle}</td>
+					<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${complaintVo.complaintEnrollDt}"/></td>
+					<td>${complaintVo.complaintStatus }</td>
 				</tr>
-				<tr>
-					<td>2</td>
-					<td>Eunhae</td>
-					<td>민원접수 제목</td>
-					<td>2019/08/29</td>
-					<td>반려</td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td>Dongha</td>
-					<td>민원접수 제목</td>
-					<td>2019/08/29</td>
-					<td>반려</td>
-				</tr>
-				<tr>
-					<td>4</td>
-					<td>YoungJun</td>
-					<td>민원접수 제목</td>
-					<td>2019/08/29</td>
-					<td>반려</td>
-				</tr>
-				<tr>
-					<td>5</td>
-					<td>John</td>
-					<td>가로등좀 고쳐주세요</td>
-					<td>2019/08/29</td>
-					<td>반려</td>
-				</tr>
-				<tr>
-					<td>6</td>
-					<td>Eunhae</td>
-					<td>민원접수 제목</td>
-					<td>2019/08/29</td>
-					<td>반려</td>
-				</tr>
-				<tr>
-					<td>7</td>
-					<td>Dongha</td>
-					<td>민원접수 제목</td>
-					<td>2019/08/29</td>
-					<td>반려</td>
-				</tr>
-				<tr>
-					<td>8</td>
-					<td>YoungJun</td>
-					<td>민원접수 제목</td>
-					<td>2019/08/29</td>
-					<td>반려</td>
-				</tr>
-				<tr>
-					<td>9</td>
-					<td>John</td>
-					<td>가로등좀 고쳐주세요</td>
-					<td>2019/08/29</td>
-					<td>반려</td>
-				</tr>
-				<tr>
-					<td>10</td>
-					<td>Eunhae</td>
-					<td>민원접수 제목</td>
-					<td>2019/08/29</td>
-					<td>반려</td>
-				</tr>
+			</c:forEach>
 			</tbody>
 		</table>
 	</div>
@@ -122,7 +61,7 @@
 	<script type="text/javascript">
 	$(function(){
 		$("#moveComplaintDetail").data("menu-url", "/onepart/resident/moveComplaintDetail"); 	
-		
+		$("#moveComplaintDetail").data("menu-url", "/onepart/resident/moveComplaintDetail");
 		$("#moveComplaintDetail").click(function(){
 			var menuUrl = $(this).data("menu-url");
 			console.log(menuUrl);
@@ -157,6 +96,7 @@
 		});
 		
 	});
+	
 
 
 </script>
