@@ -72,7 +72,7 @@
 			                    <div class="panel panel-inverse">
 
 			                        <div class="panel-body">
-			                            <form method="POST" data-parsley-validate="true" name="form-wizard" id="findPwdForm">
+			                            <form method="POST" data-parsley-validate="true" name="form-wizard" id="findIdForm">
 											<div id="wizard" >
 												<ol>
 													<li style="width: 26%" >
@@ -121,7 +121,7 @@
 			                                                    <div class="form-group">
 			                                                        <label>사용자 이름</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="residentNm" id="residentNm" placeholder="실명 입력" class="form-control" data-parsley-group="wizard-step-2" required />
+			                                                            <input type="text" name="username" placeholder="실명 입력" class="form-control" data-parsley-group="wizard-step-2" required />
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
@@ -151,7 +151,26 @@
 			                                                <!-- 시작 모달로 결과 보내기 버튼 -->
 															<a href="#modal-dialog" class="btn btn-sm btn-success" data-toggle="modal" onclick="showPwd(); return false;" style="float:right;">비밀번호 재설정 하기</a>
 															<!-- 끝= 모달로 결과 보내기 버튼 -->
-
+															<!-- 시작 아이디찾기 결과 모달 -->
+															<div class="modal fade" id="modal-dialog" aria-hidden="true" style="display: none;">
+																<div class="modal-dialog">
+																	<div class="modal-content">
+																		<div class="modal-header">
+																			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+																			<h4 class="modal-title">비밀 번호 재설정 하기</h4>
+																		</div>
+																		<div class="modal-body">
+																			<span id="showResultPwd"></span>
+																		</div>
+																		<div class="modal-footer">
+																			<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+																			<a href="moveFindPwd" class="btn btn-sm btn-success">비밀번호 찾기</a>
+																			<a href="moveAccount" class="btn btn-sm btn-success">로그인 하기</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<!-- 끝 아이디찾기 결과 모달 -->
 			                                            </div>
 			                                            <!-- end row -->
 													</fieldset>
@@ -159,7 +178,35 @@
 
 												<!-- end wizard step-2 -->
 												<!-- begin wizard step-3 -->
-
+												<div class="wizard-step-3">
+													<fieldset>
+														<legend class="pull-left width-full">비밀번호 재설정</legend>
+			                                            <!-- begin row -->
+			                                            <div class="row">
+			                                                <!-- begin col-4 -->
+			                                                <div class="col-md-4">
+			                                                    <div class="form-group">
+			                                                        <label>새 비밀번호</label>
+			                                                        <div class="controls">
+			                                                            <input type="password" name="residentPwd" id="residentPwd" placeholder="새로운 비밀번호 입력" class="form-control" data-parsley-group="wizard-step-3" required />
+			                                                        </div>
+			                                                    </div>
+			                                                </div>
+			                                                <!-- end col-4 -->
+			                                                <!-- begin col-4 -->
+			                                                <div class="col-md-4">
+			                                                    <div class="form-group">
+			                                                        <label>새 비밀번호 확인</label>
+			                                                        <div class="controls">
+			                                                            <input type="password" name="residentPwd2" id="residentPwd2" placeholder="새로운 비밀번호 확인" class="form-control" />
+			                                                        </div>
+			                                                    </div>
+			                                                </div>
+			                                                <!-- end col-6 -->
+			                                            </div>
+			                                            <!-- end row -->
+			                                        </fieldset>
+												</div>
 												<!-- end wizard step-3 -->
 												<!-- begin wizard step-4 -->
 												<div>
@@ -172,57 +219,6 @@
 												<!-- end wizard step-4 -->
 											</div>
 										</form>
-
-										<!-- 시작 아이디찾기 결과 모달 -->
-															<div class="modal fade" id="modal-dialog" aria-hidden="true" style="display: none;">
-																<div class="modal-dialog">
-																	<div class="modal-content">
-																		<div class="modal-header">
-																			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-																			<h4 class="modal-title">비밀 번호 재설정 하기</h4>
-																		</div>
-																		<div class="modal-body">
-																			<span id="showResultPwd"></span>
-																			<!-- begin wizard step-3 -->
-																			<div class="wizard-step-3">
-																				<fieldset>
-																					<legend class="pull-left width-full">비밀번호 재설정</legend>
-										                                            <!-- begin row -->
-										                                            <div class="row">
-										                                                <!-- begin col-4 -->
-										                                                <div class="col-md-4">
-										                                                    <div class="form-group">
-										                                                        <label>새 비밀번호</label>
-										                                                        <div class="controls">
-										                                                            <input type="password" name="residentPwd" id="residentPwd" placeholder="새로운 비밀번호 입력" class="form-control" data-parsley-group="wizard-step-3" required />
-										                                                        </div>
-										                                                    </div>
-										                                                </div>
-										                                                <!-- end col-4 -->
-										                                                <!-- begin col-4 -->
-										                                                <div class="col-md-4">
-										                                                    <div class="form-group">
-										                                                        <label>새 비밀번호 확인</label>
-										                                                        <div class="controls">
-										                                                            <input type="password" name="residentPwd2" id="residentPwd2" placeholder="새로운 비밀번호 확인" class="form-control" />
-										                                                        </div>
-										                                                    </div>
-										                                                </div>
-										                                                <!-- end col-6 -->
-										                                            </div>
-										                                            <!-- end row -->
-										                                        </fieldset>
-																			</div>
-																			<!-- end wizard step-3 -->
-																		</div>
-																		<div class="modal-footer">
-																			<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-																			<a href="moveFindPwd" class="btn btn-sm btn-success">비밀번호 재설정</a>
-																		</div>
-																	</div>
-																</div>
-															</div>
-															<!-- 끝 비밀번호 찾기 결과 모달 -->
 			                        </div>
 			                    </div>
 			                    <!-- end panel -->
@@ -271,32 +267,29 @@
 
 		//비밀번호 찾기 결과 보여주는 함수
 		function showPwd() {
-			('.next').children().eq(0).css("display", "none")
-
-		/*
-			var findPwdForm =$("#findPwdForm").serialize();
+			var findIdForm =$("#findPwdForm").serialize();
 
 		$.ajax({
   			url:"findPwd",
   			type:"post",
-  			data:findPwdForm,
+  			data:findIdForm,
   			success:function(data){
+				/* var jsonObj = JSON.parse(data); */
 				console.log("data : " + data);
 				$("#showResultPwd").empty();
 
 				if(data == ''){
 				$("#showResultPwd").append("<h3>"+"입력하신 정보가 일치하지 않습니다.");
 				}else{
+					/* console.log(data.showResultPwd.residentId); */
 					var resultPwd = data.findPwd.residentId;
 					$("#showResultPwd").append("<h3>"+"회원님의 아이디는 '" + resultPwd + "' 입니다.</h3>");
-
 				}
   			},
   			error:function(xhr, status){
   				alert(xhr + " : " + status);
   			}
   		});
-		*/
 		}
 	</script>
 </body>

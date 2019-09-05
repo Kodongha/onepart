@@ -76,6 +76,15 @@
 	   	</choose>
    </select>
 
+   <!-- 비밀번호 찾기용 정보조회 메소드 -->
+   <select id="selectFindPwd" resultMap="residentVOResultSet" parameterType="ResidentVO">
+	   	SELECT RESIDENT_SEQ, RESIDENT_ID, RESIDENT_NM
+	   	FROM RESIDENT
+	   	WHERE RESIDENT_ID = #{residentId}
+	   	AND RESIDENT_NM = #{residentNm}
+	   	AND RESIDENT_PHONE = #{residentPhone}
+   </select>
+
 
 
 </mapper>

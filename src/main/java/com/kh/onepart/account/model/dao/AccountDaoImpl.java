@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.onepart.account.model.exception.findIdException;
+import com.kh.onepart.account.model.exception.findPwdException;
 import com.kh.onepart.account.model.vo.ResidentVO;
 
 @Repository
@@ -56,6 +57,21 @@ public class AccountDaoImpl implements AccountDao {
 //			throw new findIdException("일치하는 아이디가 존재하지 않습니다.");
 //		}
 		return findId;
+	}
+
+	//비밀번호 찾기용 정보조회 메소드
+	@Override
+	public ResidentVO findPwd(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO) throws findPwdException {
+		System.out.println("account dao");
+		System.out.println("requestResidentVO::" + requestResidentVO);
+
+		ResidentVO findPwd = sqlSession.selectOne("Account.selectFindPwd", requestResidentVO);
+		System.out.println("findPwd in dao : " + findPwd);
+
+		if(findPwd == null) {
+			throw new findPwdException("일치하는 아이디가 존재하지 않습니다.");
+		}
+		return findPwd;
 	}
 
 }

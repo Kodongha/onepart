@@ -127,8 +127,9 @@
 								<!-- <a href="javascript:;" class="btn btn-white m-r-5">취소</a> <a href="javascript:;" class="btn btn-primary">찾기</a> -->
 								<button type="reset" class="btn btn-white m-r-5">취소</button> &nbsp; &nbsp;
 								<!-- <button type="submit" class="btn btn-primary">찾기</button> -->
-								<!-- 모달로 결과 보내기 버튼 -->
+					 			<!-- 시작 모달로 결과 보내기 버튼 -->
 								<a href="#modal-dialog" class="btn btn-primary" data-toggle="modal" onclick="showId(); return false;">찾기</a>
+								<!-- 끝= 모달로 결과 보내기 버튼 -->
 							</p>
 								<!-- 시작 아이디찾기 결과 모달 -->
 								<div class="modal fade" id="modal-dialog" aria-hidden="true" style="display: none;">
