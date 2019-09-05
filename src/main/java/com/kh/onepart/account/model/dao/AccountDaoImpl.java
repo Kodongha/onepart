@@ -68,10 +68,19 @@ public class AccountDaoImpl implements AccountDao {
 		ResidentVO findPwd = sqlSession.selectOne("Account.selectFindPwd", requestResidentVO);
 		System.out.println("findPwd in dao : " + findPwd);
 
-		if(findPwd == null) {
-			throw new findPwdException("일치하는 아이디가 존재하지 않습니다.");
-		}
+//		if(findPwd == null) {
+//			throw new findPwdException("일치하는 아이디가 존재하지 않습니다.");
+//		}
 		return findPwd;
+	}
+
+	//비밀번호 재설정용 메소드
+	@Override
+	public int setNewPwd(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO) {
+		System.out.println("sqlSession in daoImpl : " + sqlSession);
+		System.out.println("requestResidentVO in daoImpl : " + requestResidentVO);
+		//System.out.println("result in daoImle : " + sqlSession.insert("Account.insertResident", requestResidentVO));
+		return sqlSession.insert("Account.setNewPwd", requestResidentVO);
 	}
 
 }

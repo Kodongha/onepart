@@ -25,4 +25,7 @@ public interface AccountDao {
 	//비밀번호 찾기용 정보조회 메소드
 	ResidentVO findPwd(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO) throws findPwdException;
 
+	//비밀번호 재설정용 메소드
+	int setNewPwd(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO);
+
 }

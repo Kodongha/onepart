@@ -195,6 +195,27 @@ public class AccountController {
 					return mv;
 				}
 
+		//비밀번호 재설정용 메소드
+				@RequestMapping("/setNewPwd")
+				public ModelAndView setNewPwd(ResidentVO requestResidentVO, ModelAndView mv) {
+					String encPassword = passwordEncoder.encode(requestResidentVO.getResidentPwd());
+					System.out.println("encPassword in ctr: " + encPassword);
+					requestResidentVO.setResidentPwd(encPassword);
+
+					System.out.println("requestResidentVO in ctr : " + requestResidentVO);
+
+					int result = accountService.setNewPwd(requestResidentVO);
+					System.out.println("result in ctr : " + result);
+
+					if(result > 0) {
+						mv.addObject("result", result);
+						mv.setViewName("jsonView");
+					}else {
+						mv.addObject("msg", "비밀번호 재설정 오류");
+						mv.setViewName("common/errorPage");
+					}
+					return mv;
+				}
 
 
 }

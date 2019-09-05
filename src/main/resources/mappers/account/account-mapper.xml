@@ -85,6 +85,13 @@
 	   	AND RESIDENT_PHONE = #{residentPhone}
    </select>
 
+   <!-- 비밀번호 재설정용 메소드 -->
+   <update id="setNewPwd" parameterType="ResidentVO">
+      UPDATE RESIDENT
+      SET RESIDENT_PWD = #{residentPwd}
+      WHERE RESIDENT_ID = #{residentId}
+   </update>
+
 
 
 </mapper>

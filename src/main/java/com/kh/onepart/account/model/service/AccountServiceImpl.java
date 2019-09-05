@@ -81,6 +81,13 @@ public class AccountServiceImpl implements AccountService{
 		return findPwd;
 	}
 
+	//비밀번호 재설정용 메소드
+	@Override
+	public int setNewPwd(ResidentVO requestResidentVO) {
+		System.out.println("requestResidentVO in svcImpl : " + requestResidentVO);
+		return accountDao.setNewPwd(sqlSession, requestResidentVO);
+	}
+
 
 
 
