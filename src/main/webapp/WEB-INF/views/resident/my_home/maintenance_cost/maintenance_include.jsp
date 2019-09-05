@@ -21,7 +21,7 @@ $(document).ready(function() {
 	$("#payment").data("menu-url", "/onepart/resident/payment");
 	/* 해당 관리비 사용내역 상세보기 */
 	$("#useDetailMonth").data("menu-url", "/onepart/resident/useDetailMonth");
-	
+
 	/* 우리집 관리비 비교 */
 	$("#maintenancecompare").click(function(){
 		var voteUrl = $(this).data("menu-url");
@@ -77,11 +77,11 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+
 	/* select변화에 따른 servlet호출 script */
 	$("#compareSelect").change(function(){
 		var result = $(this).val();
-		
+
 		if(result == 'year'){
 			$.ajax({
 				url:"/onepart/resident/maintenancecompare2",
@@ -112,11 +112,13 @@ $(document).ready(function() {
 </script>
 <!-- 타이틀 -->
 			<div style="width:95%; margin:0 auto">
-			<h2>우리집 관리비</h2>
-			</div>
-			<br><br><br>
 			<!-- 전체 div -->
-			<div style="width:95%; margin:0 auto">
+			<div>
+			<div style="width:85%; margin:0 auto">
+			<br>
+			<h2>우리집 관리비</h2>
+			<hr>
+			<br>
 				<!-- 타이틀 div -->
 				<div>
 					<table style="width:100%; height:100%; margin:-1% auto;">
@@ -125,8 +127,8 @@ $(document).ready(function() {
 							<td><a id="payment" class="btn btn-white" style="width:100%">납부하기</a></td>
 						</tr>
 					</table>
-					<hr style="width:100%">
 				</div>
+				<br><br>
 				<div>
 					<!-- 기본내역 div -->
 					<div>
@@ -155,5 +157,7 @@ $(document).ready(function() {
 					<hr style="width: 100%">
 				</div>
 			</div>
+		</div>
+		</div>
 </body>
 </html>

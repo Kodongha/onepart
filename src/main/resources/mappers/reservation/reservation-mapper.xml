@@ -53,6 +53,7 @@
 		FROM FAC F
 		JOIN IMAGE I ON (F.FAC_SEQ = I.FAC_SEQ)
 		WHERE F.FAC_DEL_TF = 'N'
+		AND I.IMG_TYPE = 1
 	</select>
 
 	<select id="selectOneReservation" resultMap="reservationResultSet" parameterType="_int">
@@ -61,6 +62,7 @@
 		JOIN IMAGE I ON (F.FAC_SEQ = I.FAC_SEQ)
 		WHERE F.FAC_DEL_TF = 'N'
 		AND F.FAC_SEQ = #{facSeq}
+		AND I.IMG_TYPE = 1
 	</select>
 
 	<insert id="insertReservation" parameterType="facReservation">
