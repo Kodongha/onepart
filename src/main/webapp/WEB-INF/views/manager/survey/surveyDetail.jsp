@@ -29,28 +29,31 @@
 	    <div class="col-md-10">
 			<h3>설문조사</h3>
 			<br>
+
 			<div class="tab-content">
 				<div class="tab-pane fade active in" id="default-tab-1">
 
 					<div id="surveyInfoHeader">
+
 						<h2 id="titleH1">${ surveyVO.surveyTitle }</h2>
 
-							<c:if test="${ surveyVO.surveyStatus == 1}">
-								<span class="badge badge-inverse" id="surveyStatus">
-									진행 예정
-								</span>
-							</c:if>
-							<c:if test="${ surveyVO.surveyStatus == 2}">
-								<span class="badge badge-Primary" id="surveyStatus">
-									진행 중
-								</span>
-							</c:if>
-							<c:if test="${ surveyVO.surveyStatus == 3}">
-								<span class="badge badge-Danger" id="surveyStatus">
-									종료
-								</span>
-							</c:if>
+						<c:if test="${ surveyVO.surveyStatus == 1}">
+							<span class="badge badge-inverse" id="surveyStatus">
+								진행 예정
+							</span>
+						</c:if>
+						<c:if test="${ surveyVO.surveyStatus == 2}">
+							<span class="badge badge-Primary" id="surveyStatus">
+								진행 중
+							</span>
+						</c:if>
+						<c:if test="${ surveyVO.surveyStatus == 3}">
+							<span class="badge badge-Danger" id="surveyStatus">
+								종료
+							</span>
+						</c:if>
 
+						<span style="text-align: right;">버튼</span>
 
 
 						<table class="table" id="TbsurveyInfo">

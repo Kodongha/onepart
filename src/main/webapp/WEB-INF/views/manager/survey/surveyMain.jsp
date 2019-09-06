@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="${contextPath}/resources/plugins/switchery/switchery.min.css" rel="stylesheet" />
+<script src="${contextPath}/resources/plugins/switchery/switchery.min.js"></script>
 <link href="${contextPath}/resources/plugins/powerange/powerange.min.css" rel="stylesheet" />
 <%--
 <script type="text/javascript" src="${ contextPath }/resources/js/daterangepicker.js"></script>
@@ -28,10 +29,6 @@
 
 	#pageingBtnArea {
 		text-align: center;
-	}
-
-	#writeSurvey {
-		margin-bottom: 5%;
 	}
 
 	textarea {
