@@ -313,9 +313,25 @@
 			// 방 참가
 			$(document).on('click', '.roomDiv', function () {
 				const openChatSeq = $(this).data('open-chat-seq');
-				let url = "${contextPath}/resident/menuOpenChatRoom/"+openChatSeq;
 
-				window.open(url, "채팅방"+openChatSeq, "width=450px; height=600px;");
+				$.ajax({
+					url : '/onepart/resident/maxCheck',
+					type : 'get',
+					dataType: 'json',
+					data : {'openChatSeq': openChatSeq},
+					success : function(data) {
+
+					if(data.OpenChatVO.openChatMaxHead > data.OpenChatVO.openChatCurrHead){
+						 let url = "${contextPath}/resident/menuOpenChatRoom/"+openChatSeq;
+						window.open(url, "채팅방"+openChatSeq, "width=450px; height=600px;");
+					}else{
+						alert("채팅방 꽊참");
+					}
+
+					},error : function(err) {
+
+					}
+				});
 			});
 
 

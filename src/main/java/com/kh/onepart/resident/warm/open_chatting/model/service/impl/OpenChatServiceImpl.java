@@ -49,4 +49,6 @@ public class OpenChatServiceImpl implements OpenChatService {
 		return openChatDao.countChatRoom(sqlSession);
 	}
 
+
+
 }

@@ -56,4 +56,6 @@ public class OpenChatDaoImpl implements OpenChatDao {
 	}
 
 
+
+
 }
