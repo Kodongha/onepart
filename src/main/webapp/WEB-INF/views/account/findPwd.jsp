@@ -10,7 +10,7 @@
 <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-	<title>Color Admin | Wizards + Validation</title>
+	<title>원파트 | 비밀번호 찾기</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
@@ -75,19 +75,19 @@
 			                            <form method="POST" data-parsley-validate="true" name="form-wizard" id="findPwdForm">
 											<div id="wizard" >
 												<ol>
-													<li style="width: 26%" >
+													<li style="width: 26%" id="tabStep1" >
 													    아이디  입력
 													    <small>비밀번호를 찾고자 하는 아이디를 입력해 주세요.</small>
 													</li>
-													<li style="width: 26%">
+													<li style="width: 26%" id="tabStep2">
 													    본인 확인
 													    <small>회원정보에 등록한 휴대전화로 인증</small>
 													</li>
-													<li style="width: 26%">
+													<li style="width: 26%" id="tabStep3">
 													    비밀번호 재설정
 													    <small>새로운 비밀번호 설정</small>
 													</li>
-													<li style="width: 22%">
+													<li style="width: 22%" id="tabStep4">
 													    완료!
 													    <small>비밀번호 변경 완료</small>
 													</li>
@@ -134,7 +134,7 @@
 																	<tr>
 																		<td>
 																		<input name="residentPhone" id="residentPhone" type="tel" placeholder="' - ' 없이 숫자만 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" style="width: 300px; display: inline-block;" required/></td>
-																		<td>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default m-r-5 m-b-5" style="display: inline-block; align-self: flex-start;">인증번호</button></td>
+																		<td>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default m-r-5 m-b-5" style="display: inline-block; align-self: flex-start;" onclick="confirmNumber()">인증번호</button></td>
 																	</tr>
 																</table>
 																</div>
@@ -159,14 +159,16 @@
 
 												<!-- end wizard step-2 -->
 												<!-- begin wizard step-3 -->
+												<div class="wizard-step-3">
 
+												</div>
 												<!-- end wizard step-3 -->
 												<!-- begin wizard step-4 -->
-												<div>
+												<div id="step4">
 												    <div class="jumbotron m-b-0 text-center">
 			                                            <h1>비밀번호 변경 성공!</h1>
 			                                            <p>설정하신 비밀번호로 변경되었습니다. 다시 로그인하시기 바랍니다.</p>
-			                                            <p><a class="btn btn-success btn-lg" role="button">로그인으로 이동</a></p>
+			                                            <p><a class="btn btn-success btn-lg" role="button" href="moveAccount">로그인으로 이동</a></p>
 			                                        </div>
 												</div>
 												<!-- end wizard step-4 -->
@@ -181,12 +183,14 @@
 																			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 																			<h4 class="modal-title">비밀 번호 재설정 하기</h4>
 																		</div>
+																 		<form method="POST" data-parsley-validate="true"  id="setNewPwdForm">
+																		<!-- <form action=""> -->
 																		<div class="modal-body">
-																			<span id="showResultPwd"></span>
 																			<!-- begin wizard step-3 -->
-																			<div class="wizard-step-3">
+																			<span id="showResultPwd"></span>
+																			<div id="setNewPassword">
 																				<fieldset>
-																					<legend class="pull-left width-full">비밀번호 재설정</legend>
+																					<!-- <legend class="pull-left width-full">비밀번호 재설정</legend> -->
 										                                            <!-- begin row -->
 										                                            <div class="row">
 										                                                <!-- begin col-4 -->
@@ -194,7 +198,9 @@
 										                                                    <div class="form-group">
 										                                                        <label>새 비밀번호</label>
 										                                                        <div class="controls">
+										                                                        	<input type="hidden" name= residentId id="residentIdResult">
 										                                                            <input type="password" name="residentPwd" id="residentPwd" placeholder="새로운 비밀번호 입력" class="form-control" data-parsley-group="wizard-step-3" required />
+										                                                            <p style="color: graytext; margin-bottom: 0%;">&nbsp;비밀번호는 최소 8자 이상, 영문과 숫자 혼합하여 설정</p>
 										                                                        </div>
 										                                                    </div>
 										                                                </div>
@@ -217,8 +223,9 @@
 																		</div>
 																		<div class="modal-footer">
 																			<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-																			<a href="moveFindPwd" class="btn btn-sm btn-success">비밀번호 재설정</a>
+																			<a href="moveFindPwd" id="changeNewPasswordBtn"class="btn btn-sm btn-success" data-dismiss="modal" onclick="setNewPwd()">비밀번호 재설정</a>
 																		</div>
+															 </form>
 																	</div>
 																</div>
 															</div>
@@ -268,12 +275,14 @@
 			App.init();
 			FormWizardValidation.init();
 		});
+		//비밀번호 찾기에서 인증번호 단추 클릭 함수
+		function confirmNumber() {
+			//next버튼 없애
+			$('.next').children().eq(0).css("display", "none")
+		}
 
 		//비밀번호 찾기 결과 보여주는 함수
 		function showPwd() {
-			('.next').children().eq(0).css("display", "none")
-
-		/*
 			var findPwdForm =$("#findPwdForm").serialize();
 
 		$.ajax({
@@ -281,23 +290,72 @@
   			type:"post",
   			data:findPwdForm,
   			success:function(data){
-				console.log("data : " + data);
+
 				$("#showResultPwd").empty();
+  				if(data.findPwd != null){
+					console.log("data : " + data.findPwd.residentId);
+					var resultId = data.findPwd.residentId;
+					$("#residentIdResult").val(resultId);
+					console.log($("#residentIdResult").val());
+					$('#setNewPassword').css("display", "");
+					$('#changeNewPasswordBtn').css("display", "");
+  				}else{
+
+					$("#showResultPwd").append("<h3>"+"입력하신 정보가 일치하지 않습니다.");
+					$('#setNewPassword').css("display", "none");
+					$('#changeNewPasswordBtn').css("display", "none");
+  				}
+
+
 
 				if(data == ''){
-				$("#showResultPwd").append("<h3>"+"입력하신 정보가 일치하지 않습니다.");
 				}else{
-					var resultPwd = data.findPwd.residentId;
-					$("#showResultPwd").append("<h3>"+"회원님의 아이디는 '" + resultPwd + "' 입니다.</h3>");
-
 				}
   			},
   			error:function(xhr, status){
   				alert(xhr + " : " + status);
   			}
   		});
-		*/
 		}
+
+		//새로운 비밀번호 설정 함수
+		function setNewPwd() {
+
+			var setNewPwdForm =$("#setNewPwdForm").serialize();
+
+			$.ajax({
+  			url:"setNewPwd",
+  			type:"post",
+  			data:setNewPwdForm,
+  			success:function(data){
+				console.log("data : " + data);
+				$("body").html(data);
+				/* $("#showResultPwd").empty(); */
+
+			/* 	if(data == ''){
+				$("#showResultPwd").append("<h3>"+"입력하신 정보가 일치하지 않습니다.");
+				}else{
+					var resultPwd = data.findPwd.residentId;
+					$("#showResultPwd").append("<h3>"+"회원님의 아이디는 '" + resultPwd + "' 입니다.</h3>");
+
+				} */
+				$('#step2').attr("class", "wizard-step-2 hide")
+				$('#step4').attr("class", "bwizard-activated")
+				/* $('#tabStep2').attr("aria-selected", "false")
+				$('#tabStep4').attr("aria-selected", "true") */
+				$('#tabStep2').attr("class", "")
+				$('#tabStep4').attr("class", "active")
+				$('.next').children().eq(0).css("display", "none")
+				$('.previous').children().eq(0).css("display", "none")
+
+  				},
+  				error:function(xhr, status){
+  				alert(xhr + " : " + status);
+  			}
+  		});
+		}
+
+
 	</script>
 </body>
 </html>

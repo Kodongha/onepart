@@ -12,7 +12,7 @@
 <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-	<title>원파트 | 404 Error Page</title>
+	<title>원파트 | 503 Error Page</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
@@ -41,26 +41,27 @@
 	<div id="page-container" class="fade">
 	    <!-- begin error -->
         <div class="error">
-            <div class="error-code m-b-10"><h1 align="center">${ msg }</h1> <i class="fa fa-warning"></i></div>
+            <div class="error-code m-b-10">503 <i class="fa fa-warning"></i></div>
             <div class="error-content">
-                <!-- <div class="error-message">페이지를 찾을 수 없습니다.</div>
+                <div class="error-message">서비스를 사용할 수 없습니다.</div>
                 <div class="error-desc m-b-20">
-                    찾으시는 페이지가 존재하지 않습니다. <br />
-                </div> -->
+                   서비스를 일시적으로 사용할 수 없습니다. <br />
+                   나중에 다시 오세요. 503 Service Unavailable <br />
+                </div>
                 <div>
                 	<c:set var="name1" value="${sessionScope.loginUser.residentSeq}"/>
                 	<c:choose>
 	                	<c:when test="${empty  name1}" >
-	                    <a href="javascript:history.back()" class="btn btn-success">이전 페이지로 이동</a> &nbsp;&nbsp;
-	                    <a href="/onepart/moveAccount" class="btn btn-success">로그인 페이지로 이동</a>
+	                	<a href="javascript:history.back()" class="btn btn-success">이전 페이지로 이동</a> &nbsp;&nbsp;
+	                    <a href="/onepart/moveAccount" class="btn btn-success">로그인 페이지로 이동</a> &nbsp;&nbsp;
 	                	</c:when>
 	                	<c:when test="${fn:contains(name1 ,'E')}" >
 	                	<a href="javascript:history.back()" class="btn btn-success">이전 페이지로 이동</a> &nbsp;&nbsp;
-	                    <a href="/onepart/manager/main" class="btn btn-success">메인 페이지로 이동</a>
+	                    <a href="/onepart/manager/main" class="btn btn-success">메인 페이지로 이동</a> &nbsp;&nbsp;
 	                	</c:when>
 	                	<c:otherwise>
 	                	<a href="javascript:history.back()" class="btn btn-success">이전 페이지로 이동</a> &nbsp;&nbsp;
-	                    <a href="/onepart/resident/main" class="btn btn-success">메인 페이지로 이동</a>
+	                    <a href="/onepart/resident/main" class="btn btn-success">메인 페이지로 이동</a> &nbsp;&nbsp;
 	                	</c:otherwise>
                 	</c:choose>
                 </div>

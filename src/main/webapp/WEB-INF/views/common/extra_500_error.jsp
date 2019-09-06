@@ -12,7 +12,7 @@
 <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-	<title>원파트 | 404 Error Page</title>
+	<title>원파트 | 500 Error Page</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
@@ -41,17 +41,18 @@
 	<div id="page-container" class="fade">
 	    <!-- begin error -->
         <div class="error">
-            <div class="error-code m-b-10"><h1 align="center">${ msg }</h1> <i class="fa fa-warning"></i></div>
+            <div class="error-code m-b-10">500 <i class="fa fa-warning"></i></div>
             <div class="error-content">
-                <!-- <div class="error-message">페이지를 찾을 수 없습니다.</div>
+                <div class="error-message">웹 사이트에서 페이지를 표시할 수 없습니다.</div>
                 <div class="error-desc m-b-20">
-                    찾으시는 페이지가 존재하지 않습니다. <br />
-                </div> -->
+                    요청 처리 과정에서 예외가 발생하였습니다. <br />
+                    빠른 시간 내에 문제를 해결하도록 하겠습니다. <br />
+                </div>
                 <div>
                 	<c:set var="name1" value="${sessionScope.loginUser.residentSeq}"/>
                 	<c:choose>
 	                	<c:when test="${empty  name1}" >
-	                    <a href="javascript:history.back()" class="btn btn-success">이전 페이지로 이동</a> &nbsp;&nbsp;
+	                	<a href="javascript:history.back()" class="btn btn-success">이전 페이지로 이동</a> &nbsp;&nbsp;
 	                    <a href="/onepart/moveAccount" class="btn btn-success">로그인 페이지로 이동</a>
 	                	</c:when>
 	                	<c:when test="${fn:contains(name1 ,'E')}" >

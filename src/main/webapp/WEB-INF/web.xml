@@ -47,4 +47,17 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+ 	<error-page>
+        <error-code>404</error-code>            <!-- 500, 503도 필요하신 page 를 만드셔서 연동하시면 됩니다. -->
+        <location>/WEB-INF/views/common/extra_404_error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>            <!-- 500, 503도 필요하신 page 를 만드셔서 연동하시면 됩니다. -->
+        <location>/WEB-INF/views/common/extra_500_error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>503</error-code>            <!-- 500, 503도 필요하신 page 를 만드셔서 연동하시면 됩니다. -->
+        <location>/WEB-INF/views/common/extra_503_error.jsp</location>
+    </error-page>
+
 </web-app>

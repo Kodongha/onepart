@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.onepart.account.model.exception.findIdException;
 import com.kh.onepart.account.model.exception.findPwdException;
+import com.kh.onepart.account.model.vo.ManagerVO;
 import com.kh.onepart.account.model.vo.ResidentVO;
 
 @Repository
@@ -68,10 +69,31 @@ public class AccountDaoImpl implements AccountDao {
 		ResidentVO findPwd = sqlSession.selectOne("Account.selectFindPwd", requestResidentVO);
 		System.out.println("findPwd in dao : " + findPwd);
 
-		if(findPwd == null) {
-			throw new findPwdException("일치하는 아이디가 존재하지 않습니다.");
-		}
+//		if(findPwd == null) {
+//			throw new findPwdException("일치하는 아이디가 존재하지 않습니다.");
+//		}
 		return findPwd;
+	}
+
+	//비밀번호 재설정용 메소드
+	@Override
+	public int setNewPwd(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO) {
+		System.out.println("sqlSession in daoImpl : " + sqlSession);
+		System.out.println("requestResidentVO in daoImpl : " + requestResidentVO);
+		//System.out.println("result in daoImle : " + sqlSession.insert("Account.insertResident", requestResidentVO));
+		return sqlSession.insert("Account.setNewPwd", requestResidentVO);
+	}
+
+	// 관리자 암호화 비밀번호 조회용 메소드
+	@Override
+	public String selectEncPassword(SqlSessionTemplate sqlSession, ManagerVO requestManagerVO) {
+		return sqlSession.selectOne("Account.selectManagerPwd", requestManagerVO);
+	}
+
+	// 관리자 비밀번호 일치 시 회원 정보 조회용 메소드
+	@Override
+	public ManagerVO selectManager(SqlSessionTemplate sqlSession, ManagerVO requestManagerVO) {
+		return sqlSession.selectOne("Account.selectManagerLoginUser", requestManagerVO);
 	}
 
 }

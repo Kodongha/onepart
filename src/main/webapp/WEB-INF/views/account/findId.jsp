@@ -10,7 +10,7 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>Color Admin | Register Page</title>
+	<title>원파트 | 비밀번호 찾기</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />

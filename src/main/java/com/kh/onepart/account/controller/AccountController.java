@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.onepart.account.model.exception.ManagerLoginException;
 import com.kh.onepart.account.model.exception.findIdException;
 import com.kh.onepart.account.model.exception.findPwdException;
 import com.kh.onepart.account.model.service.AccountService;
+import com.kh.onepart.account.model.vo.ManagerVO;
 import com.kh.onepart.account.model.vo.ResidentVO;
 
 @Controller
@@ -51,27 +53,34 @@ public class AccountController {
 	//이동 로그인 화면
 	@RequestMapping("/moveLogin")
 	public String moveLogin() {
-		System.out.println("in account");
+		System.out.println("in moveLogin");
 		return "account/login";
 	}
 	//이동 회원가입 화면
 	@RequestMapping("/moveRegister")
 	public String moveRegister() {
-		System.out.println("in account");
+		System.out.println("in moveRegister");
 		return "account/register";
 	}
 	//이동 아이디찾기 화면
 	@RequestMapping("/moveFindId")
 	public String moveFindId() {
-		System.out.println("in account");
+		System.out.println("in moveFindId");
 		return "account/findId";
 	}
 	//이동 비밀번호 찾기 화면
 	@RequestMapping("/moveFindPwd")
 	public String moveFindPwd() {
-		System.out.println("in account");
+		System.out.println("in moveFindPwd");
 		return "account/findPwd";
 	}
+	//이동 관리자 로그 화면
+	@RequestMapping("/moveManagerAccount")
+	public String moveManagerAccount() {
+		System.out.println("in moveManagerAccount");
+		return "account/managerLogin";
+	}
+
 
 	//로그인용 메소드
 	@RequestMapping(value="/loginCheck", method=RequestMethod.POST)
@@ -88,7 +97,7 @@ public class AccountController {
 			ResidentVO loginUser = accountService.loginCheck(requestResidentVO);
 			model.addAttribute("loginUser", loginUser);
 			System.out.println("loginUser in controller" + loginUser);
-			return "redirect:resident/main";
+				return "redirect:resident/main";
 		} catch (LoginException e) {
 			model.addAttribute("msg", e.getMessage());
 			return "common/errorPage";
@@ -184,17 +193,68 @@ public class AccountController {
 							mv.addObject("findPwd", findPwd);
 							mv.setViewName("jsonView");
 						}else {
-							return null;
+							mv.addObject("findPwd", findPwd);
+							mv.setViewName("jsonView");
 						}
 
 					} catch (findPwdException e) {
 						mv.addObject("msg", e.getMessage());
+						System.out.println("아이디없음!");
 						mv.setViewName("common/errorPage");
 					}
 
 					return mv;
 				}
 
+		//비밀번호 재설정용 메소드
+				@RequestMapping("/setNewPwd")
+				public ModelAndView setNewPwd(ResidentVO requestResidentVO, ModelAndView mv) {
+					String encPassword = passwordEncoder.encode(requestResidentVO.getResidentPwd());
+					System.out.println("encPassword in ctr: " + encPassword);
+					requestResidentVO.setResidentPwd(encPassword);
 
+					System.out.println("requestResidentVO in ctr : " + requestResidentVO);
+
+					int result = accountService.setNewPwd(requestResidentVO);
+					System.out.println("result in ctr : " + result);
+
+					if(result > 0) {
+						mv.addObject("result", result);
+						mv.setViewName("jsonView");
+					}else {
+						System.out.println("비밀번호 재설정 오류");
+						mv.addObject("msg", "비밀번호 재설정 오류");
+						mv.setViewName("common/errorPage");
+
+					}
+					return mv;
+				}
+
+	//관리자 로그인용 메소드
+	@RequestMapping(value="/managerLoginCheck", method=RequestMethod.POST)
+	public String managerLoginCheck(ManagerVO requestManagerVO, Model model) {
+		System.out.println("/managerLoginCheck");
+		System.out.println("requestManagerVO in Controller:::" + requestManagerVO);
+
+		try {
+			ManagerVO managerLoginUser = accountService.managerLoginCheck(requestManagerVO);
+			model.addAttribute("managerLoginUser", managerLoginUser);
+			System.out.println("managerLoginUser in controller : " + managerLoginUser);
+			return "redirect:manager/main";
+		} catch (ManagerLoginException e) {
+			model.addAttribute("msg", e.getMessage());
+			return "common/errorPage";
+		}
+	}
+
+	//관리자 로그아웃
+	@RequestMapping("/managerLogout")
+	public String managerLogout(SessionStatus status) {
+		System.out.println("in managerLogout");
+		//System.out.println("before : " + request.getSession().getAttribute("loginUser"));
+		status.setComplete();
+
+		return "redirect:manager/main";
+	}
 
 }
