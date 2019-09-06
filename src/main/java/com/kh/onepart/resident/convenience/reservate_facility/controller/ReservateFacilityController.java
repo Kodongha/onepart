@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -125,11 +126,6 @@ public class ReservateFacilityController {
 			}
 		}
 
-
-		for(int i = 0; i < seatList.size(); i++) {
-			System.out.println("결과리스트 : " + seatList.get(i).getFacPositionNum());
-		}
-
 		mv.addObject("widthSize", widthSize);
 		mv.addObject("maxNumber", maxNumber);
 		mv.addObject("propSeatList", propSeatList);
@@ -185,6 +181,37 @@ public class ReservateFacilityController {
 		System.out.println("최종 예약 시간대 리스트 : " + resultList);
 
 		mv.addObject("resultList", resultList);
+		mv.setViewName("jsonView");
+
+		return mv;
+	}
+
+	@RequestMapping("/resident/insertReservation_seat")
+	public ModelAndView insertReservation_seat(ModelAndView mv, int facSeq, String propSeat, HttpServletRequest request) {
+
+		System.out.println("facSqe : " + facSeq );
+		System.out.println("propSeatCode : " + propSeat);
+
+		//해당 좌석코드번호의 PK 불러오는 메소드
+		FacSeatInfo fr = new FacSeatInfo();
+		fr.setFacSeq(facSeq);
+		fr.setFacPositionNum(propSeat);
+		int realPropSeat = rs.selectSeatPrimarykey(fr);
+		System.out.println("realPropSeat : " + realPropSeat);
+
+		int residentSeq = ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentSeq();
+		String rsrvNm =  ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentNm();
+		String rsrvPhone = ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentPhone();
+
+		//좌석 시설물 예약하는 메소드
+		FacReservation fr2 = new FacReservation();
+		fr2.setFacSeq(facSeq);
+		fr2.setPropSeat(realPropSeat);
+		fr2.setResidentSeq(residentSeq);
+		fr2.setRsrvNm(rsrvNm);
+		fr2.setRsrvPhone(rsrvPhone);
+		int result = rs.insertReservationSeat(fr2);
+
 		mv.setViewName("jsonView");
 
 		return mv;

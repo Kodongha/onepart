@@ -2,13 +2,13 @@ package com.kh.onepart.resident.convenience.reservate_facility.model.service;
 
 import java.util.ArrayList;
 
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.onepart.resident.convenience.reservate_facility.model.dao.ReservationDao;
 import com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacReservation;
+import com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacSeatInfo;
 import com.kh.onepart.resident.convenience.reservate_facility.model.vo.Reservation;
 
 @Service
@@ -81,6 +81,22 @@ public class ReservationServiceImpl implements ReservationService{
 		ArrayList propSeatList = rd.selectOnePropSeatList(sqlSession, facSeq);
 
 		return propSeatList;
+	}
+	//해당 좌석코드번호의 PK 불러오는 메소드
+	@Override
+	public int selectSeatPrimarykey(FacSeatInfo fr) {
+
+		int realPropSeat = rd.selectSeatPrimarykey(sqlSession, fr);
+
+		return realPropSeat;
+	}
+	//좌석 시설물 예약하는 메소드
+	@Override
+	public int insertReservationSeat(FacReservation fr2) {
+
+		int result = rd.insertReservationSeat(sqlSession, fr2);
+
+		return result;
 	}
 
 }

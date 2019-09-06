@@ -411,19 +411,20 @@ function applyReservation() {
 			                                                     <div class="form-group">
 			                                                        <label style="font-weight:bold">연락처</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" id="rsrvPhone" class="form-control" data-parsley-group="wizard-step-3" required />
+			                                                            <input type="text" id="rsrvPhone" class="form-control" data-parsley-group="wizard-step-3" required value="${ loginUser.residentPhone }"/>
 			                                                        </div>
 			                                                    </div>
+			                                                    <c:set var="detail" value="${fn:split(loginUser.aptDetailInfoSeq, '_')}"></c:set>
 			                                                     <div class="form-group">
 			                                                        <label style="font-weight:bold">거주 동</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required />
+			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required value="${ detail[1] }동"/>
 			                                                        </div>
 			                                                    </div>
 			                                                     <div class="form-group">
 			                                                        <label style="font-weight:bold">거주 호</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required />
+			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required value="${ detail[2] }호"/>
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
