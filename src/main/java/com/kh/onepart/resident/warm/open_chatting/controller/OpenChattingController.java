@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -36,6 +37,16 @@ public class OpenChattingController {
 
 
 		return "/resident/warm/open_chatting/openChatting";
+	}
+
+	@RequestMapping("/resident/maxCheck")
+	@ResponseBody
+	public String maxCheck(@RequestParam("openChatSeq") int openChatSeq) throws JsonProcessingException {
+		OpenChatVO openChatVO = openChatService.selectOneById(openChatSeq);
+		Map<String, Object> result = new HashMap<>();
+		result.put("result", "success");
+		result.put("OpenChatVO",openChatVO);
+		return new ObjectMapper().writeValueAsString(result);
 	}
 
 	// 채팅방 참여

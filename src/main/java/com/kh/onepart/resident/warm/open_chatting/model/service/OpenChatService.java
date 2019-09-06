@@ -13,4 +13,5 @@ public interface OpenChatService {
 	public OpenChatVO selectOneById(int openChatSeq);
 	public int countChatRoom();
 
+
 }
