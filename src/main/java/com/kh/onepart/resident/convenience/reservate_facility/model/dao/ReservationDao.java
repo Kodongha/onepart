@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacReservation;
+import com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacSeatInfo;
+import com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacSeatInfo;
 import com.kh.onepart.resident.convenience.reservate_facility.model.vo.Reservation;
 
 public interface ReservationDao {
@@ -24,5 +26,9 @@ public interface ReservationDao {
 	ArrayList selectOneReservationSeatList(SqlSessionTemplate sqlSession, int facSeq);
 	//해당 시설물번호의 좌석예약 상태 불러오는 메소드
 	ArrayList selectOnePropSeatList(SqlSessionTemplate sqlSession, int facSeq);
+	//해당 좌석코드번호의 PK 불러오는 메소드
+	int selectSeatPrimarykey(SqlSessionTemplate sqlSession, FacSeatInfo fr);
+	//좌석 시설물 예약하는 메소드
+	int insertReservationSeat(SqlSessionTemplate sqlSession, FacReservation fr2);
 
 }

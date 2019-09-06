@@ -3,6 +3,7 @@ package com.kh.onepart.resident.convenience.reservate_facility.model.service;
 import java.util.ArrayList;
 
 import com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacReservation;
+import com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacSeatInfo;
 import com.kh.onepart.resident.convenience.reservate_facility.model.vo.Reservation;
 
 public interface ReservationService {
@@ -22,5 +23,9 @@ public interface ReservationService {
 	ArrayList selectOneReservationSeatList(int facSeq);
 	//해당 시설물번호의 좌석예약 상태 불러오는 메소드
 	ArrayList selectOnePropSeatList(int facSeq);
+	//해당 좌석코드번호의 PK 불러오는 메소드
+	int selectSeatPrimarykey(FacSeatInfo fr);
+	//좌석 시설물 예약하는 메소드
+	int insertReservationSeat(FacReservation fr2);
 
 }

@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacReservation;
+import com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacSeatInfo;
 import com.kh.onepart.resident.convenience.reservate_facility.model.vo.Reservation;
 
 @Repository
@@ -76,5 +77,22 @@ public class ReservationDaoImpl implements ReservationDao{
 		ArrayList propSeatList = (ArrayList) sqlSession.selectList("reservation.selectOnePropSeatList", facSeq);
 
 		return propSeatList;
+	}
+	//해당 좌석코드번호의 PK 불러오는 메소드
+	@Override
+	public int selectSeatPrimarykey(SqlSessionTemplate sqlSession, FacSeatInfo fr) {
+
+		int realPropSeat = sqlSession.selectOne("reservation.selectSeatPrimarykey", fr);
+
+		return realPropSeat;
+
+	}
+	//좌석 시설물 예약하는 메소드
+	@Override
+	public int insertReservationSeat(SqlSessionTemplate sqlSession, FacReservation fr2) {
+
+		int result = sqlSession.insert("reservation.insertReservationSeat", fr2);
+
+		return result;
 	}
 }

@@ -193,7 +193,7 @@ $(document).ready(function() {
 			                                            <div class="row">
 			                                                <!-- begin col-4 -->
 			                                                <div style="width:90%; margin:0 auto;">
-			                                                	<div class="form-group block1">
+			                                                	<div class="form-group block1" style="margin-bottom:0px">
 					                                                <br>
 																	<label style="font-weight:bold">좌석 선택</label>
 																</div>
@@ -226,18 +226,34 @@ $(document).ready(function() {
 																			</div>
 																		</td>
 																		<td>
-																			<i class="fa fa-2x fa-exclamation"></i><label>&nbsp;&nbsp;사용불가&nbsp;&nbsp;&nbsp;&nbsp;</label>
-																			<i class="fa fa-2x fa-heart-o"></i><label>&nbsp;&nbsp;사용가능&nbsp;&nbsp;&nbsp;&nbsp;</label>
-																			<i class="fa fa-2x fa-heart"></i><label>&nbsp;&nbsp;선택 좌석</label>
-																		</td>
+																			<table>
+																				<tr>
+																					<td align="center"><i class="fa fa-2x fa-exclamation"></i></td>
+																					<td style="width:20px"></td>
+																					<td align="center">사용불가</td>
+																				</tr>
+																				<tr><td><br></td></tr>
+																				<tr>
+																					<td align="center"><i class="fa fa-2x fa-heart-o"></i></td>
+																					<td style="width:20px"></td>
+																					<td align="center">사용가능</td>
+																				</tr>
+																				<tr><td><br></td></tr>
+																				<tr>
+																					<td align="center"><i class="fa fa-2x fa-heart"></i></td>
+																					<td style="width:20px"></td>
+																					<td align="center">선택좌석</td>
+																				</tr>
+																			</table>
 																	</tr>
 																</table>
 																<br><br>
 																<div class="form-group block1">
 					                                                <br>
 																	<label style="font-weight:bold">선택된 좌석</label>
-																	<input type="text" name="datetimes" class="form-control pull-right" data-parsley-group="wizard-step-2">
+																	<input type="text" id="selectSeat" name="propSeat" class="form-control pull-right" data-parsley-group="wizard-step-2">
 																</div>
+																<br><br><br>
 																<div>
 																	<label style="font-weight:bold">상세정보</label>
 																	<div>
@@ -260,7 +276,7 @@ $(document).ready(function() {
 																</div>
 																<br>
 			                                                    <div class="form-group">
-			                                                        <label style="font-weight:bold">이용날짜 ***오늘날짜 넣기</label>
+			                                                        <label style="font-weight:bold">이용날짜</label>
 			                                                        <div class="controls">
 			                                                            <input type="text" id="propUseDt" class="form-control" data-parsley-group="wizard-step-2" required readonly="readonly"/>
 			                                                        </div>
@@ -285,25 +301,26 @@ $(document).ready(function() {
 			                                                     <div class="form-group">
 			                                                        <label style="font-weight:bold">신청인 명</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required />
+			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required value="${ loginUser.residentNm }"/>
 			                                                        </div>
 			                                                    </div>
 			                                                     <div class="form-group">
 			                                                        <label style="font-weight:bold">연락처</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required />
+			                                                            <input type="text" name="rsrvPhone" class="form-control" data-parsley-group="wizard-step-3" required value="${ loginUser.residentPhone }"/>
 			                                                        </div>
 			                                                    </div>
+			                                                    <c:set var="detail" value="${fn:split(loginUser.aptDetailInfoSeq, '_')}"></c:set>
 			                                                     <div class="form-group">
 			                                                        <label style="font-weight:bold">거주 동</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required />
+			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required value="${ detail[1] }동"/>
 			                                                        </div>
 			                                                    </div>
 			                                                     <div class="form-group">
 			                                                        <label style="font-weight:bold">거주 호</label>
 			                                                        <div class="controls">
-			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required />
+			                                                            <input type="text" name="username" class="form-control" data-parsley-group="wizard-step-3" required value="${ detail[2] }호"/>
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
@@ -315,9 +332,9 @@ $(document).ready(function() {
 												<!-- begin wizard step-4 -->
 												<div>
 												    <div class="jumbotron m-b-0 text-center">
-			                                            <h1>예약 완료!</h1>
-			                                            <p>예약이 완료되었습니다. 관리자가 확인 후 승인처리 해드립니다.</p>
-			                                            <p id="returnMain"><a class="btn btn-success btn-lg">시설물 예약페이지로 이동</a></p>
+			                                            <h1>작성 완료!</h1>
+			                                            <p>예약신청서 작성 완료되었습니다 예약버튼 클릭 시 예약이 완료처리 되고 메인페이지로 돌아갑니다.</p>
+			                                            <p id="returnMain"><a class="btn btn-success btn-lg" onclick="return seatReservationGo(${ reserv.facSeq });">예약</a></p>
 			                                        </div>
 												</div>
 												<!-- end wizard step-4 -->
@@ -347,7 +364,10 @@ $(document).ready(function() {
 					if(result == 1){
 						$(this).removeClass("fa-heart-o");
 						$(this).addClass("fa-heart");
+						$("#selectSeat").val($(this).parent("td").attr('id'));
 						result++;
+					}else{
+						alert("좌석은 한개만 선택하실 수 있습니다.");
 					}
 				});
 
@@ -356,10 +376,37 @@ $(document).ready(function() {
 					if(result > 1){
 						$(this).removeClass("fa-heart");
 						$(this).addClass("fa-heart-o");
+						$("#selectSeat").val("");
 						result = 1;
 					}
 				});
 
+				function seatReservationGo(facSeq) {
+
+					var facSeq = facSeq;
+					var propSeat = $("#selectSeat").val();
+
+					console.log("facSeq :" + facSeq);
+					console.log("propSeat : " + propSeat);
+
+					$.ajax({
+			            type: "POST",
+			            url: "/onepart/resident/insertReservation_seat",
+			            data:{facSeq:facSeq, propSeat:propSeat},
+			            success: function (data) {
+			            	$.ajax({
+			        			url:"/onepart/resident/menuReservateFacility",
+			        			dataType:"html",
+			        			success:function(result){
+
+			        			}
+			        		});
+			            },
+			            error: function (e) {
+
+			            }
+			        });
+				}
 
 			</script>
 

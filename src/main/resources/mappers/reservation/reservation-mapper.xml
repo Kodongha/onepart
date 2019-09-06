@@ -116,4 +116,17 @@
 		AND TO_DATE(TO_CHAR(PROP_USE_DT, 'YYYYMMDD'), 'YYYY/MM/DD') = TO_DATE(TO_CHAR(SYSDATE, 'YYYYMMDD'), 'YYYY/MM/DD')
 	</select>
 
+	<select id="selectSeatPrimarykey" parameterType="facSeatInfo" resultType="_int">
+		SELECT FAC_SEAT_SEQ
+		FROM FAC_SEAT
+		WHERE FAC_SEQ = #{facSeq}
+		AND FAC_POSITION_NUM = #{facPositionNum}
+	</select>
+
+	<insert id="insertReservationSeat" parameterType="facReservation">
+		INSERT INTO FAC_RSRV
+		VALUES (FAC_RSRV_SEQ.NEXTVAL, #{facSeq}, SYSDATE, '좌석', #{residentSeq}, 2, 0, 1, '좌석',
+				'좌석', 1, #{rsrvNm}, SYSDATE, #{propSeat}, #{rsrvPhone})
+	</insert>
+
 </mapper>
