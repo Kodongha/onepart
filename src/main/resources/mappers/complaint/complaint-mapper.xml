@@ -3,11 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="complaint">
-	<select id="menuComplaint"
-		resultType="com.kh.complaint.ComplaintVo">
-		SELECT COMPLAINT_SEQ, COMPLAINT_TITLE, RESIDENT_SEQ,
-		COMPLAINT_CONTENT, COMPLAINT_ENROLL_DT, COMPLAINT_STATUS
-		FROM COMPLAINT
-		ORDER BY COMPLAINT_SEQ
-	</select>
+
+	<select resultType="com.kh.complaint.ComplaintVo"
+		id="menuComplaint">
+		SELECT COMPLAINT_SEQ, COMPLAINT_TITLE,
+		RESIDENT_SEQ,COMPLAINT_CONTENT, COMPLAINT_ENROLL_DT,
+		COMPLAINT_STATUSFROM COMPLAINT
+		FROM COMPLIANT
+		ORDER BY COMPLAINT_SEQ 
+		</select>
+
 </mapper>

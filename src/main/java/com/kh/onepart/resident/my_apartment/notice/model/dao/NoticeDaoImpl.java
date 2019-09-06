@@ -12,7 +12,7 @@ public class NoticeDaoImpl implements NoticeDao{
 
 	@Override
 	public ArrayList<NoticeVo> selectNoticeVo(int noticeSeq,SqlSessionTemplate sqlSession) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

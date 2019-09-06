@@ -9,5 +9,5 @@ import com.kh.onepart.resident.convenience.complaint.model.vo.ComplaintVo;
 public interface ComplaintDao {
 
 	ArrayList<ComplaintVo> selectAllComplaintVo(SqlSessionTemplate sqlSession);
-
+	
 }
