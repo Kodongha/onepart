@@ -28,29 +28,29 @@ public class ComplaintController {
 		System.out.println("/menuComplaint");
 		
 		ResidentVO loginResident = (ResidentVO)session.getAttribute("loginUser");
-//		int residentSeq = loginResident.getResidentSeq();
-//		System.out.println("로그인한nom : " + residentSeq);
 		
 		ArrayList<ComplaintVo> list = service.selectAllComplaintVo();
 //		return "/resident/convenience/complaint/complaint";
+		
 		mv.addObject("list", list);
 		mv.setViewName("/resident/convenience/complaint/complaint");
-		
+	
 		return mv;
-				
-		
-		
 	}
 	
 	@RequestMapping("/resident/moveComplaintDetail")
-	public String moveComplaintDetail() {
+	public String moveComplaintDetail(ModelAndView mv, int complaintSeq, String complaintTitle, 
+										String complaintContent, Date complaintEnrollDt) {
 		System.out.println("/moveComplaintDetail");
+		
+		ComplaintVo cv = new ComplaintVo();
+		//버튼만눌렀을때 셀렉트 되게 
 		return "/resident/convenience/complaint/complaint_detail";
 	}
-	
+
 	@RequestMapping("/resident/moveComplaintWrite")
 	public ModelAndView moveComplaintWrite(ModelAndView mv, String complaintTitle, String complaintContent,
-										Date complaintEnrollDt ) {
+										Date complaintEnrollDt) {
 		System.out.println("/moveComplaintWrite");
 		
 		ComplaintVo cv = new ComplaintVo();
@@ -58,20 +58,20 @@ public class ComplaintController {
 		cv.setComplaintTitle(complaintTitle);
 		cv.setComplaintContent(complaintContent);
 		cv.setComplaintEnrollDt(complaintEnrollDt);
-		
 		System.out.println("컨트롤 complaintVo : " + cv.toString());
 		
 		ArrayList<ComplaintVo> list = service.insertComplaintVo();
 		
 		mv.addObject("list", list);
 		mv.setViewName("/resident/convenience/complaint/complaint_write");
-		
 		return mv;
 	}
 	
 	@RequestMapping("/resident/moveComplaintUpdate")
 	public String moveComplaintUpdate() {
 		System.out.println("/moveComplaintUpdate");
+		
+		
 		return "/resident/convenience/complaint/complaint_update";
 	}
 	
