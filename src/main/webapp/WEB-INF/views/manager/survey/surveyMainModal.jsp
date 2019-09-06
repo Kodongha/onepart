@@ -7,6 +7,19 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	$(function(){
+
+		// 모달창 이동
+		$('.modal-dialog').draggable({
+		      handle: ".modal-header"
+		});
+
+		// 모달 스크롤 하단
+
+
+		/* $(".modal-dialog").draggable({scroll: true});
+		$(".modal-body").draggable(false);
+		$(".modal-footer").draggable(false); */
+
 		/* 질문 추가 삭제 관련 */
  		// + 버튼 클릭 시 폼 추가
 		$('.addBtn').click(function(){
@@ -26,19 +39,19 @@
 
 		// surveyQstnType 변경 시 폼 변경
 		$('select[name="surveyQstnType"]').change(function(){
-
-			$(this).parents('.questionArea').children('.questionDetailArea').eq(0).children().remove();
+			var el = $(this).parents('.questionArea').children('.questionDetailArea').eq(0)
+			el.children().remove();
 
 			var optionValue = $(this).val();
 
 
 			// 단답형
 			if(optionValue == 1){
-				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).prepend('<input type="text" class="form-control" placeholder="단답형의 질문입니다.">');
+				el.prepend('<input type="text" class="form-control" placeholder="단답형의 질문입니다.">');
 
 			// 장문형
 			} else if(optionValue == 2){
-				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).prepend('<textarea class="form-control" placeholder="장문형의 질문입니다." rows="5"></textarea>');
+				el.prepend('<textarea class="form-control" placeholder="장문형의 질문입니다." rows="5"></textarea>');
 
 			// 객관식
 			} else if(optionValue == 3){
@@ -84,13 +97,13 @@
 				$buttonAddOptionBtn.text('옵션 추가');
 				$divClassColMd11_2.append($buttonAddOptionBtn);
 
-				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).append($divClassColMd1);
-				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).append($divClassColMd11);
+				el.append($divClassColMd1);
+				el.append($divClassColMd11);
 
-				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).append($brClearAll);
+				el.append($brClearAll);
 
-				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).append($divClassColMd1_2);
-				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).append($divClassColMd11_2);
+				el.append($divClassColMd1_2);
+				el.append($divClassColMd11_2);
 
 			// 체크박스
 			} else if(optionValue == 4){
@@ -119,14 +132,16 @@
 				$buttonAddOptionBtn.text('옵션 추가');
 				$divClassColMd11_2.append($buttonAddOptionBtn);
 
-				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).append($divClassColMd1);
-				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).append($divClassColMd11);
+				el.append($divClassColMd1);
+				el.append($divClassColMd11);
 
-				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).append($brClearAll);
+				el.append($brClearAll);
 
-				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).append($divClassColMd1_2);
-				$(this).parents('.questionArea').children('.questionDetailArea').eq(0).append($divClassColMd11_2);
+				el.append($divClassColMd1_2);
+				el.append($divClassColMd11_2);
 			}
+
+
 
 		});
 
@@ -151,8 +166,8 @@
 
 			var surveyQstnNum = 0;
 
-			var resultJson = new Object(); // 설문조사 객체
-			var questionArray = new Array(); // 질문 배열
+			var resultJson = {}; // 설문조사 객체
+			var questionArray = []; // 질문 배열
 
 			resultJson = {
 				surveyTitle : inputSurveyTitle,
@@ -212,14 +227,11 @@
 					console.log("fail");
 				}
 			});
-
-
 		});
 
 		$('#close').click(function(){
 
 		});
-
 
  	});
 
@@ -283,6 +295,10 @@
 		$(this).parents('.col-md-11').prev().before($divClassColMd11);
 		$(this).parents('.col-md-11').prev().before($brClearAll);
 	});
+
+
+
+
 </script>
 </head>
 <body>
@@ -296,25 +312,31 @@
 					<div id="writeSurvey">
 						<h3 class="modal-title">설문조사 작성</h3>
 					</div>
-					<h4>설문조사 제목</h4>
-					<input type="text" class="form-control" placeholder="설문의 제목을 입력해주세요." id="inputSurveyTitle" name="inputSurveyTitle">
-
+				</div>
+				<!-- Body -->
+				<div class="modal-body">
+					<div class="col-md-12 p-0 m-b-5">
+						<h4>설문조사 제목</h4>
+						<input type="text" class="form-control" placeholder="설문의 제목을 입력해주세요." id="inputSurveyTitle" name="inputSurveyTitle">
+					</div>
 					<hr>
-
-					<div class="col-md-6">
-						<h4><i class="fa fa-calendar"></i> 설문기간 설정</h4>
-						<input type="text" class="form-control" placeholder="설문 기간을 설정해주세요." id="surveyPeriod" name="surveyPeriod">
+					<div class="col-md-12 p-0 m-b-10">
+						<div class="col-md-6 p-0 p-r-5">
+							<h4>
+								<i class="fa fa-calendar"></i> 설문기간 설정
+							</h4>
+							<input type="text" class="form-control" placeholder="설문 기간을 설정해주세요." id="surveyPeriod" name="surveyPeriod">
+						</div>
+						<div class="col-md-6 p-0">
+							<h4>
+								<i class="fa fa-info-circle"></i> 설문조사 유형
+							</h4>
+							<select class="form-control" id="inputSurveyType" name="inputSurveyType">
+								<option value="1" selected="selected">일반 설문</option>
+								<option value="2">세대별 설문</option>
+							</select>
+						</div>
 					</div>
-					<div class="col-md-6">
-						<h4><i class="fa fa-info-circle"></i> 설문조사 유형</h4>
-
-						<select class="form-control" id="inputSurveyType" name="inputSurveyType">
-							<option value="1" selected="selected">일반 설문</option>
-							<option value="2">세대별 설문</option>
-						</select>
-					</div>
-
-					<br clear="all">
 
 				</div>
 

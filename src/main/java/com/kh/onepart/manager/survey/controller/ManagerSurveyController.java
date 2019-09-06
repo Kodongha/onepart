@@ -47,6 +47,7 @@ public class ManagerSurveyController {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 
+		System.out.println("currentPage::::" + currentPage);
 
 		int surveyListCount = surveyService.surveyListCount();
 
@@ -70,7 +71,6 @@ public class ManagerSurveyController {
 	@RequestMapping(value="/manager/searchSurvey")
 	public ModelAndView searchSurvey(HttpServletRequest request, SurveyVO requestSurveyVO, ModelAndView modelAndView) {
 		System.out.println("in manager/searchSurvey");
-
 
 		int currentPage = 1;
 
@@ -202,8 +202,8 @@ public class ManagerSurveyController {
 
 		ArrayList<Object> surveyDetailList = surveyService.selectSurveyDetail(surveySeq);
 		SurveyVO surveyVO = (SurveyVO) surveyDetailList.get(0);
-		ArrayList<SurveyQstn> surveyQstnList = (ArrayList<SurveyQstn>) surveyDetailList.get(0);
-		ArrayList<SurveyQstnOption> surveyQstnOptionList = (ArrayList<SurveyQstnOption>) surveyDetailList.get(0);
+		ArrayList<SurveyQstn> surveyQstnList = (ArrayList<SurveyQstn>) surveyDetailList.get(1);
+		ArrayList<SurveyQstnOption> surveyQstnOptionList = (ArrayList<SurveyQstnOption>) surveyDetailList.get(2);
 
 		modelAndView.addObject("surveyVO", surveyVO);
 		modelAndView.addObject("surveyQstnList", surveyQstnList);
