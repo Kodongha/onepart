@@ -40,8 +40,6 @@ public class ManagerSurveyDaoImple implements ManagerSurveyDao{
 
 		int listCount = sqlSession.selectOne("ManagerSurvey.selectSurveyListCount");
 
-		System.out.println("out");
-
 		return listCount;
 	}
 
