@@ -21,6 +21,19 @@
 		<result property="residentNm2" column="RESIDENT_NM"/>
 	</resultMap>
 
+	<resultMap type="com.kh.onepart.account.model.vo.ManagerVO" id="managerVOResultSet">
+		<id property="managerSeq" column="MANAGER_SEQ"/>
+		<result property="managerId" column="MANAGER_ID"/>
+		<result property="managerPwd" column="MANAGER_PWD"/>
+		<result property="managerNm" column="MANAGER_NM"/>
+		<result property="managerPhone" column="MANAGER_PHONE"/>
+		<result property="managerEmail" column="MANAGER_EMAIL"/>
+		<result property="deptCd" column="DEPT_CD"/>
+		<result property="managerEnrollDt" column="MANAGER_ENROLL_DT"/>
+		<result property="managerLeaveTf" column="MANAGER_LEAVE_TF"/>
+		<result property="managerLeaveDt" column="MANAGER_LEAVE_DT"/>
+	</resultMap>
+
 	<select id="selectCheckLogin" resultMap="residentVOResultSet" parameterType="ResidentVO">
 		SELECT	*
 		FROM	RESIDENT
@@ -64,6 +77,7 @@
 	   		<when test="residentNm != ''">
 	   		RESIDENT_NM = #{residentNm}
 		   	AND RESIDENT_PHONE = #{residentPhone}
+		   	AND	LEAVE_TF = 'N'
 	   		</when>
 	   	<!-- 	<when test="residentNm == ''">
 	   		RESIDENT_NM = #{residentNm2}
@@ -72,6 +86,7 @@
 			<otherwise>
 			RESIDENT_NM = #{residentNm2}
 			AND RESIDENT_EMAIL = #{residentEmail}
+			AND	LEAVE_TF = 'N'
 			</otherwise>
 	   	</choose>
    </select>
@@ -83,6 +98,7 @@
 	   	WHERE RESIDENT_ID = #{residentId}
 	   	AND RESIDENT_NM = #{residentNm}
 	   	AND RESIDENT_PHONE = #{residentPhone}
+	   	AND	LEAVE_TF = 'N'
    </select>
 
    <!-- 비밀번호 재설정용 메소드 -->
@@ -92,6 +108,23 @@
       WHERE RESIDENT_ID = #{residentId}
    </update>
 
+   <!-- 관리자 암호화된 비밀번호 로그인용(조회용) 메소드 -->
+   <select id="selectManagerPwd" parameterType="java.lang.String" resultType="java.lang.String">
+	   	SELECT MANAGER_PWD
+	   	FROM MANAGER
+	   	WHERE MANAGER_ID = #{managerId}
+	   	AND MANAGER_LEAVE_TF = 'N'
+   </select>
+
+
+ <!--  관리자 비밀번호 일치 시 회원 정보 조회용 메소드 -->
+   <select id="selectManagerLoginUser" resultMap="managerVOResultSet" parameterType="ManagerVO">
+	   	SELECT MANAGER_SEQ,MANAGER_NM,DEPT_CD,MANAGER_ID,MANAGER_PWD
+	   		,MANAGER_PHONE,MANAGER_EMAIL,MANAGER_ENROLL_DT,MANAGER_LEAVE_DT,MANAGER_LEAVE_TF
+	   	FROM MANAGER
+	   	WHERE MANAGER_ID = #{managerId}
+	   	AND MANAGER_LEAVE_TF = 'N'
+   </select>
 
 
 </mapper>

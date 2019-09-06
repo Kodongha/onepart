@@ -198,7 +198,7 @@
 										                                                    <div class="form-group">
 										                                                        <label>새 비밀번호</label>
 										                                                        <div class="controls">
-										                                                        	<input type="hidden" name= residentId value="${requestScope.residentId}">
+										                                                        	<input type="hidden" name= residentId id="residentIdResult">
 										                                                            <input type="password" name="residentPwd" id="residentPwd" placeholder="새로운 비밀번호 입력" class="form-control" data-parsley-group="wizard-step-3" required />
 										                                                            <p style="color: graytext; margin-bottom: 0%;">&nbsp;비밀번호는 최소 8자 이상, 영문과 숫자 혼합하여 설정</p>
 										                                                        </div>
@@ -290,16 +290,26 @@
   			type:"post",
   			data:findPwdForm,
   			success:function(data){
-				console.log("data : " + data);
+
 				$("#showResultPwd").empty();
+  				if(data.findPwd != null){
+					console.log("data : " + data.findPwd.residentId);
+					var resultId = data.findPwd.residentId;
+					$("#residentIdResult").val(resultId);
+					console.log($("#residentIdResult").val());
+					$('#setNewPassword').css("display", "");
+					$('#changeNewPasswordBtn').css("display", "");
+  				}else{
+
+					$("#showResultPwd").append("<h3>"+"입력하신 정보가 일치하지 않습니다.");
+					$('#setNewPassword').css("display", "none");
+					$('#changeNewPasswordBtn').css("display", "none");
+  				}
+
+
 
 				if(data == ''){
-					$("#showResultPwd").append("<h3>"+"입력하신 정보가 일치하지 않습니다.");
-					$('#setNewPassword').css("display", "none")
-					$('#changeNewPasswordBtn').css("display", "none")
 				}else{
-					$('#setNewPassword').css("display", "")
-					$('#changeNewPasswordBtn').css("display", "")
 				}
   			},
   			error:function(xhr, status){
@@ -319,6 +329,7 @@
   			data:setNewPwdForm,
   			success:function(data){
 				console.log("data : " + data);
+				$("body").html(data);
 				/* $("#showResultPwd").empty(); */
 
 			/* 	if(data == ''){

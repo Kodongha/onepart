@@ -8,8 +8,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kh.onepart.account.model.dao.AccountDao;
+import com.kh.onepart.account.model.exception.ManagerLoginException;
 import com.kh.onepart.account.model.exception.findIdException;
 import com.kh.onepart.account.model.exception.findPwdException;
+import com.kh.onepart.account.model.vo.ManagerVO;
 import com.kh.onepart.account.model.vo.ResidentVO;
 
 @Service
@@ -86,6 +88,29 @@ public class AccountServiceImpl implements AccountService{
 	public int setNewPwd(ResidentVO requestResidentVO) {
 		System.out.println("requestResidentVO in svcImpl : " + requestResidentVO);
 		return accountDao.setNewPwd(sqlSession, requestResidentVO);
+	}
+
+	@Override
+	public ManagerVO managerLoginCheck(ManagerVO requestManagerVO) throws ManagerLoginException {
+		System.out.println("account service");
+		System.out.println("requestManagerVO in Service::" + requestManagerVO);
+
+		ManagerVO loginUser = null;
+		String encPassword = accountDao.selectEncPassword(sqlSession, requestManagerVO);
+		System.out.println("encPassword in service : " + encPassword);
+		System.out.println("requestManagerVO.getResidentPwd() in service : " + requestManagerVO.getManagerPwd());
+
+//		ResidentVO responseResidentVO = accountDao.loginCheck(sqlSession, requestManagerVO);
+
+		if(!passwordEncoder.matches(requestManagerVO.getManagerPwd(), encPassword)) {
+			System.out.println("hi");
+			throw new ManagerLoginException("로그인 실패!");
+		}else {
+			loginUser = accountDao.selectManager(sqlSession, requestManagerVO);
+			System.out.println("loginUser in Service : " + loginUser);
+		}
+
+		return loginUser;
 	}
 
 

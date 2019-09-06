@@ -11,6 +11,7 @@
 	<typeAliases>
 		<!-- account -->
 		<typeAlias type="com.kh.onepart.account.model.vo.ResidentVO" alias="ResidentVO" />
+		<typeAlias type="com.kh.onepart.account.model.vo.ManagerVO" alias="ManagerVO" />
 
 
 

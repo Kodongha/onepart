@@ -9,7 +9,7 @@
 <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-	<title>OnePart(원파트) | Login Page</title>
+	<title>OnePart(원파트) | 관리자 로그인 페이지</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
@@ -37,7 +37,7 @@
 	<!-- end #page-loader -->
 
 	<div class="login-cover">
-	    <div class="login-cover-image"><img src="${contextPath}/resources/img/login-bg/bg-11.jpg" data-id="login-cover-image" alt="" /></div>
+	    <div class="login-cover-image"><img src="${contextPath}/resources/img/login-bg/bg-8.jpg" data-id="login-cover-image" alt="" /></div>
 	    <div class="login-cover-bg"></div>
 	</div>
 	<!-- begin #page-container -->
@@ -48,7 +48,7 @@
             <div class="login-header">
                 <div class="brand">
                     <span class="logo"></span> OnePart(원파트)
-                    <small>아파트 스마트 홈라이프의 시작</small>
+                    <small>관리자 페이지 로그인</small>
                 </div>
                 <div class="icon">
                     <i class="fa fa-sign-in"></i>
@@ -56,12 +56,12 @@
             </div>
             <!-- end brand -->
             <div class="login-content">
-                <form action="${ contextPath }/loginCheck" method="POST" class="margin-bottom-0">
+                <form action="${ contextPath }/managerLoginCheck" method="POST" class="margin-bottom-0">
                     <div class="form-group m-b-20">
-                        <input type="text" class="form-control input-lg" placeholder="아이디를 입력하세요." name="residentId" id="residentId" />
+                        <input type="text" class="form-control input-lg" placeholder="아이디를 입력하세요." name="managerId" id="managerId" />
                     </div>
                     <div class="form-group m-b-20">
-                        <input type="password" class="form-control input-lg" placeholder="비밀번호를 입력하세요."  name="residentPwd" id="residentPwd" />
+                        <input type="password" class="form-control input-lg" placeholder="비밀번호를 입력하세요."  name="managerPwd" id="managerPwd" />
                     </div>
                     <div class="checkbox m-b-20">
                         <label>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="m-t-20" style="margin-top: 1%!important">
                         <a href="${contextPath }/moveFindId">아이디</a>,<a href="${contextPath }/moveFindPwd">비밀번호</a>를 잃어버리셨습니까?<br>
-                        <a href="${contextPath }/moveManagerAccount" style="color: grey;">관리자 로그인</a>
+                        <a href="${contextPath }/moveAccount" style="color: grey;">입주자 로그인</a>
                     </div>
 
                 </form>

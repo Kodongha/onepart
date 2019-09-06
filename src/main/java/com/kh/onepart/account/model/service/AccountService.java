@@ -2,8 +2,10 @@ package com.kh.onepart.account.model.service;
 
 import javax.security.auth.login.LoginException;
 
+import com.kh.onepart.account.model.exception.ManagerLoginException;
 import com.kh.onepart.account.model.exception.findIdException;
 import com.kh.onepart.account.model.exception.findPwdException;
+import com.kh.onepart.account.model.vo.ManagerVO;
 import com.kh.onepart.account.model.vo.ResidentVO;
 
 public interface AccountService {
@@ -21,6 +23,9 @@ public interface AccountService {
 
 	//비밀번호 재설정용 메소드
 	int setNewPwd(ResidentVO requestResidentVO);
+
+	//관리자 로그인 정보 확인용 메소드
+	ManagerVO managerLoginCheck(ManagerVO requestManagerVO) throws ManagerLoginException;
 
 
 

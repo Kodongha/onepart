@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.onepart.account.model.exception.findIdException;
 import com.kh.onepart.account.model.exception.findPwdException;
+import com.kh.onepart.account.model.vo.ManagerVO;
 import com.kh.onepart.account.model.vo.ResidentVO;
 
 public interface AccountDao {
@@ -27,5 +28,11 @@ public interface AccountDao {
 
 	//비밀번호 재설정용 메소드
 	int setNewPwd(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO);
+
+	// 관리자 암호화 비밀번호 조회용 메소드
+	String selectEncPassword(SqlSessionTemplate sqlSession, ManagerVO requestManagerVO);
+
+	// 관리자 비밀번호 일치 시 회원 정보 조회용 메소드
+	ManagerVO selectManager(SqlSessionTemplate sqlSession, ManagerVO requestManagerVO);
 
 }

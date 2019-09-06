@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,7 @@
 			</button>
 		</div>
 		<!-- end mobile sidebar expand / collapse button -->
-		
+
 		<!-- begin header navigation right -->
 		<ul class="nav navbar-nav navbar-right">
 			<li>
@@ -91,9 +92,11 @@
 				</ul>
 			</li>
 			<li class="dropdown navbar-user">
+
+				<c:if test="${sessionScope.managerLoginUser != null }">
 				<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-					<img src="${contextPath}/resources/img/user-13.jpg" alt="" /> 
-					<span class="hidden-xs">Adam Schwartz</span> <b class="caret"></b>
+					<img src="${contextPath}/resources/img/user-13.jpg" alt="" />
+					<span class="hidden-xs">${ sessionScope.managerLoginUser.managerNm}</span> <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu animated fadeInLeft">
 					<li class="arrow"></li>
@@ -102,9 +105,15 @@
 					<li><a href="javascript:;">Calendar</a></li>
 					<li><a href="javascript:;">Setting</a></li>
 					<li class="divider"></li>
-					<li><a href="javascript:;">Log Out</a></li>
+					<li><a href="${contextPath }/managerLogout">Log Out</a></li>
 				</ul>
+				</c:if>
 			</li>
+			<c:if test="${sessionScope.managerLoginUser == null }">
+				<span style="height: 100%;">
+					<button type="button" onclick="location.href='${contextPath}/moveManagerAccount'" class="btn btn-success m-r-5 m-b-5" style="margin-top: 3%;">Log In</button>
+				</span>
+			</c:if>
 		</ul>
 		<!-- end header navigation right -->
 	</div>
