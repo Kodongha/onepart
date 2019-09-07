@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<!-- ================== BEGIN BASE JS ================== -->
+	<!-- 제이쿼리 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- ================== END BASE JS ================== -->
 </head>
 <body>
 <div id="header" class="header navbar navbar-default navbar-fixed-top">
@@ -32,6 +36,7 @@
 					</div>
 				</form>
 			</li>
+		<c:if test="${sessionScope.managerLoginUser != null }">
 			<li class="dropdown">
 				<a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle f-s-14">
 					<i class="fa fa-bell-o"></i>
@@ -93,8 +98,7 @@
 			</li>
 			<li class="dropdown navbar-user">
 
-				<c:if test="${sessionScope.managerLoginUser != null }">
-				<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+							<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
 					<img src="${contextPath}/resources/img/user-13.jpg" alt="" />
 					<span class="hidden-xs">${ sessionScope.managerLoginUser.managerNm}</span> <b class="caret"></b>
 				</a>
@@ -107,8 +111,8 @@
 					<li class="divider"></li>
 					<li><a href="${contextPath }/managerLogout">Log Out</a></li>
 				</ul>
-				</c:if>
 			</li>
+		</c:if>
 			<c:if test="${sessionScope.managerLoginUser == null }">
 				<span style="height: 100%;">
 					<button type="button" onclick="location.href='${contextPath}/moveManagerAccount'" class="btn btn-success m-r-5 m-b-5" style="margin-top: 3%;">Log In</button>
@@ -119,5 +123,14 @@
 	</div>
 	<!-- end container-fluid -->
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	var managerLoginUser = '<c:out value="${managerLoginUser}"/>';
+	console.log("managerLoginUser : " + managerLoginUser);
+
+});
+</script>
+
 </body>
 </html>
