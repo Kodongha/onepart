@@ -194,6 +194,12 @@ public class ManagerSurveyController {
 	}
 
 
+	/**
+	 * 설문조사 상세정보
+	 * @param surveySeq
+	 * @param modelAndView
+	 * @return
+	 */
 	@RequestMapping("/manager/surveyDetail")
 	public ModelAndView moveSurveyDetail(int surveySeq, ModelAndView modelAndView) {
 		System.out.println("/manager/surveyDetail in");

@@ -26,7 +26,6 @@
 		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacSeatInfo" alias="facSeatInfo" />
 
 
-
 		<!-- Manager -->
 		<typeAlias type="com.kh.onepart.manager.survey.model.vo.SurveyVO" alias="SurveyVO"/>
 		<typeAlias type="com.kh.onepart.manager.survey.model.vo.RequestSurveyVO" alias="RequestSurveyVO"/>
@@ -41,13 +40,13 @@
 		<mapper resource="mappers/account/account-mapper.xml" />
 
 
-
 		<!-- resident -->
 		<mapper resource="mappers/openChat/openChat-mapper.xml" />
 		<mapper resource="mappers/myCar/myCar-mapper.xml" />
 		<mapper resource="mappers/openChat/openChatMember-mapper.xml" />
 		<mapper resource="mappers/openChat/openChatComm-mapper.xml" />
 		<mapper resource="mappers/reservation/reservation-mapper.xml" />
+		<mapper resource="mappers/resident/survey/resident-survey-mapper.xml" />
 
 
 

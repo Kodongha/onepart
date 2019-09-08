@@ -81,6 +81,7 @@
 			$('#defaultOption').attr("selected", "selected");
 		});
 
+		/* 검색버튼 클릭 */
 		$('#searchBtn').click(function(){
 
 			var surveyTitleValue = $('#surveyTitle').val();
@@ -111,7 +112,7 @@
 		   console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 		});
  */
-
+		/* 상세보기 */
  		$('#surveyList > tbody > tr').click(function(){
  			var surveySeq = $(this).children().eq(0).text();
 
@@ -244,7 +245,7 @@
 			<div id="pageingBtnArea">
 				<ul class="pagination m-t-0 m-b-10">
 					<c:if test="${ pi.currentPage <= 1 }">
-						<li class="disabled"><a href="javascript:paging(${ pi.currentPage-1 });">«</a></li>
+						<li class="disabled"><a>«</a></li>
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
 						<li><a href="javascript:paging(${ p });">«</a></li>
@@ -265,6 +266,9 @@
 						<li class="disabled"><a>»</a></li>
 					</c:if>
 				</ul>
+			</div>
+			<div>
+				<span></span>
 			</div>
 
 			<div id="etcBtnArea">

@@ -309,9 +309,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<div id="writeSurvey">
-						<h3 class="modal-title">설문조사 작성</h3>
-					</div>
+					<h3 class="modal-title">설문조사 작성</h3>
 				</div>
 				<!-- Body -->
 				<div class="modal-body">
@@ -337,7 +335,6 @@
 							</select>
 						</div>
 					</div>
-
 				</div>
 
 				<!-- Body -->
