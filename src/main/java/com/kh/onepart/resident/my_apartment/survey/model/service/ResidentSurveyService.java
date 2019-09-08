@@ -3,7 +3,7 @@ package com.kh.onepart.resident.my_apartment.survey.model.service;
 import java.util.ArrayList;
 
 import com.kh.onepart.common.PageInfo;
-import com.kh.onepart.manager.survey.model.vo.SurveyVO;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyVO;
 
 
 public interface ResidentSurveyService {
@@ -46,5 +46,13 @@ public interface ResidentSurveyService {
 	 * @return
 	 */
 	public ArrayList<SurveyVO> finishSurveyList(PageInfo pi);
+
+
+	/**
+	 * 설문조사 상세정보
+	 * @param surveySeq
+	 * @return
+	 */
+	public ArrayList<Object> selectSurveyDetail(int surveySeq);
 
 }

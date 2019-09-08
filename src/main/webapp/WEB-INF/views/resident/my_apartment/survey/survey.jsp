@@ -47,6 +47,25 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
+
+	/* 상세보기 */
+	$(document).on('click','table > tbody > tr', function(){
+		var surveySeq = $(this).children().eq(0).text();
+
+		$.ajax({
+			url:'surveyDetail',
+			type:'post',
+			data:{surveySeq:surveySeq},
+			success:function(result){
+			console.log('succ');
+			$("#content").html(result);
+			},
+			error:function(error){
+				console.log(error);
+			}
+		});
+	});
+
 	$(function(){
 		/* 진행 중 리스트 가져오기 */
 		getIngSurveyList();
@@ -54,6 +73,9 @@
 		getexpectedSurveyList();
 		/* 종료 리스트 가져오기 */
 		getfinishSurveyList();
+
+
+
 	});
 
 	/* 진행 중 리스트 가져오기 */
@@ -90,7 +112,6 @@
 					$tr.append($surveyTypeTd);
 					$tr.append($prtcptTfTd);
 					$tr.append($surveyPeriodTd);
-
 
 					tableTbody.append($tr);
 

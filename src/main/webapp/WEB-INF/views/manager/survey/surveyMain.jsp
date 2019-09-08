@@ -81,6 +81,7 @@
 			$('#defaultOption').attr("selected", "selected");
 		});
 
+		/* 검색버튼 클릭 */
 		$('#searchBtn').click(function(){
 
 			var surveyTitleValue = $('#surveyTitle').val();
@@ -111,7 +112,7 @@
 		   console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 		});
  */
-
+		/* 상세보기 */
  		$('#surveyList > tbody > tr').click(function(){
  			var surveySeq = $(this).children().eq(0).text();
 
@@ -128,12 +129,6 @@
  				}
 
  			});
- 		});
-
- 		$('#surveyList tbody > tr').click(function(){
-
- 			console.log($(this));
-
  		});
 
 	});

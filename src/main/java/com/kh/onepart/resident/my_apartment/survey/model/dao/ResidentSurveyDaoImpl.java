@@ -7,7 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.onepart.common.PageInfo;
-import com.kh.onepart.manager.survey.model.vo.SurveyVO;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstn;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstnOption;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyVO;
 
 @Repository
 public class ResidentSurveyDaoImpl implements ResidentSurveyDao {
@@ -76,6 +78,35 @@ public class ResidentSurveyDaoImpl implements ResidentSurveyDao {
 
 		ArrayList<SurveyVO> expectedSurveyList = (ArrayList) sqlSession.selectList("ResidentSurvey.finishSurveyList", null, rowBounds);
 		return expectedSurveyList;
+	}
+
+	/** 설문조사 상세정보 - 기본정보 */
+	@Override
+	public SurveyVO selectSurveyBasicInfo(SqlSessionTemplate sqlSession, int surveySeq) {
+		// TODO Auto-generated method stub
+		SurveyVO surveyVO = sqlSession.selectOne("ResidentSurvey.selectSurveyBasicInfo", surveySeq);
+
+		return surveyVO;
+	}
+
+	/** 설문조사 상세정보 - 문제정보 */
+	@Override
+	public ArrayList<SurveyQstn> selectSurveyQstnList(SqlSessionTemplate sqlSession, int surveySeq) {
+		// TODO Auto-generated method stub
+
+		ArrayList<SurveyQstn> surveyQstnList = (ArrayList) sqlSession.selectList("ResidentSurvey.selectSurveyQstnInfo", surveySeq);
+
+		return surveyQstnList;
+	}
+
+	/** 설문조사 상세정보 - 옵션정보 */
+	@Override
+	public ArrayList<SurveyQstnOption> selectsurveyQstnOptionList(SqlSessionTemplate sqlSession,
+			ArrayList<SurveyQstn> surveyQstnList) {
+		// TODO Auto-generated method stub
+		ArrayList<SurveyQstnOption> selectsurveyQstnOptionList = (ArrayList) sqlSession.selectList("ResidentSurvey.selectsurveyQstnOptionList", surveyQstnList);
+
+		return selectsurveyQstnOptionList;
 	}
 
 }

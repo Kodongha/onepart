@@ -14,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.common.Pagination;
-import com.kh.onepart.manager.survey.model.vo.SurveyVO;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstn;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstnOption;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyVO;
 import com.kh.onepart.resident.my_apartment.survey.model.service.ResidentSurveyService;
 
 @Controller
@@ -136,4 +138,48 @@ public class ResidentSurveyController {
 
 		return returnMap;
 	}
+
+
+	/**
+	 * 설문조사 상세정보
+	 * @param surveySeq
+	 * @param modelAndView
+	 * @return
+	 */
+	@RequestMapping("/resident/surveyDetail")
+	public ModelAndView moveSurveyDetail(int surveySeq, ModelAndView modelAndView) {
+		System.out.println("/residentSurveyService in");
+		System.out.println("request surveySeq :::" + surveySeq);
+
+		ArrayList<Object> surveyDetailList = residentSurveyService.selectSurveyDetail(surveySeq);
+		SurveyVO surveyVO = (SurveyVO) surveyDetailList.get(0);
+		ArrayList<SurveyQstn> surveyQstnList = (ArrayList<SurveyQstn>) surveyDetailList.get(1);
+		ArrayList<SurveyQstnOption> surveyQstnOptionList = (ArrayList<SurveyQstnOption>) surveyDetailList.get(2);
+
+		modelAndView.addObject("surveyVO", surveyVO);
+		modelAndView.addObject("surveyQstnList", surveyQstnList);
+		modelAndView.addObject("surveyQstnOptionList", surveyQstnOptionList);
+		modelAndView.setViewName("resident/my_apartment/survey/surveyDetail");
+
+		return modelAndView;
+	}
+
+
+	/**
+	 * 설문조사 참여
+	 * @param surveySeq
+	 * @param modelAndView
+	 * @return
+	 */
+	@RequestMapping("/resident/insertsurveyPrtcpt")
+	public ModelAndView insertsurveyPrtcpt(ModelAndView modelAndView) {
+		System.out.println("/insertsurveyPrtcpt in");
+
+
+
+		return modelAndView;
+	}
+
+
+
 }
