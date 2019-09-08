@@ -10,6 +10,7 @@ import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.warm.open_chatting.model.dao.OpenChatMemberDao;
 import com.kh.onepart.resident.warm.open_chatting.model.service.OpenChatMemberService;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO;
+import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO;
 
 @Service
 public class OpenChatMemberServiceImpl implements OpenChatMemberService{
@@ -32,6 +33,51 @@ public class OpenChatMemberServiceImpl implements OpenChatMemberService{
 		}
 	}
 
-	
+
+
+
+
+	@Override
+	public boolean enterCheckMember(int openChatSeq, int residentSeq) {
+		OpenChatMemberVO openChatMemberVO = new OpenChatMemberVO();
+		openChatMemberVO.setOpenChatSeq(openChatSeq);
+		openChatMemberVO.setResidentSeq(residentSeq);
+
+		return(openChatMemberDao.selectCountByOpenChatSeqAndResidentSeq(sqlSession, openChatMemberVO) > 0);
+	}
+
+
+
+
+
+	@Override
+	public void getOutThisRoom(OpenChatMemberVO openChatMemberVO) {
+		openChatMemberDao.getOutThisRoom(sqlSession, openChatMemberVO);
+
+	}
+
+
+
+
+
+	@Override
+	public int pastMemberEnter(OpenChatMemberVO openChatMemberVO) {
+		return openChatMemberDao.pastMemberEnter(sqlSession, openChatMemberVO);
+		}
+
+
+
+
+
+	@Override
+	public void reEnterOpenChatMember(OpenChatMemberVO openChatMemberVO) {
+		 openChatMemberDao.reEnterOpenChatMember(sqlSession, openChatMemberVO);
+
+	}
+
+
+
+
+
 
 }

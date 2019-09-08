@@ -25,20 +25,40 @@
 	</resultMap>
 
 
+
+
 	<select id="selectCountByOpenChatSeqAndResidentSeq" resultType="Integer" parameterType="OpenChatMemberVO">
+		SELECT count(*)
+		FROM OPEN_CHAT_MEMBER
+		WHERE OPEN_CHAT_SEQ = #{openChatSeq}
+			AND RESIDENT_SEQ = #{residentSeq}
+			AND STATUS = 'Y'
+	</select>
+
+	<insert id="insert" parameterType="OpenChatMemberVO">
+		INSERT INTO OPEN_CHAT_MEMBER
+			(OPEN_CHAT_MEMBER_SEQ, OPEN_CHAT_SEQ, RESIDENT_SEQ, OPEN_CHAT_MEMBER_PRTCPT_DT, STATUS)
+		VALUES
+			(OPEN_CHAT_MEMBER_SEQ.nextval, #{openChatSeq}, #{residentSeq}, sysdate, 'Y')
+	</insert>
+
+	<update id="getOutThisRoom" parameterType="OpenChatMemberVO">
+		update OPEN_CHAT_MEMBER set status = 'N'
+		WHERE OPEN_CHAT_SEQ = #{openChatSeq} AND RESIDENT_SEQ = #{residentSeq}
+	</update>
+
+	<select id="pastMemberEnter" resultType="Integer" parameterType="OpenChatMemberVO">
 		SELECT count(*)
 		FROM OPEN_CHAT_MEMBER
 		WHERE OPEN_CHAT_SEQ = #{openChatSeq}
 			AND RESIDENT_SEQ = #{residentSeq}
 	</select>
 
-	<insert id="insert" parameterType="OpenChatMemberVO">
-		INSERT INTO OPEN_CHAT_MEMBER
-			(OPEN_CHAT_MEMBER_SEQ, OPEN_CHAT_SEQ, RESIDENT_SEQ, OPEN_CHAT_MEMBER_PRTCPT_DT)
-		VALUES
-			(OPEN_CHAT_MEMBER_SEQ.nextval, #{openChatSeq}, #{residentSeq}, sysdate)
-	</insert>
 
+	<update id="reEnterOpenChatMember" parameterType="OpenChatMemberVO">
+		update OPEN_CHAT_MEMBER set status = 'Y'
+		WHERE OPEN_CHAT_SEQ = #{openChatSeq} AND RESIDENT_SEQ = #{residentSeq}
+	</update>
 
 
 </mapper>

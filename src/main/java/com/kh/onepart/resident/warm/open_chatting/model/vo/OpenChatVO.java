@@ -16,6 +16,6 @@ public class OpenChatVO {
 	private int		openChatMaxHead;	// 최대 인원
 	private String	openChatDeleteTf;	// 삭제여부
 	private int		residentSeq;		// 입주민 고유번호(FK)
-	private String	openChatCurrHead;	// 현재 방 참가 인원
+	private int	openChatCurrHead;	// 현재 방 참가 인원
 	private String	openChatPwd;		// 채팅방 비밀번호
 }

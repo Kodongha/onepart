@@ -3,6 +3,7 @@ package com.kh.onepart.resident.warm.open_chatting.model.service;
 import java.util.List;
 
 import com.kh.onepart.account.model.vo.ResidentVO;
+import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO;
 
 public interface OpenChatService {
@@ -12,6 +13,10 @@ public interface OpenChatService {
 	public List<ResidentVO> getResidentList(int openChatSeq);
 	public OpenChatVO selectOneById(int openChatSeq);
 	public int countChatRoom();
+	public void updateOpenChatDelete(OpenChatVO openChatVO);
+	public int countChatMyRoom(ResidentVO loginResident);
+	public List<OpenChatVO> getMyRoomListAll(int residentSeq);
+
 
 
 }

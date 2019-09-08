@@ -28,6 +28,17 @@
 		<result property="leaveDt" column="LEAVE_DT"/>
 	</resultMap>
 
+
+	<select id="getMyRoomListAll" resultMap="openChatVOResultSet" parameterType="Integer">
+		 SELECT *
+		 FROM OPEN_CHAT OC
+		 JOIN OPEN_CHAT_MEMBER OCM ON(OC.OPEN_CHAT_SEQ = OCM.OPEN_CHAT_SEQ)
+		 WHERE OPEN_CHAT_DELETE_TF = 'N'
+		 AND OCM.RESIDENT_SEQ = #{residentSeq}
+		 AND OCM.STATUS = 'Y'
+		 ORDER BY OC.OPEN_CHAT_SEQ DESC
+	</select>
+
 	<select id="selectListAll" resultMap="openChatVOResultSet">
 		SELECT * FROM OPEN_CHAT WHERE OPEN_CHAT_DELETE_TF = 'N' ORDER BY OPEN_CHAT_SEQ DESC
 	</select>
@@ -70,7 +81,7 @@
 	<update id="setCurrHead" parameterType="Integer">
 		UPDATE OPEN_CHAT
 		SET OPEN_CHAT_CURR_HEAD = (
-			SELECT count(*) FROM OPEN_CHAT_MEMBER WHERE OPEN_CHAT_SEQ = #{openChatSeq}
+			SELECT count(*) FROM OPEN_CHAT_MEMBER WHERE OPEN_CHAT_SEQ = #{openChatSeq} AND STATUS = 'Y'
 		)
 		WHERE OPEN_CHAT_SEQ = #{openChatSeq}
 	</update>
@@ -78,7 +89,7 @@
 	<select id="selectListByOpenChatSeq" resultMap="residentVOResultSet">
 		SELECT *
 		FROM RESIDENT
-		WHERE RESIDENT_SEQ IN (SELECT RESIDENT_SEQ FROM OPEN_CHAT_MEMBER WHERE OPEN_CHAT_SEQ = #{openChatSeq})
+		WHERE RESIDENT_SEQ IN (SELECT RESIDENT_SEQ FROM OPEN_CHAT_MEMBER WHERE OPEN_CHAT_SEQ = #{openChatSeq} AND STATUS = 'Y')
 	</select>
 
 	<select id="countChatRoom" resultType="Integer">
@@ -86,5 +97,20 @@
 	   	FROM OPEN_CHAT
         WHERE OPEN_CHAT_DELETE_TF = 'N'
 	</select>
-	
+
+	<select id="countChatMyRoom" resultType="Integer" parameterType="Integer">
+		SELECT count(*)
+	   	FROM OPEN_CHAT OC
+        join OPEN_CHAT_MEMBER OCM ON( OC.OPEN_CHAT_SEQ = OCM.OPEN_CHAT_SEQ)
+        WHERE OPEN_CHAT_DELETE_TF = 'N'
+        AND OCM.STATUS = 'Y'
+        AND OCM.RESIDENT_SEQ = #{residentSeq}
+	</select>
+
+	<update id="updateOpenChatDelete" parameterType="OpenChatVO">
+		UPDATE OPEN_CHAT
+		SET OPEN_CHAT_DELETE_TF = 'Y'
+		WHERE OPEN_CHAT_SEQ = #{openChatSeq}
+	</update>
+
 </mapper>
