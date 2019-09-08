@@ -40,7 +40,6 @@ public class AccountController {
 	@RequestMapping("/moveAccount")
 	public String moveAccountPage(HttpServletRequest request) {
 		System.out.println("in account");
-
 		System.out.println("after : " + request.getSession().getAttribute("loginUser"));
 
 		return "account/login";
@@ -76,8 +75,9 @@ public class AccountController {
 	}
 	//이동 관리자 로그 화면
 	@RequestMapping("/moveManagerAccount")
-	public String moveManagerAccount() {
+	public String moveManagerAccount(HttpServletRequest request) {
 		System.out.println("in moveManagerAccount");
+		System.out.println("after : " + request.getSession().getAttribute("managerLoginUser"));
 		return "account/managerLogin";
 	}
 
@@ -86,17 +86,12 @@ public class AccountController {
 	@RequestMapping(value="/loginCheck", method=RequestMethod.POST)
 	public String loginCheck(ResidentVO requestResidentVO, Model model) {
 		System.out.println("/loginCheck");
-		System.out.println("requestResidentVO in Controller:::" + requestResidentVO);
-//		passwordEncoder.encode(requestResidentVO.getResidentPwd());
-//		System.out.println("암호화된 비번 : " + passwordEncoder.encode(requestResidentVO.getResidentPwd()));
-//		ResidentVO responseResidentVO= accountService.loginCheck(requestResidentVO);
-//		System.out.println("ctrl responseResidentVO ::::" + responseResidentVO);
-//		return "account/account2";
+		System.out.println("requestResidentVO ::C:: " + requestResidentVO);
 
 		try {
 			ResidentVO loginUser = accountService.loginCheck(requestResidentVO);
 			model.addAttribute("loginUser", loginUser);
-			System.out.println("loginUser in controller" + loginUser);
+			System.out.println("loginUser ::C:: " + loginUser);
 				return "redirect:resident/main";
 		} catch (LoginException e) {
 			model.addAttribute("msg", e.getMessage());
@@ -116,7 +111,7 @@ public class AccountController {
 	@RequestMapping("/register")
 	public String register(ResidentVO requestResidentVO, Model model) {
 		String encPassword = passwordEncoder.encode(requestResidentVO.getResidentPwd());
-		System.out.println("encPassword in ctr: " + encPassword);
+		System.out.println("encPassword ::C:: " + encPassword);
 		requestResidentVO.setResidentPwd(encPassword);
 
 		if(requestResidentVO.getResidentGender().equals("1") || requestResidentVO.getResidentGender().equals("3")) {
@@ -124,9 +119,9 @@ public class AccountController {
 		}else {
 			requestResidentVO.setResidentGender("F");
 		}
-		System.out.println("requestResidentVO in ctr : " + requestResidentVO);
+		System.out.println("requestResidentVO ::C:: " + requestResidentVO);
 		int result = accountService.insertResident(requestResidentVO);
-		System.out.println("result in ctr : " + result);
+		System.out.println("result ::C:: " + result);
 
 		if(result > 0) {
 			return "redirect:moveAccount";
@@ -234,12 +229,12 @@ public class AccountController {
 	@RequestMapping(value="/managerLoginCheck", method=RequestMethod.POST)
 	public String managerLoginCheck(ManagerVO requestManagerVO, Model model) {
 		System.out.println("/managerLoginCheck");
-		System.out.println("requestManagerVO in Controller:::" + requestManagerVO);
+		System.out.println("requestManagerVO ::C:: " + requestManagerVO);
 
 		try {
 			ManagerVO managerLoginUser = accountService.managerLoginCheck(requestManagerVO);
 			model.addAttribute("managerLoginUser", managerLoginUser);
-			System.out.println("managerLoginUser in controller : " + managerLoginUser);
+			System.out.println("managerLoginUser ::C:: " + managerLoginUser);
 			return "redirect:manager/main";
 		} catch (ManagerLoginException e) {
 			model.addAttribute("msg", e.getMessage());

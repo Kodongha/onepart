@@ -29,7 +29,7 @@ public class AccountServiceImpl implements AccountService{
 	//로그인용 메소드
 	@Override
 	public ResidentVO loginCheck(ResidentVO requestResidentVO) throws LoginException {
-		System.out.println("account service");
+		System.out.println("loginCheck service");
 		System.out.println("requestResidentVO in Service::" + requestResidentVO);
 
 		ResidentVO loginUser = null;
