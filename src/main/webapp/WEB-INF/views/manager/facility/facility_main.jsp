@@ -56,7 +56,7 @@
 				</div>
 				<br><br><br>
 				<!-- 시설물 등록 버튼 div -->
-				<div>
+				<!-- <div>
 					<table style="width:100%; margin:0 auto;">
 						<tr>
 							<td style="width:47%"><a id="newFacility_general" class="btn btn-warning " style="width:100%">새 시설물 등록&nbsp;(예약)</a></td>
@@ -65,7 +65,7 @@
 						</tr>
 					</table>
 				</div>
-				<br><br>
+				<br><br> -->
 				<!-- 우리아파트 공공시설물 div -->
 				<div>
 					<h4>우리아파트 공공시설물</h4>
@@ -126,6 +126,37 @@
 		if(confirm("해당 시설물을 삭제처리 하시겠습니까?")){
 			$.ajax({
 				url:"/onepart/manager/facility_delete_general",
+				dataType:"html",
+				data:{facSeq:facSeq},
+				success:function(result){
+					$.ajax({
+	        			url:"/onepart/manager/menuFacility",
+	        			dataType:"html",
+	        			success:function(result){
+	        				$("#content").html(result);
+	        			}
+	        		});
+				}
+			});
+		}
+	}
+
+	function modifySeat(facSeq) {
+		$.ajax({
+			url:"/onepart/manager/facility_modify_seat",
+			dataType:"html",
+			data:{facSeq:facSeq},
+			success:function(result){
+				$("#content").html(result);
+			}
+		});
+	}
+
+	function deleteSeat(facSeq) {
+
+		if(confirm("해당 시설물을 삭제처리 하시겠습니까?")){
+			$.ajax({
+				url:"/onepart/manager/facility_delete_seat",
 				dataType:"html",
 				data:{facSeq:facSeq},
 				success:function(result){

@@ -135,7 +135,14 @@ function failReservation(facRsrvSeq) {
 <!-- 타이틀 -->
 <div style="width:85%; margin:0 auto">
 	<br>
-	<h2>시설물 관리</h2>
+	<table style="width:100%; margin-bottom:-10px;">
+		<tr>
+			<td><h2>시설물 관리</h2></td>
+			<td style="width:30%"><a id="newFacility_general" class="btn btn-success " style="width:100%; margin-bottom:-10px;">새 시설물 등록&nbsp;(예약)</a></td>
+			<td style="width:5%"></td>
+			<td style="width:30%"><a id="newFacility_seat" class="btn btn-success" style="width:100%; margin-bottom:-10px;">새 시설물 등록&nbsp;(좌석)</a></td>
+		</tr>
+	</table>
 	<hr>
 	<br>
 </div>

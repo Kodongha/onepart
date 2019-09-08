@@ -398,7 +398,7 @@ $(document).ready(function() {
 			        			url:"/onepart/resident/menuReservateFacility",
 			        			dataType:"html",
 			        			success:function(result){
-
+			        				$("#content").html(result);
 			        			}
 			        		});
 			            },

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.onepart.manager.facility.model.vo.FacReservation;
+import com.kh.onepart.manager.facility.model.vo.FacSeatInfo;
 import com.kh.onepart.manager.facility.model.vo.Image;
 import com.kh.onepart.manager.facility.model.vo.Reservation;
 
@@ -31,5 +32,11 @@ public interface FacliltyDao {
 	int updateFacilityGeneral(SqlSessionTemplate sqlSession, Reservation reserv);
 	//해당 시설물 삭제하는 메소드
 	int deleteFacliltyGeneral(SqlSessionTemplate sqlSession, int facSeq);
+	//시설물 정보 insert하는 메소드(좌석)
+	int insertReservationInfo2(SqlSessionTemplate sqlSession, Reservation reserv);
+	//시설물 좌석정보 insert하는 메소드
+	int insertReservationSeatInfo(SqlSessionTemplate sqlSession, FacSeatInfo fsi);
+	//해당 좌석 시설물 리스트 불러오는 메소드
+	Reservation selectOneSeatReservation(SqlSessionTemplate sqlSession, int facSeq);
 
 }

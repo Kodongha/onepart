@@ -163,7 +163,7 @@
 							</tr>
 						</table>
 						<!-- 사진첨부 div -->
-						<br><br><br><br>
+						<br><br><br>
 						<table style="width:90%">
 							<tr>
 								<td colspan="2" style="font-weight:bold; font-size:1.2em">시설 사진 등록</td>
@@ -197,10 +197,6 @@
 						<br><br>
 					</div>
 					<br><br>
-					<!-- 등록 버튼 div -->
-					<!-- 첨부파일 추가 input 추가 script -->
-
-					<!-- 예약처리 버튼 div -->
 	                <div>
 
 	                </div>
@@ -265,74 +261,6 @@
 							});
 						});
 
-
-						/* function insertNewGeneral() {
-							console.log("insertNewGeneral");
-							var facNm = $("#facNm").val();
-							var facPosition = $("#facPosition").val();
-							var facAvailWeekOfDayStart = $("#facAvailWeekOfDayStart").val();
-							var facAvailWeekOfDayEnd = $("#facAvailWeekOfDayEnd").val();
-							var facAvailWeekOfDay = facAvailWeekOfDayStart + " ~ " + facAvailWeekOfDayEnd;
-							var facAvailTmStart = $("#facAvailTmStart").val();
-							var facAvailTmEnd = $("#facAvailTmEnd").val();
-							var facAvailTm = facAvailTmStart + " ~ " + facAvailTmEnd;
-							var facDefaultFee = $("#facDefaultFee").val();
-							var facMaxHead = $("#facMaxHead").val();
-							var facSquareMeasure = $("#facSquareMeasure").val();
-							var facDetailInfo = $("#facDetailInfo").val();
-							var facRsrvInfo = $("#facRsrvInfo").val();
-							var facUseInfo = $("#facUseInfo").val();
-
-							var imgArr = new Array();
-							$("td > span").each(function(){
-								console.log($(this).text());
-								imgArr.push($(this).text());
-							});
-
-							var form = $('#fileUploadForm')[0];
-
-					        var data = new FormData(form);
-
-							var Reservation = {
-									facNm:facNm,
-									facPosition:facPosition,
-									facAvailWeekOfDay:facAvailWeekOfDay,
-									facAvailTm:facAvailTm,
-									facDefaultFee:facDefaultFee,
-									facMaxHead:facMaxHead,
-									facSquareMeasure:facSquareMeasure,
-									facDetailInfo:facDetailInfo,
-									facRsrvInfo:facRsrvInfo,
-									facUseInfo:facUseInfo
-							}
-
-							console.log(Reservation);
-
-							$.ajax({
-					            type: "POST",
-					            enctype: 'multipart/form-data',
-					            url: "/onepart/manager/newFacility_general",
-					            data: data,
-					            processData: false,
-					            contentType: false,
-					            cache: false,
-					            timeout: 600000,
-					            success: function (data) {
-					                alert("complete");
-					                $("#btnSubmit").prop("disabled", false);
-					            },
-					            error: function (e) {
-					                console.log("ERROR : ", e);
-					                $("#btnSubmit").prop("disabled", false);
-					                alert("fail");
-					            }
-					        });
-
-							return false;
-
-
-
-						} */
 
 						$(function(){
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.onepart.manager.facility.model.dao.FacliltyDao;
 import com.kh.onepart.manager.facility.model.vo.FacReservation;
+import com.kh.onepart.manager.facility.model.vo.FacSeatInfo;
 import com.kh.onepart.manager.facility.model.vo.Image;
 import com.kh.onepart.manager.facility.model.vo.Reservation;
 
@@ -105,6 +106,44 @@ public class FacliltyServiceImpl implements FacliltyService{
 		int result = fd.deleteFacliltyGeneral(sqlSession, facSeq);
 
 		return result;
+	}
+	//예약 시설물 insert하는 메소드
+	@Override
+	public int insertReservationSeat(Reservation reserv, ArrayList<Image> imgArr, String[] seatResultArr) {
+		//시설물 정보 insert하는 메소드(좌석)
+		int facSeq = fd.insertReservationInfo2(sqlSession, reserv);
+		//시설물 사진들 insert하는 메소드
+		for(int i = 0; i < imgArr.size(); i++) {
+			if(i == 0) {
+				//대표사진 insert하는 메소드
+				imgArr.get(i).setFacSeq(facSeq);
+				int result = fd.insertReservationImgFirst(sqlSession, imgArr.get(i));
+			}else {
+				//서브사진 insert하는 메소드
+				imgArr.get(i).setFacSeq(facSeq);
+				int result2 = fd.insertReservationImgSecond(sqlSession, imgArr.get(i));
+			}
+		}
+		//시설물 좌석정보 insert하는 메소드
+		for(int i = 1; i <= seatResultArr.length; i++) {
+			FacSeatInfo fsi = new FacSeatInfo();
+			fsi.setFacSeatNum(i);
+			fsi.setFacSeq(facSeq);
+			fsi.setFacPositionNum(seatResultArr[i-1]);
+			fsi.setFacSeatMaxNum(reserv.getSeatMaxNum());
+			int result3 = fd.insertReservationSeatInfo(sqlSession, fsi);
+		}
+
+		return facSeq;
+	}
+	//해당 좌석 시설물 리스트 불러오는 메소드
+	@Override
+	public Reservation selectOneSeatReservation(int facSeq) {
+
+		Reservation rs = fd.selectOneSeatReservation(sqlSession, facSeq);
+
+		return rs;
+
 	}
 
 }

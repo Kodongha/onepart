@@ -25,5 +25,9 @@ public interface FacliltyService {
 	int updateFacilityGeneral(Reservation reserv);
 	//해당 시설물 삭제하는 메소드
 	int deleteFacliltyGeneral(int facSeq);
+	//예약 시설물 insert하는 메소드
+	int insertReservationSeat(Reservation reserv, ArrayList<Image> imgArr, String[] seatResultArr);
+	//해당 좌석 시설물 리스트 불러오는 메소드
+	Reservation selectOneSeatReservation(int facSeq);
 
 }

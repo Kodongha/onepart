@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.onepart.manager.facility.model.vo.FacReservation;
+import com.kh.onepart.manager.facility.model.vo.FacSeatInfo;
 import com.kh.onepart.manager.facility.model.vo.Image;
 import com.kh.onepart.manager.facility.model.vo.Reservation;
 
@@ -61,6 +62,14 @@ public class FacliltyDaoImpl implements FacliltyDao{
 		int facSeq = reserv.getFacSeq();
 		return facSeq;
 	}
+	//시설물 정보 insert하는 메소드(좌석)
+		@Override
+		public int insertReservationInfo2(SqlSessionTemplate sqlSession, Reservation reserv) {
+
+			sqlSession.insert("faclilty.insertReservationInfo2", reserv);
+			int facSeq = reserv.getFacSeq();
+			return facSeq;
+		}
 	//대표사진 insert하는 메소드
 	@Override
 	public int insertReservationImgFirst(SqlSessionTemplate sqlSession, Image image) {
@@ -101,6 +110,22 @@ public class FacliltyDaoImpl implements FacliltyDao{
 		int result = sqlSession.delete("faclilty.deleteFacliltyGeneral", facSeq);
 
 		return result;
+	}
+	//시설물 좌석정보 insert하는 메소드
+	@Override
+	public int insertReservationSeatInfo(SqlSessionTemplate sqlSession, FacSeatInfo fsi) {
+
+		int result = sqlSession.insert("faclilty.insertReservationSeatInfo", fsi);
+
+		return result;
+	}
+	//해당 좌석 시설물 리스트 불러오는 메소드
+	@Override
+	public Reservation selectOneSeatReservation(SqlSessionTemplate sqlSession, int facSeq) {
+
+		Reservation rs = sqlSession.selectOne("faclilty.selectOneSeatReservation", facSeq);
+
+		return rs;
 	}
 
 }
