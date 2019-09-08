@@ -14,5 +14,8 @@ public interface OpenChatMemberDao {
 	public void insert(SqlSessionTemplate sqlSession, OpenChatMemberVO openChatMemberVO);
 	public void update(SqlSessionTemplate sqlSession, OpenChatMemberVO openChatMemberVO);
 	public void deleteById(SqlSessionTemplate sqlSession, int openChatMemberSeq);
+	public void getOutThisRoom(SqlSessionTemplate sqlSession, OpenChatMemberVO openChatMemberVO);
+	public int pastMemberEnter(SqlSessionTemplate sqlSession, OpenChatMemberVO openChatMemberVO);
+	public void reEnterOpenChatMember(SqlSessionTemplate sqlSession, OpenChatMemberVO openChatMemberVO);
 
 }

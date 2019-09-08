@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.warm.open_chatting.model.dao.OpenChatDao;
 import com.kh.onepart.resident.warm.open_chatting.model.service.OpenChatService;
+import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO;
 
 @Service
@@ -48,6 +49,24 @@ public class OpenChatServiceImpl implements OpenChatService {
 	public int countChatRoom() {
 		return openChatDao.countChatRoom(sqlSession);
 	}
+
+	@Override
+	public void updateOpenChatDelete(OpenChatVO openChatVO) {
+		openChatDao.updateOpenChatDelete(sqlSession,openChatVO);
+
+	}
+
+	@Override
+	public int countChatMyRoom(ResidentVO loginResident) {
+		return openChatDao.countChatMyRoom(sqlSession, loginResident);
+	}
+
+	@Override
+	public List<OpenChatVO> getMyRoomListAll(int residentSeq) {
+		return openChatDao.getMyRoomListAll(sqlSession, residentSeq);
+	}
+
+
 
 
 

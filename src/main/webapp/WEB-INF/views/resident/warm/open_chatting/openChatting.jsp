@@ -164,7 +164,7 @@
 			</a></li>
 			<li><a href="#rightTab" data-toggle="tab"> <span
 					class="hidden-xs m-l-3">참여중인 채팅방<span
-						class="badge badge-inverse m-l-3">267</span></span>
+						class="badge badge-inverse m-l-3" id="myroom"></span></span>
 			</a></li>
 			<li class="search-li">
 				<form class="navbar-form full-width">
@@ -193,9 +193,7 @@
 			<!-- begin tab-pane -->
 			<div class="tab-pane fade" id="rightTab">
 				<div id="roomListRightTab">
-					<div class="alert alert-success fade in m-b-15">
-						<strong>뜨개질방 들어오세융2</strong><br> <span>20/25</span>
-					</div>
+
 				</div>
 			</div>
 			<!-- end tab-pane -->
@@ -320,14 +318,20 @@
 					dataType: 'json',
 					data : {'openChatSeq': openChatSeq},
 					success : function(data) {
-
-					if(data.OpenChatVO.openChatMaxHead > data.OpenChatVO.openChatCurrHead){
-						 let url = "${contextPath}/resident/menuOpenChatRoom/"+openChatSeq;
-						window.open(url, "채팅방"+openChatSeq, "width=450px; height=600px;");
-					}else{
-						alert("채팅방 꽊참");
-					}
-
+						console.log(data.loginResident);
+					if(data.loginResident != null){
+							if(data.check){
+								 let url = "${contextPath}/resident/menuOpenChatRoom/"+openChatSeq;
+									window.open(url, "채팅방"+openChatSeq, "width=450px; height=600px;");
+							}else if(data.OpenChatVO.openChatMaxHead > data.OpenChatVO.openChatCurrHead){
+								 let url = "${contextPath}/resident/menuOpenChatRoom/"+openChatSeq;
+								window.open(url, "채팅방"+openChatSeq, "width=450px; height=600px;");
+							}else{
+								alert("인원수 제한으로 채팅입장이 제한됩니다.");
+							}
+						}else{
+							alert("로그인 후 이용해주세요.");
+						}
 					},error : function(err) {
 
 					}
@@ -375,8 +379,12 @@
 				success : function(data) {
 					if(data.result == "success") {
 						let roomList = data.openChatRoomList;
+						let myRoomList = data.openChatMyRoomList;
 						drawRoomList(roomList);
+						drawMyRoomList(myRoomList)
 						$("#allroom").text(data.countChatRoom);
+						$("#myroom").text(data.countMyChatRoom);
+						console.log(data.countMyChatRoom);
 					}
 					// 방 목록 불러오기
 					OpenChatRoomListTimeoutManage = setTimeout(function(){
@@ -396,6 +404,24 @@
 
 			roomList.forEach(roomInfo => {
 				let roomDivFormat = $('.roomDiv.LeftTab.format').clone();
+				roomDivFormat.removeClass('format');
+				roomDivFormat.show();
+
+				roomDivFormat.data('open-chat-seq', roomInfo.openChatSeq);
+				roomDivFormat.find('.roomNm').text(roomInfo.openChatRoomNm);
+				roomDivFormat.find('.currHead').text(roomInfo.openChatCurrHead);
+				roomDivFormat.find('.maxHead').text(roomInfo.openChatMaxHead);
+
+				roomsDiv.append(roomDivFormat);
+			});
+		}
+
+		function drawMyRoomList(myRoomList) {
+			let roomsDiv = $('#roomListRightTab');
+			roomsDiv.html('');
+
+			myRoomList.forEach(roomInfo => {
+				let roomDivFormat = $('.roomDiv.RightTab.format').clone();
 				roomDivFormat.removeClass('format');
 				roomDivFormat.show();
 

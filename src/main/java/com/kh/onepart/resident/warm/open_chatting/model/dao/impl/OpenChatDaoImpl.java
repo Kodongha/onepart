@@ -55,6 +55,23 @@ public class OpenChatDaoImpl implements OpenChatDao {
 		return sqlSession.selectOne("OpenChat.countChatRoom");
 	}
 
+	@Override
+	public void updateOpenChatDelete(SqlSessionTemplate sqlSession, OpenChatVO openChatVO) {
+		sqlSession.update("OpenChat.updateOpenChatDelete", openChatVO);
+
+	}
+
+	@Override
+	public int countChatMyRoom(SqlSessionTemplate sqlSession, ResidentVO loginResident) {
+		return sqlSession.selectOne("OpenChat.countChatMyRoom", loginResident);
+	}
+
+	@Override
+	public List<OpenChatVO> getMyRoomListAll(SqlSessionTemplate sqlSession, int residentSeq) {
+
+		return sqlSession.selectList("OpenChat.getMyRoomListAll",residentSeq);
+	}
+
 
 
 

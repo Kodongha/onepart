@@ -8,6 +8,7 @@
 <!--<![endif]-->
 <head>
 <style type="text/css">
+
 	.panel-inverse>.panel-heading { height: 40px; background: #00acac !important; }
 	.panel-heading .label.pull-left, .panel-heading .label.pull-right {    background-color: #8a6d3b !important; position: relative; top: -20px; }
 	.ion-android-clipboard:before { display: inline-block; position: absolute; right: 80px; top: 9px; cursor: pointer;}
@@ -22,13 +23,13 @@
 
 	/* 채팅방  */
 	.chat-content.panel { height: 100%; margin-bottom: 0; padding-top: 40px; padding-bottom: 50px; }
-	.chat-content .slimScrollDiv { padding: 0 15px; }
+	.chat-content .slimScrollDiv { padding: 0 5px; }
 	.chat-content #chatpeople button { background: none; border: none; outline: none; }
 	.chat-content .panel-body { height: 100%; padding: 0; }
 	.chat-content .panel-footer { position: fixed; bottom: 0; z-index: 110; }
 	.chat-content .chats>li+li { margin-bottom: 7px; }
 
-	.chat-content ul.chats { padding: 0; }
+	.chat-content ul.chats { padding: 0px 5px; }
 	.chat-content .chats li:nth-child(1) { margin-top: 70px; }
 	.chat-content .chats li { width: 100%; }
 	.chat-content .chats li div { display: inline-block; }
@@ -226,8 +227,8 @@
 			<form id="sendMessageForm" name="send_message_form" data-id="message-form">
 				<div class="input-group">
 					<input id="inputMsg" type="text" class="form-control input-sm" name="message"
-						placeholder="보낼 메세지를 작성하시오."> <span
-						class="input-group-btn">
+						placeholder="보낼 메세지를 작성하시오.">
+					<span class="input-group-btn">
 						<button id="sendMessageBtn" class="btn btn-primary btn-sm" type="button">보내기</button>
 					</span>
 				</div>
@@ -265,7 +266,7 @@
 			</table>
 		</div>
 		<div>
-			<button id="exitBtn" class="btn btn-danger">방나가기</button>
+			<button id="exitBtn" class="btn btn-danger" onclick="getOut()">방나가기</button>
 		</div>
 	</div>
 	<!-- end 채팅자 목록 -->
@@ -283,11 +284,54 @@
 
 		ChatMessage.init();
 		ChatMessage.scrollBottom();
-		setTimeout(function(){
-			$("#memberContentDiv").load(window.location.href + "#memberContentDiv");
-		}, 5000);
+
+		$("#sendMessageBtn").attr('disabled',true);
+		$(document).keyup(function (e) {
+			$('.slimScrollBar, .slimScrollRail').css('opacity', '0');
+			inputMsgCheck();
+		});
+		$(document).mouseup(function (e) {
+			inputMsgCheck();
+		});
+		window.setTimeout('window.location.reload()',60000);
 
 	});
+
+	function getOut(){
+		let urlPathArr = location.href.split('/');
+		let openChatSeq = urlPathArr[urlPathArr.length-1];
+		let residentSeq = ${ sessionScope.loginUser.residentSeq };
+		var real = window.confirm("정말 방을 나가시겠습니까?");
+		console.log(real);
+		if(real){
+		$.ajax({
+			url : '/onepart/resident/getOut',
+			type : 'get',
+			data : {residentSeq : residentSeq, openChatSeq : openChatSeq},
+			dataType: 'json',
+			success : function(data) {
+
+				window.close();
+			},
+			error : function(err) {
+				alert('나가기에 실패하였습니다.');
+			}
+		});
+		}
+
+	}
+
+
+
+	function inputMsgCheck(){
+
+		if($("#inputMsg" ).val()== ""){
+			  $("#sendMessageBtn").attr('disabled',true);
+
+		  }else{
+				$("#sendMessageBtn").attr('disabled',false)
+		  }
+	}
 
 	const ChatMessage = (function() {
 
@@ -388,7 +432,7 @@
 				'act': 'enterRoom',
 				'openChatSeq' : openChatSeq
 			};
-			console.log(openChatSeq);
+
 			webSocket.send(JSON.stringify(data));
 		}
 
@@ -433,7 +477,9 @@
 			let divHeight = $('#chatDiv').height();										// 채팅창 높이
 			let scrollBarHeight = $('#chatDiv .slimScrollBar').height();				// 채팅창 템플릿 스크롤바 상단 높이
 			$('#chatDiv .slimScrollDiv > div').scrollTop($('#chatDiv ul').height());	// 채팅창 높이 - 채팅창 원래 스크롤바 상단 높이
-			$('#chatDiv .slimScrollBar').css('top', divHeight-scrollBarHeight); 		// 채팅창 높이 - 채팅창 템플릿 스크롤바 상단 높이
+			$('#chatDiv .slimScrollBar').css('top', divHeight-scrollBarHeight);
+
+
 		}
 
 		return {

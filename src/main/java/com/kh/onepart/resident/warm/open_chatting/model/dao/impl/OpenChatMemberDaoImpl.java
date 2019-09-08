@@ -50,6 +50,25 @@ public class OpenChatMemberDaoImpl implements OpenChatMemberDao {
 
 	}
 
+	@Override
+	public void getOutThisRoom(SqlSessionTemplate sqlSession, OpenChatMemberVO openChatMemberVO) {
+		sqlSession.update("OpenChatMember.getOutThisRoom", openChatMemberVO);
+
+	}
+
+	@Override
+	public int pastMemberEnter(SqlSessionTemplate sqlSession, OpenChatMemberVO openChatMemberVO) {
+		return sqlSession.selectOne("OpenChatMember.pastMemberEnter", openChatMemberVO);
+	}
+
+	@Override
+	public void reEnterOpenChatMember(SqlSessionTemplate sqlSession, OpenChatMemberVO openChatMemberVO) {
+		sqlSession.update("OpenChatMember.reEnterOpenChatMember", openChatMemberVO);
+
+	}
+
 	
+
+
 
 }
