@@ -85,7 +85,6 @@
 		FROM FAC_RSRV R
 		JOIN FAC F ON (R.FAC_SEQ = F.FAC_SEQ)
 		WHERE R.RESIDENT_SEQ = #{residentSeq}
-		AND R.PROP_SEAT IS NULL
 	</select>
 
 	<delete id="deleteUserReservation" parameterType="_int">

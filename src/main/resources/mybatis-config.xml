@@ -33,6 +33,7 @@
     	<typeAlias type="com.kh.onepart.manager.facility.model.vo.Reservation" alias="manager_reservation"/>
     	<typeAlias type="com.kh.onepart.manager.facility.model.vo.FacReservation" alias="manager_facReservation"/>
     	<typeAlias type="com.kh.onepart.manager.facility.model.vo.Image" alias="manager_img"/>
+    	<typeAlias type="com.kh.onepart.manager.facility.model.vo.FacSeatInfo" alias="manager_facSeatInfo" />
 	</typeAliases>
 
 	<mappers>

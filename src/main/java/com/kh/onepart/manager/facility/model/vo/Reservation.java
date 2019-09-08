@@ -34,5 +34,7 @@ public class Reservation implements java.io.Serializable{
 	private Date uploadDt;
 	private int messengerSeq;
 	private int openChatCommSeq;
+	private String seatArr;
+	private int seatMaxNum;
 
 }
