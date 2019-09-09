@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OpenChatNotice">
+
+
+	<resultMap type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatNoticeVO" id="openChatNoticeVOResultSet">
+		<id property="openChatSeq" column="OPEN_CHAT_SEQ"/>
+		<result property="openChatNoticeContent" column="OPEN_CHAT_NOTICE_CONTENT"/>
+		<result property="openChatNoticeEnrollDt" column="OPEN_CHAT_NOTICE_ENROLL_DT"/>
+		<result property="openChatNoticeSeq" column="OPEN_CHAT_NOTICE_SEQ"/>
+	</resultMap>
+
+
+	<select id="noticeSelect" resultMap="openChatNoticeVOResultSet" parameterType="OpenChatNoticeVO">
+		SELECT *
+		FROM OPEN_CHAT_NOTICE
+		WHERE OPEN_CHAT_SEQ = #{openChatSeq}
+	</select>
+
+
+
+</mapper>

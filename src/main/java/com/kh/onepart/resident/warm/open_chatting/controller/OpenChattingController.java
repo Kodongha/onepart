@@ -19,8 +19,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.warm.open_chatting.model.service.OpenChatMemberService;
+import com.kh.onepart.resident.warm.open_chatting.model.service.OpenChatNoticeService;
 import com.kh.onepart.resident.warm.open_chatting.model.service.OpenChatService;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO;
+import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatNoticeVO;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO;
 
 @Controller
@@ -31,6 +33,9 @@ public class OpenChattingController {
 
 	@Autowired
 	OpenChatMemberService openChatMemberService;
+
+	@Autowired
+	OpenChatNoticeService openChatNoticeService;
 
 	// 채팅방 목록 페이지 이동
 	@RequestMapping("/resident/menuOpenChatting")
@@ -59,7 +64,7 @@ public class OpenChattingController {
 
 	}
 
-
+	//채팅방 나가기
 	@RequestMapping("/resident/getOut")
 	@ResponseBody
 	public String getOut(@RequestParam("openChatSeq") int openChatSeq, @RequestParam("residentSeq") int residentSeq,HttpSession session) throws JsonProcessingException {
@@ -71,6 +76,19 @@ public class OpenChattingController {
 		openChatService.setCurrHead(openChatSeq);
 		result.put("result", "success");
 
+		return new ObjectMapper().writeValueAsString(result);
+
+	}
+
+	@RequestMapping(value = "/resident/noticeSelect" ,produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String noticeSelect(@RequestParam("openChatSeq") int openChatSeq,HttpSession session) throws JsonProcessingException {
+		Map<String, Object> result = new HashMap<>();
+		OpenChatNoticeVO openChatNoticeVO = new OpenChatNoticeVO();
+		openChatNoticeVO.setOpenChatSeq(openChatSeq);
+		openChatNoticeVO = openChatNoticeService.noticeSelect(openChatNoticeVO);
+		result.put("result", "success");
+		result.put("openChatNoticeVO",openChatNoticeVO);
 		return new ObjectMapper().writeValueAsString(result);
 
 	}

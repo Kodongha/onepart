@@ -19,7 +19,7 @@
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO" alias="OpenChatVO" />
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO" alias="OpenChatMemberVO" />
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatCommVO" alias="OpenChatCommVO" />
-
+		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatNoticeVO" alias="OpenChatNoticeVO" />
 		<typeAlias type="com.kh.onepart.resident.my_home.my_car.model.vo.MyCar" alias="MyCar" />
 		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.Reservation" alias="reservation" />
 		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacReservation" alias="facReservation" />
@@ -46,6 +46,7 @@
 		<mapper resource="mappers/myCar/myCar-mapper.xml" />
 		<mapper resource="mappers/openChat/openChatMember-mapper.xml" />
 		<mapper resource="mappers/openChat/openChatComm-mapper.xml" />
+		<mapper resource="mappers/openChat/openChatNotice-mapper.xml" />
 		<mapper resource="mappers/reservation/reservation-mapper.xml" />
 		<mapper resource="mappers/resident/survey/resident-survey-mapper.xml" />
 

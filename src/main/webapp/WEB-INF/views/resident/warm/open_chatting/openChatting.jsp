@@ -8,6 +8,10 @@
 <!--<![endif]-->
 <head>
 <style>
+.roomNm{font-size: 1.2em;}
+.chatTable{width: 100%;}
+.passTd{text-align: left;}
+.headTd{text-align: right; font-size: 1.2em;}
 .format { display:none !important; }
 .content {
 	margin-left: 110px !important;
@@ -16,7 +20,7 @@
 .alert.alert-success {
 	background: #00acac !important;
 	color: black !important;
-	height: 66px !important;
+	height: 80px !important;
 	padding: 15px !important;
 	margin: 0 25%;
 	font-size: 1.3em !important;
@@ -79,7 +83,7 @@
 
 .content>.tab-content>div>div span {
 	display: inline-block;
-	left: 45%;
+
 	position: relative;
 }
 
@@ -203,15 +207,25 @@
 
 		<div class="roomDiv LeftTab format alert alert-success fade in m-b-15">
 			<strong class="roomNm"></strong>
-			<br>
-			<span class="currHead"></span><span>/</span><span class="maxHead"></span>
+
+			<table class="chatTable">
+				<tr>
+					<td class="passTd"><span class="pass"></span></td>
+					<td class="headTd"><span class="currHead"></span><span>/</span><span class="maxHead"></span></td>
+				</tr>
+			</table>
 
 		</div>
 
 		<div class="roomDiv RightTab format alert alert-success fade in m-b-15">
 			<strong class="roomNm"></strong>
-			<br>
-			<span class="currHead"></span><span>/</span><span class="maxHead"></span>
+
+			<table class="chatTable">
+				<tr>
+					<td class="passTd"><span class="pass"></span></td>
+					<td class="headTd"><span class="currHead"></span><span>/</span><span class="maxHead"></span></td>
+				</tr>
+			</table>
 		</div>
 
 	</div>
@@ -318,14 +332,34 @@
 					dataType: 'json',
 					data : {'openChatSeq': openChatSeq},
 					success : function(data) {
-						console.log(data.loginResident);
+
 					if(data.loginResident != null){
 							if(data.check){
-								 let url = "${contextPath}/resident/menuOpenChatRoom/"+openChatSeq;
+								if(data.OpenChatVO.openChatPwd != null){
+									var pass = window.prompt("비밀번호를 입력하세요")
+									if(pass == data.OpenChatVO.openChatPwd){
+										let url = "${contextPath}/resident/menuOpenChatRoom/"+openChatSeq;
+										window.open(url, "채팅방"+openChatSeq, "width=450px; height=600px;");
+									}else{
+										alert("비밀번호가 틀렸습니다.");
+									}
+								}else{
+									let url = "${contextPath}/resident/menuOpenChatRoom/"+openChatSeq;
 									window.open(url, "채팅방"+openChatSeq, "width=450px; height=600px;");
+								}
 							}else if(data.OpenChatVO.openChatMaxHead > data.OpenChatVO.openChatCurrHead){
-								 let url = "${contextPath}/resident/menuOpenChatRoom/"+openChatSeq;
-								window.open(url, "채팅방"+openChatSeq, "width=450px; height=600px;");
+								if(data.OpenChatVO.openChatPwd != null){
+									var pass = window.prompt("비밀번호를 입력하세요")
+									if(pass == data.OpenChatVO.openChatPwd){
+										let url = "${contextPath}/resident/menuOpenChatRoom/"+openChatSeq;
+										window.open(url, "채팅방"+openChatSeq, "width=450px; height=600px;");
+									}else{
+										alert("비밀번호가 틀렸습니다.");
+									}
+								}else{
+									let url = "${contextPath}/resident/menuOpenChatRoom/"+openChatSeq;
+									window.open(url, "채팅방"+openChatSeq, "width=450px; height=600px;");
+								}
 							}else{
 								alert("인원수 제한으로 채팅입장이 제한됩니다.");
 							}
@@ -390,10 +424,10 @@
 					OpenChatRoomListTimeoutManage = setTimeout(function(){
 						if(OpenChatRoomListTimeoutEnable)
 							getRoomListAll();
-					}, 5000);
+					}, 5000000);
 				},
 				error : function(err) {
-					alert('방 목록 가져오기에 실패했습니다.');
+					alert('로그인 후 이용 바랍니다.');
 				}
 			});
 		}
@@ -411,6 +445,12 @@
 				roomDivFormat.find('.roomNm').text(roomInfo.openChatRoomNm);
 				roomDivFormat.find('.currHead').text(roomInfo.openChatCurrHead);
 				roomDivFormat.find('.maxHead').text(roomInfo.openChatMaxHead);
+				if(roomInfo.openChatPwd != null){
+					roomDivFormat.find('.pass').html('<i class="fa fa-2x fa-lock"></i>');
+				}else{
+					roomDivFormat.find('.pass').html('<i class="fa fa-2x fa-unlock"></i>');
+				}
+
 
 				roomsDiv.append(roomDivFormat);
 			});
@@ -429,6 +469,12 @@
 				roomDivFormat.find('.roomNm').text(roomInfo.openChatRoomNm);
 				roomDivFormat.find('.currHead').text(roomInfo.openChatCurrHead);
 				roomDivFormat.find('.maxHead').text(roomInfo.openChatMaxHead);
+				if(roomInfo.openChatPwd != null){
+					roomDivFormat.find('.pass').html('<i class="fa fa-2x fa-lock"></i>');
+				}else{
+					roomDivFormat.find('.pass').html('<i class="fa fa-2x fa-unlock"></i>');
+				}
+
 
 				roomsDiv.append(roomDivFormat);
 			});

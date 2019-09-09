@@ -196,7 +196,7 @@
 			<h4 class="panel-title">
 				<strong>공지사항</strong>
 			</h4>
-			<p></p>
+			<p class="noticeCon">없음</p>
 		</div>
 
 		<div id="chatDiv" class="panel-body bg-silver">
@@ -278,6 +278,7 @@
 	let webSocket;
 
 	$(document).ready(function() {
+		notice();
 		App.init();
 
 		CustomModal.init();
@@ -320,6 +321,24 @@
 		}
 
 	}
+
+	function notice(){
+		let urlPathArr = location.href.split('/');
+		let openChatSeq = urlPathArr[urlPathArr.length-1];
+		$.ajax({
+			url : '/onepart/resident/noticeSelect',
+			type : 'get',
+			data : {openChatSeq : openChatSeq},
+			dataType: 'json',
+			success : function(data) {
+				$(".noticeCon").text(data.openChatNoticeVO.openChatNoticeContent);
+			},
+			error : function(err) {
+				alert('공지사항 읽기에 실패하였습니다.');
+			}
+		});
+		}
+
 
 
 

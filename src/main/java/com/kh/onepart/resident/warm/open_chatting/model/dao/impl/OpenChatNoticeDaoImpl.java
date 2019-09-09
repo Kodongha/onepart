@@ -18,13 +18,19 @@ public class OpenChatNoticeDaoImpl implements OpenChatNoticeDao {
 	@Override
 	public void insert(SqlSessionTemplate sqlSession, OpenChatNoticeVO openChatNoticeVO) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void update(SqlSessionTemplate sqlSession, OpenChatNoticeVO openChatNoticeVO) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public OpenChatNoticeVO noticeSelect(SqlSessionTemplate sqlSession, OpenChatNoticeVO openChatNoticeVO) {
+
+		return sqlSession.selectOne("OpenChatNotice.noticeSelect", openChatNoticeVO);
 	}
 
 }
