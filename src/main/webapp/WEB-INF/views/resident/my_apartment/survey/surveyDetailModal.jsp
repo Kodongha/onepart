@@ -17,17 +17,29 @@
 
 		$('#enrollBtn').click(function(){
 
-			$('[name=answer]').each(function(){
+			var answerResult = {};
 
-				console.log("type : " + $(this).attr('type'));
 
-				if($(this).attr('type') == 'radio' && $(this).is(":checked")){
-					console.log($(this).val());
-				} else if($(this).attr('type') == 'checkbox' && $(this).is(":checked")){
-					console.log($(this).val());
-				}
-				//console.log($(this).val());
+			$('.questionArea').each(function(item){
+				var num = $(this).children().eq(0).val();
+				console.log(num);
+
+				$(this).attr('[name=attr]').each(function(){
+
+					if($(this).attr('type') == 'radio' && $(this).is(":checked")){
+						console.log($(this).val());
+					} else if($(this).attr('type') == 'checkbox' && $(this).is(":checked")){
+						console.log($(this).val());
+					} else {
+						console.log($(this).val());
+					}
+
+
+				});
 			});
+
+
+
 
 		});
 
@@ -50,42 +62,45 @@
 
 					<div>
 						<c:forEach var="surveyQstn" items="${surveyQstnList }">
-							<h4><c:out value="[${ surveyQstn.surveyQstnNum }] "/><c:out value="${surveyQstn.surveyQstnTitle }"/></h4>
+							<div class="questionArea">
+								<input type="hidden" class="numData" value="${ surveyQstn.surveyQstnNum }">
+								<h4><c:out value="[${ surveyQstn.surveyQstnNum }] "/><c:out value="${surveyQstn.surveyQstnTitle }"/></h4>
 
-							<!-- 단답형 -->
-							<c:if test="${surveyQstn.surveyQstnType == 1 }">
-								<input type="text" class="form-control" placeholder="내용을 입력해주세요." name="answer">
-							</c:if>
+								<!-- 단답형 -->
+								<c:if test="${surveyQstn.surveyQstnType == 1 }">
+									<input type="text" class="form-control answer" placeholder="내용을 입력해주세요." name="answer">
+								</c:if>
 
-							<!-- 장문형 -->
-							<c:if test="${surveyQstn.surveyQstnType == 2 }">
-								<textarea class="form-control" placeholder="내용을 입력해주세요." rows="5" name="answer"></textarea>
-							</c:if>
+								<!-- 장문형 -->
+								<c:if test="${surveyQstn.surveyQstnType == 2 }">
+									<textarea class="form-control" placeholder="내용을 입력해주세요." rows="5" name="answer"></textarea>
+								</c:if>
 
-							<!-- 객관식 -->
-							<c:if test="${surveyQstn.surveyQstnType == 3 }">
-								<c:forEach var="surveyQstnOption" items="${surveyQstnOptionList}">
-									<c:if test="${surveyQstnOption.surveyQstnSeq == surveyQstn.surveyQstnSeq}">
-										<h4>
-											<input type="radio" data-render="switchery" data-theme="default" name="answer" id="${surveyQstnOption.surveyQstnSeq}_${surveyQstnOption.surveyQstnOptionNum}" value="${surveyQstnOption.surveyQstnOptionContent}">
-											<label for="${surveyQstnOption.surveyQstnSeq}_${surveyQstnOption.surveyQstnOptionNum}"><c:out value="${surveyQstnOption.surveyQstnOptionContent}"/></label>
-										</h4>
-									</c:if>
-								</c:forEach>
-							</c:if>
+								<!-- 객관식 -->
+								<c:if test="${surveyQstn.surveyQstnType == 3 }">
+									<c:forEach var="surveyQstnOption" items="${surveyQstnOptionList}">
+										<c:if test="${surveyQstnOption.surveyQstnSeq == surveyQstn.surveyQstnSeq}">
+											<h4>
+												<input type="radio" data-render="switchery" data-theme="default" name="answer" id="${surveyQstnOption.surveyQstnSeq}_${surveyQstnOption.surveyQstnOptionNum}" value="${surveyQstnOption.surveyQstnOptionContent}">
+												<label for="${surveyQstnOption.surveyQstnSeq}_${surveyQstnOption.surveyQstnOptionNum}"><c:out value="${surveyQstnOption.surveyQstnOptionContent}"/></label>
+											</h4>
+										</c:if>
+									</c:forEach>
+								</c:if>
 
-							<!-- 체크박스 -->
-							<c:if test="${surveyQstn.surveyQstnType == 4 }">
-								<c:forEach var="surveyQstnOption" items="${surveyQstnOptionList}">
-									<c:if test="${surveyQstnOption.surveyQstnSeq == surveyQstn.surveyQstnSeq}">
-										<h4>
-											<input type="checkbox" data-render="switchery" data-theme="default" name="answer" id="${surveyQstnOption.surveyQstnSeq}_${surveyQstnOption.surveyQstnOptionNum}" value="${surveyQstnOption.surveyQstnOptionContent}">
-											<label for="${surveyQstnOption.surveyQstnSeq}_${surveyQstnOption.surveyQstnOptionNum}"><c:out value="${surveyQstnOption.surveyQstnOptionContent}"/></label>
-										</h4>
-									</c:if>
-								</c:forEach>
-							</c:if>
-							<hr>
+								<!-- 체크박스 -->
+								<c:if test="${surveyQstn.surveyQstnType == 4 }">
+									<c:forEach var="surveyQstnOption" items="${surveyQstnOptionList}">
+										<c:if test="${surveyQstnOption.surveyQstnSeq == surveyQstn.surveyQstnSeq}">
+											<h4>
+												<input type="checkbox" data-render="switchery" data-theme="default" name="answer" id="${surveyQstnOption.surveyQstnSeq}_${surveyQstnOption.surveyQstnOptionNum}" value="${surveyQstnOption.surveyQstnOptionContent}">
+												<label for="${surveyQstnOption.surveyQstnSeq}_${surveyQstnOption.surveyQstnOptionNum}"><c:out value="${surveyQstnOption.surveyQstnOptionContent}"/></label>
+											</h4>
+										</c:if>
+									</c:forEach>
+								</c:if>
+								<hr>
+							</div>
 						</c:forEach>
 					</div>
 				</div>
