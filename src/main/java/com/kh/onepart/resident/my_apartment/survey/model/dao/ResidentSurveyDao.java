@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.onepart.common.PageInfo;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyPrtcpt;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveySelected;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstn;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstnOption;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyVO;
@@ -78,5 +80,19 @@ public interface ResidentSurveyDao {
 	 * @return
 	 */
 	ArrayList<SurveyQstnOption> selectsurveyQstnOptionList(SqlSessionTemplate sqlSession, ArrayList<SurveyQstn> surveyQstnList);
+
+	/**
+	 * 설문조사 참여 기본정보 삽입
+	 * @param requestSurveyPrtcpt
+	 * @return
+	 */
+	int insertSurveyPrtcpt(SqlSessionTemplate sqlSession, RequestSurveyPrtcpt requestSurveyPrtcpt);
+
+	/**
+	 * 설문조사 참여 답변정보 삽입
+	 * @param sqlSession
+	 * @param requestSurveySelected
+	 */
+	void insertsurveySelected(SqlSessionTemplate sqlSession, RequestSurveySelected requestSurveySelected);
 
 }

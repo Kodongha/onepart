@@ -39,7 +39,7 @@
 		AND		SURVEY_DEL_TF = 'N'
 	</select>
 
-	<!-- 설문조사 진행 중 카운트 - 설문조사 메인 -->
+	<!-- 설문조사 진행 중 리스트 - 설문조사 메인 -->
 	<select id="selectSurveyList" resultMap="surveyVOResultSet">
 		SELECT  *
 		FROM    SURVEY
@@ -56,7 +56,7 @@
 		AND		SURVEY_DEL_TF = 'N'
 	</select>
 
-	<!-- 설문조사 진행 예정 카운트 - 설문조사 메인 -->
+	<!-- 설문조사 진행 예정 리스트 - 설문조사 메인 -->
 	<select id="expectedSurveyList" resultMap="surveyVOResultSet">
 		SELECT  *
 		FROM    SURVEY
@@ -73,7 +73,7 @@
 		AND		SURVEY_DEL_TF = 'N'
 	</select>
 
-	<!-- 설문조사 종료 카운트 - 설문조사 메인 -->
+	<!-- 설문조사 종료 리스트 - 설문조사 메인 -->
 	<select id="finishSurveyList" resultMap="surveyVOResultSet">
 		SELECT  *
 		FROM    SURVEY
@@ -109,5 +109,27 @@
 		)
 	</select>
 
+	<insert id="insertSurveyPrtcpt" parameterType="requestSurveyPrtcpt">
+		INSERT INTO SURVEY_PRTCPT
+		VALUES (
+			SURVEY_PRTCPT_SEQ.NEXTVAL,
+			#{residentSeq},
+			#{surveySeq},
+			SYSDATE
+		)
+		<selectKey keyProperty="surveyPrtcptSeq" resultType="Integer" order="AFTER">
+			SELECT 	SURVEY_PRTCPT_SEQ.CURRVAL
+			FROM 	DUAL
+		</selectKey>
+	</insert>
 
+	<insert id="insertsurveySelected" parameterType="requestSurveySelected">
+		INSERT INTO SURVEY_SELECTED
+		VALUES (
+			SURVEY_SELECTED_SEQ.NEXTVAL,
+			#{surveyPrtcptSeq},
+			#{selectedAnswer},
+			#{surveyQstnSeq}
+		)
+	</insert>
 </mapper>

@@ -16,14 +16,20 @@
 
 
 		$('#enrollBtn').click(function(){
+			var resultObj = {};
+			resultObj.loginUser = '${loginUser.residentSeq}';
+			resultObj.surveySeq = '${surveyVO.surveySeq}';
+			var surveyQstnSeqArray = [];
 
 			var answerResult = [];
+
+			console.log(resultObj.loginUser);
+			console.log(resultObj.surveySeq);
 
 			$('.questionArea').each(function(){
 				var num = $(this).children().eq(0).val();
 
 				var questionArray = [];
-
 				var len = $(this).children('[name=answer]').length;
 				console.log("leng :: "  + len);
 				$(this).children('[name=answer]').each(function(index){
@@ -31,26 +37,63 @@
 					var input = $(this).eq(0);
 					var value;
 
-					if(input.attr('type') == 'radio' && input.is(":checked")){
-						value = input.val();
-					} else if(input.attr('type') == 'checkbox' && input.is(":checked")){
-						value = input.val();
-					} else if(input.attr('type') == 'text' || input.prop('tagName') == 'TEXTAREA')  {
-						value = input.val();
+					var surveyQstnSeq = $(this).parents('.questionArea').children('#surveyQstnSeq').eq(0).val();
+
+					var flag = true;
+					for(var i=0; i<surveyQstnSeqArray.length; i++){
+						if(surveyQstnSeq == surveyQstnSeqArray[i]){
+							flag = false;
+							console.log("false in!!");
+						}
 					}
 
-					questionArray.push(value);
+					if(flag){
+						console.log("flag in!!");
+						surveyQstnSeqArray.push(surveyQstnSeq);
+					}
+
+					if(input.attr('type') == 'radio' && input.is(":checked")){
+						value = input.val()+"";
+						questionArray.push(value);
+					} else if(input.attr('type') == 'checkbox' && input.is(":checked")){
+						value = input.val()+"";
+						questionArray.push(value);
+					} else if(input.attr('type') == 'text' || input.prop('tagName') == 'TEXTAREA')  {
+
+						value = input.val()+"";
+						questionArray.push(value);
+					}
 				});
 
 				answerResult.push(questionArray);
 			});
 
 			console.log('-------end--------')
+
+			resultObj.answerList = answerResult;
+			resultObj.surveyQstnSeqArray = surveyQstnSeqArray;
+			var resultStr = JSON.stringify(resultObj);
 			console.log(answerResult);
+			console.log(resultStr);
+
+			$.ajax({
+				url : 'insertsurveyPrtcpt',
+				type : 'post',
+				data : {resultStr : resultStr},
+				success : function(data) {
+					console.log('succ');
+					$('#modal-dialog').remove();
+					$('.modal-backdrop').remove();
+					$("#content").html(data);
+				},
+				error : function(error) {
+					console.log('error');
+				}
+			});
 
 		});
 
-	})
+	});
 
 </script>
 </head>
@@ -104,6 +147,7 @@
 									</c:forEach>
 								</c:if>
 								<hr>
+								<input type="hidden" value="${surveyQstn.surveyQstnSeq}" id="surveyQstnSeq">
 							</div>
 						</c:forEach>
 					</div>

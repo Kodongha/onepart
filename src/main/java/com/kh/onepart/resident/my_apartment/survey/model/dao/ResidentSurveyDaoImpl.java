@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.onepart.common.PageInfo;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyPrtcpt;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveySelected;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstn;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstnOption;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyVO;
@@ -108,5 +110,25 @@ public class ResidentSurveyDaoImpl implements ResidentSurveyDao {
 
 		return selectsurveyQstnOptionList;
 	}
+
+	/** 설문조사 참여 기본정보 삽입 */
+	@Override
+	public int insertSurveyPrtcpt(SqlSessionTemplate sqlSession, RequestSurveyPrtcpt requestSurveyPrtcpt) {
+		// TODO Auto-generated method stub
+
+		sqlSession.insert("ResidentSurvey.insertSurveyPrtcpt", requestSurveyPrtcpt);
+		int surveyPrtcptSeq = requestSurveyPrtcpt.getSurveyPrtcptSeq();
+
+		return surveyPrtcptSeq;
+	}
+
+	/** 설문조사 참여 답변정보 삽입 */
+	@Override
+	public void insertsurveySelected(SqlSessionTemplate sqlSession, RequestSurveySelected requestSurveySelected) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("ResidentSurvey.insertsurveySelected", requestSurveySelected);
+	}
+
+
 
 }

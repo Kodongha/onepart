@@ -49,7 +49,7 @@
 <script type="text/javascript">
 
 	/* 상세보기 */
-	$(document).on('click','table > tbody > tr', function(){
+	$(document).on('click','#ingSurveyList > tbody > tr', function(){
 		var surveySeq = $(this).children().eq(0).text();
 
 		$.ajax({
