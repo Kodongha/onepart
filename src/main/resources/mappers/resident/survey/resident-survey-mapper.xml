@@ -11,6 +11,7 @@
 		<result property="surveyPeriod" column="SURVEY_PERIOD"/>
 		<result property="surveyEnrollDt" column="SURVEY_ENROLL_DT"/>
 		<result property="surveyDelTf" column="SURVEY_DEL_TF"/>
+		<result property="residentSeq" column="RESIDENT_SEQ"/>
 	</resultMap>
 
 	<resultMap type="com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstn" id="surveyQstnResultSet">
@@ -32,63 +33,41 @@
 
 
 	<!-- 설문조사 진행 중 카운트 - 설문조사 메인 -->
-	<select id="selectIngSurveyListCount" resultType="_int">
+	<select id="selectIngSurveyListCount" resultType="_int" parameterType="requestSurveyMainVO">
 		SELECT  COUNT(*)
-		FROM    SURVEY
-		WHERE   SURVEY_STATUS = 2
-		AND		SURVEY_DEL_TF = 'N'
+		FROM    SURVEY t1
+		LEFT OUTER JOIN SURVEY_PRTCPT t2
+		ON      (t1.SURVEY_SEQ = t2.SURVEY_SEQ)
+		AND     t2.RESIDENT_SEQ = #{residentSeq}
+		WHERE   t1.SURVEY_STATUS = #{surveyType}
+		AND     t1.SURVEY_DEL_TF = 'N'
+		ORDER BY t1.SURVEY_ENROLL_DT DESC
 	</select>
 
-	<!-- 설문조사 진행 중 카운트 - 설문조사 메인 -->
-	<select id="selectSurveyList" resultMap="surveyVOResultSet">
+	<!-- 설문조사 진행 중 리스트 - 설문조사 메인 -->
+	<select id="selectSurveyList" resultMap="surveyVOResultSet" parameterType="requestSurveyMainVO">
 		SELECT  *
-		FROM    SURVEY
-		WHERE   SURVEY_STATUS = 2
-		AND   SURVEY_DEL_TF = 'N'
-		ORDER BY SURVEY_ENROLL_DT DESC
+		FROM    SURVEY t1
+		LEFT OUTER JOIN SURVEY_PRTCPT t2
+		ON      (t1.SURVEY_SEQ = t2.SURVEY_SEQ)
+		AND     t2.RESIDENT_SEQ = #{residentSeq}
+		WHERE   t1.SURVEY_STATUS = #{surveyType}
+		AND     t1.SURVEY_DEL_TF = 'N'
+		ORDER BY t1.SURVEY_ENROLL_DT DESC
 	</select>
 
-	<!-- 설문조사 진행 예정 카운트 - 설문조사 메인 -->
-	<select id="expectedSurveyListCount" resultType="_int">
-		SELECT  COUNT(*)
-		FROM    SURVEY
-		WHERE   SURVEY_STATUS = 1
-		AND		SURVEY_DEL_TF = 'N'
-	</select>
 
-	<!-- 설문조사 진행 예정 카운트 - 설문조사 메인 -->
-	<select id="expectedSurveyList" resultMap="surveyVOResultSet">
-		SELECT  *
-		FROM    SURVEY
-		WHERE   SURVEY_STATUS = 1
-		AND   SURVEY_DEL_TF = 'N'
-		ORDER BY SURVEY_ENROLL_DT DESC
-	</select>
 
-	<!-- 설문조사 종료 카운트 - 설문조사 메인 -->
-	<select id="finishSurveyListCount" resultType="_int">
-		SELECT  COUNT(*)
-		FROM    SURVEY
-		WHERE   SURVEY_STATUS = 3
-		AND		SURVEY_DEL_TF = 'N'
-	</select>
-
-	<!-- 설문조사 종료 카운트 - 설문조사 메인 -->
-	<select id="finishSurveyList" resultMap="surveyVOResultSet">
-		SELECT  *
-		FROM    SURVEY
-		WHERE   SURVEY_STATUS = 3
-		AND   SURVEY_DEL_TF = 'N'
-		ORDER BY SURVEY_ENROLL_DT DESC
-	</select>
 
 
 
 	<!-- 설문조사 상세정보 - 기본정보 -->
 	<select id="selectSurveyBasicInfo" parameterType="Integer" resultMap="surveyVOResultSet">
 		SELECT	*
-		FROM	SURVEY
-		WHERE	SURVEY_SEQ = #{surveySeq}
+		FROM	SURVEY t1
+		LEFT OUTER JOIN SURVEY_PRTCPT t2
+		ON      (t1.SURVEY_SEQ = t2.SURVEY_SEQ)
+		WHERE	t1.SURVEY_SEQ = #{surveySeq}
 	</select>
 
 	<!-- 설문조사 상세정보 - 문제정보 -->
@@ -109,5 +88,27 @@
 		)
 	</select>
 
+	<insert id="insertSurveyPrtcpt" parameterType="requestSurveyPrtcpt">
+		INSERT INTO SURVEY_PRTCPT
+		VALUES (
+			SURVEY_PRTCPT_SEQ.NEXTVAL,
+			#{residentSeq},
+			#{surveySeq},
+			SYSDATE
+		)
+		<selectKey keyProperty="surveyPrtcptSeq" resultType="Integer" order="AFTER">
+			SELECT 	SURVEY_PRTCPT_SEQ.CURRVAL
+			FROM 	DUAL
+		</selectKey>
+	</insert>
 
+	<insert id="insertsurveySelected" parameterType="requestSurveySelected">
+		INSERT INTO SURVEY_SELECTED
+		VALUES (
+			SURVEY_SELECTED_SEQ.NEXTVAL,
+			#{surveyPrtcptSeq},
+			#{selectedAnswer},
+			#{surveyQstnSeq}
+		)
+	</insert>
 </mapper>

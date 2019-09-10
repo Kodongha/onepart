@@ -6,10 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<!-- ================== BEGIN BASE JS ================== -->
-	<!-- 제이쿼리 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<!-- ================== END BASE JS ================== -->
 </head>
 <body>
 <div id="header" class="header navbar navbar-default navbar-fixed-top">
@@ -36,7 +32,8 @@
 					</div>
 				</form>
 			</li>
-		<c:if test="${sessionScope.managerLoginUser != null }">
+
+			<c:if test="${sessionScope.loginUser != null }">
 			<li class="dropdown">
 				<a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle f-s-14">
 					<i class="fa fa-bell-o"></i>
@@ -96,11 +93,12 @@
                           </li>
 				</ul>
 			</li>
+			</c:if>
 			<li class="dropdown navbar-user">
-
-							<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+				<c:if test="${sessionScope.loginUser != null }">
+				<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
 					<img src="${contextPath}/resources/img/user-13.jpg" alt="" />
-					<span class="hidden-xs">${ sessionScope.managerLoginUser.managerNm}</span> <b class="caret"></b>
+					<span class="hidden-xs">${ sessionScope.loginUser.managerNm}</span> <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu animated fadeInLeft">
 					<li class="arrow"></li>
@@ -109,28 +107,25 @@
 					<li><a href="javascript:;">Calendar</a></li>
 					<li><a href="javascript:;">Setting</a></li>
 					<li class="divider"></li>
-					<li><a href="${contextPath }/managerLogout">Log Out</a></li>
+					<li><a href="${contextPath }/logout">Log Out</a></li>
+
 				</ul>
+				</c:if>
+
+
+
 			</li>
-		</c:if>
-			<c:if test="${sessionScope.managerLoginUser == null }">
+			<c:if test="${sessionScope.loginUser == null }">
 				<span style="height: 100%;">
-					<button type="button" onclick="location.href='${contextPath}/moveManagerAccount'" class="btn btn-success m-r-5 m-b-5" style="margin-top: 3%;">Log In</button>
+					<button type="button" onclick="location.href='${contextPath}/moveAccount'" class="btn btn-success m-r-5 m-b-5" style="margin-top: 3%;">Log In</button>
+					<button type="button" onclick="location.href='${contextPath}/moveRegister'" class="btn btn-success m-r-5 m-b-5" style="margin-top: 3%;">회원가입</button>
 				</span>
 			</c:if>
 		</ul>
+
 		<!-- end header navigation right -->
 	</div>
 	<!-- end container-fluid -->
 </div>
-<script type="text/javascript">
-$(document).ready(function() {
-
-	var managerLoginUser = '<c:out value="${managerLoginUser}"/>';
-	console.log("managerLoginUser : " + managerLoginUser);
-
-});
-</script>
-
 </body>
 </html>

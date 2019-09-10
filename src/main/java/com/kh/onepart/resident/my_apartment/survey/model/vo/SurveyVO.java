@@ -19,4 +19,6 @@ public class SurveyVO {
 	private String surveyPeriod;
 	private Date surveyEnrollDt;
 	private String surveyDelTf;
+	private int residentSeq;
+	private boolean prtcptTf;
 }

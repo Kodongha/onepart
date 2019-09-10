@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.onepart.common.PageInfo;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyMainVO;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyPrtcpt;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveySelected;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstn;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstnOption;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyVO;
@@ -14,46 +17,19 @@ public interface ResidentSurveyDao {
 	/**
 	 * 설문조사 진행 중 카운트 - 설문조사 메인
 	 * @param sqlSession
+	 * @param residentSeq
 	 * @return
 	 */
-	int selectIngSurveyListCount(SqlSessionTemplate sqlSession);
+	int selectIngSurveyListCount(SqlSessionTemplate sqlSession, RequestSurveyMainVO requestSurveyMainVO);
 
 	/**
 	 * 설문조사 진행 중 리스트 - 설문조사 메인
 	 * @param sqlSession
 	 * @param pi
+	 * @param residentSeq
 	 * @return
 	 */
-	ArrayList<SurveyVO> selectIngSurveyList(SqlSessionTemplate sqlSession, PageInfo pi);
-
-	/**
-	 * 설문조사 진행 예정 카운트 - 설문조사 메인
-	 * @param sqlSession
-	 * @return
-	 */
-	int expectedSurveyListCount(SqlSessionTemplate sqlSession);
-
-	/**
-	 * 설문조사 진행 예정 리스트 - 설문조사 메인
-	 * @param sqlSession
-	 * @param pi
-	 * @return
-	 */
-	ArrayList<SurveyVO> expectedSurveyList(SqlSessionTemplate sqlSession, PageInfo pi);
-
-	/**
-	 * 설문조사 종료 카운트 - 설문조사 메인
-	 * @param sqlSession
-	 * @return
-	 */
-	int finishSurveyListCount(SqlSessionTemplate sqlSession);
-
-	/**
-	 * 설문조사 종료 리스트 - 설문조사 메인
-	 * @param sqlSession
-	 * @return
-	 */
-	ArrayList<SurveyVO> finishSurveyList(SqlSessionTemplate sqlSession, PageInfo pi);
+	ArrayList<SurveyVO> selectIngSurveyList(SqlSessionTemplate sqlSession, RequestSurveyMainVO requestSurveyMainVO);
 
 	/**
 	 * 설문조사 기본 정보 가져오기
@@ -78,5 +54,19 @@ public interface ResidentSurveyDao {
 	 * @return
 	 */
 	ArrayList<SurveyQstnOption> selectsurveyQstnOptionList(SqlSessionTemplate sqlSession, ArrayList<SurveyQstn> surveyQstnList);
+
+	/**
+	 * 설문조사 참여 기본정보 삽입
+	 * @param requestSurveyPrtcpt
+	 * @return
+	 */
+	int insertSurveyPrtcpt(SqlSessionTemplate sqlSession, RequestSurveyPrtcpt requestSurveyPrtcpt);
+
+	/**
+	 * 설문조사 참여 답변정보 삽입
+	 * @param sqlSession
+	 * @param requestSurveySelected
+	 */
+	void insertsurveySelected(SqlSessionTemplate sqlSession, RequestSurveySelected requestSurveySelected);
 
 }

@@ -233,8 +233,8 @@ public class AccountController {
 
 		try {
 			ManagerVO managerLoginUser = accountService.managerLoginCheck(requestManagerVO);
-			model.addAttribute("managerLoginUser", managerLoginUser);
-			System.out.println("managerLoginUser ::C:: " + managerLoginUser);
+			model.addAttribute("loginUser", managerLoginUser);
+			System.out.println("loginUser ::C:: " + managerLoginUser);
 			return "redirect:manager/main";
 		} catch (ManagerLoginException e) {
 			model.addAttribute("msg", e.getMessage());
