@@ -33,5 +33,10 @@ public interface FacliltyService {
 	ArrayList selectOneReservationImages(int facSeq);
 	//해당 시설물의 이미지 수정하는 메소드
 	int updateFacilityGeneralImage(Reservation reserv, ArrayList<Image> imgSecondArr, ArrayList<Image> imgFirstArr, String[] resultFile);
+	//해당 시설물 수정하는 메소드 (좌석)
+	int updateFacilitySeat(Reservation reserv);
+	//해당 시설물의 이미지 수정하는 메소드 (좌석)
+	int updateFacilitySeatImage(Reservation reserv, ArrayList<Image> imgSecondArr, ArrayList<Image> imgFirstArr,
+			String[] resultFile);
 
 }

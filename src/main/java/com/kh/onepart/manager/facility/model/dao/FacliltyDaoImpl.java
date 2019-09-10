@@ -151,5 +151,13 @@ public class FacliltyDaoImpl implements FacliltyDao{
 
 		return result;
 	}
+	//해당 시설물 수정하는 메소드 (좌석)
+	@Override
+	public int updateFacilitySeat(SqlSessionTemplate sqlSession, Reservation reserv) {
+
+		int result = sqlSession.update("faclilty.updateFacilitySeat", reserv);
+
+		return result;
+	}
 
 }

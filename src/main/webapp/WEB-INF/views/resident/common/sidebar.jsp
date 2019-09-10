@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,6 +89,7 @@
 					    <li><a id="menuAuthorization">권한 부여</a></li>
 					</ul>
 				</li>
+				<%-- <c:if test="${ loginUser != null && (loginUser.aptAuthCd == 5 || loginUser.aptAuthCd == 6) }"> --%>
 				<li class="has-sub">
 				    <a href="javascript:;">
 				        <b class="caret pull-right"></b>
@@ -98,7 +100,7 @@
 						<li><a id="menuSuperintendVote">선거관리</a></li>
 				    </ul>
 				</li>
-
+				<%-- </c:if> --%>
 		        <!-- begin sidebar minify button -->
 				<li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
 		        <!-- end sidebar minify button -->

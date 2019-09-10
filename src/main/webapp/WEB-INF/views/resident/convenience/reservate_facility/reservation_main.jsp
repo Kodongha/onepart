@@ -139,8 +139,16 @@
 			type:"post",
 			dataType:"html",
 			data:{facRsrvSeq:facRsrvSeq, residentSeq:residentSeq},
-			success:function(result){
-				$("#content").html(result);
+			success:function(data){
+				$.ajax({
+					url:"/onepart/resident/menuReservateFacility",
+					type:"post",
+					dataType:"html",
+					success:function(result){
+						$("#content").html(result);
+
+					}
+				});
 
 			}
 		});

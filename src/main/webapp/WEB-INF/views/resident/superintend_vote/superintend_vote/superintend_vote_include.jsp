@@ -10,9 +10,9 @@
 <!-- 화면 ajax처리 script -->
 <script type="text/javascript">
 $(document).ready(function() {
-	
+
 	/* 후보등록기간 메인페이지 */
-	$("#votingCandidate").data("menu-url", "/onepart/resident/votingCandidate");	
+	$("#votingCandidate").data("menu-url", "/onepart/resident/votingCandidate");
 	/* 후보등록 요청 */
 	$("#candidateRegistration").data("menu-url", "/onepart/resident/candidateRegistration");
 	/* 메세지 전송 */
@@ -33,7 +33,7 @@ $(document).ready(function() {
 	$("#endingGeneral").data("menu-url", "/onepart/resident/endingGeneral");
 	/* 후보등록 신청서 상세보기 */
 	$("#candApplyDetail").data("menu-url", "/onepart/resident/candApplyDetail");
-	
+
 	/* 후보등록기간 메인페이지 */
 	$("#votingCandidate").click(function(){
 		var voteUrl = $(this).data("menu-url");
@@ -158,9 +158,15 @@ $(document).ready(function() {
 });
 </script>
 <!-- 타이틀 -->
-<div style="width:95%; margin:0 auto">
-	<h2>선거관리 위원회</h2>
-	<br><br><br>
+<div style="width:85%; margin:0 auto">
+	<br>
+	<table style="width:100%; margin-bottom:-10px;">
+		<tr>
+			<td><h2>선거관리 위원회</h2></td>
+		</tr>
+	</table>
+	<hr>
+	<br><br>
 </div>
 </body>
 </html>

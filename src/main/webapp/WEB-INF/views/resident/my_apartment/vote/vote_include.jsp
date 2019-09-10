@@ -10,7 +10,7 @@
 <!-- 화면 ajax처리 script -->
 <script type="text/javascript">
 $(document).ready(function() {
-	
+
 	/* 후보신청서 제출 */
 	$("#candidateApply").data("menu-url", "/onepart/resident/candidateApply");
 	/* 선거 상세보기 */
@@ -35,7 +35,7 @@ $(document).ready(function() {
 	$("#modyfyGeneralOk").data("menu-url", "/onepart/resident/general");
 	/* 투표내역 수정하기 */
 	$("#modifyGeneral").data("menu-url", "/onepart/resident/modifyGeneral");
-	
+
 	/* 후보신청서 제출 */
 	$("#candidateApply").click(function(){
 		var voteUrl = $(this).data("menu-url");
@@ -102,7 +102,7 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+
 	/* 후보신청서 제출 취소 */
 	$("#cancelCandidate").click(function(){
 		var voteUrl = $(this).data("menu-url");
@@ -172,7 +172,7 @@ $(document).ready(function() {
 });
 </script>
 <!-- 타이틀 -->
-<div style="width:95%; margin:0 auto">
+<div style="width:85%; margin:0 auto">
 	<h2>우리아파트 투표</h2>
 	<table style="width:100%">
 		<tr>
@@ -180,6 +180,7 @@ $(document).ready(function() {
 			<td style="width:20%"><a class="btn btn-white" style="width: 100%" id="candidateApply">후보 신청서 제출</a></td>
 		</tr>
 	</table>
+	<hr>
 	<br><br><br>
 </div>
 </body>
