@@ -76,7 +76,7 @@
                             <c:forEach var="list" items="${ list }">
                             	<li>
                             		<div class="result-image" style="width:20%">
-                                    	<a href="javascript:;"><img src="${ contextPath }/resources/uploadFiles/reservation/${ list.changeNm }" alt="" /></a>
+                                    	<a href="javascript:;"><img src="${ contextPath }/resources/uploadFiles/reservation/${ list.changeNm }" alt="" style="width:100%; height:213px"/></a>
 	                                </div>
 	                                <div class="result-info" style="width:65%">
 	                                	<br>
@@ -95,11 +95,11 @@
 	                                <div class="result-price" align="center">
 	                                	<c:if test="${ list.facType == 2}">
 	                                    <a onclick="modifyGeneral(${list.facSeq});" class="btn btn-inverse btn-block" style="margin:0 auto; margin-top:85%">수정</a>
-	                                    <a onclick="deleteGeneral(${list.facSeq});" class="btn btn-inverse btn-block" style="margin:0 auto; margin-top:10%">삭제</a>
+	                                    <a href="#modal-dialog" data-toggle="modal" onclick="deleteReservationFac(${list.facSeq});" class="btn btn-inverse btn-block" style="margin:0 auto; margin-top:10%">삭제</a>
 	                                    </c:if>
 	                                    <c:if test="${ list.facType == 1}">
 	                                    <a onclick="modifySeat(${list.facSeq});" class="btn btn-inverse btn-block" style="margin:0 auto; margin-top:85%">수정</a>
-	                                    <a onclick="deleteSeat(${list.facSeq});" class="btn btn-inverse btn-block" style="margin:0 auto; margin-top:10%">삭제</a>
+	                                    <a href="#modal-dialog" data-toggle="modal" onclick="deleteReservationFac(${list.facSeq});" class="btn btn-inverse btn-block" style="margin:0 auto; margin-top:10%">삭제</a>
 	                                    </c:if>
 	                                </div>
                             	</li>
@@ -109,7 +109,28 @@
 				</div>
 			</div>
 </div>
+<!-- 시설물 삭제 modal -->
+<div class="modal fade" id="modal-dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">시설물 삭제하기</h4>
+			</div>
+			<div class="modal-body">
+				해당 시설물을 삭제처리 하시겠습니까? <br>
+				삭제완료 후에는 복구가 불가능 하며, 재등록을 진행하셔야 합니다.
+			</div>
+			<div class="modal-footer">
+				<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">닫기</a>
+				<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal" onclick="deleteFac();">시설물삭제</a>
+			</div>
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
+	var deletefacSeq;
+	/* 일반시설물 수정 function */
 	function modifyGeneral(facSeq) {
 		$.ajax({
 			url:"/onepart/manager/facility_modify_general",
@@ -120,27 +141,7 @@
 			}
 		});
 	}
-
-	function deleteGeneral(facSeq) {
-
-		if(confirm("해당 시설물을 삭제처리 하시겠습니까?")){
-			$.ajax({
-				url:"/onepart/manager/facility_delete_general",
-				dataType:"html",
-				data:{facSeq:facSeq},
-				success:function(result){
-					$.ajax({
-	        			url:"/onepart/manager/menuFacility",
-	        			dataType:"html",
-	        			success:function(result){
-	        				$("#content").html(result);
-	        			}
-	        		});
-				}
-			});
-		}
-	}
-
+	/* 좌석시설물 수정 fucntion */
 	function modifySeat(facSeq) {
 		$.ajax({
 			url:"/onepart/manager/facility_modify_seat",
@@ -151,25 +152,33 @@
 			}
 		});
 	}
-
-	function deleteSeat(facSeq) {
-
-		if(confirm("해당 시설물을 삭제처리 하시겠습니까?")){
-			$.ajax({
-				url:"/onepart/manager/facility_delete_seat",
-				dataType:"html",
-				data:{facSeq:facSeq},
-				success:function(result){
-					$.ajax({
-	        			url:"/onepart/manager/menuFacility",
-	        			dataType:"html",
-	        			success:function(result){
-	        				$("#content").html(result);
-	        			}
-	        		});
-				}
-			});
-		}
+	/* 시설물 삭제 fucntion */
+	function deleteReservationFac(facSeq) {
+		deletefacSeq = facSeq;
+		console.log(deletefacSeq);
+	}
+	/* 시설물 삭제완료 function */
+	function deleteFac() {
+		$.ajax({
+			url:"/onepart/manager/facility_delete_general",
+			dataType:"html",
+			data:{facSeq:deletefacSeq},
+			success:function(result){
+				$.ajax({
+        			url:"/onepart/manager/menuFacility",
+        			dataType:"html",
+        			success:function(result){
+        				$.ajax({
+		        			url:"/onepart/manager/menuFacility",
+		        			dataType:"html",
+		        			success:function(result){
+		        				$("#content").html(result);
+		        			}
+		        		});
+        			}
+        		});
+			}
+		});
 	}
 </script>
 </body>

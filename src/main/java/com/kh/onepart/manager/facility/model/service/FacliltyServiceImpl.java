@@ -145,5 +145,43 @@ public class FacliltyServiceImpl implements FacliltyService{
 		return rs;
 
 	}
+	//해당 시설물 사진 리스트 불러오는 메소드
+	@Override
+	public ArrayList selectOneReservationImages(int facSeq) {
+
+		ArrayList rsImage = fd.selectOneReservationImages(sqlSession, facSeq);
+
+		return rsImage;
+	}
+	//해당 시설물의 이미지 수정하는 메소드
+	@Override
+	public int updateFacilityGeneralImage(Reservation reserv, ArrayList<Image> imgSecondArr,
+			ArrayList<Image> imgFirstArr, String[] resultFile) {
+		//메인사진 수정하는 메소드
+		int result = 0;
+		if(imgFirstArr.size() != 0) {
+			Reservation firstRs = new Reservation();
+			firstRs.setFacSeq(reserv.getFacSeq());
+			firstRs.setChangeNm(imgFirstArr.get(0).getChangeNm());
+			firstRs.setOriginNm(imgFirstArr.get(0).getOriginNm());
+			firstRs.setFilePath(imgFirstArr.get(0).getFilePath());
+			result = fd.updateFacliltyGeneralFirstImage(sqlSession, firstRs);
+		}
+
+		//서브사진 수정하는  메소드
+		if(resultFile != null) {
+			for(int i = 0; i < resultFile.length; i++) {
+				Reservation secondRs = new Reservation();
+				secondRs.setImageSeq(Integer.parseInt(resultFile[i]));
+				secondRs.setChangeNm(imgSecondArr.get(i).getChangeNm());
+				secondRs.setOriginNm(imgSecondArr.get(i).getOriginNm());
+				secondRs.setFilePath(imgSecondArr.get(i).getFilePath());
+				int result2 = fd.updateFacliltyGeneralSecondImage(sqlSession, secondRs);
+			}
+		}
+
+		return result;
+	}
+
 
 }

@@ -19,6 +19,7 @@
 		<result property="facCaution" column="FAC_CAUTION"/>
 		<result property="facType" column="FAC_TYPE"/>
 		<result property="facDelTf" column="FAC_DEL_TF"/>
+		<result property="imageSeq" column="IMAGE_SEQ"/>
 		<result property="fileType" column="FILE_TYPE"/>
 		<result property="originNm" column="ORIGIN_NM"/>
 		<result property="changeNm" column="CHANGE_NM"/>
@@ -139,6 +140,15 @@
 		AND I.IMG_TYPE = 1
 	</select>
 
+	<select id="selectOneSeatReservation" resultMap="manager_reservationReseultSet" parameterType="_int">
+		SELECT *
+		FROM FAC F
+		JOIN IMAGE I ON (F.FAC_SEQ = I.FAC_SEQ)
+		WHERE F.FAC_DEL_TF = 'N'
+		AND F.FAC_SEQ = #{facSeq}
+		AND I.IMG_TYPE = 1
+	</select>
+
 	<update id="updateFacilityGeneral" parameterType="manager_reservation">
 		UPDATE FAC
 		SET FAC_NM = #{facNm}, FAC_POSITION = #{facPosition}, FAC_AVAIL_WEEK_OF_DAY = #{facAvailWeekOfDay}, FAC_AVAIL_TM = #{facAvailTm},
@@ -157,5 +167,33 @@
 		INSERT INTO FAC_SEAT
 		VALUES (FAC_SEAT_SEQ.NEXTVAL, #{facSeatNum}, #{facSeq}, #{facPositionNum}, #{facSeatMaxNum})
 	</insert>
+
+	<select id="selectOneReservationImages" parameterType="_int" resultMap="manager_reservationReseultSet">
+		SELECT *
+		FROM FAC F
+		JOIN IMAGE I ON (F.FAC_SEQ = I.FAC_SEQ)
+		WHERE F.FAC_DEL_TF = 'N'
+		AND F.FAC_SEQ = #{facSeq}
+		AND I.IMG_TYPE = 2
+		ORDER BY IMAGE_SEQ
+	</select>
+
+	<update id="updateFacliltyGeneralFirstImage" parameterType="manager_reservation">
+		UPDATE IMAGE
+		SET    ORIGIN_NM = #{originNm},
+		       CHANGE_NM = #{changeNm},
+		       FILE_PATH = #{filePath}
+		WHERE  FILE_TYPE = 1
+		AND    FAC_SEQ = #{facSeq}
+		AND    IMG_TYPE = 1
+	</update>
+
+	<update id="updateFacliltyGeneralSecondImage" parameterType="manager_reservation">
+		UPDATE IMAGE
+		SET    ORIGIN_NM = #{originNm},
+		       CHANGE_NM = #{changeNm},
+		       FILE_PATH = #{filePath}
+		WHERE  IMAGE_SEQ = #{imageSeq}
+	</update>
 
 </mapper>

@@ -127,5 +127,29 @@ public class FacliltyDaoImpl implements FacliltyDao{
 
 		return rs;
 	}
+	//해당 시설물 사진 리스트 불러오는 메소드
+	@Override
+	public ArrayList selectOneReservationImages(SqlSessionTemplate sqlSession, int facSeq) {
+
+		ArrayList rsImage = (ArrayList) sqlSession.selectList("faclilty.selectOneReservationImages", facSeq);
+
+		return rsImage;
+	}
+	//메인사진 수정하는 메소드
+	@Override
+	public int updateFacliltyGeneralFirstImage(SqlSessionTemplate sqlSession, Reservation firstRs) {
+
+		int result = sqlSession.update("faclilty.updateFacliltyGeneralFirstImage", firstRs);
+
+		return result;
+	}
+	//서브사진 수정하는  메소드
+	@Override
+	public int updateFacliltyGeneralSecondImage(SqlSessionTemplate sqlSession, Reservation secondRs) {
+
+		int result = sqlSession.update("faclilty.updateFacliltyGeneralSecondImage", secondRs);
+
+		return result;
+	}
 
 }

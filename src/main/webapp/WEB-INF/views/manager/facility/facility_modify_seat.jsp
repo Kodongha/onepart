@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,218 +9,326 @@
 </head>
 <body>
 <jsp:include page="../facility/facility_include.jsp"></jsp:include>
-<div style="width:95%; margin:0 auto">
-			<!-- 전체 div -->
-			<div>
-				<!-- 새 시설물 등록 (좌석) div -->
-				<div>
-					<h4>새 시설물 등록 (좌석)</h4>
-					<hr>
-					<div align="center">
-						<table style="width:80%">
-							<tr>
-								<td style="font-weight:bold; width:20%; font-size:1.2em">시설명</td>
-								<td><input type="text" class="form-control" placeholder="Default input"></td>
-							</tr>
-							<tr>
-								<td style="height:10px"></td>
-							</tr>
-							<tr>
-								<td style="font-weight:bold; font-size:1.2em">위치</td>
-								<td><input type="text" class="form-control" placeholder="Default input"></td>
-							</tr>
-							<tr>
-								<td style="height:10px"></td>
-							</tr>
-							<tr>
-								<td style="font-weight:bold; font-size:1.2em">이용시간</td>
-								<td><input type="text" class="form-control" placeholder="Default input"></td>
-							</tr>
-							<tr>
-								<td style="height:10px"></td>
-							</tr>
-							<tr>
-								<td style="font-weight:bold; font-size:1.2em">이용료</td>
-								<td><input type="text" class="form-control" placeholder="Default input"></td>
-							</tr>
-							<tr>
-								<td style="height:10px"></td>
-							</tr>
-							<tr>
-								<td style="font-weight:bold; font-size:1.2em">수용인원</td>
-								<td><input type="text" class="form-control" placeholder="Default input"></td>
-							</tr>
-							<tr>
-								<td style="height:10px"></td>
-							</tr>
-							<tr>
-								<td style="font-weight:bold; font-size:1.2em">면적</td>
-								<td><input type="text" class="form-control" placeholder="Default input"></td>
-							</tr>
-							<tr>
-								<td style="height:15px"></td>
-							</tr>
-							<tr>
-								<td colspan="2" style="font-weight:bold; font-size:1.2em">상세정보</td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<textarea class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;"></textarea>
-								</td>
-							</tr>
-							<tr>
-								<td style="height:15px"></td>
-							</tr>
-							<tr>
-								<td colspan="2" style="font-weight:bold; font-size:1.2em">예약안내</td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<textarea class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;"></textarea>
-								</td>
-							</tr>
-							<tr>
-								<td style="height:15px"></td>
-							</tr>
-							<tr>
-								<td colspan="2" style="font-weight:bold; font-size:1.2em">이용안내</td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<textarea class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;"></textarea>
-								</td>
-							</tr>
-							<tr>
-								<td style="height:15px"></td>
-							</tr>
-						</table>
-						<!-- 사진첨부 div -->
-						<table style="width:80%">
-							<tr>
-								<td colspan="2" style="font-weight:bold; font-size:1.2em">시설 사진 등록</td>
-							</tr>
-							<tr id="plusImageArea">
-								<td><input type="file"></td>
-								<td style="width:5%"><button type="button" class="btn btn-success m-r-5 m-b-5" onclick="plusImage();" id="plusBtn">+</button></td>
-							</tr>
-							<tr>
-								<td style="height:20px"></td>
-							</tr>
-							<tr>
-								<td colspan="2" style="font-weight:bold; font-size:1.2em">QR코드 사진 등록</td>
-							</tr>
-							<tr>
-								<td style="height:5px"></td>
-							</tr>
-							<tr>
-								<td><input type="file"></td>
-								<td style="width:5%"></td>
-							</tr>
-						</table>
-						<br>
-						<!-- 좌석등록 div -->
-						<table style="width:80%">
-							<tr>
-								<td style="height:20px" colspan="3"></td>
-							</tr>
-							<tr>
-								<td colspan="3" style="font-weight:bold; font-size:1.2em">좌석 정보 입력</td>
-							</tr>
-							<tr>
-								<td style="width:70%"><input type="text" class="form-control" placeholder="Default input" style="width:100%;" id="createSeatInput"></td>
-								<td style="font-size:blod;">&nbsp;개&nbsp;&nbsp;</td>
-								<td style="width:25%"><button type="button" class="btn btn-success m-r-5 m-b-5" onclick="createSeat();" style="width:100%">생성</button></td>
-							</tr>
-							<tr>
-								<td style="height:15px"></td>
-							</tr>
-							<tr>
-								<!-- 좌석생성 테이블 div -->
-								<td colspan="2" id="seatArea">
-
-								</td>
-								<td>
-									원하는 위치를 클릭하여 <br>
-									좌석을 생성하세요! <br>
-									클릭 순서로 좌석번호가  <br>
-									부여되며 재클릭시 해제됩니다.
-								</td>
-							</tr>
-						</table>
-					</div>
-					<br><br>
-					<!-- 등록 버튼 div -->
-					<!-- 좌석생성 table 추가 script -->
-					<script type="text/javascript">
-						function createSeat() {
-							var createSeat = $("#createSeatInput").val();
-							var num = 1;
-							var resultNum = 1;
-							$("#seatArea table").remove();
-							console.log(createSeat);
-							var $table = $("<table border='1' style='width:500px; height:500px; text-align:center;'>");
-							for(var i = 0; i < createSeat; i++){
-								console.log("tr생성");
-								var $tr = $("<tr id='seatTr'>");
-								for(var j = 0; j < createSeat; j++){
-									var $td = $("<td id='seatTd'>");
-									var $p = $("<p>");
-									$p.append(num)
-									$td.append($p);
-									$tr.append($td);
-									num++;
-								}
-								$table.append($tr);
-							}
-							$("#seatArea").append($table);
-
-							$("#seatTr #seatTd").click(function(){
-								var number = $(this).text();
-								console.log(number);
-								$(this).children().remove();
-								var $p = $("<p style='font-weight:bold;'>");
-								$p.append(resultNum);
-								$(this).css("background", "#00acac").append($p);
-								resultNum++;
-							});
-						}
-					</script>
-					<!-- 첨부파일 추가 input 추가 script -->
-					<script type="text/javascript">
-						var result = 0;
-
-						function plusImage() {
-
-							result++;
-							console.log(result);
-							var plusImageArea = $("#plusImageArea");
-							var inputImage = $("<input type='file'>");
-							var inputTr = $("<tr>");
-							var inputTd = $("<td>")
-							inputTd.append(inputImage);
-							inputTr.append(inputTd)
-							plusImageArea.after(inputTr);
-							plusImageArea.after("<br>");
-
-							if(result == '5'){
-								console.log("aa");
-								$("#plusBtn").prop("disabled", true);
-							}
-
-						}
-					</script>
-					<!-- 예약처리 버튼 div -->
-	                <div>
-	                	<table style="width:80%; margin:0 auto;">
-							<tr>
-								<td><a href="admin_Reservation.me" class="btn btn-white" style="width:100%">수정</a></td>
-								<td style="width:10%"></td>
-								<td><a href="admin_Reservation.me" class="btn btn-white" style="width:100%">취소</a></td>
-							</tr>
-						</table>
-	                </div>
-				</div>
+<div style="width:85%; margin:0 auto">
+	<!-- 전체 div -->
+	<div>
+		<!-- 새 시설물 등록 (좌석) div -->
+		<div>
+		<form action="" method="post" enctype="multipart/form-data" id="fileUploadForm">
+			<h4>시설물 수정 (좌석)</h4>
+			<div align="center" style="background:white">
+				<br><br>
+				<table style="width:80%">
+					<tr>
+						<td style="font-weight:bold; width:20%; font-size:1.2em">시설명</td>
+						<td colspan="3"><input type="text" class="form-control" placeholder="Default input" value="${ rs.facNm }"></td>
+					</tr>
+					<tr>
+						<td style="height:10px"></td>
+					</tr>
+					<tr>
+						<td style="font-weight:bold; font-size:1.2em">위치</td>
+						<td colspan="3"><input type="text" class="form-control" placeholder="Default input" value="${ rs.facPosition }"></td>
+					</tr>
+					<tr>
+						<td style="height:10px"></td>
+					</tr>
+					<tr>
+						<td style="font-weight:bold; font-size:1.2em">이용시간 (${ rs.facAvailTm })</td>
+						<td>
+							<select class="form-control input-sm" id="facAvailTmStart">
+                                 	<option>09:00</option>
+                                 	<option>10:00</option>
+                                 	<option>11:00</option>
+                                 	<option>12:00</option>
+                                 	<option>13:00</option>
+                                 	<option>14:00</option>
+                                 	<option>15:00</option>
+                                 	<option>16:00</option>
+                                 	<option>17:00</option>
+                                 	<option>18:00</option>
+                                 	<option>19:00</option>
+                                 	<option>20:00</option>
+                                 	<option>21:00</option>
+                              		<option>22:00</option>
+                          		</select>
+						</td>
+						<td style="text-align:center">~ </td>
+						<td>
+							<select class="form-control input-sm" id="facAvailTmEnd">
+                                 	<option>10:00</option>
+                                 	<option>11:00</option>
+                                 	<option>12:00</option>
+                                 	<option>13:00</option>
+                                 	<option>14:00</option>
+                                 	<option>15:00</option>
+                                 	<option>16:00</option>
+                                 	<option>17:00</option>
+                                 	<option>18:00</option>
+                                 	<option>19:00</option>
+                                 	<option>20:00</option>
+                                 	<option>21:00</option>
+                              		<option>22:00</option>
+                              		<option>23:00</option>
+                          		</select>
+                          		<input type="text" id="facAvailTm" name="facAvailTm">
+						</td>
+					</tr>
+					<tr>
+						<td style="height:10px"></td>
+					</tr>
+					<tr>
+						<td style="font-weight:bold; font-size:1.2em">이용료</td>
+						<td colspan="3"><input type="text" class="form-control" placeholder="Default input" value="${ rs.facDefaultFee }"></td>
+					</tr>
+					<tr>
+						<td style="height:10px"></td>
+					</tr>
+					<tr>
+						<td style="font-weight:bold; font-size:1.2em">수용인원</td>
+						<td colspan="3"><input type="text" class="form-control" placeholder="Default input" value="${ rs.facMaxHead }"></td>
+					</tr>
+					<tr>
+						<td style="height:10px"></td>
+					</tr>
+					<tr>
+						<td style="font-weight:bold; font-size:1.2em">면적</td>
+						<td colspan="3"><input type="text" class="form-control" placeholder="Default input" value="${ rs.facSquareMeasure }"></td>
+					</tr>
+					<tr>
+						<td style="height:15px"></td>
+					</tr>
+					<tr>
+						<td colspan="2" style="font-weight:bold; font-size:1.2em">상세정보</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<textarea class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;">${ rs.facDetailInfo }</textarea>
+						</td>
+					</tr>
+					<tr>
+						<td style="height:15px"></td>
+					</tr>
+					<tr>
+						<td colspan="4" style="font-weight:bold; font-size:1.2em">예약안내</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<textarea class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;">${ rs.facRsrvInfo }</textarea>
+						</td>
+					</tr>
+					<tr>
+						<td style="height:15px"></td>
+					</tr>
+					<tr>
+						<td colspan="4" style="font-weight:bold; font-size:1.2em">이용안내</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<textarea class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;">${ rs.facUseInfo }</textarea>
+						</td>
+					</tr>
+					<tr>
+						<td style="height:15px"></td>
+					</tr>
+					<tr>
+						<td colspan="4" style="font-weight:bold; font-size:1.2em">사진등록</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<table style="width:100%">
+								<tr>
+									<td colspan="2">
+										<small style="font-weight:bold;">메인사진</small>
+									</td>
+								</tr>
+								<tr>
+									<td style="width:18%;">
+										<table style="width:100%;">
+											<tr>
+												<td style="width:100%; height:200px" id="changeFirstImgTd">
+													<img alt="" src="${ contextPath }/resources/uploadFiles/reservation/${ rs.changeNm }" style="width:100%; height:100%">
+													<c:set var="fileId" value="fileImg_${ rs.imageSeq }"></c:set>
+													<input type="file" id="${ fileId }" class="fileImg" name="mainfiles" onchange="loadImg(this)">
+												</td>
+											</tr>
+											<tr>
+												<td style="height:5px"></td>
+											</tr>
+											<tr>
+												<td><a class="btn btn-default" style="width:100%" id="changeFirstImg">수정</a></td>
+											</tr>
+										</table>
+									</td>
+									<td></td>
+								</tr>
+							</table>
+							<br>
+							<table style="width:100%">
+								<tr>
+									<td colspan="2">
+										<small style="font-weight:bold;">서브사진</small>
+									</td>
+								</tr>
+								<tr>
+									<td style="width:100%;">
+										<table style="width:100%;">
+											<tr id="changeSecondImgTr">
+												<c:forEach var="rsImage" items="${ rsImage }">
+													<td style="width:18%; height:200px" id="changeSecondImgTd">
+														<img src="${ contextPath }/resources/uploadFiles/reservation/${ rsImage.changeNm }" style="width:100%; height:100%">
+														<c:set var="fileId" value="fileImg_${ rsImage.imageSeq }"></c:set>
+														<input type="file" id="${ fileId }" class="fileImg" name="files" onchange="loadImg2(this)">
+													</td>
+													<td style="width:3%"></td>
+												</c:forEach>
+													<td></td>
+											</tr>
+											<tr>
+												<c:forEach var="rsImage" items="${ rsImage }">
+													<td style="height:5px"></td>
+													<td style="width:3%"></td>
+												</c:forEach>
+													<td></td>
+											</tr>
+											<tr>
+												<c:forEach var="rsImage" items="${ rsImage }">
+													<td><a class="btn btn-default" style="width:100%" onclick="changeSecondImg(${ rsImage.imageSeq })">수정</a></td>
+													<td style="width:3%"></td>
+												</c:forEach>
+													<td></td>
+											</tr>
+										</table>
+									</td>
+									<td>
+										<input type="hidden" id="resultImgArr" name="resultImgArr">
+									</td>
+								</tr>
+							</table>
+						</td>
+				</table>
+				<br><br><br><br>
+               	<table style="width:80%; margin:0 auto;">
+					<tr>
+						<td><a class="btn btn-success" style="width:100%" id="btnSubmit">수정</a></td>
+						<td style="width:5%"></td>
+						<td><a class="btn btn-danger" style="width:100%">취소</a></td>
+					</tr>
+				</table>
+				<br><br>
 			</div>
-			</div>
+			<br><br>
+            </form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var changeImgArr = new Array();
+	/* input tyle file hide() 시켜주는 fucntion */
+	$(function(){
+		$(".fileImg").each(function(){
+			$(this).hide();
+		});
+	});
+
+	/* 서브이미지중 수정 원하는 이미지만 수정하는 function */
+	function changeSecondImg(imageSeq) {
+		var resultId = "#fileImg_" + imageSeq;
+		$(resultId).click().change(function(){
+			console.log("서브이미지 변경");
+		});
+	}
+	function loadImg2(value) {
+        if(value.files && value.files[0]) {
+           var reader = new FileReader();
+
+           reader.onload = function(e) {
+				$(value).parent().children('img').attr("src", e.target.result);
+           }
+
+           reader.readAsDataURL(value.files[0]);
+           changeImgArr.push($(value).attr('id'));
+           $("#resultImgArr").val(changeImgArr);
+           console.log(changeImgArr);
+        }
+     }
+
+
+	/* 메인이미지 수정버튼 클릭 시 img 태그 변경 function */
+	$("#changeFirstImg").click(function(){
+		$("#changeFirstImgTd input[type=file]").click();
+	});
+	function loadImg(value) {
+        if(value.files && value.files[0]) {
+           var reader = new FileReader();
+
+           reader.onload = function(e) {
+				$(value).parent().children('img').attr("src", e.target.result);
+           }
+
+           reader.readAsDataURL(value.files[0]);
+           $("#resultImgArr").val(changeImgArr);
+           console.log(changeImgArr);
+        }
+     }
+
+$(function(){
+	$("#facAvailWeekOfDay").hide();
+	$("#facAvailTm").hide();
+
+	$(".fileImg").each(function(){
+		console.log("fileImg");
+		$(this).change(function(){
+
+		})
+	});
+
+
+	$("#btnSubmit").click(function (event) {
+        event.preventDefault();
+        var facAvailWeekOfDayStart = $("#facAvailWeekOfDayStart").val();
+		var facAvailWeekOfDayEnd = $("#facAvailWeekOfDayEnd").val();
+		var facAvailWeekOfDay = facAvailWeekOfDayStart + " ~ " + facAvailWeekOfDayEnd;
+		$("#facAvailWeekOfDay").val(facAvailWeekOfDay);
+		console.log($("#facAvailWeekOfDay").val())
+		var facAvailTmStart = $("#facAvailTmStart").val();
+		var facAvailTmEnd = $("#facAvailTmEnd").val();
+		var facAvailTm = facAvailTmStart + " ~ " + facAvailTmEnd;
+		$("#facAvailTm").val(facAvailTm);
+		console.log($("#facAvailTm").val())
+
+
+        var form = $('#fileUploadForm')[0];
+
+        var data = new FormData(form);
+
+        $("#btnSubmit").prop("disabled", true);
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/onepart/manager/update_facility_general",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+            	$.ajax({
+        			url:"/onepart/manager/menuFacility",
+        			dataType:"html",
+        			success:function(result){
+        				$("#content").html(result);
+        			}
+        		});
+            },
+            error: function (e) {
+
+            }
+        });
+
+    });
+});
+</script>
 </body>
 </html>

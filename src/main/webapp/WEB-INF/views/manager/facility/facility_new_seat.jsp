@@ -167,7 +167,13 @@
 						<br><br><br>
 						<table style="width:90%">
 							<tr>
-								<td colspan="2" style="font-weight:bold; font-size:1.2em">시설 사진 등록</td>
+								<td colspan="2" style="font-weight:bold; font-size:1.2em">시설 사진 등록
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<small>첫 사진이 메인사진으로 등록됩니다.</small>
+								</td>
 							</tr>
 							<tr id="plusImageArea">
 								<td style="width:80%" id="imgTd">
