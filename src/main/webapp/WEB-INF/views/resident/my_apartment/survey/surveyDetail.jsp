@@ -19,6 +19,14 @@
 		width: 50%;
 	}
 </style>
+<script type="text/javascript">
+	$(function(){
+		var '${}';
+
+		$('#modal-dialog').text();
+	});
+
+</script>
 </head>
 <body>
 
@@ -69,8 +77,6 @@
 							</tr>
 						</table>
 						<a href="#modal-dialog" class="btn btn-info btn-block" data-toggle="modal">[ 설문조사 참여하기 ]</a>
-
-
 					</div>
 				</div>
 			</div>

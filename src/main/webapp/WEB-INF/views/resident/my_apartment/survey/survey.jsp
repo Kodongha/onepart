@@ -48,8 +48,17 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 
+	$(function(){
+		/* 진행 중 리스트 가져오기 */
+		getIngSurveyList();
+		/* 진행 예정 리스트 가져오기 */
+		getexpectedSurveyList();
+		/* 종료 리스트 가져오기 */
+		getfinishSurveyList();
+	});
+
 	/* 상세보기 */
-	$(document).on('click','#ingSurveyList > tbody > tr', function(){
+	$(document).on('click','.surveyTable > tbody > tr', function(){
 		var surveySeq = $(this).children().eq(0).text();
 
 		$.ajax({
@@ -66,17 +75,7 @@
 		});
 	});
 
-	$(function(){
-		/* 진행 중 리스트 가져오기 */
-		getIngSurveyList();
-		/* 진행 예정 리스트 가져오기 */
-		getexpectedSurveyList();
-		/* 종료 리스트 가져오기 */
-		getfinishSurveyList();
 
-
-
-	});
 
 	/* 진행 중 리스트 가져오기 */
 	function getIngSurveyList(currentPage) {
@@ -85,6 +84,7 @@
 			url : 'selectIngSurvey',
 			type : 'post',
 			data : {currentPage:currentPage},
+			async: false,
 			dataType: 'json',
 			success : function(result){
 				console.log('selectIngSurvey succ');
@@ -98,13 +98,26 @@
 
 				/* 테이블 값 입력 */
 				for(var i in ingSurveyVOList){
-					$tr = $('<tr/>');
-					$surveySeqTd = $('<td/>', {text:ingSurveyVOList[i].surveySeq});
-					$surveyTitleTd = $('<td/>', {text:ingSurveyVOList[i].surveyTitle});
-					$surveyStatusTd = $('<td/>', {text:ingSurveyVOList[i].surveyStatus});
-					$surveyTypeTd = $('<td/>', {text:ingSurveyVOList[i].surveyType});
-					$prtcptTfTd = $('<td/>', {text:ingSurveyVOList[i].prtcptTf});
-					$surveyPeriodTd = $('<td/>', {text:ingSurveyVOList[i].surveyPeriod});
+					var $tr = $('<tr/>');
+					var $surveySeqTd = $('<td/>', {text:ingSurveyVOList[i].surveySeq});
+					var $surveyTitleTd = $('<td/>', {text:ingSurveyVOList[i].surveyTitle});
+					var $surveyStatusTd = $('<td/>', {text:'진행 중'});
+
+					var $surveyTypeTd;
+					if(ingSurveyVOList[i].surveyType == 1){
+						$surveyTypeTd = $('<td/>', {text:'일반 설문'});
+					} else if(ingSurveyVOList[i].surveyType == 2){
+						$surveyTypeTd = $('<td/>', {text:'세대별 설문'});
+					}
+
+					var $prtcptTfTd;
+					if(ingSurveyVOList[i].residentSeq == 0){
+						$prtcptTfTd = $('<td/>', {text:"미참여", style:"color:red;"});
+					} else {
+						$prtcptTfTd = $('<td/>', {text:"참여 완료"});
+					}
+
+					var $surveyPeriodTd = $('<td/>', {text:ingSurveyVOList[i].surveyPeriod});
 
 					$tr.append($surveySeqTd);
 					$tr.append($surveyTitleTd);
@@ -181,6 +194,7 @@
 			url : 'selectexpectedSurvey',
 			type : 'post',
 			data : {currentPage:currentPage},
+			async: false,
 			dataType: 'json',
 			success : function(result){
 				console.log('selectexpectedSurvey succ');
@@ -194,13 +208,25 @@
 
 				/* 테이블 값 입력 */
 				for(var i in expectedSurveyVOList){
-					$tr = $('<tr/>');
-					$surveySeqTd = $('<td/>', {text:expectedSurveyVOList[i].surveySeq});
-					$surveyTitleTd = $('<td/>', {text:expectedSurveyVOList[i].surveyTitle});
-					$surveyStatusTd = $('<td/>', {text:expectedSurveyVOList[i].surveyStatus});
-					$surveyTypeTd = $('<td/>', {text:expectedSurveyVOList[i].surveyType});
-					$prtcptTfTd = $('<td/>', {text:expectedSurveyVOList[i].prtcptTf});
-					$surveyPeriodTd = $('<td/>', {text:expectedSurveyVOList[i].surveyPeriod});
+					var $tr = $('<tr/>');
+					var $surveySeqTd = $('<td/>', {text:expectedSurveyVOList[i].surveySeq});
+					var $surveyTitleTd = $('<td/>', {text:expectedSurveyVOList[i].surveyTitle});
+					var $surveyStatusTd = $('<td/>', {text:'진행 예정'});
+					var $surveyTypeTd;
+					if(expectedSurveyVOList[i].surveyType == 1){
+						$surveyTypeTd = $('<td/>', {text:'일반 설문'});
+					} else if(expectedSurveyVOList[i].surveyType == 2){
+						$surveyTypeTd = $('<td/>', {text:'세대별 설문'});
+					}
+
+					var $prtcptTfTd;
+					if(expectedSurveyVOList[i].residentSeq == 0){
+						$prtcptTfTd = $('<td/>', {text:"미참여"});
+					} else {
+						$prtcptTfTd = $('<td/>', {text:"참여 완료"});
+					}
+
+					var $surveyPeriodTd = $('<td/>', {text:expectedSurveyVOList[i].surveyPeriod});
 
 					$tr.append($surveySeqTd);
 					$tr.append($surveyTitleTd);
@@ -278,6 +304,7 @@
 			url : 'selectfinishSurvey',
 			type : 'post',
 			data : {currentPage:currentPage},
+			async: false,
 			dataType: 'json',
 			success : function(result){
 				console.log('finishSurveyList succ');
@@ -291,13 +318,29 @@
 
 				/* 테이블 값 입력 */
 				for(var i in finishSurveyVOList){
-					$tr = $('<tr/>');
-					$surveySeqTd = $('<td/>', {text:finishSurveyVOList[i].surveySeq});
-					$surveyTitleTd = $('<td/>', {text:finishSurveyVOList[i].surveyTitle});
-					$surveyStatusTd = $('<td/>', {text:finishSurveyVOList[i].surveyStatus});
-					$surveyTypeTd = $('<td/>', {text:finishSurveyVOList[i].surveyType});
-					$prtcptTfTd = $('<td/>', {text:finishSurveyVOList[i].prtcptTf});
-					$surveyPeriodTd = $('<td/>', {text:finishSurveyVOList[i].surveyPeriod});
+					var $tr = $('<tr/>');
+					var $surveySeqTd = $('<td/>', {text:finishSurveyVOList[i].surveySeq});
+					var $surveyTitleTd = $('<td/>', {text:finishSurveyVOList[i].surveyTitle});
+
+					var $surveyStatusTd = $('<td/>', {text:'종료'});
+
+
+					var $surveyTypeTd;
+					if(finishSurveyVOList[i].surveyType == 1){
+						$surveyTypeTd = $('<td/>', {text:'일반 설문'});
+					} else if(finishSurveyVOList[i].surveyType == 2){
+						$surveyTypeTd = $('<td/>', {text:'세대별 설문'});
+					}
+
+
+					var $prtcptTfTd;
+					if(finishSurveyVOList[i].residentSeq == 0){
+						$prtcptTfTd = $('<td/>', {text:"미참여"});
+					} else {
+						$prtcptTfTd = $('<td/>', {text:"참여 완료"});
+					}
+
+					var $surveyPeriodTd = $('<td/>', {text:finishSurveyVOList[i].surveyPeriod});
 
 					$tr.append($surveySeqTd);
 					$tr.append($surveyTitleTd);
@@ -380,7 +423,7 @@
 	<div id="tableArea">
 		<span class="badge badge-inverse m-t-15 m-l-15" id="surveyStatus">진행 중</span>
 		<div class="panel-body">
-			<table class="table" id="ingSurveyList">
+			<table class="table surveyTable" id="ingSurveyList">
 				<thead>
 					<tr>
 						<th>번호</th>
@@ -404,7 +447,7 @@
 	<div id="tableArea">
 		<span class="badge badge-inverse m-t-15 m-l-15" id="surveyStatus">진행 예정</span>
 		<div class="panel-body">
-			<table class="table" id="expectedSurveyList">
+			<table class="table surveyTable" id="expectedSurveyList">
 				<thead>
 					<tr>
 						<th>번호</th>
@@ -428,7 +471,7 @@
 	<div id="tableArea">
 		<span class="badge badge-inverse m-t-15 m-l-15" id="surveyStatus">종료</span>
 		<div class="panel-body">
-			<table class="table" id="finishSurveyList">
+			<table class="table surveyTable" id="finishSurveyList">
 				<thead>
 					<tr>
 						<th>번호</th>
