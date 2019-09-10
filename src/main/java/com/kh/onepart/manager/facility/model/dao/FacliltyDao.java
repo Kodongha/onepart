@@ -38,5 +38,11 @@ public interface FacliltyDao {
 	int insertReservationSeatInfo(SqlSessionTemplate sqlSession, FacSeatInfo fsi);
 	//해당 좌석 시설물 리스트 불러오는 메소드
 	Reservation selectOneSeatReservation(SqlSessionTemplate sqlSession, int facSeq);
+	//해당 시설물 사진 리스트 불러오는 메소드
+	ArrayList selectOneReservationImages(SqlSessionTemplate sqlSession, int facSeq);
+	//메인사진 수정하는 메소드
+	int updateFacliltyGeneralFirstImage(SqlSessionTemplate sqlSession, Reservation firstRs);
+	//서브사진 수정하는  메소드
+	int updateFacliltyGeneralSecondImage(SqlSessionTemplate sqlSession, Reservation secondRs);
 
 }

@@ -29,5 +29,9 @@ public interface FacliltyService {
 	int insertReservationSeat(Reservation reserv, ArrayList<Image> imgArr, String[] seatResultArr);
 	//해당 좌석 시설물 리스트 불러오는 메소드
 	Reservation selectOneSeatReservation(int facSeq);
+	//해당 시설물 사진 리스트 불러오는 메소드
+	ArrayList selectOneReservationImages(int facSeq);
+	//해당 시설물의 이미지 수정하는 메소드
+	int updateFacilityGeneralImage(Reservation reserv, ArrayList<Image> imgSecondArr, ArrayList<Image> imgFirstArr, String[] resultFile);
 
 }

@@ -26,7 +26,7 @@ public class Reservation implements java.io.Serializable{
 	private String facCaution;
 	private int facType;
 	private String facDelTf;
-	private int attchSeq;
+	private int imageSeq;
 	private int fileType;
 	private String originNm;
 	private String changeNm;
@@ -36,5 +36,6 @@ public class Reservation implements java.io.Serializable{
 	private int openChatCommSeq;
 	private String seatArr;
 	private int seatMaxNum;
+	private String resultImgArr;
 
 }
