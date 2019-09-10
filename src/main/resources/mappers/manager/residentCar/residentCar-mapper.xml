@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ResidentCar">
+
+	<resultMap type="com.kh.onepart.manager.car_manage.model.vo.ResidentCarVO" id="ResidentCarVOResultSet">
+		<id property="residentSeq" column="RESIDENT_SEQ"/>
+		<result property="residentEnrollCar" column="RESIDENT_ENROLL_CAR"/>
+		<result property="residentNm" column="RESIDENT_NM"/>
+		<result property="carType" column="CAR_TYPE"/>
+		<result property="carNm" column="CAR_NM"/>
+		<result property="enrollPurpose" column="ENROLL_PURPOSE"/>
+		<result property="enrollDt" column="ENROLL_DT"/>
+		<result property="carNum" column="CAR_NUM"/>
+		<result property="bdNm" column="BD_NM"/>
+		<result property="rmNm" column="RM_NM"/>
+	</resultMap>
+
+	<select id="residentCarList" resultMap="ResidentCarVOResultSet">
+		SELECT BD_NM, RM_NM, CAR_NUM, ENROLL_PURPOSE, CAR_NM, CAR_TYPE, RESIDENT_NM
+		FROM RESIDENT_ENROLL_CAR REC
+        JOIN RESIDENT R ON(R.RESIDENT_SEQ = REC.RESIDENT_SEQ)
+        JOIN APT_DETAIL_INFO ADIS ON (R.APT_DETAIL_INFO_SEQ = ADIS.APT_DETAIL_INFO_SEQ)
+	</select>
+
+
+</mapper>
