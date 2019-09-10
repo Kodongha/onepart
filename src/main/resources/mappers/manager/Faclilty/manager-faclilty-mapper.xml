@@ -157,6 +157,14 @@
 		WHERE FAC_SEQ = #{facSeq}
 	</update>
 
+	<update id="updateFacilitySeat" parameterType="manager_reservation">
+		UPDATE FAC
+		SET FAC_NM = #{facNm}, FAC_POSITION = #{facPosition}, FAC_AVAIL_WEEK_OF_DAY = #{facAvailWeekOfDay}, FAC_AVAIL_TM = #{facAvailTm},
+			FAC_DEFAULT_FEE = #{facDefaultFee}, FAC_MAX_HEAD = #{facMaxHead}, FAC_SQUARE_MEASURE = #{facSquareMeasure}, FAC_DETAIL_INFO = #{facDetailInfo},
+			FAC_RSRV_INFO = #{facRsrvInfo}, FAC_USE_INFO = #{facUseInfo}
+		WHERE FAC_SEQ = #{facSeq}
+	</update>
+
 	<update id="deleteFacliltyGeneral" parameterType="_int">
 		UPDATE FAC
 		SET FAC_DEL_TF = 'Y'

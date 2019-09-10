@@ -271,26 +271,30 @@ public class FacilityController {
                 // 파일 중복명 처리
                 String genId = CommonUtils.getRandomString();
                 // 본래 파일명
-                String originalfileName = mf.get(i).getOriginalFilename();
+                String filePath = null;
+                String saveFileName = null;
+                if(!mf.get(i).isEmpty()) {
+                	String originalfileName = mf.get(i).getOriginalFilename();
 
-                System.out.println("originalfileName11 : " + originalfileName);
+                	System.out.println("originalfileName11 : " + originalfileName);
 
-                String saveFileName = genId + "." + originalfileName.substring(originalfileName.lastIndexOf("."));
-                // 저장되는 파일 이름
+                	saveFileName = genId + "." + originalfileName.substring(originalfileName.lastIndexOf("."));
+                	// 저장되는 파일 이름
 
-                String root = request.getSession().getServletContext().getRealPath("resources");
-        		String filePath = root + "\\uploadFiles\\reservation";
+                	String root = request.getSession().getServletContext().getRealPath("resources");
+                	filePath = root + "\\uploadFiles\\reservation";
 
-                // 저장 될 파일 경로
+                	// 저장 될 파일 경로
 
-                long fileSize = mf.get(i).getSize(); // 파일 사이즈
+                	long fileSize = mf.get(i).getSize(); // 파일 사이즈
 
-                Image img = new Image();
-                img.setOriginNm(originalfileName);
-                img.setChangeNm(saveFileName);
-                img.setFilePath(filePath);
+                	Image img = new Image();
+                	img.setOriginNm(originalfileName);
+                	img.setChangeNm(saveFileName);
+                	img.setFilePath(filePath);
 
-                imgSecondArr.add(img);
+                	imgSecondArr.add(img);
+                }
 
                 try {
 					mf.get(i).transferTo(new File(filePath + "\\" + saveFileName));
@@ -357,6 +361,128 @@ public class FacilityController {
 		int result = fs.updateFacilityGeneral(reserv);
 		//해당 시설물의 이미지 수정하는 메소드
 		int result2 = fs.updateFacilityGeneralImage(reserv, imgSecondArr, imgFirstArr, resultFile);
+
+		mv.setViewName("jsonView");
+
+		return mv;
+	}
+
+	@RequestMapping("/manager/update_facility_seat")
+	public ModelAndView update_facility_seat(MultipartHttpServletRequest req, ModelAndView mv, Reservation reserv, HttpServletRequest request) {
+		System.out.println("/menuFacility");
+		System.out.println("전송객체 : " + reserv);
+
+		List<MultipartFile> mf = req.getFiles("files");
+		List<MultipartFile> mf2 = req.getFiles("mainfiles");
+
+
+		System.out.println("mf 사이즈 : " + mf.size());
+		for(int i = 0; i < mf.size(); i++) {
+			System.out.println(mf.get(i).getOriginalFilename());
+		}
+		for(int i = 0; i < mf2.size(); i++) {
+			System.out.println(mf2.get(i).getOriginalFilename());
+		}
+
+		ArrayList<Image> imgSecondArr = new ArrayList<Image>();
+		System.out.println("true of false : " + mf.get(0).isEmpty());
+		if (mf.get(0).isEmpty()) {
+
+        } else {
+            for (int i = 0; i < mf.size(); i++) {
+                // 파일 중복명 처리
+                String genId = CommonUtils.getRandomString();
+                // 본래 파일명
+                String filePath = null;
+                String saveFileName = null;
+                if(!mf.get(i).isEmpty()) {
+                	String originalfileName = mf.get(i).getOriginalFilename();
+
+                	System.out.println("originalfileName11 : " + originalfileName);
+
+                	saveFileName = genId + "." + originalfileName.substring(originalfileName.lastIndexOf("."));
+                	// 저장되는 파일 이름
+
+                	String root = request.getSession().getServletContext().getRealPath("resources");
+                	filePath = root + "\\uploadFiles\\reservation";
+
+                	// 저장 될 파일 경로
+
+                	long fileSize = mf.get(i).getSize(); // 파일 사이즈
+
+                	Image img = new Image();
+                	img.setOriginNm(originalfileName);
+                	img.setChangeNm(saveFileName);
+                	img.setFilePath(filePath);
+
+                	imgSecondArr.add(img);
+                }
+
+                try {
+					mf.get(i).transferTo(new File(filePath + "\\" + saveFileName));
+				} catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} // 파일 저장
+
+            }
+        }
+
+
+		ArrayList<Image> imgFirstArr = new ArrayList<Image>();
+		if (mf2.size() == 1 && mf2.get(0).getOriginalFilename().equals("")) {
+
+        } else {
+            for (int i = 0; i < mf2.size(); i++) {
+                // 파일 중복명 처리
+                String genId = CommonUtils.getRandomString();
+                // 본래 파일명
+                String originalfileName = mf2.get(i).getOriginalFilename();
+
+                System.out.println("originalfileName : " + originalfileName);
+
+                String saveFileName = genId + "." + originalfileName.substring(originalfileName.lastIndexOf("."));
+                // 저장되는 파일 이름
+
+                String root = request.getSession().getServletContext().getRealPath("resources");
+        		String filePath = root + "\\uploadFiles\\reservation";
+
+                // 저장 될 파일 경로
+
+                long fileSize = mf2.get(i).getSize(); // 파일 사이즈
+
+                Image img = new Image();
+                img.setOriginNm(originalfileName);
+                img.setChangeNm(saveFileName);
+                img.setFilePath(filePath);
+
+                imgFirstArr.add(img);
+
+                try {
+					mf2.get(i).transferTo(new File(filePath + "\\" + saveFileName));
+				} catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} // 파일 저장
+
+            }
+        }
+		String[] resultFile = null;
+		if(!reserv.getResultImgArr().equals("")) {
+			String[] fileName = reserv.getResultImgArr().split(",");
+			resultFile = new String[fileName.length];
+			for(int j = 0; j < fileName.length; j++) {
+				if(fileName[j].length() != 0) {
+					resultFile[j] = fileName[j].substring(8);
+					System.out.println("resultFile : " + resultFile[j]);
+				}
+			};
+		}
+
+		//해당 시설물 수정하는 메소드 (좌석)
+		int result = fs.updateFacilitySeat(reserv);
+		//해당 시설물의 이미지 수정하는 메소드 (좌석)
+		int result2 = fs.updateFacilitySeatImage(reserv, imgSecondArr, imgFirstArr, resultFile);
 
 		mv.setViewName("jsonView");
 
