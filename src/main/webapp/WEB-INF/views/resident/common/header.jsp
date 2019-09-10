@@ -117,8 +117,8 @@
 			</li>
 			<c:if test="${sessionScope.loginUser == null }">
 				<span style="height: 100%;">
-					<button type="button" onclick="location.href='${contextPath}/moveAccount'" class="btn btn-success m-r-5 m-b-5" style="margin-top: 3%;">Log In</button>
-					<button type="button" onclick="location.href='${contextPath}/moveRegister'" class="btn btn-success m-r-5 m-b-5" style="margin-top: 3%;">회원가입</button>
+					<button type="button" onclick="location.href='${contextPath}/moveAccount'" class="btn btn-success " style="margin-top: 3%; width: 15%;">Log In</button>
+					<button type="button" onclick="location.href='${contextPath}/moveRegister'" class="btn btn-success " style="margin-top: 3%; width: 15%;">회원가입</button>
 				</span>
 			</c:if>
 		</ul>

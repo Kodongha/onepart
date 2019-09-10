@@ -5,10 +5,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class VisitCarController {
-	
+
+	@RequestMapping("/resident/registerVisitCar")
+	public String registerVisitCar() {
+		System.out.println("/resident/registerVisitCar");
+		return "/resident/my_home/visit_car/registerVisitCar";
+	}
 	@RequestMapping("/resident/menuVisitCar")
-	public String moveVisitCar() {
-		System.out.println("/resident/visitCar");
-		return "/resident/my_home/visit_car/visitCar";
+	public String listVisitCar() {
+		System.out.println("/resident/menuVisitCar");
+		return "/resident/my_home/visit_car/listVisitCar3";
 	}
 }

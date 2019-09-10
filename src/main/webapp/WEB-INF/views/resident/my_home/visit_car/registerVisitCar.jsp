@@ -44,6 +44,11 @@
    href="${contextPath}/resources/plugins/DataTables/css/data-table.css"
    rel="stylesheet" />
 <!-- ================== END PAGE LEVEL STYLE ================== -->
+<!-- ================== BEGIN BASE JS ================== -->
+<script src="${contextPath}/resources/plugins/pace/pace.min.js"></script>
+<!-- 제이쿼리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- ================== END BASE JS ================== -->
 <style type="text/css">
 .form-control {
     width: 90% !important;
@@ -84,15 +89,18 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
 <body>
 
    <!-- begin #content -->
-   <div id="content" class="content">
+   <div id="content" class="content" style="margin-left: 0px;">
 
       <!-- end col-2 -->
       <!-- begin col-10 -->
       <div class="col-md-10">
          <h1>차량관리</h1>
+         <br>
+	         <button type="button" id="delete" class="btn btn-sm btn-warning modal-show">삭제</button>
+	         <button id="add-with-callbacks" class="btn btn-sm btn-warning modal-show"
+	            data-modal-id="createRoomDiv">차량등록</button>
+	     <br>
          <div class="panel panel-inverse">
-
-
             <div class="panel-body">
                <div class="table-responsive">
                   <table id="data-table" class="table table-striped table-bordered">
@@ -116,7 +124,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -135,7 +143,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -153,7 +161,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -171,7 +179,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -189,7 +197,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -207,7 +215,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -225,7 +233,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -243,7 +251,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -261,7 +269,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -279,7 +287,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -297,7 +305,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -315,7 +323,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -333,7 +341,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -351,7 +359,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -369,7 +377,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -387,7 +395,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -405,7 +413,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -423,7 +431,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -441,7 +449,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -459,7 +467,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -477,7 +485,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -495,7 +503,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -513,7 +521,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -531,7 +539,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -549,7 +557,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -567,7 +575,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -585,7 +593,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -603,7 +611,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -621,7 +629,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -639,7 +647,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -657,7 +665,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -675,7 +683,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -693,7 +701,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -711,7 +719,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -729,7 +737,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -747,7 +755,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                            <td>승용차</td>
                            <td>sm3</td>
                            <td>자차</td>
-                           
+
                         </tr>
                         <tr class="even gradeC">
                            <td><input type="checkbox"></td>
@@ -763,11 +771,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                      </tbody>
                   </table>
 
-                  <button type="button" id="delete"
-                     class="btn btn-sm btn-warning modal-show"">삭제</button>
-                  <button id="add-with-callbacks"
-                     class="btn btn-sm btn-warning modal-show"
-                     data-modal-id="createRoomDiv">차량등록</button>
+
                </div>
             </div>
          </div>
@@ -781,7 +785,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
              <div class="col-md-6">
                  <!-- begin panel -->
                     <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
-                              
+
                         <div class="panel-body">
                         <h2 id="carre">차량등록</h2>
                             <form class="form-horizontal">
@@ -793,20 +797,20 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                                     <label class="col-md-3 control-label">주소</label>
                                     <table id="address">
                                        <tr>
-                                          <td> 
+                                          <td>
                                         <input type="text" class="form-control"  placeholder="동수를 입력하시오."/>
                                    </td>
                                           <td><h5>동</h5></td>
-                                          <td> 
+                                          <td>
                                         <input type="text" class="form-control"  placeholder="호수를 입력하시오."/>
                                 </td>
                                           <td><h5>호</h5></td>
                                        </tr>
                                     </table>
-                                   
-                                    
-                                   
-                                    
+
+
+
+
                                     <label class="col-md-3 control-label">차주</label>
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" placeholder="차주를 입력하세요." />
@@ -823,10 +827,10 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" placeholder="용도를 입력하세요." />
                                     </div>
-                                   
+
                                 </div>
-                            
-                               
+
+
                                 <div class="form-group">
                                         <div class="col-md-9" id="btncar">
                                        <button type="submit" class="btn btn-sm btn-success">등록</button>
@@ -838,6 +842,7 @@ input[type=checkbox] { margin: 0; -webkit-transform: scale(1.3); }
                     </div>
                     <!-- end panel -->
                 </div>
+   </div>
    </div>
    <!-- end pag
 
