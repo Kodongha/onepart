@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="${contextPath}/resources/js/moment_ko.min.js"></script>
+<script type="text/javascript" src="${contextPath}/resources/js/jquery.daterangepicker.min.js"></script>
+<link rel="stylesheet" href="${contextPath}/resources/css/daterangepicker.min.css">
 <script type="text/javascript">
 	$(function(){
 
@@ -235,70 +238,6 @@
 
  	});
 
-	// 라디오 옵션 추가
-	$(document).on('click', "button[name='addRadioOption']", function(){
-		/*
-		<br clear="all"/>
-		<div class="col-md-1">
-		<h4><i class="fa fa-dot-circle-o"></i></h4>
-		</div>
-		<div class="col-md-11">
-			<input type="text" class="form-control" placeholder="옵션을 입력해주세요." name="radioOption">
-		</div>
-		 */
-
-		var $divClassColMd1 = $('<div>', {class:'col-md-1'});
-		var $h4 = $('<h4>');
-		var $iCircle = $('<i>', {class:'fa fa-dot-circle-o'});
-		var $divClassColMd11 = $('<div>', {class:'col-md-11'});
-		var $inputCheckboxOption = $('<input>', {type:'text', class:'form-control', placeholder:'옵션을 입력해주세요.', name:'option'});
-		var $brClearAll = $('<br>', {clear:'all'});
-
-		$h4.append($iCircle);
-		$divClassColMd1.append($h4);
-
-		$divClassColMd11.append($inputCheckboxOption);
-
-		$(this).parents('.col-md-11').prev().before($brClearAll);
-		$(this).parents('.col-md-11').prev().before($divClassColMd1);
-		$(this).parents('.col-md-11').prev().before($divClassColMd11);
-		$(this).parents('.col-md-11').prev().before($brClearAll);
-
-	});
-
-	// 체크박스 옵션 추가
-	$(document).on('click', "button[name='addCheckOption']", function(){
-		/*
-		<br clear="all"/>
-		<div class="col-md-1">
-		<h4><i class="fa fa-dot-circle-o"></i></h4>
-		</div>
-		<div class="col-md-11">
-			<input type="text" class="form-control" placeholder="옵션을 입력해주세요." name="radioOption">
-		</div>
-		 */
-
-		var $divClassColMd1 = $('<div>', {class:'col-md-1'});
-		var $h4 = $('<h4>');
-		var $iCircle = $('<i>', {class:'fa fa-check-circle-o'});
-		var $divClassColMd11 = $('<div>', {class:'col-md-11'});
-		var $inputCheckboxOption = $('<input>', {type:'text', class:'form-control', placeholder:'옵션을 입력해주세요.', name:'option'});
-		var $brClearAll = $('<br>', {clear:'all'});
-
-		$h4.append($iCircle);
-		$divClassColMd1.append($h4);
-
-		$divClassColMd11.append($inputCheckboxOption);
-
-		$(this).parents('.col-md-11').prev().before($brClearAll);
-		$(this).parents('.col-md-11').prev().before($divClassColMd1);
-		$(this).parents('.col-md-11').prev().before($divClassColMd11);
-		$(this).parents('.col-md-11').prev().before($brClearAll);
-	});
-
-
-
-
 </script>
 </head>
 <body>
@@ -309,32 +248,45 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 class="modal-title">설문조사 작성</h3>
-				</div>
-				<!-- Body -->
-				<div class="modal-body">
-					<div class="col-md-12 p-0 m-b-5">
-						<h4>설문조사 제목</h4>
-						<input type="text" class="form-control" placeholder="설문의 제목을 입력해주세요." id="inputSurveyTitle" name="inputSurveyTitle">
+					<div id="writeSurvey">
+						<h3 class="modal-title">설문조사 작성</h3>
 					</div>
+					<h4>설문조사 제목</h4>
+					<input type="text" class="form-control" placeholder="설문의 제목을 입력해주세요." id="inputSurveyTitle" name="inputSurveyTitle">
+
 					<hr>
-					<div class="col-md-12 p-0 m-b-10">
-						<div class="col-md-6 p-0 p-r-5">
-							<h4>
-								<i class="fa fa-calendar"></i> 설문기간 설정
-							</h4>
-							<input type="text" class="form-control" placeholder="설문 기간을 설정해주세요." id="surveyPeriod" name="surveyPeriod">
-						</div>
-						<div class="col-md-6 p-0">
-							<h4>
-								<i class="fa fa-info-circle"></i> 설문조사 유형
-							</h4>
-							<select class="form-control" id="inputSurveyType" name="inputSurveyType">
-								<option value="1" selected="selected">일반 설문</option>
-								<option value="2">세대별 설문</option>
-							</select>
-						</div>
+
+					<div class="col-md-6">
+						<h4><i class="fa fa-calendar"></i> 설문기간 설정</h4>
+						<input type="text" class="form-control" placeholder="설문 기간을 설정해주세요." id="surveyPeriod" name="surveyPeriod" autocomplete="off">
 					</div>
+
+					<script type="text/javascript">
+					$('#surveyPeriod').dateRangePicker({
+
+						startDate: new Date(),
+						selectForward: true,
+						beforeShowDay: function(t)
+						{
+							$('.date-picker-wrapper').css('z-index', 99999999999999);
+							var valid = !(t.getDay() == 0 || t.getDay() == 6);  //disable saturday and sunday
+							return [valid];
+						}
+
+					});
+
+					</script>
+
+					<div class="col-md-6">
+						<h4><i class="fa fa-info-circle"></i> 설문조사 유형</h4>
+
+						<select class="form-control" id="inputSurveyType" name="inputSurveyType">
+							<option value="1" selected="selected">일반 설문</option>
+							<option value="2">세대별 설문</option>
+						</select>
+					</div>
+
+					<br clear="all">
 				</div>
 
 				<!-- Body -->

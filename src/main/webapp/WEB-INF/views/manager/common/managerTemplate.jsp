@@ -93,6 +93,9 @@
 	<script src="${contextPath}/resources/js/dashboard.min.js"></script>
 	<script src="${contextPath}/resources/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
+
+	<!-- COMMON -->
+	<script src="${contextPath}/resources/js/common.js"></script>
 	<script>
 		$(document).ready(function() {
 			App.init();

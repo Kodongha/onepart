@@ -40,6 +40,8 @@
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="${contextPath}/resources/plugins/pace/pace.min.js"></script>
 	<!-- ================== END BASE JS ================== -->
+
+
 </head>
 <body>
 	<!-- begin #page-loader -->
@@ -95,6 +97,10 @@
 	<script src="${contextPath}/resources/js/dashboard.min.js"></script>
 	<script src="${contextPath}/resources/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
+
+	<!-- COMMON -->
+	<script src="${contextPath}/resources/js/common.js"></script>
+
 	<script>
 		// 채팅 목록 가져오는 timeoutID
 		let OpenChatRoomListTimeoutEnable = true;

@@ -37,7 +37,7 @@ public interface ResidentSurveyDao {
 	 * @param surveySeq
 	 * @return
 	 */
-	SurveyVO selectSurveyBasicInfo(SqlSessionTemplate sqlSession, int surveySeq);
+	SurveyVO selectSurveyBasicInfo(SqlSessionTemplate sqlSession, SurveyVO requestSurveyVO);
 
 	/**
 	 * 설문조사 문제 정보 가져오기
@@ -68,5 +68,36 @@ public interface ResidentSurveyDao {
 	 * @param requestSurveySelected
 	 */
 	void insertsurveySelected(SqlSessionTemplate sqlSession, RequestSurveySelected requestSurveySelected);
+
+	/**
+	 * 전체 입주 가구 수의 설문 전체 카운트
+	 * @param surveySeq
+	 * @return
+	 */
+	int selectMovedHouseholdCount(SqlSessionTemplate sqlSession, int surveySeq);
+
+	/**
+	 * 설문에 참여한 가구 수의 카운트
+	 * @param sqlSession
+	 * @param surveySeq
+	 * @return
+	 */
+	int selectHouseholdPrtcptCount(SqlSessionTemplate sqlSession, int surveySeq);
+
+	/**
+	 * 전체 입주민 수의 설문 전체 카운트
+	 * @param sqlSession
+	 * @param surveySeq
+	 * @return
+	 */
+	int selecttotalResidentCount(SqlSessionTemplate sqlSession, int surveySeq);
+
+	/**
+	 * 설문에 참여한 입주민 수의 카운트
+	 * @param sqlSession
+	 * @param surveySeq
+	 * @return
+	 */
+	int selectResidentPrtcptCount(SqlSessionTemplate sqlSession, int surveySeq);
 
 }

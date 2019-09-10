@@ -62,11 +62,12 @@
 
 
 	<!-- 설문조사 상세정보 - 기본정보 -->
-	<select id="selectSurveyBasicInfo" parameterType="Integer" resultMap="surveyVOResultSet">
+	<select id="selectSurveyBasicInfo" parameterType="residentSurveyVO" resultMap="surveyVOResultSet">
 		SELECT	*
 		FROM	SURVEY t1
 		LEFT OUTER JOIN SURVEY_PRTCPT t2
 		ON      (t1.SURVEY_SEQ = t2.SURVEY_SEQ)
+		AND		t2.RESIDENT_SEQ = #{residentSeq}
 		WHERE	t1.SURVEY_SEQ = #{surveySeq}
 	</select>
 
@@ -88,6 +89,7 @@
 		)
 	</select>
 
+	<!-- 설문조사 참여 기본정보 등록 -->
 	<insert id="insertSurveyPrtcpt" parameterType="requestSurveyPrtcpt">
 		INSERT INTO SURVEY_PRTCPT
 		VALUES (
@@ -102,6 +104,7 @@
 		</selectKey>
 	</insert>
 
+	<!-- 설문조사 참여 답변 등록 -->
 	<insert id="insertsurveySelected" parameterType="requestSurveySelected">
 		INSERT INTO SURVEY_SELECTED
 		VALUES (
@@ -111,4 +114,63 @@
 			#{surveyQstnSeq}
 		)
 	</insert>
+
+	<!-- 전체 입주 가구 수의 설문 전체 카운트 -->
+	<select id="selectMovedhouseholdCount" resultType="_int" parameterType="_int">
+	    SELECT COUNT(*)
+	    FROM (
+	        SELECT  *
+	        FROM    APT_DETAIL_INFO t1
+	        INNER JOIN RESIDENT t2
+	        ON (t1.APT_DETAIL_INFO_SEQ = t2.APT_DETAIL_INFO_SEQ)
+	        WHERE t2.HOUSEHOLD_AUTH_TYPE = 2
+	        AND t2.LEAVE_TF = 'N'
+	        ) t1
+	    LEFT OUTER JOIN SURVEY_PRTCPT t2
+	    ON (t1.RESIDENT_SEQ = t2.RESIDENT_SEQ)
+	    AND t2.SURVEY_SEQ = #{surveySeq}
+	</select>
+
+	<!-- 설문에 참여한 가구 수의 카운트 -->
+	<select id="selectHouseholdPrtcptCount" resultType="_int" parameterType="_int">
+	    SELECT COUNT(*)
+	    FROM (
+	        SELECT  *
+	        FROM    APT_DETAIL_INFO t1
+	        INNER JOIN RESIDENT t2
+	        ON (t1.APT_DETAIL_INFO_SEQ = t2.APT_DETAIL_INFO_SEQ)
+	        WHERE t2.HOUSEHOLD_AUTH_TYPE = 2
+	        AND t2.LEAVE_TF = 'N'
+	        ) t1
+	    LEFT OUTER JOIN SURVEY_PRTCPT t2
+	    ON (t1.RESIDENT_SEQ = t2.RESIDENT_SEQ)
+	    WHERE t2.SURVEY_SEQ = #{surveySeq}
+	</select>
+
+	<!-- 전체 입주민 수의 설문 전체 카운트 -->
+	<select id="selecttotalResidentCount" resultType="_int" parameterType="_int">
+	     SELECT COUNT(*)
+	    FROM (
+	        SELECT  *
+            FROM    RESIDENT t1
+            WHERE   t1.LEAVE_TF = 'N'
+	        ) t1
+	    LEFT OUTER JOIN SURVEY_PRTCPT t2
+	    ON (t1.RESIDENT_SEQ = t2.RESIDENT_SEQ)
+	    AND t2.SURVEY_SEQ = #{surveySeq}
+	</select>
+
+	<!-- 설문에 참여한 입주민 수의 카운트 -->
+	<select id="selectResidentPrtcptCount" resultType="_int" parameterType="_int">
+	    SELECT COUNT(*)
+	    FROM (
+	        SELECT  *
+            FROM    RESIDENT t1
+            WHERE   t1.LEAVE_TF = 'N'
+	        ) t1
+	    LEFT OUTER JOIN SURVEY_PRTCPT t2
+	    ON (t1.RESIDENT_SEQ = t2.RESIDENT_SEQ)
+	    WHERE t2.SURVEY_SEQ = #{surveySeq}
+	</select>
+
 </mapper>
