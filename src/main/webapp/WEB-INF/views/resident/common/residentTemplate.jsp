@@ -6,7 +6,6 @@
 <c:if test="${ !empty sessionScope.loginUser }">
 	<c:set var="loginUser" value="${ sessionScope.loginUser }"/>
 </c:if>
-
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if !IE]><!-->
@@ -40,8 +39,13 @@
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="${contextPath}/resources/plugins/pace/pace.min.js"></script>
 	<!-- ================== END BASE JS ================== -->
+<script type="text/javascript">
+	const Messenger = (function() {
+
+	});
 
 
+</script>
 </head>
 <body>
 	<!-- begin #page-loader -->
