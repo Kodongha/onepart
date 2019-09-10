@@ -413,7 +413,7 @@ $(document).on('click', '.downback', function () {
 			$(document).on('submit', '#sendMessageForm', function(e) {
 				// 기존 이벤트 제거
 				e.preventDefault();
-
+				console.log("12345");
 				// 전송 버튼 클릭 이벤트 발생
 				$("#sendMessageBtn").trigger('click');
 			});

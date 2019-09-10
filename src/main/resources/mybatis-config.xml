@@ -37,6 +37,8 @@
     	<typeAlias type="com.kh.onepart.manager.facility.model.vo.FacReservation" alias="manager_facReservation"/>
     	<typeAlias type="com.kh.onepart.manager.facility.model.vo.Image" alias="manager_img"/>
     	<typeAlias type="com.kh.onepart.manager.facility.model.vo.FacSeatInfo" alias="manager_facSeatInfo" />
+    	<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatNoticeVO" alias="OpenChatNoticeVO"/>
+
 	</typeAliases>
 
 	<mappers>
@@ -58,5 +60,7 @@
 		<!-- Manager -->
 		<mapper resource="mappers/manager/survey/manager-survey-mapper.xml" />
 		<mapper resource="mappers/manager/Faclilty/manager-faclilty-mapper.xml" />
+		<mapper resource="mappers/manager/Faclilty/manager-faclilty-mapper.xml" />
+		<mapper resource="mappers/manager/residentCar/residentCar-mapper.xml" />
 	</mappers>
 </configuration>
