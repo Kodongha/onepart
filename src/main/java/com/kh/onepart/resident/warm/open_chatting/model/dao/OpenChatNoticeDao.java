@@ -9,4 +9,7 @@ public interface OpenChatNoticeDao {
 	public void insert(SqlSessionTemplate sqlSession, OpenChatNoticeVO openChatNoticeVO);
 	public void update(SqlSessionTemplate sqlSession, OpenChatNoticeVO openChatNoticeVO);
 	public OpenChatNoticeVO noticeSelect(SqlSessionTemplate sqlSession, OpenChatNoticeVO openChatNoticeVO);
+	public void insertNotice(SqlSessionTemplate sqlSession, OpenChatNoticeVO openChatNoticeVO);
+	public void updateNotice(SqlSessionTemplate sqlSession, OpenChatNoticeVO openChatNoticeVO);
+	public void deleteNotice(SqlSessionTemplate sqlSession, OpenChatNoticeVO openChatNoticeVO);
 }

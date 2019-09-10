@@ -33,4 +33,22 @@ public class OpenChatNoticeDaoImpl implements OpenChatNoticeDao {
 		return sqlSession.selectOne("OpenChatNotice.noticeSelect", openChatNoticeVO);
 	}
 
+	@Override
+	public void insertNotice(SqlSessionTemplate sqlSession, OpenChatNoticeVO openChatNoticeVO) {
+		sqlSession.insert("OpenChatNotice.insertNotice", openChatNoticeVO);
+
+	}
+
+	@Override
+	public void updateNotice(SqlSessionTemplate sqlSession, OpenChatNoticeVO openChatNoticeVO) {
+		sqlSession.update("OpenChatNotice.updateNotice", openChatNoticeVO);
+
+	}
+
+	@Override
+	public void deleteNotice(SqlSessionTemplate sqlSession, OpenChatNoticeVO openChatNoticeVO) {
+		sqlSession.delete("OpenChatNotice.deleteNotice", openChatNoticeVO);
+
+	}
+
 }

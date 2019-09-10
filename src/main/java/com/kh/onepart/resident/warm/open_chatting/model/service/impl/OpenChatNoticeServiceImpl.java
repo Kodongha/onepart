@@ -20,5 +20,19 @@ public class OpenChatNoticeServiceImpl implements OpenChatNoticeService {
 		return openChatNoticeDao.noticeSelect(sqlSession, openChatNoticeVO);
 
 	}
+	@Override
+	public void insertNotice(OpenChatNoticeVO openChatNoticeVO) {
+		openChatNoticeDao.insertNotice(sqlSession, openChatNoticeVO);
+
+	}
+	@Override
+	public void updateNotice(OpenChatNoticeVO openChatNoticeVO) {
+		openChatNoticeDao.updateNotice(sqlSession, openChatNoticeVO);
+
+	}
+	@Override
+	public void deleteNotice(OpenChatNoticeVO openChatNoticeVO) {
+		openChatNoticeDao.deleteNotice(sqlSession, openChatNoticeVO);
+	}
 
 }
