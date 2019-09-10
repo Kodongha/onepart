@@ -8,7 +8,7 @@
 <!--<![endif]-->
 <head>
 <style type="text/css">
-
+	.downback{ position: absolute; right: 10px; top: 0px; cursor: pointer;}
 	.panel-inverse>.panel-heading { height: 40px; background: #00acac !important; }
 	.panel-heading .label.pull-left, .panel-heading .label.pull-right {    background-color: #8a6d3b !important; position: relative; top: -20px; }
 	.ion-android-clipboard:before { display: inline-block; position: absolute; right: 80px; top: 9px; cursor: pointer;}
@@ -19,7 +19,7 @@
 
 	html, body { height: 100%; }
 	.chat-content .panel-heading { position: fixed; top: 0; width: 100%; }
-	.chat-content .panel-heading.notice { height: 60px; position: fixed; top: 40px; width: 100%; background-color: #000 !important; opacity: 0.7; z-index: 90; border-radius: 0;}
+	.chat-content .panel-heading.notice { height: auto; position: fixed; top: 40px; width: 100%; background-color: #000 !important; opacity: 0.7; z-index: 90; border-radius: 0;}
 
 	/* 채팅방  */
 	.chat-content.panel { height: 100%; margin-bottom: 0; padding-top: 40px; padding-bottom: 50px; }
@@ -184,7 +184,7 @@
 			<h4 class="panel-title">
 				<strong>${ openChatVO.openChatRoomNm }</strong>
 				<div class="noticeicon">
-					<i class="ion-android-clipboard fa-2x text-inverse"></i>
+					<i class="ion-android-clipboard fa-2x text-inverse" id="noticeIcon"></i>
 				</div>
 
 				<span class="label label-success pull-right" id="chatpeople">
@@ -195,6 +195,9 @@
 		<div class="panel-heading notice">
 			<h4 class="panel-title">
 				<strong>공지사항</strong>
+			</h4>
+			<h4 class="downback">
+				<strong>△</strong>
 			</h4>
 			<p class="noticeCon">없음</p>
 		</div>
@@ -273,7 +276,15 @@
 </body>
 
 
-<script src="${contextPath}/resources/js/SockJs.min.js"></script>
+<script src="${contextPath}/resources/js/SockJs.min.js">
+
+</script>
+
+<script>
+$(document).on('click', '.downback', function () {
+	$(".chat-content .panel-heading.notice").css("display", "none");
+});
+</script>
 <script>
 	let webSocket;
 
@@ -294,9 +305,49 @@
 		$(document).mouseup(function (e) {
 			inputMsgCheck();
 		});
-		window.setTimeout('window.location.reload()',60000);
+		window.setTimeout('window.location.reload()',180000);
 
 	});
+
+
+	$(document).on('click', '#noticeIcon', function () {
+		let urlPathArr = location.href.split('/');
+		let openChatSeq = urlPathArr[urlPathArr.length-1];
+		  const content = prompt( '공지사항을 입력하세요.\n(빈칸을 입력하시면 공지사항이 삭제됩니다.)');
+		  console.log(content);
+			if(content == ''){
+				$.ajax({
+					url : '/onepart/resident/deleteNotice',
+					type : 'get',
+					data : {openChatSeq : openChatSeq},
+					dataType: 'json',
+					success : function(data) {
+						$(".noticeCon").text('없음');
+
+					},
+					error : function(err) {
+						alert('공지사항 삭제에 실패하였습니다.');
+					}
+				});
+				}else if(content != null){
+					$.ajax({
+						url : '/onepart/resident/insertNotice',
+						type : 'get',
+						data : {openChatSeq : openChatSeq, content : content},
+						dataType: 'json',
+						success : function(data) {
+							notice();
+
+						},
+						error : function(err) {
+							alert('공지사항 작성에 실패하였습니다.');
+						}
+					});
+				}
+
+	});
+
+
 
 	function getOut(){
 		let urlPathArr = location.href.split('/');
@@ -331,12 +382,15 @@
 			data : {openChatSeq : openChatSeq},
 			dataType: 'json',
 			success : function(data) {
+
 				$(".noticeCon").text(data.openChatNoticeVO.openChatNoticeContent);
+
 			},
 			error : function(err) {
 				alert('공지사항 읽기에 실패하였습니다.');
 			}
 		});
+
 		}
 
 

@@ -80,6 +80,48 @@ public class OpenChattingController {
 
 	}
 
+	@RequestMapping("/resident/insertNotice")
+	@ResponseBody
+	public String insertNotice(@RequestParam("openChatSeq") int openChatSeq, @RequestParam("content") String content,HttpSession session) throws JsonProcessingException {
+		Map<String, Object> result = new HashMap<>();
+		OpenChatNoticeVO openChatNoticeVO = new OpenChatNoticeVO();
+		openChatNoticeVO.setOpenChatNoticeContent(content);
+		openChatNoticeVO.setOpenChatSeq(openChatSeq);
+		openChatNoticeVO = openChatNoticeService.noticeSelect(openChatNoticeVO);
+
+		if(openChatNoticeVO == null) {
+			OpenChatNoticeVO openChatNoticeVO2 = new OpenChatNoticeVO();
+			openChatNoticeVO2.setOpenChatNoticeContent(content);
+			openChatNoticeVO2.setOpenChatSeq(openChatSeq);
+			openChatNoticeService.insertNotice(openChatNoticeVO2);
+		}else {
+			OpenChatNoticeVO openChatNoticeVO3 = new OpenChatNoticeVO();
+			openChatNoticeVO3.setOpenChatNoticeContent(content);
+			openChatNoticeVO3.setOpenChatSeq(openChatSeq);
+			openChatNoticeService.updateNotice(openChatNoticeVO3);
+		}
+
+		result.put("result", "success");
+
+		return new ObjectMapper().writeValueAsString(result);
+
+	}
+
+	@RequestMapping("/resident/deleteNotice")
+	@ResponseBody
+	public String deleteNotice(@RequestParam("openChatSeq") int openChatSeq,HttpSession session) throws JsonProcessingException {
+		Map<String, Object> result = new HashMap<>();
+		OpenChatNoticeVO openChatNoticeVO = new OpenChatNoticeVO();
+		openChatNoticeVO.setOpenChatSeq(openChatSeq);
+		openChatNoticeService.deleteNotice(openChatNoticeVO);
+
+		result.put("result", "success");
+
+		return new ObjectMapper().writeValueAsString(result);
+
+	}
+
+
 	@RequestMapping(value = "/resident/noticeSelect" ,produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String noticeSelect(@RequestParam("openChatSeq") int openChatSeq,HttpSession session) throws JsonProcessingException {

@@ -281,7 +281,8 @@
 		if($("#passwordMake").prop("checked")){
 			$("#openChatPwd").attr("disabled", false);
 		}else{
-			$("#openChatPwd").attr("disabled", true);
+			$("#openChatPwd").attr("disabled", true).val('');
+
 		}
 	});
 
@@ -308,6 +309,7 @@
 				$('#openChatPwd').val("");
 				$("#passwordMake").prop("checked", false)
 				$("#openChatPwd").attr("disabled", true);
+				$("#openChatMaxHead").val('2');
 			});
 		}
 		return {
@@ -424,7 +426,7 @@
 					OpenChatRoomListTimeoutManage = setTimeout(function(){
 						if(OpenChatRoomListTimeoutEnable)
 							getRoomListAll();
-					}, 5000000);
+					}, 5000);
 				},
 				error : function(err) {
 					alert('로그인 후 이용 바랍니다.');

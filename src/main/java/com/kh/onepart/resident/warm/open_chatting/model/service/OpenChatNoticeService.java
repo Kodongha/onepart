@@ -6,4 +6,10 @@ public interface OpenChatNoticeService {
 
 	OpenChatNoticeVO noticeSelect(OpenChatNoticeVO openChatNoticeVO);
 
+	void insertNotice(OpenChatNoticeVO openChatNoticeVO);
+
+	void updateNotice(OpenChatNoticeVO openChatNoticeVO);
+
+	void deleteNotice(OpenChatNoticeVO openChatNoticeVO);
+
 }
