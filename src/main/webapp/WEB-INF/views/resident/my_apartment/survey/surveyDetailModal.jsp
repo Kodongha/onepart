@@ -84,6 +84,7 @@
 					console.log('succ');
 					$('#modal-dialog').remove();
 					$('.modal-backdrop').remove();
+					$("#content *").remove();
 					$("#content").html(data);
 				},
 				error : function(error) {

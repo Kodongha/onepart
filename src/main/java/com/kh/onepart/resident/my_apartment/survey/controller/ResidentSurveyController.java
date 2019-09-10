@@ -199,18 +199,37 @@ public class ResidentSurveyController {
 	 * @return
 	 */
 	@RequestMapping("/resident/surveyDetail")
-	public ModelAndView moveSurveyDetail(int surveySeq, ModelAndView modelAndView) {
+	public ModelAndView moveSurveyDetail(int surveySeq, ModelAndView modelAndView, HttpSession session) {
 		System.out.println("/surveyDetail in");
 		System.out.println("request surveySeq :::" + surveySeq);
 
-		ArrayList<Object> surveyDetailList = residentSurveyService.selectSurveyDetail(surveySeq);
+		// residentSeq 추가
+		ResidentVO residentVO = (ResidentVO) session.getAttribute("loginUser");
+		int residentSeq = 0;
+		if(residentVO != null) {
+			residentSeq = residentVO.getResidentSeq();
+		}
+
+		SurveyVO requestSurveyVO = new SurveyVO();
+		requestSurveyVO.setSurveySeq(surveySeq);
+		requestSurveyVO.setResidentSeq(residentSeq);
+
+
+		/* 설문조사 상세정보 */
+		ArrayList<Object> surveyDetailList = residentSurveyService.selectSurveyDetail(requestSurveyVO);
 		SurveyVO surveyVO = (SurveyVO) surveyDetailList.get(0);
 		ArrayList<SurveyQstn> surveyQstnList = (ArrayList<SurveyQstn>) surveyDetailList.get(1);
 		ArrayList<SurveyQstnOption> surveyQstnOptionList = (ArrayList<SurveyQstnOption>) surveyDetailList.get(2);
 
+		/* 설문조사 참여율 */
+		double PrtcptPercent = residentSurveyService.selectPrtcptPercent(surveySeq, surveyVO.getSurveyType());
+		String prtcptPercentStr = String.format("%.2f", PrtcptPercent);
+		System.out.println("prtcptPercentStr ::: " + prtcptPercentStr);
+
 		modelAndView.addObject("surveyVO", surveyVO);
 		modelAndView.addObject("surveyQstnList", surveyQstnList);
 		modelAndView.addObject("surveyQstnOptionList", surveyQstnOptionList);
+		modelAndView.addObject("prtcptPercentStr", prtcptPercentStr);
 		modelAndView.setViewName("resident/my_apartment/survey/surveyDetail");
 
 		return modelAndView;

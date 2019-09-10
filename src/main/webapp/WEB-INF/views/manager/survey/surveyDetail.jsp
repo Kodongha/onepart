@@ -66,14 +66,9 @@
 							</tr>
 							<tr>
 								<td>참여율</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>동 별 참여율</td>
-								<td></td>
+								<td>${ prtcptPercentStr }</td>
 							</tr>
 						</table>
-
 					</div>
 				</div>
 			</div>

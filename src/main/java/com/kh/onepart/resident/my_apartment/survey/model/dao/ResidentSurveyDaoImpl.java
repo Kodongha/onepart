@@ -45,9 +45,9 @@ public class ResidentSurveyDaoImpl implements ResidentSurveyDao {
 
 	/** 설문조사 상세정보 - 기본정보 */
 	@Override
-	public SurveyVO selectSurveyBasicInfo(SqlSessionTemplate sqlSession, int surveySeq) {
+	public SurveyVO selectSurveyBasicInfo(SqlSessionTemplate sqlSession, SurveyVO requestSurveyVO) {
 		// TODO Auto-generated method stub
-		SurveyVO surveyVO = sqlSession.selectOne("ResidentSurvey.selectSurveyBasicInfo", surveySeq);
+		SurveyVO surveyVO = sqlSession.selectOne("ResidentSurvey.selectSurveyBasicInfo", requestSurveyVO);
 
 		return surveyVO;
 	}
@@ -90,6 +90,37 @@ public class ResidentSurveyDaoImpl implements ResidentSurveyDao {
 		sqlSession.insert("ResidentSurvey.insertsurveySelected", requestSurveySelected);
 	}
 
+	/** 전체 입주 가구 수의 설문 전체 카운트 */
+	@Override
+	public int selectMovedHouseholdCount(SqlSessionTemplate sqlSession, int surveySeq) {
+		// TODO Auto-generated method stub
 
+		int movedhouseholdCount = sqlSession.selectOne("ResidentSurvey.selectMovedhouseholdCount", surveySeq);
+		return movedhouseholdCount;
+	}
+
+	/** 설문에 참여한 가구 수의 카운트 */
+	@Override
+	public int selectHouseholdPrtcptCount(SqlSessionTemplate sqlSession, int surveySeq) {
+		// TODO Auto-generated method stub
+		int householdPrtcptCount = sqlSession.selectOne("ResidentSurvey.selectHouseholdPrtcptCount", surveySeq);
+		return householdPrtcptCount;
+	}
+
+	/** 전체 입주민 수의 설문 전체 카운트 */
+	@Override
+	public int selecttotalResidentCount(SqlSessionTemplate sqlSession, int surveySeq) {
+		// TODO Auto-generated method stub
+		int totalResidentCount = sqlSession.selectOne("ResidentSurvey.selecttotalResidentCount", surveySeq);
+		return totalResidentCount;
+	}
+
+	/** 설문에 참여한 입주민 수의 카운트 */
+	@Override
+	public int selectResidentPrtcptCount(SqlSessionTemplate sqlSession, int surveySeq) {
+		// TODO Auto-generated method stub
+		int residentPrtcptCount = sqlSession.selectOne("ResidentSurvey.selectResidentPrtcptCount", surveySeq);
+		return residentPrtcptCount;
+	}
 
 }

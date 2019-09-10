@@ -27,6 +27,7 @@
 		<typeAlias type="com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyPrtcpt" alias="requestSurveyPrtcpt"/>
 		<typeAlias type="com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveySelected" alias="requestSurveySelected"/>
 		<typeAlias type="com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyMainVO" alias="requestSurveyMainVO"/>
+		<typeAlias type="com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyVO" alias="residentSurveyVO"/>
 
 
 		<!-- Manager -->

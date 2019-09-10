@@ -28,10 +28,10 @@ public interface ResidentSurveyService {
 
 	/**
 	 * 설문조사 상세정보
-	 * @param surveySeq
+	 * @param requestSurveyVO
 	 * @return
 	 */
-	public ArrayList<Object> selectSurveyDetail(int surveySeq);
+	public ArrayList<Object> selectSurveyDetail(SurveyVO requestSurveyVO);
 
 	/**
 	 * 설문조사 참여정보 삽입
@@ -40,5 +40,13 @@ public interface ResidentSurveyService {
 	 */
 	public void insertsurveyPrtcpt(RequestSurveyPrtcpt requestSurveyPrtcpt,
 			ArrayList<RequestSurveySelected> surveySelectedList);
+
+	/**
+	 * 설문조사 참여율 조회
+	 * @param surveySeq
+	 * @param i
+	 * @return
+	 */
+	public double selectPrtcptPercent(int surveySeq, int surveyType);
 
 }

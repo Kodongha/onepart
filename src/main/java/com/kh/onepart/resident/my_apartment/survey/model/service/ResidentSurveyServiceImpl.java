@@ -46,15 +46,15 @@ public class ResidentSurveyServiceImpl implements ResidentSurveyService {
 
 	/** 설문조사 상세정보 */
 	@Override
-	public ArrayList<Object> selectSurveyDetail(int surveySeq) {
+	public ArrayList<Object> selectSurveyDetail(SurveyVO requestSurveyVO) {
 		// TODO Auto-generated method stub
 		ArrayList<Object> surveyDetailList = new ArrayList<Object>();
 
 		// 설문조사 기본 정보
-		SurveyVO surveyVO = residentSurveyDao.selectSurveyBasicInfo(sqlSession, surveySeq);
+		SurveyVO surveyVO = residentSurveyDao.selectSurveyBasicInfo(sqlSession, requestSurveyVO);
 
 		// 설문조사 문제 정보
-		ArrayList<SurveyQstn> surveyQstnList = residentSurveyDao.selectSurveyQstnList(sqlSession, surveySeq);
+		ArrayList<SurveyQstn> surveyQstnList = residentSurveyDao.selectSurveyQstnList(sqlSession, requestSurveyVO.getSurveySeq());
 
 		// 설문조사 옵션 정보
 		ArrayList<SurveyQstnOption> surveyQstnOptionList = residentSurveyDao.selectsurveyQstnOptionList(sqlSession, surveyQstnList);
@@ -88,6 +88,43 @@ public class ResidentSurveyServiceImpl implements ResidentSurveyService {
 			// 설문조사 참여 답변정보 삽입
 			residentSurveyDao.insertsurveySelected(sqlSession, surveySelectedList.get(i));
 		}
+	}
+
+	/** 설문조사 참여율 조회 */
+	@Override
+	public double selectPrtcptPercent(int surveySeq, int surveyType) {
+		// TODO Auto-generated method stub
+		double prtcptPercent  = 0.0;
+		// 설문 타입이 세대별일 경우
+		if(surveyType == 2) {
+			// 전체 입주 가구 수의 설문 전체 카운트
+			int movedHouseholdCount = residentSurveyDao.selectMovedHouseholdCount(sqlSession, surveySeq);
+			System.out.println("movedHouseholdCount:::: " + movedHouseholdCount);
+
+			// 설문에 참여한 가구 수의 카운트
+			int householdPrtcptCount = residentSurveyDao.selectHouseholdPrtcptCount(sqlSession, surveySeq);
+			System.out.println("householdPrtcptCount:::: " + householdPrtcptCount);
+
+			prtcptPercent = (double) householdPrtcptCount / movedHouseholdCount * 100;
+
+			System.out.println("PrtcptPercent ::: " + prtcptPercent);
+
+		// 설문 타입이 일반일 경우
+		} else {
+
+			// 전체 입주민 수의 설문 전체 카운트
+			int totalResidentCount = residentSurveyDao.selecttotalResidentCount(sqlSession, surveySeq);
+			System.out.println("totalResidentCount :: " + totalResidentCount);
+
+			// 설문에 참여한 입주민 수의 카운트
+			int residentPrtcptCount = residentSurveyDao.selectResidentPrtcptCount(sqlSession, surveySeq);
+			System.out.println("residentPrtcptCount :: " + residentPrtcptCount);
+
+			prtcptPercent = (double) residentPrtcptCount / totalResidentCount * 100;
+
+		}
+
+		return prtcptPercent;
 	}
 
 }
