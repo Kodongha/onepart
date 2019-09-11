@@ -445,12 +445,13 @@
 	$(document).ready(function(){
 
 		$('#submitBtn').click(function(){
-			var aptDetailInfoSeqVal = $("#dong").val() + "-" + $("#ho").val();
+			var aptDetailInfoSeqVal = 1 + "_" + $("#dong").val() + "_" + $("#ho").val();
 			console.log("aptDetailInfoSeq : " + aptDetailInfoSeqVal);
 			$("#aptDetailInfoSeq").val(aptDetailInfoSeqVal);
 			console.log("#aptDetailInfoSeq : " + $("#aptDetailInfoSeq").val());
 		});
 	});
+
 </script>
 </body>
 

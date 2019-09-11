@@ -13,14 +13,13 @@
 		<typeAlias type="com.kh.onepart.account.model.vo.ResidentVO" alias="ResidentVO" />
 		<typeAlias type="com.kh.onepart.account.model.vo.ManagerVO" alias="ManagerVO" />
 
-
-
 		<!-- resident -->
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO" alias="OpenChatVO" />
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO" alias="OpenChatMemberVO" />
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatCommVO" alias="OpenChatCommVO" />
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatNoticeVO" alias="OpenChatNoticeVO" />
 		<typeAlias type="com.kh.onepart.resident.my_home.my_car.model.vo.MyCar" alias="MyCar" />
+		<typeAlias type="com.kh.onepart.resident.my_home.visit_car.model.vo.VisitCarVO" alias="VisitCarVO" />
 		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.Reservation" alias="reservation" />
 		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacReservation" alias="facReservation" />
 		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacSeatInfo" alias="facSeatInfo" />
@@ -34,7 +33,6 @@
 		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote" alias="ElectionVote"/>
 		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.VoteList" alias="VoteList"/>
 		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate" alias="ElectionVoteCandidate"/>
-
 
 
 		<!-- Manager -->
@@ -63,6 +61,7 @@
 		<mapper resource="mappers/reservation/reservation-mapper.xml" />
 		<mapper resource="mappers/resident/survey/resident-survey-mapper.xml" />
 		<mapper resource="mappers/resident/superintendVote/resident-superintendVote-mapper.xml" />
+		<mapper resource="mappers/resident/visitCar/resident-visitCar-mapper.xml" />
 
 
 

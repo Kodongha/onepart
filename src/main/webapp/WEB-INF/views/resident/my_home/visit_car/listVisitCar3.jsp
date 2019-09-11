@@ -6,58 +6,622 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-	<meta content="" name="description" />
-	<meta content="" name="author" />
-
-	<!-- ================== BEGIN BASE CSS STYLE ================== -->
-	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-	<link href="${contextPath}/resources/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
-	<link href="${contextPath}/resources/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="${contextPath}/resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-	<link href="${contextPath}/resources/css/animate.min.css" rel="stylesheet" />
-	<link href="${contextPath}/resources/css/style.min.css" rel="stylesheet" />
-	<link href="${contextPath}/resources/css/style-responsive.min.css" rel="stylesheet" />
-	<link href="${contextPath}/resources/css/theme/default.css" rel="stylesheet" id="theme" />
-	<!-- ================== END BASE CSS STYLE ================== -->
 
 	<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
 	<link href="${contextPath}/resources/plugins/DataTables/css/data-table.css" rel="stylesheet" />
 	<!-- ================== END PAGE LEVEL STYLE ================== -->
 
-	<!-- ================== BEGIN BASE JS ================== -->
-	<script src="${contextPath}/resources/plugins/pace/pace.min.js"></script>
-	<!-- ================== END BASE JS ================== -->
 
 </head>
 <body>
 	<div id="visitCarPanel" class="panel-body">
-	<div class="table-responsive">
+		<h1>방문차량관리</h1>
+		<div class="table-responsive">
 		<table id="data-table" class="table table-striped table-bordered">
 			<thead>
 				<tr>
-					<th>Rendering engine</th>
-					<th>Browser</th>
-					<th>Platform(s)</th>
-					<th>Engine version</th>
-					<th>CSS grade</th>
+					<th>선택</th>
+					<th>상태</th>
+					<th>방문차량번호</th>
+					<th>방문일</th>
+					<th>비상연락처</th>
+					<th>방문목적</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr class="odd gradeX">
-					<td>Trident</td>
-					<td>Internet Explorer 4.0</td>
-					<td>Win 95+</td>
-					<td>4</td>
-					<td>X</td>
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
 				</tr>
 				<tr class="even gradeC">
-					<td>Trident</td>
-					<td>Internet Explorer 5.0</td>
-					<td>Win 95+</td>
-					<td>5</td>
-					<td>C</td>
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
 				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="odd gradeX">
+					<td><input type="checkbox"></td>
+					<td>승인 대기</td>
+					<td>32서4698</td>
+					<td>2019.09.19</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<tr class="even gradeC">
+					<td><input type="checkbox"></td>
+					<td>승인</td>
+					<td>32서4698</td>
+					<td>2019.09.10</td>
+					<td>010-4445-8565</td>
+					<td>친척방문</td>
+				</tr>
+				<!--
 				<tr class="odd gradeA">
 					<td>Trident</td>
 					<td>Internet Explorer 5.5</td>
@@ -65,7 +629,7 @@
 					<td>5.5</td>
 					<td>A</td>
 				</tr>
-				<tr class="even gradeA">
+				 <tr class="even gradeA">
 					<td>Trident</td>
 					<td>Internet Explorer 6</td>
 					<td>Win 98+</td>
@@ -442,38 +1006,37 @@
 					<td>-</td>
 					<td>-</td>
 					<td>U</td>
-				</tr>
+				</tr> -->
 			</tbody>
 		</table>
 	</div>
 </div>
 
 
-<!-- ================== BEGIN BASE JS ================== -->
-	<script src="${contextPath}/resources/plugins/jquery/jquery-1.9.1.min.js"></script>
-	<script src="${contextPath}/resources/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
-	<script src="${contextPath}/resources/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-	<script src="${contextPath}/resources/plugins/bootstrap/js/bootstrap.min.js"></script>
-	<!--[if lt IE 9]>
-		<script src="${contextPath}/resources/crossbrowserjs/html5shiv.js"></script>
-		<script src="${contextPath}/resources/crossbrowserjs/respond.min.js"></script>
-		<script src="${contextPath}/resources/crossbrowserjs/excanvas.min.js"></script>
-	<![endif]-->
-	<script src="${contextPath}/resources/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-	<script src="${contextPath}/resources/plugins/jquery-cookie/jquery.cookie.js"></script>
-	<!-- ================== END BASE JS ================== -->
-
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
 	<script src="${contextPath}/resources/plugins/DataTables/js/jquery.dataTables.js"></script>
 	<script src="${contextPath}/resources/js/table-manage-default.demo.min.js"></script>
-	<script src="${contextPath}/resources/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
 
 	<script>
 		$(document).ready(function() {
 			$("#visitCarPanel").css("background-color","white");
-			App.init();
 			TableManageDefault.init();
+
+			var button1 = $("<button id='delete' class='btn btn-sm btn-danger'>").text("삭제");
+			var button2 = $("<button id='add-with-callbacks' class='btn btn-sm btn-info' data-modal-id='createRoomDiv'>").text("차량 등록하기");
+			var btnTable = $("<table class='table'>").css({'width':'10%', 'margin-bottom':'0px'});
+			var tableTr = $("<tr>");
+			var tableTd1 = $("<td>").css('padding','0px 5px');
+			var tableTd2 = $("<td>").css('padding','0px 5px');
+
+			tableTd1.append(button1);
+			tableTd2.append(button2);
+			tableTr.append(tableTd1);
+			tableTr.append(tableTd2);
+			btnTable.append(tableTr);
+
+			$(btnTable).insertBefore("#data-table");
 		});
 	</script>
 

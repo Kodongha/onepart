@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ResidentVisitCar">
+
+	<resultMap type="com.kh.onepart.resident.my_home.visit_car.model.vo.VisitCarVO" id="visitCarVOResultSet">
+		<id property="visitCarSeq" column="VISIT_CAR_SEQ"/>
+		<result property="visitCarNum" column="VISIT_CAR_NUM"/>
+		<result property="subPhone" column="SUB_PHONE"/>
+		<result property="visitPurpose" column="VISIT_PURPOSE"/>
+		<result property="visitDt" column="VISIT_DT"/>
+		<result property="visitCarEnrollDt" column="VISIT_CAR_ENROLL_DT"/>
+		<result property="status" column="STATUS"/>
+		<result property="residentSeq" column="RESIDENT_SEQ"/>
+		<result property="rejectReason" column="REJECT_REASON"/>
+	</resultMap>
+
+
+
+	<!-- 방문차량 등록용 메소드 -->
+	<insert id="insertVisitCar" parameterType="VisitCarVO">
+		INSERT INTO SURVEY_SELECTED
+		VALUES (
+			SURVEY_SELECTED_SEQ.NEXTVAL,
+			#{surveyPrtcptSeq},
+			#{selectedAnswer},
+			#{surveyQstnSeq}
+		)
+	</insert>
+
+
+
+</mapper>
