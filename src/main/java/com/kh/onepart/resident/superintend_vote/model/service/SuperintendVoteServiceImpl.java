@@ -1,0 +1,92 @@
+package com.kh.onepart.resident.superintend_vote.model.service;
+
+import java.util.ArrayList;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.kh.onepart.resident.superintend_vote.model.dao.SuperintendVoteDao;
+import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
+import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
+import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm;
+import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteCandidate;
+
+@Service
+public class SuperintendVoteServiceImpl implements SuperintendVoteService{
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	@Autowired
+	private SuperintendVoteDao svd;
+
+	//투표정보 insert 하는 메소드
+	@Override
+	public int insertGeneralVote(GeneralVote gv, ArrayList<GeneralVoteBdNm> bdNmList, ArrayList<GeneralVoteCandidate> candidateList) {
+
+		//투표테이블 insert 메소드 (return gnrVoteSeq)
+		int gnrVoteSeq = svd.insertGeneralVote(sqlSession, gv);
+		System.out.println("service gnrVoteSeq : " + gnrVoteSeq);
+
+		//동 투표일때 통투표 테이블 insert 메소드
+		if(gv.getGnrVoteGrant() == 2) {
+			for(int i = 0 ; i < bdNmList.size(); i++) {
+				bdNmList.get(i).setGnrVoteSeq(gnrVoteSeq);
+				int result = svd.insertGeneralVoteBdNm(sqlSession, bdNmList.get(i));
+			}
+		}
+
+		//해당 투표 후보정보 후보테이블 insert 메소드
+		for(int i = 0; i < candidateList.size(); i++) {
+			candidateList.get(i).setGnrVoteSeq(gnrVoteSeq);
+			int result = svd.insertGeneralVoteCandidate(sqlSession, candidateList.get(i));
+		}
+
+		return gnrVoteSeq;
+	}
+	//선거정보 insert하는 메소드
+	@Override
+	public int insertElectionVote(ElectionVote ev) {
+
+		int result = svd.insertElectionVote(sqlSession, ev);
+
+		return result;
+
+	}
+	//현재 진행중인 선거 리스트 불러오는 메소드
+	@Override
+	public ArrayList selectAllIngVoteList() {
+
+		ArrayList ingVoteList = svd.selectAllIngVoteList(sqlSession);
+
+		return ingVoteList;
+
+	}
+	//일주일 이내에 종료된 선거 리스트 불러오는 메소드
+	@Override
+	public ArrayList selectAllEndVoteList() {
+
+		ArrayList endVoteList = svd.selectAllEndVoteList(sqlSession);
+
+		return endVoteList;
+
+	}
+	//해당 선거 정보 담아오는 메소드
+	@Override
+	public ElectionVote selectOneElectionVote(int voteSeq) {
+
+		ElectionVote ev = svd.selectOneElectionVote(sqlSession, voteSeq);
+
+		return ev;
+
+	}
+	//해당 선거에 등록된 후보 담아오는 메소드
+	@Override
+	public ArrayList selectAllElectionVoteCandidate(int voteSeq) {
+
+		ArrayList candidateList = svd.selectAllElectionVoteCandidate(sqlSession, voteSeq);
+
+		return candidateList;
+
+	}
+
+}

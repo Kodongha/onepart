@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Superintend">
+	<resultMap type="VoteList" id="VoteListResultSet">
+		<result property="voteSeq" column="VOTE_SEQ"/>
+		<result property="voteKind" column="VOTE_KIND"/>
+		<result property="voteNm" column="VOTE_NM"/>
+		<result property="endDt" column="END_DT"/>
+		<result property="voteStatus" column="VOTE_STATUS"/>
+	</resultMap>
+
+	<resultMap type="ElectionVote" id="ElectionVoteResultSet">
+		<id property="electVoteSeq" column="ELECT_VOTE_SEQ"/>
+		<result property="electNm" column="ELECT_NM"/>
+		<result property="electType" column="ELECT_TYPE"/>
+		<result property="electVoteDetail" column="ELECT_VOTE_DETAIL"/>
+		<result property="electVoteEnrollDt" column="ELECT_VOTE_ENROLL_DT"/>
+		<result property="cnddEnrollStartDt" column="CNDD_ENROLL_START_DT"/>
+		<result property="cnddEnrollEndDt" column="CNDD_ENROLL_END_DT"/>
+		<result property="campaignStartDt" column="CAMPAIGN_START_DT"/>
+		<result property="campaignEndDt" column="CAMPAIGN_END_DT"/>
+		<result property="voteStartDt" column="VOTE_START_DT"/>
+		<result property="voteEndDt" column="VOTE_END_DT"/>
+		<result property="electVoteOfflinePlace" column="ELECT_VOTE_OFFLINE_PLACE"/>
+		<result property="bdNm" column="BD_NM"/>
+	</resultMap>
+
+	<resultMap type="ElectionVoteCandidate" id="ElectionVoteCandidateResultSet">
+		<id property="electVoteCndtSignupSeq" column="ELECT_VOTE_CNDT_SIGNUP_SEQ"></id>
+		<result property="electVoteSeq" column="ELECT_VOTE_SEQ"/>
+		<result property="finalEdu" column="FINAL_EDU"/>
+		<result property="residentSeq" column="RESIDENT_SEQ"/>
+		<result property="cndtSignupDt" column="CNDT_SIGNUP_DT"/>
+		<result property="workNm" column="WORK_NM"/>
+		<result property="workPosition" column="WORK_POSITION"/>
+		<result property="workAdd" column="WORK_ADD"/>
+		<result property="careerSeq" column="CAREER_SEQ"/>
+		<result property="status" column="STATUS"/>
+		<result property="simpleInfo" column="SIMPLE_INFO"/>
+		<result property="detailInfo" column="DETAIL_INFO"/>
+		<result property="etcInfo" column="ETC_INFO"/>
+		<result property="cndtEnrollDt" column="CNDT_ENROLL_DT"/>
+		<result property="cndtElectedDt" column="CNDT_ELECTED_DT"/>
+		<result property="residentNm" column="RESIDENT_NM"/>
+		<result property="bdNm" column="BD_NM"/>
+		<result property="rmNm" column="RM_NM"/>
+		<result property="changeNm" column="CHANGE_NM"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="cndtNo" column="CNDT_NO"/>
+	</resultMap>
+
+	<insert id="insertGeneralVote" parameterType="GeneralVote">
+		INSERT INTO GNR_VOTE
+		VALUES (
+					GNR_VOTE_SEQ.NEXTVAL,
+					#{gnrVoteName},
+					#{gnrVoteType},
+					SYSDATE,
+					TO_DATE(#{gnrVoteEndDt}, 'YYYY/MM/DD'),
+					#{gnrVoteOfflinePlace},
+					#{gnrVoteDetail},
+					SYSDATE,
+					#{gnrVoteGrant}
+				)
+		<selectKey keyProperty="gnrVoteSeq" resultType="Integer" order="AFTER">
+			SELECT GNR_VOTE_SEQ.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<insert id="insertGeneralVoteBdNm" parameterType="GeneralVoteBdNm">
+		INSERT INTO GNR_VOTE_BY_BD_NM
+		VALUES (
+					GNR_VOTE_BY_BD_NM_SEQ.NEXTVAL,
+					#{bdNm},
+					#{gnrVoteSeq}
+				)
+	</insert>
+
+	<insert id="insertGeneralVoteCandidate" parameterType="GeneralVoteCandidate">
+		INSERT INTO GNR_VOTE_CNDT_ENROLL
+		VALUES (
+					GNR_VOTE_CNDT_ENROLL_SEQ.NEXTVAL,
+					#{gnrVoteSeq},
+					#{cndtNm},
+					#{cndtDetail},
+					SYSDATE
+				)
+	</insert>
+
+	<insert id="insertElectionVote" parameterType="ElectionVote">
+		INSERT INTO ELECT_VOTE
+		VALUES (
+					ELECT_VOTE_SEQ.NEXTVAL,
+					#{electNm},
+					#{electType},
+					#{electVoteDetail},
+					SYSDATE,
+					TO_DATE(#{cnddEnrollStartDt}, 'YYYY/MM/DD'),
+					TO_DATE(#{cnddEnrollEndDt}, 'YYYY/MM/DD'),
+					TO_DATE(#{campaignStartDt}, 'YYYY/MM/DD'),
+					TO_DATE(#{campaignEndDt}, 'YYYY/MM/DD'),
+					TO_DATE(#{voteStartDt}, 'YYYY/MM/DD'),
+					TO_DATE(#{voteEndDt}, 'YYYY/MM/DD'),
+					#{electVoteOfflinePlace}
+					<if test="bdNm != 0">
+					,#{bdNm}
+					</if>
+					<if test="bdNm == 0">
+					,NULL
+					</if>
+				)
+	</insert>
+
+	<select id="selectAllIngVoteList" resultMap="VoteListResultSet">
+		<![CDATA[
+			SELECT *
+			FROM (
+			        SELECT ELECT_VOTE_SEQ as VOTE_SEQ,
+			                '선거' as VOTE_KIND,
+			                ELECT_NM as VOTE_NM,
+			                CASE WHEN CNDD_ENROLL_START_DT < SYSDATE AND CNDD_ENROLL_END_DT >= SYSDATE THEN CNDD_ENROLL_END_DT
+			                      WHEN CAMPAIGN_START_DT < SYSDATE AND CAMPAIGN_END_DT >= SYSDATE THEN CAMPAIGN_END_DT
+			                      WHEN VOTE_START_DT < SYSDATE AND VOTE_END_DT >= SYSDATE THEN VOTE_END_DT END AS END_DT,
+			                CASE WHEN CNDD_ENROLL_START_DT < SYSDATE AND CNDD_ENROLL_END_DT >= SYSDATE THEN '후보등록기간'
+			                      WHEN CAMPAIGN_START_DT < SYSDATE AND CAMPAIGN_END_DT >= SYSDATE THEN '선거운동기간'
+			                      WHEN VOTE_START_DT < SYSDATE AND VOTE_END_DT >= SYSDATE THEN '투표기간' END AS VOTE_STATUS
+			        FROM ELECT_VOTE
+
+			        UNION ALL
+
+			        SELECT GNR_VOTE_SEQ as VOTE_SEQ,
+			                '일반투표' as VOTE_KIND,
+			                GNR_VOTE_NAME as VOTE_NM,
+			                GNR_VOTE_END_DT as END_DT,
+			                '투표기간' as VOTE_STATUS
+			        FROM GNR_VOTE
+			    )
+			WHERE END_DT >= SYSDATE
+			ORDER BY END_DT
+		]]>
+	</select>
+
+	<select id="selectAllEndVoteList" resultMap="VoteListResultSet">
+		<![CDATA[
+			SELECT *
+			FROM (
+			        SELECT ELECT_VOTE_SEQ as VOTE_SEQ,
+			                '선거' as VOTE_KIND,
+			                ELECT_NM as VOTE_NM,
+			                CASE WHEN CNDD_ENROLL_START_DT < SYSDATE AND CNDD_ENROLL_END_DT >= SYSDATE THEN CNDD_ENROLL_END_DT
+			                      WHEN CAMPAIGN_START_DT < SYSDATE AND CAMPAIGN_END_DT >= SYSDATE THEN CAMPAIGN_END_DT
+			                      WHEN VOTE_START_DT < SYSDATE AND VOTE_END_DT >= SYSDATE THEN VOTE_END_DT
+	                              ELSE VOTE_END_DT END AS END_DT,
+			                CASE WHEN CNDD_ENROLL_START_DT < SYSDATE AND CNDD_ENROLL_END_DT >= SYSDATE THEN '후보등록기간'
+			                      WHEN CAMPAIGN_START_DT < SYSDATE AND CAMPAIGN_END_DT >= SYSDATE THEN '선거운동기간'
+			                      WHEN VOTE_START_DT < SYSDATE AND VOTE_END_DT >= SYSDATE THEN '투표기간'
+	                              ELSE '투표종료' END AS VOTE_STATUS
+			        FROM ELECT_VOTE
+
+			        UNION ALL
+
+			        SELECT GNR_VOTE_SEQ as VOTE_SEQ,
+			                '일반투표' as VOTE_KIND,
+			                GNR_VOTE_NAME as VOTE_NM,
+			                GNR_VOTE_END_DT as END_DT,
+			                '투표종료' as VOTE_STATUS
+			        FROM GNR_VOTE
+			    )
+			WHERE END_DT < SYSDATE
+			ORDER BY END_DT
+		]]>
+	</select>
+
+	<select id="selectOneElectionVote" parameterType="_int" resultMap="ElectionVoteResultSet">
+		SELECT *
+		FROM ELECT_VOTE
+		WHERE ELECT_VOTE_SEQ = #{voteSeq}
+	</select>
+
+	<select id="selectAllElectionVoteCandidate" parameterType="_int" resultMap="ElectionVoteCandidateResultSet">
+		SELECT *
+		FROM ELECT_VOTE_CNDT_SIGNUP t1
+		JOIN RESIDENT t2 ON (t1.RESIDENT_SEQ = t2.RESIDENT_SEQ)
+		JOIN APT_DETAIL_INFO t3 ON (t3.APT_DETAIL_INFO_SEQ = t2.APT_DETAIL_INFO_SEQ)
+		JOIN IMAGE t4 ON (t1.ELECT_VOTE_CNDT_SIGNUP_SEQ = t4.ELECT_VOTE_CNDT_SIGNUP_SEQ)
+		WHERE t1.ELECT_VOTE_SEQ = #{voteSeq}
+		AND t1.STATUS = 2
+	</select>
+</mapper>
