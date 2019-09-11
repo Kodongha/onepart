@@ -12,6 +12,9 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style type="text/css">
+.buttonTable{
+width:100%;
+}
 .form-control {
 	width: 90% !important;
 }
@@ -26,10 +29,7 @@
 	color: #fff;
 	background: #00acac !important;
 	border-color: #00acac !important;
-	position: absolute;
-	top: 130px;
-	right: 3%;
-	width: 10%;
+	width: 20%;
 }
 
 .btn.btn-warning:hover {
@@ -83,10 +83,7 @@ table.dataTable {
 }
 
 button#delete {
-	position: absolute;
-	left: 3%;
-	top: 130px;
-	width: 8%;
+	width: 20%;
 }
 
 button#maderoom {
@@ -174,8 +171,15 @@ input[type=checkbox] {
 
 			<div class="panel-body">
 				<div class="table-responsive">
+
+
+
 					<table id="data-table" class="table table-striped table-bordered">
 						<thead>
+							<tr>
+								<td colspan="3" style="border-top:1px solid white; border-right:1px solid white; border-left:1px solid white"><button type="button" id="delete" class="btn btn-sm btn-warning modal-show">삭제</button></td>
+								<td colspan="4" style="text-align:right; border-top:1px solid white; border-right:1px solid white; border-left:1px solid white"><button id="add-with-callbacks" class="btn btn-sm btn-warning modal-show" data-modal-id="createRoomDiv">차량등록</button></td>
+							</tr>
 							<tr>
 								<th>선택</th>
 								<th>차량번호</th>
@@ -186,39 +190,26 @@ input[type=checkbox] {
 								<th>용도</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="tbodyDiv">
 
+						<c:forEach var="car" items="${residentCarList}" varStatus="status">
 
 							<tr class="odd gradeX">
 								<td><input type="checkbox"></td>
-								<td class="carNum"></td>
-								<td class="bdrm"></td>
-								<td class="residentNm"></td>
-								<td class="carType"></td>
-								<td class="carNm"></td>
-								<td class="enrollPurpose"></td>
+								<td class="carNum">${car.carNum }</td>
+								<td class="bdrm">${car.bdNm }동 ${ car.rmNm }호</td>
+								<td class="residentNm">${car.residentNm }</td>
+								<td class="carType">${car.carType }</td>
+								<td class="carNm">${car.carNm }</td>
+								<td class="enrollPurpose">${car.enrollPurpose }</td>
 
 							</tr>
-
-							<tr class="even gradeC">
-								<td><input type="checkbox"></td>
-
-								<td class="carNum"></td>
-								<td class="bdrm"></td>
-								<td class="residentNm"></td>
-								<td class="carType"></td>
-								<td class="carNm"></td>
-								<td class="enrollPurpose"></td>
-							</tr>
-
+						</c:forEach>
 						</tbody>
 					</table>
 
-					<button type="button" id="delete"
-						class="btn btn-sm btn-warning modal-show">삭제</button>
-					<button id="add-with-callbacks"
-						class="btn btn-sm btn-warning modal-show"
-						data-modal-id="createRoomDiv">차량등록</button>
+
+
 				</div>
 			</div>
 		</div>
@@ -299,9 +290,9 @@ input[type=checkbox] {
 
 	<script>
 
-function getMyCarList() {
+/* function getResidentCarList() {
 			$.ajax({
-				url : '/onepart/resident/getMyCarList',
+				url : '/onepart/resident/getResidentCarList',
 				type : 'get',
 				data : {},
 				dataType: 'json',
@@ -309,8 +300,8 @@ function getMyCarList() {
 
 						console.log(data)
 					if(data.result == "success") {
-						let carList = data.getMyCarList;
-						drawMyCarList(carList);
+						let carList = data.residentCarList;
+						drawResidentCarList(carList);
 						console.log(carList);
 					}
 				},
@@ -321,32 +312,43 @@ function getMyCarList() {
 		}
 
 
-function drawMyCarList(carList) {
-	let listDiv = $('#pricing-table');
+function drawResidentCarList(carList) {
+	let listDiv = $('#tbodyDiv');
 	console.log("carList:::" + carList);
 
-	carList.forEach(carInfo => {
+	for(var a = 0; a<100; a++){
 
-		let carDivFormat = $('.format').clone();
-		carDivFormat.removeClass('format');
-		carDivFormat.show();
 
-		carDivFormat.find('.carNum').text(carInfo.carNum);
-		carDivFormat.find('.bdNm').text(carInfo.bdNm);
-		carDivFormat.find('.rmNm').text(carInfo.rmNm);
-		carDivFormat.find('.residentNm').text(carInfo.residentNm);
-		carDivFormat.find('.carType').text(carInfo.carType);
-		carDivFormat.find('.carNm').text(carInfo.carNm);
-		carDivFormat.find('.enrollPurpose').text(carInfo.enrollPurpose);
+		for(var i = 0; i < carList.length; i++){
+
+		if(i%2==1){
+			var carDivFormat = $('.format').clone();
+			carDivFormat.removeClass('format');
+			carDivFormat.show();
+		}else{
+			var carDivFormat = $('.format2').clone();
+			carDivFormat.removeClass('format2');
+			carDivFormat.show();
+		}
+
+
+		carDivFormat.find('.carNum').text(carList[i].carNum);
+		carDivFormat.find('.bdNm').text(carList[i].bdNm);
+		carDivFormat.find('.rmNm').text(carList[i].rmNm);
+		carDivFormat.find('.residentNm').text(carList[i].residentNm);
+		carDivFormat.find('.carType').text(carList[i].carType);
+		carDivFormat.find('.carNm').text(carList[i].carNm);
+		carDivFormat.find('.enrollPurpose').text(carList[i].enrollPurpose);
 
 		listDiv.append(carDivFormat);
-	});
 
+		}
+	}
 
-}
+} */
 
 $(function() {
-	getMyCarList();
+	//getResidentCarList();
 	App.init();
 	displayInit();
 	TableManageColVis.init();
