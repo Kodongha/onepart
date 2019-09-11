@@ -6,6 +6,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="${contextPath}/resources/plugins/jquery/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+
+	$(function(){
+		$('#messengerBtn').click(function(){
+			console.log('in!~!');
+			url = '${contextPath}/messenger/moveMessenger';
+			window.open(url, "Messenger", "width=800px; height=450px;");
+		});
+	});
+
+</script>
 </head>
 <body>
 <div id="header" class="header navbar navbar-default navbar-fixed-top">
@@ -35,7 +47,7 @@
 
 			<c:if test="${sessionScope.loginUser != null }">
 			<li class="dropdown">
-				<a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle f-s-14">
+				<a data-toggle="dropdown" class="dropdown-toggle f-s-14" id="messengerBtn">
 					<i class="fa fa-bell-o"></i>
 					<span class="label">5</span>
 				</a>
