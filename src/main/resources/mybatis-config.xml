@@ -28,6 +28,13 @@
 		<typeAlias type="com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveySelected" alias="requestSurveySelected"/>
 		<typeAlias type="com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyMainVO" alias="requestSurveyMainVO"/>
 		<typeAlias type="com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyVO" alias="residentSurveyVO"/>
+		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote" alias="GeneralVote"/>
+		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteCandidate" alias="GeneralVoteCandidate"/>
+		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm" alias="GeneralVoteBdNm"/>
+		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote" alias="ElectionVote"/>
+		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.VoteList" alias="VoteList"/>
+		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate" alias="ElectionVoteCandidate"/>
+
 
 
 		<!-- Manager -->
@@ -55,6 +62,7 @@
 		<mapper resource="mappers/openChat/openChatNotice-mapper.xml" />
 		<mapper resource="mappers/reservation/reservation-mapper.xml" />
 		<mapper resource="mappers/resident/survey/resident-survey-mapper.xml" />
+		<mapper resource="mappers/resident/superintendVote/resident-superintendVote-mapper.xml" />
 
 
 
