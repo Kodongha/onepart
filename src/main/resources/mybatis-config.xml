@@ -13,6 +13,10 @@
 		<typeAlias type="com.kh.onepart.account.model.vo.ResidentVO" alias="ResidentVO" />
 		<typeAlias type="com.kh.onepart.account.model.vo.ManagerVO" alias="ManagerVO" />
 
+		<!-- messenger -->
+		<typeAlias type="com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO" alias="requestMessengerVO" />
+
+
 		<!-- resident -->
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO" alias="OpenChatVO" />
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO" alias="OpenChatMemberVO" />
@@ -53,6 +57,9 @@
 		<!-- account -->
 		<mapper resource="mappers/account/account-mapper.xml" />
 
+		<!-- messenger -->
+		<mapper resource="mappers/messenger/messenger-mapper.xml" />
+
 
 		<!-- resident -->
 		<mapper resource="mappers/openChat/openChat-mapper.xml" />
@@ -73,5 +80,8 @@
 		<mapper resource="mappers/manager/Faclilty/manager-faclilty-mapper.xml" />
 		<mapper resource="mappers/manager/Faclilty/manager-faclilty-mapper.xml" />
 		<mapper resource="mappers/manager/residentCar/residentCar-mapper.xml" />
+
+
+
 	</mappers>
 </configuration>

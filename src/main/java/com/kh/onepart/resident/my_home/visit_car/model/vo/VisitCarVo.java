@@ -16,12 +16,10 @@ public class VisitCarVo {
 	private String visitCarNum;
 	private String subPhone;
 	private String visitPurpose;
-	private Date visitDt;
+	private String visitDt;
 	private Date visitCarEnrollDt;
 	private int status;
 	private int residentSeq;
 	private String rejectReason;
-
-
 
 }

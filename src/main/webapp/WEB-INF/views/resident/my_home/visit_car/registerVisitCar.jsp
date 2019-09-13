@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,14 +35,14 @@
 <body>
 
 	<div class="panel-body bg-white" style="text-align: center;">
-		<form class="form-horizontal form-bordered" action="POST">
+		<form action="" method="GET" class="form-horizontal form-bordered" id="registerVisicarForm" >
 			<h2 class="m-t-0">방문 차량 등록</h2>
 
 			<table class="visitCarTable">
 				<tr>
 					<td>
 						<button class='btn btn-sm btn-info' style="float: right;"
-							onclick="location.href='/onepart/resident/listVisitCar3'">차량등록
+							onclick="return moveListVisitCar()">차량등록
 							리스트보기</button>
 					</td>
 				</tr>
@@ -69,14 +71,18 @@
 					</td>
 				</tr>
 
+
+
 				<tr>
 					<td><input name="aptDetailInfoSeq" id="aptDetailInfoSeq"
 						type="hidden"> <input name="dong" id="dong" type="text"
-						class="form-control" placeholder="동 입력"
-						style="width: 22%; display: inline-block;" readonly="readonly" />&nbsp;동&nbsp;&nbsp;
+						class="form-control" placeholder="동 입력" value="${fn:split(loginUser.aptDetailInfoSeq,'_')[1]}"
+						style="width: 22%; display: inline-block; text-align: center;" readonly="readonly" />&nbsp;동&nbsp;&nbsp;
 						<input name="ho" id="ho" type="text" class="form-control"
-						placeholder="호수 입력" style="width: 22%; display: inline-block;"
-						readonly="readonly" />&nbsp;호&nbsp;</td>
+						placeholder="호수 입력" style="width: 22%; display: inline-block; text-align: center;"
+						readonly="readonly"
+						value="${fn:split(loginUser.aptDetailInfoSeq,'_')[2]}"/>&nbsp;호&nbsp;
+						</td>
 				</tr>
 
 				<tr>
@@ -106,7 +112,7 @@
 			</table>
 			<p class="text-center m-b-0">
 				<!-- <button type="reset" class="btn btn-default">취소</button> &nbsp; &nbsp; -->
-				<button type="submit" class="btn btn-primary">등록</button>
+				<button type="" class="btn btn-primary" onclick="return registerVisitCar()">등록</button>
 			</p>
 		</form>
 	</div>
@@ -123,12 +129,46 @@
 			});
 		})
 
-		/* function resultaptDetailInfoSeq() {
-			var dong = $(#dong).val();
-			var ho = $(#ho).val();
-			var aptDetailInfoSeq = dong + '-' + ho;
-			console.log(aptDetailInfoSeq);
-		} */
+		function registerVisitCar() {
+			var visitCarNum = $("#visitCarNum").val();
+			var subPhone = $("#subPhone").val();
+			var visitPurpose = $("#visitPurpose").val();
+			var visitDt = $("#visitDt").val();
+
+
+			$.ajax({
+				url:"/onepart/resident/registerVisitCar",
+				type:"GET",
+				data:{visitCarNum:visitCarNum, subPhone:subPhone, visitPurpose:visitPurpose
+					, visitDt:visitDt},
+				dataType: "json",
+				success:function(){
+					alert('방문차량 등록이 완료되었습니다.');
+
+					$("#visitCarNum").val('');
+					$("#subPhone").val('');
+					$("#visitPurpose").val('');
+					$("#visitDt").val('');
+				},
+				error : function(err) {
+					alert('방문차량 등록에 실패했습니다.');
+				}
+			});
+			return false;
+		}
+
+		function moveListVisitCar(){
+			$.ajax({
+				url:"/onepart/resident/moveListVisitCar",
+				type:"GET",
+				dataType:"html",
+				success:function(data){
+					$("#content").html(data);
+				},
+			});
+			return false;
+		}
+
 	</script>
 
 </body>
