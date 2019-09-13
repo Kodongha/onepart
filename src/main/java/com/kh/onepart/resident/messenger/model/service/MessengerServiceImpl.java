@@ -1,11 +1,15 @@
 package com.kh.onepart.resident.messenger.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.resident.messenger.model.dao.MessengerDao;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
+import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
 
 @Service
 public class MessengerServiceImpl implements MessengerService {
@@ -33,13 +37,24 @@ public class MessengerServiceImpl implements MessengerService {
 
 	/** 타입별 쪽지 카운트 */
 	@Override
-	public int selectMessengerCount(int type) {
+	public int selectMessengerCount(RequestMessengerVO requestMessengerVO) {
 		// TODO Auto-generated method stub
 
-		int messengerCount = messengerDao.selectMessengerCount(sqlSession, type);
+		int messengerCount = messengerDao.selectMessengerCount(sqlSession, requestMessengerVO);
 
 
 		return messengerCount;
+	}
+
+	/** 타입별 쪽지 리스트 */
+	@Override
+	public ArrayList<ResponseMessengerAndResidentAndManagerVO> selectMessengerList(PageInfo pi,
+			RequestMessengerVO requestMessengerVO) {
+		// TODO Auto-generated method stub
+
+		ArrayList<ResponseMessengerAndResidentAndManagerVO> responseMessengerAndResidentAndManagerVOList = messengerDao.selectMessengerList(sqlSession, pi, requestMessengerVO);
+
+		return responseMessengerAndResidentAndManagerVOList;
 	}
 
 }

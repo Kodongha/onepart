@@ -1,8 +1,12 @@
 package com.kh.onepart.resident.messenger.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
+import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
 
 public interface MessengerDao {
 
@@ -16,9 +20,19 @@ public interface MessengerDao {
 	/**
 	 * 타입별 쪽지 카운트
 	 * @param sqlSession
-	 * @param type
+	 * @param requestMessengerVO
 	 * @return
 	 */
-	int selectMessengerCount(SqlSessionTemplate sqlSession, int type);
+	int selectMessengerCount(SqlSessionTemplate sqlSession, RequestMessengerVO requestMessengerVO);
+
+	/**
+	 * 타입별 쪽지 리스트
+	 * @param sqlSession
+	 * @param pi
+	 * @param requestMessengerVO
+	 * @return
+	 */
+	ArrayList<ResponseMessengerAndResidentAndManagerVO> selectMessengerList(SqlSessionTemplate sqlSession, PageInfo pi,
+			RequestMessengerVO requestMessengerVO);
 
 }

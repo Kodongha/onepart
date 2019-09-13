@@ -77,7 +77,7 @@
 
 		});
 
-
+		// 쪽지 리스트 가져오기
 		function loadMessenger(type, currentPage) {
 			/*
 			type 1 : 읽지 않은 쪽지
@@ -87,6 +87,9 @@
 			*/
 			if(!currentPage){
 				currentPage = 1;
+			}
+			if(!type){
+				type = 1;
 			}
 
 			console.log('type :: ' + type);
@@ -101,6 +104,11 @@
 				},
 				success : function(data){
 					console.log('succ');
+					console.log(data);
+
+					var $tr
+
+
 				},
 				error : function(error){
 					console.log('error');
@@ -139,7 +147,7 @@
                       <a href="#" class="btn btn-sm btn-inverse"><i class="fa fa-times-circle m-r-5"></i> 선택 삭제</a>
                   </div>
 	        <div class="email-content">
-                      <table class="table table-email">
+                      <table class="table table-email" id="messengerList">
                           <thead>
                               <tr>
                                   <th class="email-select"><a href="#" data-click="email-select-all"><i class="fa fa-square-o fa-fw"></i></a></th>
@@ -149,266 +157,6 @@
                               </tr>
                           </thead>
                           <tbody>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Leap Motion
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Maecenas ultrices interdum leo, eu aliquam diam mattis sed.
-                                  </td>
-                                  <td class="email-date">11/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Leap Motion
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Ut tristique dapibus nibh, sed scelerisque magna vehicula a.
-                                  </td>
-                                  <td class="email-date">11/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Stefie Chin
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Etiam pretium neque vitae vulputate fermentum.
-                                  </td>
-                                  <td class="email-date">11/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Alan Tan
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Duis et justo in nisl tristique lobortis id at ligula.
-                                  </td>
-                                  <td class="email-date">11/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Yu Ming Tan
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Sed dapibus nec velit eget pulvinar. Etiam id erat in eros imperdiet tempus.
-                                  </td>
-                                  <td class="email-date">11/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Harvinder Signh
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Aliquam diam risus, condimentum ut diam in, fermentum euismod sem.
-                                  </td>
-                                  <td class="email-date">12/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Fiona Loh
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Praesent dapibus ultricies magna, ac laoreet ante pellentesque nec.
-                                  </td>
-                                  <td class="email-date">11/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Derrick Tew
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Nullam eget nibh et dui vestibulum aliquam vitae a lacus.
-                                  </td>
-                                  <td class="email-date">10/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Terry Dew
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Nulla eget placerat ante, sed hendrerit felis. Praesent vitae convallis erat.
-                                  </td>
-                                  <td class="email-date">09/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      John Doe
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Sed dapibus nec velit eget pulvinar. Etiam id erat in eros imperdiet tempus.
-                                  </td>
-                                  <td class="email-date">08/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Leap Motion
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Ut tristique dapibus nibh, sed scelerisque magna vehicula a.
-                                  </td>
-                                  <td class="email-date">11/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Stefie Chin
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Etiam pretium neque vitae vulputate fermentum.
-                                  </td>
-                                  <td class="email-date">11/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Alan Tan
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Duis et justo in nisl tristique lobortis id at ligula.
-                                  </td>
-                                  <td class="email-date">11/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Yu Ming Tan
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Sed dapibus nec velit eget pulvinar. Etiam id erat in eros imperdiet tempus.
-                                  </td>
-                                  <td class="email-date">11/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Fiona Loh
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Praesent dapibus ultricies magna, ac laoreet ante pellentesque nec.
-                                  </td>
-                                  <td class="email-date">11/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Derrick Tew
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Nullam eget nibh et dui vestibulum aliquam vitae a lacus.
-                                  </td>
-                                  <td class="email-date">10/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Terry Dew
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Nulla eget placerat ante, sed hendrerit felis. Praesent vitae convallis erat.
-                                  </td>
-                                  <td class="email-date">09/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      John Doe
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Sed dapibus nec velit eget pulvinar. Etiam id erat in eros imperdiet tempus.
-                                  </td>
-                                  <td class="email-date">08/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Leap Motion
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Ut tristique dapibus nibh, sed scelerisque magna vehicula a.
-                                  </td>
-                                  <td class="email-date">11/4/2014</td>
-                              </tr>
-                              <tr>
-                                  <td class="email-select"><a href="#" data-click="email-select-single"><i class="fa fa-square-o fa-fw"></i></a></td>
-                                  <td class="email-sender">
-                                      Stefie Chin
-                                  </td>
-                                  <td class="email-subject">
-                                      <a href="#" class="email-btn" data-click="email-archive"><i class="fa fa-folder-open"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-remove"><i class="fa fa-trash-o"></i></a>
-                                      <a href="#" class="email-btn" data-click="email-highlight"><i class="fa fa-flag"></i></a>
-                                      Etiam pretium neque vitae vulputate fermentum.
-                                  </td>
-                                  <td class="email-date">11/4/2014</td>
-                              </tr>
                           </tbody>
                       </table>
                       <div class="email-footer clearfix">

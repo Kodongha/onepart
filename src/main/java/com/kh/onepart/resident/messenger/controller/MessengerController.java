@@ -1,5 +1,7 @@
 package com.kh.onepart.resident.messenger.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.onepart.account.model.vo.ManagerVO;
 import com.kh.onepart.account.model.vo.ResidentVO;
+import com.kh.onepart.common.PageInfo;
+import com.kh.onepart.common.Pagination;
 import com.kh.onepart.resident.messenger.model.service.MessengerService;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
+import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
 
 @Controller
 public class MessengerController {
@@ -45,6 +50,7 @@ public class MessengerController {
 		System.out.println("currentPage :: " + currentPage);
 
 
+
 		// 받는 사람 구하기(로그인 유저)
 		String loginUser = "";
 		// 입주민일 경우, int > String 으로 형변환
@@ -53,7 +59,7 @@ public class MessengerController {
 			loginUser = String.valueOf(((ResidentVO) session.getAttribute("loginUser")).getResidentSeq());
 
 
-			// 관리자일 경우
+		// 관리자일 경우
 		} else if(session.getAttribute("loginUser") instanceof ManagerVO) {
 			System.out.println("resident in");
 			loginUser = String.valueOf(((ManagerVO) session.getAttribute("loginUser")).getManagerSeq());
@@ -71,8 +77,18 @@ public class MessengerController {
 		requestMessengerVO.setType(type);
 
 		// 타입별 카운트 가져오기
-		int messengerCount = messengerService.selectMessengerCount(type);
+		int messengerCount = messengerService.selectMessengerCount(requestMessengerVO);
 		System.out.println("messengerCount");
+
+		PageInfo pi = Pagination.getPageInfo(currentPage, messengerCount);
+
+		ArrayList<ResponseMessengerAndResidentAndManagerVO> responseMessengerAndResidentAndManagerVOList = messengerService.selectMessengerList(pi, requestMessengerVO);
+
+		System.out.println("responseMessengerAndResidentAndManagerVOList.size() ::: " + responseMessengerAndResidentAndManagerVOList.size());
+		System.out.println("responseMessengerAndResidentAndManagerVOList ::: " + responseMessengerAndResidentAndManagerVOList);
+
+
+		modelAndView.addObject("responseMessengerAndResidentAndManagerVOList", responseMessengerAndResidentAndManagerVOList);
 
 		modelAndView.setViewName("jsonView");
 		return modelAndView;

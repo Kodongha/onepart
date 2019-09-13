@@ -2,6 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Messenger">
 
+	<resultMap type="com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO" id="responseMessengerAndResidentAndManagerVO">
+		<id property="messengerSeq" column="MESSENGER_SEQ"/>
+		<result property="messengerSender" column="MESSENGER_SENDER"/>
+		<result property="messengerReceiver" column="MESSENGER_RECEIVER"/>
+		<result property="messengerContent" column="MESSENGER_CONTENT"/>
+		<result property="readTm" column="READ_TM"/>
+		<result property="messengerEnrollDt" column="MESSENGER_ENROLL_DT"/>
+		<result property="messengerEnrollDt" column="KEEP_TF"/>
+
+		<result property="residentSeq" column="RESIDENT_SEQ"/>
+		<result property="residentId" column="RESIDENT_ID"/>
+		<result property="residentPwd" column="RESIDENT_PWD"/>
+		<result property="residentNm" column="RESIDENT_NM"/>
+		<result property="residentPhone" column="RESIDENT_PHONE"/>
+		<result property="residentEmail" column="RESIDENT_EMAIL"/>
+		<result property="householdAuthType" column="HOUSEHOLD_AUTH_TYPE"/>
+		<result property="residentEnrollDt" column="RESIDENT_ENROLL_DT"/>
+		<result property="leaveTf" column="LEAVE_TF"/>
+		<result property="aptAuthCd" column="APT_AUTH_CD"/>
+		<result property="leaveDt" column="LEAVE_DT"/>
+		<result property="residentBirth" column="RESIDENT_BIRTH"/>
+		<result property="confirmTf" column="CONFIRM_TF"/>
+		<result property="residentGender" column="RESIDENT_GENDER"/>
+
+		<result property="aptDetailInfoSeq" column="APT_DETAIL_INFO_SEQ"/>
+		<result property="bdNm" column="BD_NM"/>
+		<result property="rmNm" column="RM_NM"/>
+		<result property="squareMeasure" column="SQUARE_MEASURE"/>
+
+		<result property="managerSeq" column="MANAGER_SEQ"/>
+		<result property="managerNm" column="MANAGER_NM"/>
+		<result property="deptCd" column="DEPT_CD"/>
+		<result property="managerId" column="MANAGER_ID"/>
+		<result property="managerPwd" column="MANAGER_PWD"/>
+		<result property="managerPhone" column="MANAGER_PHONE"/>
+		<result property="managerEmail" column="MANAGER_EMAIL"/>
+		<result property="managerEnrollDt" column="MANAGER_ENROLL_DT"/>
+		<result property="managerLeaveDt" column="MANAGER_LEAVE_DT"/>
+		<result property="managerLeaveTf" column="MANAGER_LEAVE_TF"/>
+
+		<result property="deptNm" column="DEPT_NM"/>
+	</resultMap>
+
+
+
 	<!-- 쪽지 작성 -->
 	<insert id="insertMessenger" parameterType="requestMessengerVO">
 		INSERT INTO MESSENGER
@@ -16,25 +61,57 @@
 	    )
 	</insert>
 
-	<select id="selectMessengerCount" resultType="_int" parameterType="_int">
+	<!-- 페이징을 위한 쪽지 타입별 카운트 -->
+	<select id="selectMessengerCount" resultType="_int" parameterType="requestMessengerVO">
 		SELECT  COUNT(*)
 	    FROM    MESSENGER
 	    <choose>
-			<when test="_parameter == 1">
-				WHERE 	MESSENGER_RECEIVER = '8'
+			<when test="type == 1">
+				WHERE 	MESSENGER_RECEIVER = #{loginUser}
 				AND     READ_TM IS NULL
 			</when>
-			<when test="_parameter == 2">
-				WHERE	MESSENGER_RECEIVER = '8'
+			<when test="type == 2">
+				WHERE	MESSENGER_RECEIVER = #{loginUser}
 			</when>
-			<when test="_parameter == 3">
-				WHERE 	MESSENGER_SENDER = '8'
+			<when test="type == 3">
+				WHERE 	MESSENGER_SENDER = #{loginUser}
 			</when>
-			<when test="_parameter == 4">
-				WHERE 	MESSENGER_RECEIVER = '8'
+			<when test="type == 4">
+				WHERE 	MESSENGER_RECEIVER = #{loginUser}
 				AND     KEEP_TF = 'Y'
 			</when>
 	    </choose>
 	</select>
+
+	<select id="selectMessengerList" parameterType="requestMessengerVO" resultMap="responseMessengerAndResidentAndManagerVO">
+	    SELECT  *
+	    FROM    MESSENGER t1
+	    LEFT OUTER JOIN RESIDENT t2
+	    ON (t1.MESSENGER_SENDER = TO_CHAR(t2.RESIDENT_SEQ))
+	    AND     t2.LEAVE_TF = 'N'
+	    AND     t2.CONFIRM_TF = 'Y'
+	    LEFT OUTER JOIN MANAGER t3
+	    ON (t1.MESSENGER_SENDER = t3.MANAGER_SEQ)
+	    AND     t3.MANAGER_LEAVE_TF = 'N'
+	    LEFT OUTER JOIN APT_DETAIL_INFO t4 ON (t2.APT_DETAIL_INFO_SEQ = t4.APT_DETAIL_INFO_SEQ)
+	    LEFT OUTER JOIN DEPT t5 ON (t3.DEPT_CD = t5.DEPT_CD)
+	    <choose>
+			<when test="type == 1">
+				WHERE 	MESSENGER_RECEIVER = #{loginUser}
+				AND     READ_TM IS NULL
+			</when>
+			<when test="type == 2">
+				WHERE	MESSENGER_RECEIVER = #{loginUser}
+			</when>
+			<when test="type == 3">
+				WHERE 	MESSENGER_SENDER = #{loginUser}
+			</when>
+			<when test="type == 4">
+				WHERE 	MESSENGER_RECEIVER = #{loginUser}
+				AND     KEEP_TF = 'Y'
+			</when>
+	    </choose>
+	</select>
+
 
 </mapper>

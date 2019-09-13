@@ -1,9 +1,14 @@
 package com.kh.onepart.resident.messenger.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
+import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
 
 @Repository
 public class MessengerDaoImpl implements MessengerDao {
@@ -18,12 +23,26 @@ public class MessengerDaoImpl implements MessengerDao {
 
 	/** 타입별 쪽지 카운트 */
 	@Override
-	public int selectMessengerCount(SqlSessionTemplate sqlSession, int type) {
+	public int selectMessengerCount(SqlSessionTemplate sqlSession, RequestMessengerVO requestMessengerVO) {
 		// TODO Auto-generated method stub
 
-		int messengerCount = sqlSession.selectOne("Messenger.selectMessengerCount", type);
+		int messengerCount = sqlSession.selectOne("Messenger.selectMessengerCount", requestMessengerVO);
 
 		return messengerCount;
+	}
+
+	/** 타입별 쪽지 리스트 */
+	@Override
+	public ArrayList<ResponseMessengerAndResidentAndManagerVO> selectMessengerList(SqlSessionTemplate sqlSession,
+			PageInfo pi, RequestMessengerVO requestMessengerVO) {
+		// TODO Auto-generated method stub
+		int offset = (pi.getCurrentPage() - 1) * pi.getLimit();
+
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+
+		ArrayList<ResponseMessengerAndResidentAndManagerVO> responseMessengerAndResidentAndManagerVOList = (ArrayList) sqlSession.selectList("Messenger.selectMessengerList", requestMessengerVO, rowBounds);
+
+		return responseMessengerAndResidentAndManagerVOList;
 	}
 
 }
