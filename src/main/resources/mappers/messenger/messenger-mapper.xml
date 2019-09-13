@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Messenger">
+
+	<!-- 쪽지 작성 -->
+	<insert id="insertMessenger" parameterType="requestMessengerVO">
+		INSERT INTO MESSENGER
+	    VALUES (
+	        MESSENGER_SEQ.NEXTVAL,
+	        #{messengerSender},
+	        #{messengerReceiver},
+	        #{messengerContent},
+	        NULL,
+	        SYSDATE,
+	        'N'
+	    )
+	</insert>
+
+	<select id="selectMessengerCount" resultType="_int" parameterType="_int">
+		SELECT  COUNT(*)
+	    FROM    MESSENGER
+	    <choose>
+			<when test="_parameter == 1">
+				WHERE 	MESSENGER_RECEIVER = '8'
+				AND     READ_TM IS NULL
+			</when>
+			<when test="_parameter == 2">
+				WHERE	MESSENGER_RECEIVER = '8'
+			</when>
+			<when test="_parameter == 3">
+				WHERE 	MESSENGER_SENDER = '8'
+			</when>
+			<when test="_parameter == 4">
+				WHERE 	MESSENGER_RECEIVER = '8'
+				AND     KEEP_TF = 'Y'
+			</when>
+	    </choose>
+	</select>
+
+</mapper>

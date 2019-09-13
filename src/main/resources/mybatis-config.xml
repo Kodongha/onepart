@@ -13,13 +13,17 @@
 		<typeAlias type="com.kh.onepart.account.model.vo.ResidentVO" alias="ResidentVO" />
 		<typeAlias type="com.kh.onepart.account.model.vo.ManagerVO" alias="ManagerVO" />
 
+		<!-- messenger -->
+		<typeAlias type="com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO" alias="requestMessengerVO" />
+
+
 		<!-- resident -->
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO" alias="OpenChatVO" />
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO" alias="OpenChatMemberVO" />
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatCommVO" alias="OpenChatCommVO" />
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatNoticeVO" alias="OpenChatNoticeVO" />
 		<typeAlias type="com.kh.onepart.resident.my_home.my_car.model.vo.MyCar" alias="MyCar" />
-		<typeAlias type="com.kh.onepart.resident.my_home.visit_car.model.vo.VisitCarVO" alias="VisitCarVO" />
+		<typeAlias type="com.kh.onepart.resident.my_home.visit_car.model.vo.VisitCarVo" alias="VisitCarVo" />
 		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.Reservation" alias="reservation" />
 		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacReservation" alias="facReservation" />
 		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacSeatInfo" alias="facSeatInfo" />
@@ -51,6 +55,9 @@
 		<!-- account -->
 		<mapper resource="mappers/account/account-mapper.xml" />
 
+		<!-- messenger -->
+		<mapper resource="mappers/messenger/messenger-mapper.xml" />
+
 
 		<!-- resident -->
 		<mapper resource="mappers/openChat/openChat-mapper.xml" />
@@ -70,5 +77,8 @@
 		<mapper resource="mappers/manager/Faclilty/manager-faclilty-mapper.xml" />
 		<mapper resource="mappers/manager/Faclilty/manager-faclilty-mapper.xml" />
 		<mapper resource="mappers/manager/residentCar/residentCar-mapper.xml" />
+
+
+
 	</mappers>
 </configuration>
