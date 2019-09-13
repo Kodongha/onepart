@@ -1,4 +1,4 @@
-package com.kh.onepart.resident.superintend_vote.model.vo;
+package com.kh.onepart.resident.my_apartment.vote.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

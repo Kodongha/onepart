@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ResidentVisitCar">
 
+	<resultMap type="com.kh.onepart.resident.my_home.visit_car.model.vo.VisitCarVo" id="visitCarVOResultSet">
 	<resultMap type="VisitCarVO" id="visitCarVoResultSet">
 		<id property="visitCarSeq" column="VISIT_CAR_SEQ"/>
 		<result property="visitCarNum" column="VISIT_CAR_NUM"/>

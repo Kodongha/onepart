@@ -25,6 +25,7 @@
 			<td style="width:1%"></td>
 			<td style="width:15%">
 				<a class="btn btn-success" style="width:100%" id="candidateApply">후보 신청서 관리</a>
+				<input type="hidden" value="${ ev.electVoteSeq }" id="electVoteSeq" name="electVoteSeq">
 			</td>
 		</tr>
 	</table>

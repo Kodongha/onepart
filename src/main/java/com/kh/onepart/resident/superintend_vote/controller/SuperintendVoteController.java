@@ -1,6 +1,9 @@
 package com.kh.onepart.resident.superintend_vote.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.onepart.resident.superintend_vote.model.service.SuperintendVoteService;
+import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm;
@@ -38,7 +42,7 @@ public class SuperintendVoteController {
 		return mv;
 	}
 
-	@RequestMapping("/resident/superintend_vote_registration_main")
+	@RequestMapping(value="/resident/superintend_vote_registration_main")
 	public ModelAndView votingCandidate(HttpServletRequest request, ModelAndView mv) {
 		System.out.println("/menuSuperintendVote");
 		int voteSeq = Integer.parseInt(request.getParameter("voteSeq"));
@@ -59,9 +63,19 @@ public class SuperintendVoteController {
 	}
 
 	@RequestMapping("/resident/candidateRegistration")
-	public String candidateRegistration() {
+	public ModelAndView candidateRegistration(HttpServletRequest request, ModelAndView mv) {
 		System.out.println("/menuSuperintendVote");
-		return "/resident/superintend_vote/superintend_vote/superintend_vote_registration_candidateReg";
+		int electVoteSeq = Integer.parseInt(request.getParameter("electVoteSeq"));
+		System.out.println("controller voteSeq : " + electVoteSeq);
+
+		//해당 선거 정보 담아오는 메소드
+		ElectionVote ev = svs.selectOneElectionVote(electVoteSeq);
+		System.out.println("controller ev : " + ev);
+
+		mv.addObject("ev", ev);
+		mv.setViewName("/resident/superintend_vote/superintend_vote/superintend_vote_registration_candidateReg");
+
+		return mv;
 	}
 
 	@RequestMapping("/resident/regicandidateApply")
@@ -71,9 +85,23 @@ public class SuperintendVoteController {
 	}
 
 	@RequestMapping("/resident/candidateSupervise")
-	public String candidateSupervise() {
-		System.out.println("/menuSuperintendVote");
-		return "/resident/superintend_vote/superintend_vote/superintend_vote_registration_candidateSupervise";
+	public ModelAndView candidateSupervise(HttpServletRequest request, ModelAndView mv) {
+		System.out.println("/candidateSupervise");
+		int electVoteSeq = Integer.parseInt(request.getParameter("electVoteSeq"));
+		System.out.println("controller voteSeq : " + electVoteSeq);
+
+		//해당 선거 정보 담아오는 메소드
+		ElectionVote ev = svs.selectOneElectionVote(electVoteSeq);
+		System.out.println("controller ev : " + ev);
+
+		//해당 선거에 등록된 후보 담아오는 메소드
+		ArrayList candidateList = svs.selectAllElectionVoteCandidate(electVoteSeq);
+
+		mv.addObject("candidateList", candidateList);
+		mv.addObject("ev", ev);
+		mv.setViewName("/resident/superintend_vote/superintend_vote/superintend_vote_registration_candidateSupervise");
+
+		return mv;
 	}
 
 	@RequestMapping("/resident/votingRealvote")
@@ -202,6 +230,53 @@ public class SuperintendVoteController {
 		return mv;
 	}
 
+	@RequestMapping("/resident/changeBdNm")
+	public ModelAndView changeBdNm(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/menuSuperintendVote");
+		int bdNm = Integer.parseInt(request.getParameter("bdNm"));
+		System.out.println("controller bdNm : " + bdNm);
 
+		//해당 선택동에 포함된 호 리스트 불러오는 메소드
+		ArrayList hoList = svs.selectAllHoList(bdNm);
+
+		mv.addObject("hoList", hoList);
+		mv.setViewName("jsonView");
+
+		return mv;
+	}
+
+	@RequestMapping(value="/resident/changeRmNm", produces = "application/json; charset=utf8")
+	public ModelAndView changeRmNm(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/menuSuperintendVote");
+		int bdNm = Integer.parseInt(request.getParameter("bdNm"));
+		int rmNm = Integer.parseInt(request.getParameter("rmNm"));
+		System.out.println("controller bdNm : " + bdNm);
+		System.out.println("controller rmNm : " + rmNm);
+
+		//해당 선택동, 선택호 에 포함된 호 리스트 불러오는 메소드
+		ApartDetailInfo tdi = new ApartDetailInfo();
+		tdi.setBdNm(bdNm);
+		tdi.setRmNm(rmNm);
+		ArrayList<ApartDetailInfo> nameList = svs.selectAllNameList(tdi);
+		System.out.println("controller nameList : " + nameList);
+//		ArrayList name = new ArrayList();
+//		HashMap nameMap = new HashMap();
+//		for(int i = 0; i < nameList.size(); i++) {
+//			try {
+//				URLEncoder.encode(nameList.get(i).getResidentNm() , "UTF-8");
+//			} catch (UnsupportedEncodingException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			name.add(nameList.get(i).getResidentNm());
+//		}
+//
+//		nameMap.put("name", name);
+
+		mv.addObject("nameList", nameList);
+		mv.setViewName("jsonView");
+
+		return mv;
+	}
 
 }

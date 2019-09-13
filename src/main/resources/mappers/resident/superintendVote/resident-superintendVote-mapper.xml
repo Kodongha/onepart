@@ -50,6 +50,15 @@
 		<result property="cndtNo" column="CNDT_NO"/>
 	</resultMap>
 
+	<resultMap type="ApartDetailInfo" id="ApartDetailInfoResultSet">
+		<id property="aptDetailInfoSeq" column="APT_DETAIL_INFO_SEQ"></id>
+		<result property="bdNm" column="BD_NM"/>
+		<result property="rmNm" column="RM_NM"/>
+		<result property="squareMeasure" column="SQUARE_MEASURE"/>
+		<result property="residentNm" column="RESIDENT_NM"/>
+		<result property="residentPhone" column="RESIDENT_PHONE"/>
+	</resultMap>
+
 	<insert id="insertGeneralVote" parameterType="GeneralVote">
 		INSERT INTO GNR_VOTE
 		VALUES (
@@ -119,12 +128,12 @@
 			        SELECT ELECT_VOTE_SEQ as VOTE_SEQ,
 			                '선거' as VOTE_KIND,
 			                ELECT_NM as VOTE_NM,
-			                CASE WHEN CNDD_ENROLL_START_DT < SYSDATE AND CNDD_ENROLL_END_DT >= SYSDATE THEN CNDD_ENROLL_END_DT
-			                      WHEN CAMPAIGN_START_DT < SYSDATE AND CAMPAIGN_END_DT >= SYSDATE THEN CAMPAIGN_END_DT
-			                      WHEN VOTE_START_DT < SYSDATE AND VOTE_END_DT >= SYSDATE THEN VOTE_END_DT END AS END_DT,
-			                CASE WHEN CNDD_ENROLL_START_DT < SYSDATE AND CNDD_ENROLL_END_DT >= SYSDATE THEN '후보등록기간'
-			                      WHEN CAMPAIGN_START_DT < SYSDATE AND CAMPAIGN_END_DT >= SYSDATE THEN '선거운동기간'
-			                      WHEN VOTE_START_DT < SYSDATE AND VOTE_END_DT >= SYSDATE THEN '투표기간' END AS VOTE_STATUS
+			                CASE WHEN CNDD_ENROLL_START_DT < TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN CNDD_ENROLL_END_DT
+			                      WHEN CAMPAIGN_START_DT < TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN CAMPAIGN_END_DT
+			                      WHEN VOTE_START_DT < TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN VOTE_END_DT END AS END_DT,
+			                CASE WHEN CNDD_ENROLL_START_DT < TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '후보등록기간'
+			                      WHEN CAMPAIGN_START_DT < TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '선거운동기간'
+			                      WHEN VOTE_START_DT < TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '투표기간' END AS VOTE_STATUS
 			        FROM ELECT_VOTE
 
 			        UNION ALL
@@ -136,7 +145,7 @@
 			                '투표기간' as VOTE_STATUS
 			        FROM GNR_VOTE
 			    )
-			WHERE END_DT >= SYSDATE
+			WHERE END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD')
 			ORDER BY END_DT
 		]]>
 	</select>
@@ -148,13 +157,13 @@
 			        SELECT ELECT_VOTE_SEQ as VOTE_SEQ,
 			                '선거' as VOTE_KIND,
 			                ELECT_NM as VOTE_NM,
-			                CASE WHEN CNDD_ENROLL_START_DT < SYSDATE AND CNDD_ENROLL_END_DT >= SYSDATE THEN CNDD_ENROLL_END_DT
-			                      WHEN CAMPAIGN_START_DT < SYSDATE AND CAMPAIGN_END_DT >= SYSDATE THEN CAMPAIGN_END_DT
-			                      WHEN VOTE_START_DT < SYSDATE AND VOTE_END_DT >= SYSDATE THEN VOTE_END_DT
+			                CASE WHEN CNDD_ENROLL_START_DT < TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN CNDD_ENROLL_END_DT
+			                      WHEN CAMPAIGN_START_DT < TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN CAMPAIGN_END_DT
+			                      WHEN VOTE_START_DT < TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN VOTE_END_DT
 	                              ELSE VOTE_END_DT END AS END_DT,
-			                CASE WHEN CNDD_ENROLL_START_DT < SYSDATE AND CNDD_ENROLL_END_DT >= SYSDATE THEN '후보등록기간'
-			                      WHEN CAMPAIGN_START_DT < SYSDATE AND CAMPAIGN_END_DT >= SYSDATE THEN '선거운동기간'
-			                      WHEN VOTE_START_DT < SYSDATE AND VOTE_END_DT >= SYSDATE THEN '투표기간'
+			                CASE WHEN CNDD_ENROLL_START_DT < TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '후보등록기간'
+			                      WHEN CAMPAIGN_START_DT < TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '선거운동기간'
+			                      WHEN VOTE_START_DT < TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '투표기간'
 	                              ELSE '투표종료' END AS VOTE_STATUS
 			        FROM ELECT_VOTE
 
@@ -167,7 +176,7 @@
 			                '투표종료' as VOTE_STATUS
 			        FROM GNR_VOTE
 			    )
-			WHERE END_DT < SYSDATE
+			WHERE END_DT < TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD')
 			ORDER BY END_DT
 		]]>
 	</select>
@@ -186,5 +195,19 @@
 		JOIN IMAGE t4 ON (t1.ELECT_VOTE_CNDT_SIGNUP_SEQ = t4.ELECT_VOTE_CNDT_SIGNUP_SEQ)
 		WHERE t1.ELECT_VOTE_SEQ = #{voteSeq}
 		AND t1.STATUS = 2
+	</select>
+
+	<select id="selectAllHoList" parameterType="_int" resultMap="ApartDetailInfoResultSet">
+		SELECT *
+		FROM APT_DETAIL_INFO
+		WHERE BD_NM = #{bdNm}
+	</select>
+
+	<select id="selectAllNameList" parameterType="ApartDetailInfo" resultMap="ApartDetailInfoResultSet">
+		SELECT *
+		FROM APT_DETAIL_INFO A
+		JOIN RESIDENT R ON (A.APT_DETAIL_INFO_SEQ = R.APT_DETAIL_INFO_SEQ)
+		WHERE BD_NM = #{bdNm}
+		AND RM_NM = #{rmNm}
 	</select>
 </mapper>
