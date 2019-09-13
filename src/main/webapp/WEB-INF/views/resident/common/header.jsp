@@ -13,7 +13,7 @@
 		$('#messengerBtn').click(function(){
 			console.log('in!~!');
 			url = '${contextPath}/messenger/moveMessenger';
-			window.open(url, "Messenger", "width=800px; height=450px;");
+			window.open(url, "Messenger", "width=980; height=500px;");
 		});
 	});
 
