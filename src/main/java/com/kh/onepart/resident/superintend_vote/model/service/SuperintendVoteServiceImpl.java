@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.onepart.resident.superintend_vote.model.dao.SuperintendVoteDao;
+import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm;
@@ -88,5 +89,22 @@ public class SuperintendVoteServiceImpl implements SuperintendVoteService{
 		return candidateList;
 
 	}
+	//해당 선택동에 포함된 호 리스트 불러오는 메소드
+	@Override
+	public ArrayList selectAllHoList(int bdNm) {
 
+		ArrayList hoList = svd.selectAllHoList(sqlSession, bdNm);
+
+		return hoList;
+
+	}
+	//해당 선택동, 선택호 에 포함된 호 리스트 불러오는 메소드
+	@Override
+	public ArrayList selectAllNameList(ApartDetailInfo tdi) {
+
+		ArrayList nameList = svd.selectAllNameList(sqlSession, tdi);
+
+		return nameList;
+
+	}
 }

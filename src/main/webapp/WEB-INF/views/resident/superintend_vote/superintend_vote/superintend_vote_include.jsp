@@ -48,9 +48,11 @@ $(document).ready(function() {
 	/* 후보등록 요청 */
 	$("#candidateRegistration").click(function(){
 		var voteUrl = $(this).data("menu-url");
+		var electVoteSeq = $("#electVoteSeq").val()
 		$.ajax({
 			url:voteUrl,
 			dataType:"html",
+			data:{electVoteSeq:electVoteSeq},
 			success:function(result){
 				$("#content").html(result);
 			}
@@ -81,9 +83,11 @@ $(document).ready(function() {
 	/* 후보관리 및 후보등록 */
 	$("#candidateSupervise").click(function(){
 		var voteUrl = $(this).data("menu-url");
+		var electVoteSeq = $("#electVoteSeq").val()
 		$.ajax({
 			url:voteUrl,
 			dataType:"html",
+			data:{electVoteSeq:electVoteSeq},
 			success:function(result){
 				$("#content").html(result);
 			}
@@ -166,7 +170,7 @@ $(document).ready(function() {
 		</tr>
 	</table>
 	<hr>
-	<br><br>
+	<br>
 </div>
 </body>
 </html>

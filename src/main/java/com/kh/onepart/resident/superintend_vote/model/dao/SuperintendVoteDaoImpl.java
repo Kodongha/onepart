@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm;
@@ -82,5 +83,23 @@ public class SuperintendVoteDaoImpl implements SuperintendVoteDao{
 		return candidateList;
 
 	}
+	//해당 선택동에 포함된 호 리스트 불러오는 메소드
+	@Override
+	public ArrayList selectAllHoList(SqlSessionTemplate sqlSession, int bdNm) {
+
+		ArrayList hoList = (ArrayList) sqlSession.selectList("Superintend.selectAllHoList", bdNm);
+
+		return hoList;
+
+	}
+	//해당 선택동, 선택호 에 포함된 호 리스트 불러오는 메소드
+	@Override
+	public ArrayList selectAllNameList(SqlSessionTemplate sqlSession, ApartDetailInfo tdi) {
+
+		ArrayList nameList = (ArrayList) sqlSession.selectList("Superintend.selectAllNameList", tdi);
+
+		return nameList;
+	}
+
 
 }

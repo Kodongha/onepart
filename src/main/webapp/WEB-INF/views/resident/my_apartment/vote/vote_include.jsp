@@ -177,11 +177,10 @@ $(document).ready(function() {
 	<table style="width:100%">
 		<tr>
 			<td><h5>입주민 여러분들의 활발한 투표가 우리아파트를 더 성장 시킵니다.</h5></td>
-			<td style="width:20%"><a class="btn btn-white" style="width: 100%" id="candidateApply">후보 신청서 제출</a></td>
 		</tr>
 	</table>
 	<hr>
-	<br><br><br>
+	<br>
 </div>
 </body>
 </html>

@@ -19,7 +19,7 @@
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatCommVO" alias="OpenChatCommVO" />
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatNoticeVO" alias="OpenChatNoticeVO" />
 		<typeAlias type="com.kh.onepart.resident.my_home.my_car.model.vo.MyCar" alias="MyCar" />
-		<typeAlias type="com.kh.onepart.resident.my_home.visit_car.model.vo.VisitCarVO" alias="VisitCarVO" />
+		<typeAlias type="com.kh.onepart.resident.my_home.visit_car.model.vo.VisitCarVo" alias="VisitCarVO" />
 		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.Reservation" alias="reservation" />
 		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacReservation" alias="facReservation" />
 		<typeAlias type="com.kh.onepart.resident.convenience.reservate_facility.model.vo.FacSeatInfo" alias="facSeatInfo" />
@@ -33,6 +33,8 @@
 		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote" alias="ElectionVote"/>
 		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.VoteList" alias="VoteList"/>
 		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate" alias="ElectionVoteCandidate"/>
+		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo" alias="ApartDetailInfo"/>
+		<typeAlias type="com.kh.onepart.resident.my_apartment.vote.model.vo.VoteList" alias="vote_VoteList"/>
 
 
 		<!-- Manager -->
@@ -62,6 +64,7 @@
 		<mapper resource="mappers/resident/survey/resident-survey-mapper.xml" />
 		<mapper resource="mappers/resident/superintendVote/resident-superintendVote-mapper.xml" />
 		<mapper resource="mappers/resident/visitCar/resident-visitCar-mapper.xml" />
+		<mapper resource="mappers/resident/vote/vote-mapper.xml" />
 
 
 

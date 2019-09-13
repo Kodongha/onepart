@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm;
@@ -26,5 +27,9 @@ public interface SuperintendVoteDao {
 	ElectionVote selectOneElectionVote(SqlSessionTemplate sqlSession, int voteSeq);
 	//해당 선거에 등록된 후보 담아오는 메소드
 	ArrayList selectAllElectionVoteCandidate(SqlSessionTemplate sqlSession, int voteSeq);
+	//해당 선택동에 포함된 호 리스트 불러오는 메소드
+	ArrayList selectAllHoList(SqlSessionTemplate sqlSession, int bdNm);
+	//해당 선택동, 선택호 에 포함된 호 리스트 불러오는 메소드
+	ArrayList selectAllNameList(SqlSessionTemplate sqlSession, ApartDetailInfo tdi);
 
 }

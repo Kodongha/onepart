@@ -13,7 +13,6 @@
 <jsp:include page="../superintend_vote/superintend_vote_detail_include.jsp"></jsp:include>
 <!-- 후보정보 div -->
 <div style="width:85%; margin:0 auto">
-	<!-- title div -->
 	<table style="width:100%">
 		<tr>
 			<td>
@@ -29,34 +28,44 @@
 	</table>
 	<div class="panel-body" style="background:white" align="center">
 	<!-- 후보 상세정보 div -->
-	<div style="width:95%">
-		<div id="gallery" class="gallery isotope" style="position: relative; overflow: hidden; height: 1092px;">
-			<c:forEach var="candidateList" items="${ candidateList }">
-                <div class="image gallery-group-1 isotope-item" style="position: absolute; left: 0px; top: 0px; transform: translate3d(0px, 0px, 0px); width:35%; height:400px;">
-                    <div class="image-inner">
-                        <a href="${ contextPath }/resources/uploadFiles/reservation/${ candidateList.changeNm }" data-lightbox="gallery-group-1">
-                            <img src="${ contextPath }/resources/uploadFiles/reservation/${ candidateList.changeNm }" alt="" style="height:300px">
-                        </a>
-                        <p class="image-caption" style="font-size:1.5em">
-
-							후보 ${ candidateList.cndtNo }번
-                        </p>
-                    </div>
-                    <div class="image-info" style="background:#e3e5e8; height:55px" align="center">
-
-                        <div style="margin:0 auto;">
-
-                        				<p align="center">
-                        				<a href="javascript:;"><span style="font-size:1.5em">${ candidateList.residentNm }</span>
-                            				<span style="font-size:1.4em">${ candidateList.bdNm }동 ${ candidateList.rmNm } 거주</span>
-                            			</a>
-                            			</p>
-
-                        </div>
-                    </div>
-                </div>
-                </c:forEach>
-            </div>
+		<div style="width:95%">
+			<ul class="media-list media-list-with-divider">
+				<c:forEach var="candidateList" items="${ candidateList }">
+					<!-- 한후보 정보 div -->
+					<li style="margin-bottom:-10px;">
+						<table style="width:95%; margin:0 auto;">
+							<tr>
+								<td style="width:30%"><h4>후보${ candidateList.cndtNo }번. ${ candidateList.residentNm }
+								&nbsp;&nbsp;&nbsp; <small style="font-size:1em">${ candidateList.bdNm }동 ${ candidateList.rmNm }호 거주</small></h4></td>
+							</tr>
+						</table>
+					</li>
+					<li class="media media-lg" style="padding:15px; margin-top:10px">
+						<table style="width:95%; margin:0 auto;">
+							<tr>
+								<td>
+									<a href="javascript:;" class="pull-left">
+										<img class="media-object" src="${contextPath }/resources/images/${ candidateList.changeNm }" alt="" style="height:250px; width:auto;">
+									</a>
+								</td>
+								<td style="width:10%"></td>
+								<td>
+									<div class="media-body" style="padding-top:1%">
+										<h4 class="media-heading">후보자 간단정보</h4>
+										${ candidateList.simpleInfo }
+										<br><br><br>
+										<h4 class="media-heading">후보자 상세정보</h4>
+										${ candidateList.detailInfo }
+										<br><br><br>
+										<h4 class="media-heading">기타사항</h4>
+										${ candidateList.etcInfo }
+									</div>
+								</td>
+							</tr>
+						</table>
+					</li>
+		        </c:forEach>
+			</ul>
 		</div>
 	</div>
 </div>
