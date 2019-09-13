@@ -9,7 +9,7 @@
 		<result property="messengerContent" column="MESSENGER_CONTENT"/>
 		<result property="readTm" column="READ_TM"/>
 		<result property="messengerEnrollDt" column="MESSENGER_ENROLL_DT"/>
-		<result property="messengerEnrollDt" column="KEEP_TF"/>
+		<result property="keepTf" column="KEEP_TF"/>
 
 		<result property="residentSeq" column="RESIDENT_SEQ"/>
 		<result property="residentId" column="RESIDENT_ID"/>

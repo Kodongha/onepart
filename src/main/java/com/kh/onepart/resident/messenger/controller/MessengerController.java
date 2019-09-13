@@ -89,6 +89,7 @@ public class MessengerController {
 
 
 		modelAndView.addObject("responseMessengerAndResidentAndManagerVOList", responseMessengerAndResidentAndManagerVOList);
+		modelAndView.addObject("pi", pi);
 
 		modelAndView.setViewName("jsonView");
 		return modelAndView;
