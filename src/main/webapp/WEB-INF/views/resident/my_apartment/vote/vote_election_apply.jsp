@@ -60,11 +60,11 @@
 							</tr>
 							<tr>
 								<td style="width:15%">동 - 호</td>
-								<td colspan="2" style="height:80px">104동 601호</td>
+								<td colspan="2" style="height:80px">${fn:substring(loginUser.aptDetailInfoSeq,2,5)}동 ${fn:substring(loginUser.aptDetailInfoSeq,6,9)}호</td>
 							</tr>
 							<tr>
 								<td>성 명</td>
-								<td colspan="2" style="height:80px">김 은 혜</td>
+								<td colspan="2" style="height:80px">${ loginUser.residentNm }</td>
 							</tr>
 							<tr>
 								<td>등록기준지</td>
@@ -72,27 +72,40 @@
 							</tr>
 							<tr>
 								<td>주소</td>
-								<td colspan="3" style="height:80px">경기도 안양시 만안구 석수3동 코오롱하늘채 104동 601호</td>
+								<td colspan="3" style="height:80px">경기도 안양시 만안구 석수3동 코오롱하늘채 ${fn:substring(loginUser.aptDetailInfoSeq,2,5)}동 ${fn:substring(loginUser.aptDetailInfoSeq,6,9)}호</td>
 							</tr>
 							<tr>
 								<td>생년월일</td>
-								<td style="width:35%; height:80px">1995년 6월 9일</td>
+								<td style="width:35%; height:80px">19${fn:substring(loginUser.residentBirth,0,2)}년 ${fn:substring(loginUser.residentBirth,2,4)}월 ${fn:substring(loginUser.residentBirth,4,6)}일</td>
 								<td style="width:15%">성별</td>
-								<td>여자</td>
+								<c:if test="${ loginUser.residentGender == 'F' }">
+									<td>여자</td>
+								</c:if>
+								<c:if test="${ loginUser.residentGender == 'M' }">
+									<td>남자</td>
+								</c:if>
 							</tr>
 							<tr>
 								<td>최종학력</td>
-								<td colspan="3" style="height:80px">OOO학교 졸업</td>
+								<td colspan="3" style="height:80px">
+									<input type="text" style="width:95%; height:50px; border:none;">
+								</td>
 							</tr>
 							<tr>
 								<td>직장주소</td>
-								<td style="height:80px">OO전자</td>
+								<td style="height:80px">
+									<input type="text" style="width:95%; height:50px; border:none;">
+								</td>
 								<td>직위</td>
-								<td>대표</td>
+								<td>
+									<input type="text" style="width:95%; height:50px; border:none;">
+								</td>
 							</tr>
 							<tr>
 								<td>직장주소</td>
-								<td colspan="3" style="height:80px">서울시 OO구 OO길 OO로</td>
+								<td colspan="3" style="height:80px">
+									<input type="text" style="width:95%; height:50px; border:none;">
+								</td>
 							</tr>
 							<tr>
 								<td rowspan="5">경력 및 이력</td>
@@ -100,27 +113,44 @@
 								<td colspan="2">경력 및 이력사항</td>
 							</tr>
 							<tr>
-								<td>날짜</td>
-								<td colspan="2" style="height:80px">경력</td>
+								<td>
+									<input type="text" style="width:95%; height:50px; border:none;">
+								</td>
+								<td colspan="2" style="height:80px">
+									<input type="text" style="width:95%; height:50px; border:none;">
+								</td>
 							</tr>
 							<tr>
-								<td>날짜</td>
-								<td colspan="2" style="height:80px">경력</td>
+								<td>
+									<input type="text" style="width:95%; height:50px; border:none;">
+								</td>
+								<td colspan="2" style="height:80px">
+									<input type="text" style="width:95%; height:50px; border:none;">
+								</td>
 							</tr>
 							<tr>
-								<td>날짜</td>
-								<td colspan="2" style="height:80px">경력</td>
+								<td>
+									<input type="text" style="width:95%; height:50px; border:none;">
+								</td>
+								<td colspan="2" style="height:80px">
+									<input type="text" style="width:95%; height:50px; border:none;">
+								</td>
 							</tr>
 							<tr>
-								<td>날짜</td>
-								<td colspan="2" style="height:80px">경력</td>
+								<td>
+									<input type="text" style="width:95%; height:50px; border:none;">
+								</td>
+								<td colspan="2" style="height:80px">
+									<input type="text" style="width:95%; height:50px; border:none;">
+								</td>
 							</tr>
 							<tr>
 								<td colspan="4" style="height:100px">
-									위와 같이 대한아파트 동별 대표자선거 제101동 선거구 후보자등록을 신청합니다. <br>
-									2019 년     8 월     25 일<br>
+									<br>
+									위와 같이 후보자등록을 신청합니다. <br>
 									입후보자 : 김 은 혜  &nbsp;&nbsp;<a id="buttonModal">(인)</a><br><br>
-									대한아파트 선거관리위원회위원장 귀하
+									선거관리위원회위원장 귀하
+									<br>
 									<br>
 								</td>
 							</tr>
@@ -151,36 +181,6 @@
 <!-- 서명 모달창 -->
 
 <script>
-	/* 드래그 서명 script */
-	/* $(document).ready(function() {
-  		$('#smoothed').signaturePad({
-			drawOnly:true,
-			drawBezierCurves:true,
-			lineTop:200
-  		});
-	}); */
-
-	/* 모달창 띄우기 script */
-	/* $(function(){
-		 $( "#dialog" ).hide();
-
-		 $("#buttonModal").click(function(){
-			 var test = $(this);
-			 var testX = test.offset().left;
-			 var testY = test.offset().top;
-			 console.log(testX);
-			 $( "#dialog" ).show().css({
-				 "position": "absolute",
-				 "top": testY,
-			     "left": testX
-			 });
-		 });
-
-		$("#cancelName").click(function(){
-			$( "#dialog" ).hide();
-		});
-
-	}); */
 	/* 신청서 폼 변경 script */
 	$(function(){
 		var name;

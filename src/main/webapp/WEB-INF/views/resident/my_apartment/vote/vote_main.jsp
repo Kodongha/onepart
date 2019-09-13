@@ -110,7 +110,7 @@
 							<td>${ endVoteList.voteSeq }</td>
 							<td>${ endVoteList.voteKind }</td>
 							<td>${ endVoteList.voteNm }</td>
-							<td>완료</td>
+							<td>${ endVoteList.voteStatus }</td>
 							<td>${ endVoteList.userStatus }</td>
 							<td>${fn:substring(endVoteList.realEndDt,0,10)}</td>
 						</tr>
@@ -120,5 +120,45 @@
 		</div>
 	</div>
 </div>
+<!-- 상세보기 불가 안내 modal -->
+<div class="modal fade" id="modal-dialog_test">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">★ 안 내 ★</h4>
+			</div>
+			<div class="modal-body">
+				<h5>
+					현재 선택하신 선거는 상세보기가 불가능합니다.<br>
+				</h5>
+				<h6>
+					투표가 진행중인 선거에 한에서 상세보기를 하실 수 있습니다.
+				</h6>
+			</div>
+			<div class="modal-footer">
+				<a href="javascript:;" class="btn btn-sm btn-danger" data-dismiss="modal">닫기</a>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	/* 선거 및 투표 상세보기 (투표기간) function */
+	function detailAllTypeVote(voteSeq, voteKind, voteStatus) {
+		var voteSeq = voteSeq;
+		if(voteKind == '일반투표' && voteStatus == '투표기간'){
+			console.log("a");
+		}else if(voteKind == '일반투표' && voteStatus == '완료'){
+			console.log("b");
+		}else if(voteKind == '선거' && voteStatus == '투표기간'){
+			console.log("c");
+		}else if(voteKind == '선거' && voteStatus == '완료'){
+			console.log("d");
+		}else{
+			console.log("e");
+			location.href="#modal-dialog_test";
+		}
+	}
+</script>
 </body>
 </html>

@@ -43,13 +43,11 @@ public class VoteController {
 	}
 
 	@RequestMapping("/resident/candidateApply")
-	public ModelAndView moveVote_candidateApply(ModelAndView mv) {
+	public ModelAndView moveVote_candidateApply(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("/menuVote");
 
 		//현재 후보신청을 받고있는 선거 리스트 불러오는메소드
 		ArrayList candidateVoteList = vs.selectAllCandidateVoteList();
-
-		//작성을 준비중인 로그인유저의 정보를 불러오는 메소드
 
 		mv.addObject("candidateVoteList", candidateVoteList);
 		mv.setViewName("/resident/my_apartment/vote/vote_election_apply");
