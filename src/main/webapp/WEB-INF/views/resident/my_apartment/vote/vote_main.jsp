@@ -41,7 +41,7 @@
                    </thead>
 				<tbody>
 					<c:forEach var="ingVoteList" items="${ ingVoteList }">
-						<tr onclick="detailAllTypeVote(${ingVoteList.voteSeq}, '${ ingVoteList.voteKind }', '${ ingVoteList.voteStatus }')">
+						<tr onclick="detailAllTypeVote(${ingVoteList.voteSeq}, '${ ingVoteList.voteKind }', '${ ingVoteList.voteStatus }')" data-toggle="modal">
 							<td>${ ingVoteList.voteSeq }</td>
 							<td>${ ingVoteList.voteKind }</td>
 							<td>${ ingVoteList.voteNm }</td>
@@ -73,7 +73,7 @@
                    </thead>
 				<tbody>
 					<c:forEach var="noVoteList" items="${ noVoteList }">
-						<tr onclick="detailAllTypeVote(${noVoteList.voteSeq}, '${ noVoteList.voteKind }', '${ noVoteList.voteStatus }')">
+						<tr onclick="detailAllTypeVote(${noVoteList.voteSeq}, '${ noVoteList.voteKind }', '${ noVoteList.voteStatus }')" data-toggle="modal">
 							<td>${ noVoteList.voteSeq }</td>
 							<td>${ noVoteList.voteKind }</td>
 							<td>${ noVoteList.voteNm }</td>
@@ -147,16 +147,28 @@
 	function detailAllTypeVote(voteSeq, voteKind, voteStatus) {
 		var voteSeq = voteSeq;
 		if(voteKind == '일반투표' && voteStatus == '투표기간'){
+			$.ajax({
+				url:"/onepart/resident/general",
+				type:"get",
+				dataType:"html",
+				data:{
+						voteSeq:voteSeq,
+						voteKind:voteKind,
+						voteStatus:voteStatus
+					},
+				success:function(result){
+					$("#content").html(result);
+				}
+			});
 			console.log("a");
 		}else if(voteKind == '일반투표' && voteStatus == '완료'){
-			console.log("b");
+
 		}else if(voteKind == '선거' && voteStatus == '투표기간'){
 			console.log("c");
 		}else if(voteKind == '선거' && voteStatus == '완료'){
 			console.log("d");
 		}else{
-			console.log("e");
-			location.href="#modal-dialog_test";
+			alert("현재 선택하신 선거는 상세보기가 불가능합니다. \n투표가 진행중인 선거만 상세보기를 하실 수 있습니다.")
 		}
 	}
 </script>

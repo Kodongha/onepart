@@ -353,7 +353,7 @@
 			});
 
 		});
-		/* 예약 시간대가 선택되었을때  이용시간 값 변동 function */
+			/* 예약 시간대가 선택되었을때  이용시간 값 변동 function */
 			var time = new Array();
 			$("input[type='checkbox'][name='timeCheckbox']").change(function(){
 				console.log($(this).val())

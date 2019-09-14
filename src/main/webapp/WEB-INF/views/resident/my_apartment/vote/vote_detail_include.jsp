@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,27 +9,47 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div>
-	<!-- 투표정보 div -->
-		<div style="width:95%; margin:0 auto;">
-				<h4>투표정보</h4>
-				<!-- 상세정보 div -->
-				<div>
-					<table style="width:60%">
-						<tr>
-							<td style="width:70%"><h2>은혜아파트 입대의 회장 선거</h2></td>
-							<td  style="width:15%"><h5>진행중</h5></td>
-							<td  style="width:15%"><h5>34%완료</h5></td>
-						</tr>
-					</table>
-				</div>
-				<h4>기간 : 2019.08.28 ~ 2019.08.30</h4>
-				<br>
-				<h4>상세정보</h4>	
-				<p>
-					방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는
-					방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는
-				</p>
-				<br>
+<div style="width:85%; margin:0 auto">
+	<table style="width:100%">
+		<tr>
+			<td>
+				<div class="form-group">
+                    <h4>투표정보</h4>
+                </div>
+			</td>
+		</tr>
+	</table>
+	<div class="panel-body" style="background:white" align="center">
+	<!-- 상세정보 div -->
+		<table style="width:95%; margin:0 auto;">
+			<tr>
+				<td style="width:70%;"><h3>${ vote.gnrVoteName }</h3></td>
+				<td style="width:15%; text-align:center;">
+					<span class="badge badge-primary" style="height:28px; font-size:1.25em;">투표 진행중</span>
+				</td>
+				<td style="width:15%; text-align:right;">
+					<span class="badge badge-inverse" style="height:28px; font-size:1.25em;">34% 완료</span>
+					<input type="hidden" value="${ vote.gnrVoteSeq }" id="gnrVoteSeq">
+				</td>
+			</tr>
+		</table>
+		<table style="margin:0 auto">
+			<tr>
+				<td>
+					<hr>
+					<h5>기간 : ${ vote.gnrVoteStartDt } ~ ${ vote.gnrVoteEndDt }</h5>
+					<hr>
+				</td>
+			</tr>
+		</table>
+		<br>
+		<h4>상세정보</h4>
+		<p>
+			${ vote.gnrVoteDetail }
+		</p>
+		<br>
+	</div>
+</div>
+<br><br>
 </body>
 </html>

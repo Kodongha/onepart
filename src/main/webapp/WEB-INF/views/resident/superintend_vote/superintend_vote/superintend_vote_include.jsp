@@ -83,7 +83,7 @@ $(document).ready(function() {
 	/* 후보관리 및 후보등록 */
 	$("#candidateSupervise").click(function(){
 		var voteUrl = $(this).data("menu-url");
-		var electVoteSeq = $("#electVoteSeq").val()
+		var electVoteSeq = $("#electVoteSeq").val();
 		$.ajax({
 			url:voteUrl,
 			dataType:"html",

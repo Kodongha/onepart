@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
+import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteCandidate;
@@ -99,6 +100,24 @@ public class SuperintendVoteDaoImpl implements SuperintendVoteDao{
 		ArrayList nameList = (ArrayList) sqlSession.selectList("Superintend.selectAllNameList", tdi);
 
 		return nameList;
+	}
+	//해당 후보를 등록처리하고 정보 update하는 메소드
+	@Override
+	public int updateElectionVoteCandidate(SqlSessionTemplate sqlSession, ElectionVoteCandidate evc) {
+
+		int result = sqlSession.update("Superintend.updateElectionVoteCandidate", evc);
+
+		return result;
+
+	}
+	//해당 선거의 후보신청 고유번호를 받아오는 메소드
+	@Override
+	public int selectUserElectVoteCndtSignupSeq(SqlSessionTemplate sqlSession, ElectionVoteCandidate evc) {
+
+		int electVoteCndtSignupSeq = sqlSession.selectOne("Superintend.selectUserElectVoteCndtSignupSeq", evc);
+
+		return electVoteCndtSignupSeq;
+
 	}
 
 

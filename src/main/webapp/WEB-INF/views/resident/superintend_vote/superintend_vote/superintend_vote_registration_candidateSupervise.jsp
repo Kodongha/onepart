@@ -34,7 +34,7 @@
 					<li style="margin-bottom:-10px;">
 						<table style="width:95%; margin:0 auto;">
 							<tr>
-								<td style="width:30%"><h4>후보${ candidateList.cndtNo }번. ${ candidateList.residentNm }
+								<td style="width:30%"><h4>후보${ candidateList.cndtNo }번 ${ candidateList.residentNm }
 								&nbsp;&nbsp;&nbsp; <small style="font-size:1em">${ candidateList.bdNm }동 ${ candidateList.rmNm }호 거주</small></h4></td>
 							</tr>
 						</table>
@@ -80,20 +80,19 @@
 				<table style="width:100%; margin:0 auto;">
                        		<tr>
                        			<td>
-                       				 <label for="exampleInputEmail1" style="font-weight:bold;">후보정보</label>
+                       				 <label for="exampleInputEmail1" style="font-weight:bold;">후보명</label>
                        			</td>
-                       			<td style="width:2%"></td>
                        			<td style="width:65%">
-                       				<input style="width:100%;" type="text" class="form-control" id="exampleInputEmail1" readonly="readonly">
+                       				<input style="width:100%;" type="text" class="form-control" id="candidateName" readonly="readonly">
+                       				<input type="hidden" id="candidateResidentSeq">
                        			</td>
                        			<td style="width:2%"></td>
                        			<td>
-                       				<a class="btn btn-white" style="width: 100%" id="plusCandidateBtn">추가</a>
+                       				<a class="btn btn-primary" style="width: 100%" id="plusCandidateBtn">추가</a>
                        			</td>
                        		</tr>
                        		<tr><td><br></td></tr>
                        		<tr id="candidateTableHide">
-                		        <td></td>
                        			<td colspan="4">
                        				<table style="width:100%; height:30px; margin:0 auto;">
 				                      	<tr>
@@ -131,7 +130,7 @@
 								<td colspan="5">
 									<div class="form-group">
 		                                      <label for="exampleInputEmail1" style="font-weight:bold;">간단정보</label>
-		                                      <textarea class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;"></textarea>
+		                                      <textarea class="form-control" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px; resize:none" id="simpleInfo"></textarea>
 		                                  </div>
 								</td>
 							</tr>
@@ -140,7 +139,7 @@
 								<td colspan="5">
 									<div class="form-group">
 		                                      <label for="exampleInputEmail1" style="font-weight:bold;">상세정보</label>
-		                                      <textarea class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;"></textarea>
+		                                      <textarea class="form-control" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px; resize:none" id="detailInfo"></textarea>
 		                                  </div>
 								</td>
 							</tr>
@@ -149,7 +148,7 @@
 								<td colspan="5">
 									<div class="form-group">
 		                                      <label for="exampleInputEmail1" style="font-weight:bold;">기타사항</label>
-		                                      <textarea class="form-control" placeholder="Textarea" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px;"></textarea>
+		                                      <textarea class="form-control" rows="5" style="margin: 0px 1px 0px 0px; width:100%; height: 141px; resize:none" id="etcInfo"></textarea>
 		                                  </div>
 								</td>
 							</tr>
@@ -170,6 +169,10 @@
 		/* 숨기기 */
 		$("#newCandidate").click(function(){
 			$("#candidateTableHide").hide();
+
+			$("#candidateName").val("");
+			$("#candidateResidentSeq").val("");
+
 		});
 		/* 보이기 */
 		$("#plusCandidateBtn").click(function(){
@@ -234,8 +237,7 @@
 					for(var i = 0; i < data.nameList.length; i++){
 						console.log("aa");
 						var $optionText = decodeURIComponent(data.nameList[i].residentNm);
-						var $optionHo = $("<option>").val($optionText);
-						$optionHo.append($optionText);
+						var $optionHo = $("<option>").text(data.nameList[i].residentNm).val(data.nameList[i].residentSeq);
 						$("#candidateInfoName").append($optionHo);
 					}
 
@@ -243,9 +245,60 @@
 			});
 
 		});
+
+		/* 선택한 입주자 제목 input에 추가 function */
+		$("#candidateInfoName").change(function(){
+			console.log($("#candidateInfoName option:selected").text());
+
+			$("#candidateName").val($("#candidateInfoName option:selected").text());
+			$("#candidateResidentSeq").val($(this).val());
+		});
+
 	});
 
+	/* 후보등록 완료시 insert하고 이전페이지로  돌아가는 function */
+	function registerCandidate() {
+		var residentSeq = $("#candidateResidentSeq").val();
+		var simpleInfo = $("#simpleInfo").val();
+		var detailInfo = $("#detailInfo").val();
+		var etcInfo = $("#etcInfo").val();
+		var electVoteSeq = $("#electVoteSeq").val()
+		console.log(residentSeq);
+		console.log(simpleInfo);
+		console.log(detailInfo);
+		console.log(etcInfo);
 
+		$.ajax({
+			url:"/onepart/resident/insertElectionVoteCandidate",
+			type:"get",
+			data:{
+					residentSeq:residentSeq,
+					simpleInfo:simpleInfo,
+					detailInfo:detailInfo,
+					etcInfo:etcInfo,
+					electVoteSeq:electVoteSeq
+				},
+			success:function(){
+				console.log("success");
+				electVoteSeq = $("#electVoteSeq").val();
+				$.ajax({
+					url:"/onepart/resident/superintend_vote_registration_main",
+					dataType:"html",
+					type:"get",
+					data:{voteSeq:electVoteSeq},
+					success:function(result){
+						$('#modal-message').remove();
+						$('.modal-backdrop').remove();
+						$("#content").html(result);
+					}
+
+				});
+			},error:function(){
+				alert("후보등록을 하지 않은 입주자입니다.")
+			}
+		});
+
+	}
 </script>
 </body>
 </html>

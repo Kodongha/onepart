@@ -1,9 +1,6 @@
 package com.kh.onepart.resident.superintend_vote.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.onepart.resident.superintend_vote.model.service.SuperintendVoteService;
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
+import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteCandidate;
@@ -103,11 +101,32 @@ public class SuperintendVoteController {
 
 		return mv;
 	}
-
+	///////////////////////////////////////////////////
 	@RequestMapping("/resident/votingRealvote")
-	public String votingRealvote() {
+	public ModelAndView votingRealvote(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("/menuSuperintendVote");
-		return "/resident/superintend_vote/superintend_vote/superintend_vote_realvote_main";
+		int voteSeq = Integer.parseInt(request.getParameter("voteSeq"));
+		String voteKind = request.getParameter("voteKind");
+
+		if(voteKind.equals("선거")) {
+			//해당 선거 정보 담아오는 메소드
+			ElectionVote ev = svs.selectOneElectionVote(voteSeq);
+
+			//해당 선거에 등록된 후보 담아오는 메소드
+			ArrayList candidateList = svs.selectAllElectionVoteCandidate(voteSeq);
+
+			mv.addObject("candidateList", candidateList);
+			mv.addObject("ev", ev);
+
+		}else {
+			//해당 투표 정보 담아오는 메소드
+			//GeneralVote gv = svs.selectOneGeneralVote(voteSeq);
+
+		}
+
+		mv.setViewName("/resident/superintend_vote/superintend_vote/superintend_vote_realvote_main");
+
+		return mv;
 	}
 
 	@RequestMapping("/resident/sendMessageResident")
@@ -259,21 +278,36 @@ public class SuperintendVoteController {
 		tdi.setRmNm(rmNm);
 		ArrayList<ApartDetailInfo> nameList = svs.selectAllNameList(tdi);
 		System.out.println("controller nameList : " + nameList);
-//		ArrayList name = new ArrayList();
-//		HashMap nameMap = new HashMap();
-//		for(int i = 0; i < nameList.size(); i++) {
-//			try {
-//				URLEncoder.encode(nameList.get(i).getResidentNm() , "UTF-8");
-//			} catch (UnsupportedEncodingException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			name.add(nameList.get(i).getResidentNm());
-//		}
-//
-//		nameMap.put("name", name);
 
 		mv.addObject("nameList", nameList);
+		mv.setViewName("jsonView");
+
+		return mv;
+	}
+
+	@RequestMapping("/resident/insertElectionVoteCandidate")
+	public ModelAndView insertElectionVoteCandidate(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/menuSuperintendVote");
+		int residentSeq = Integer.parseInt(request.getParameter("residentSeq"));
+		String simpleInfo = request.getParameter("simpleInfo");
+		String detailInfo = request.getParameter("detailInfo");
+		String etcInfo = request.getParameter("etcInfo");
+		int electVoteSeq = Integer.parseInt(request.getParameter("electVoteSeq"));
+		System.out.println("insert residentSeq : " + residentSeq);
+		System.out.println("insert simpleInfo : " + simpleInfo);
+		System.out.println("insert detailInfo : " + detailInfo);
+		System.out.println("insert etcInfo : " + etcInfo);
+
+
+		//해당 후보를 등록처리하고 정보 update하는 메소드
+		ElectionVoteCandidate evc = new ElectionVoteCandidate();
+		evc.setResidentSeq(residentSeq);
+		evc.setSimpleInfo(simpleInfo);
+		evc.setDetailInfo(detailInfo);
+		evc.setEtcInfo(etcInfo);
+		evc.setElectVoteSeq(electVoteSeq);
+		int result = svs.updateElectionVoteCandidate(evc);
+
 		mv.setViewName("jsonView");
 
 		return mv;

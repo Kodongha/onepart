@@ -15,6 +15,7 @@ public class ApartDetailInfo implements java.io.Serializable{
 	private int squareMeasure;            //평수
 	private String residentNm;
 	private String residentPhone;
+	private int residentSeq;
 
 }
 

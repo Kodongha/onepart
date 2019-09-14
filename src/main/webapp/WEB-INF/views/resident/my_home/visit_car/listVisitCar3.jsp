@@ -34,7 +34,7 @@
 				<tr class="odd gradeX">
 					<td>
 					<c:if test="${ myVisitcarList.status == 1}">
-						<input type="checkbox">
+						<input type="checkbox" value="${myVisitcarList.visitCarSeq }" name="timeCheckbox">
 					</c:if>
 					<c:if test="${ myVisitcarList.status == 2}">
 						<input type="checkbox" disabled=true>
@@ -82,7 +82,37 @@
 	<!-- ================== END PAGE LEVEL JS ================== -->
 
 	<script>
+
+
 		$(document).ready(function() {
+
+			console.log("로딩");
+
+			var time = new Array();
+			$("input[type='checkbox'][name='timeCheckbox']").change(function(){
+				console.log($(this).val())
+
+				//선택된값 시간대 배열에 담아 input에 출력
+				if($(this).is(":checked")){
+					console.log("checked!!");
+					//time.push($(this).val())
+					//$("#propUseTm").val(time);
+				}else{
+					console.log("unchecked!!")
+					//var remove = $(this).val();
+					//time.splice(time.indexOf($(this).val()), 1);
+					//$("#propUseTm").val(time);
+				}
+				//총사용시간 input에 출력
+				//$("#allUserTm").val(time.length);
+				//이용금액 input에 출력
+				//var price = time.length * $("#facDefaultFee").val();
+				//$("#toalFee").val(price);
+			});
+
+
+
+
 			$("#visitCarPanel").css("background-color","white");
 			TableManageDefault.init();
 

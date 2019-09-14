@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
+import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteCandidate;
@@ -25,5 +26,7 @@ public interface SuperintendVoteService {
 	ArrayList selectAllHoList(int bdNm);
 	//해당 선택동, 선택호 에 포함된 호 리스트 불러오는 메소드
 	ArrayList selectAllNameList(ApartDetailInfo tdi);
+	//해당 후보를 등록처리하고 정보 update하는 메소드
+	int updateElectionVoteCandidate(ElectionVoteCandidate evc);
 
 }

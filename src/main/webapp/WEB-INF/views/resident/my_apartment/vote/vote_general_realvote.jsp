@@ -29,7 +29,7 @@
 			</td>
 			<td style="width:15%" align="center">
 				<c:if test="${ voteUser.voteSeq == null }">
-					<a class="btn btn-success" style="width:100%" id="">투표하기</a>
+					<a class="btn btn-success" style="width:100%" id="insertGeneralVoteResult">투표완료</a>
 				</c:if>
 				<c:if test="${ voteUser.voteSeq != null }">
 					<a class="btn btn-danger" style="width:100%" id="updateGeneralVoteResult">수정완료</a>
@@ -42,7 +42,7 @@
 		<!-- 각 후보정보 div -->
 		<div>
 			<br>
-			<c:if test="${ voteUser.candidateSeq == null }">
+			<c:if test="${ voteUser.candidateSeq != null }">
 				<table style="width:95%">
 					<c:forEach var="candidateList" items="${ candidateList }">
 						<tr>
@@ -63,7 +63,7 @@
 					</c:forEach>
 				</table>
 			</c:if>
-			<c:if test="${ voteUser.candidateSeq != null }">
+			<c:if test="${ voteUser.candidateSeq == null }">
 				<table style="width:95%">
 					<c:forEach var="candidateList" items="${ candidateList }">
 						<tr>
@@ -118,14 +118,14 @@
 			});
 		});
 
-		/* 선택 후 수정내역 update하고 이전 페이지로 되돌리는 function */
-		$("#updateGeneralVoteResult").click(function(){
+		/* 선택 후 투표내역 insert하고 이전 페이지로 되돌리는 function */
+		$("#insertGeneralVoteResult").click(function(){
 			var gnrVoteSeq = $("#gnrVoteSeq").val();
 			var gnrVoteCndtEnrollSeq =$("#modifyCandidateResult").val();
 			console.log(gnrVoteSeq);
 			console.log(gnrVoteCndtEnrollSeq);
 			$.ajax({
-				url:"/onepart/resident/updateGeneralVote",
+				url:"/onepart/resident/insertGeneralVote",
 				type:"get",
 				dataType:"html",
 				data:{

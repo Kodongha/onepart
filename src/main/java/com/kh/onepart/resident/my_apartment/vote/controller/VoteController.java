@@ -11,6 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.my_apartment.vote.model.service.VoteService;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteList;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.VotePrtcpt;
 
 @Controller
 public class VoteController {
@@ -62,15 +65,67 @@ public class VoteController {
 	}
 
 	@RequestMapping("/resident/general")
-	public String moveVote_general() {
+	public ModelAndView moveVote_general(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("/menuVote");
-		return "/resident/my_apartment/vote/vote_general";
+		int voteSeq = Integer.parseInt(request.getParameter("voteSeq"));
+		System.out.println("controller voteSeq : " + voteSeq);
+		int residentSeq = ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentSeq();
+
+		//선택한 선거의 상세정보를 불러오는 메소드
+		VoteList info = new VoteList();
+		info.setVoteSeq(voteSeq);
+		info.setResidentSeq(residentSeq);
+		GeneralVote vote = vs.selectOneGeneralVoteInfo(voteSeq);
+		System.out.println("controller vote : " + vote);
+
+		//로그인유저의 현황을 불러오는 메소드
+		VoteList voteUser = vs.selectOneGeneralVoteUserInfo(info);
+		System.out.println("controller voteUser : " + voteUser);
+
+		//선택한 선거의 총 선거율을 불러오는 메소드
+
+		//선택한 선거의 후보 리스트를 불러오는 메소드
+		ArrayList candidateList = vs.selectAllCandidateList(voteSeq);
+		System.out.println("controller candidateList : " + candidateList);
+
+		mv.addObject("vote", vote);
+		mv.addObject("candidateList", candidateList);
+		mv.addObject("voteUser", voteUser);
+		mv.setViewName("/resident/my_apartment/vote/vote_general");
+
+		return mv;
 	}
 
 	@RequestMapping("/resident/modifyGeneral")
-	public String moveVote_modifyGeneral() {
-		System.out.println("/menuVote");
-		return "/resident/my_apartment/vote/vote_general_modify";
+	public ModelAndView moveVote_modifyGeneral(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/modifyGeneral");
+		int gnrVoteSeq = Integer.parseInt(request.getParameter("gnrVoteSeq"));
+		System.out.println("modify gnrVoteSeq : " + gnrVoteSeq);
+		int residentSeq = ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentSeq();
+
+		//선택한 선거의 상세정보를 불러오는 메소드
+		VoteList info = new VoteList();
+		info.setVoteSeq(gnrVoteSeq);
+		info.setResidentSeq(residentSeq);
+		GeneralVote vote = vs.selectOneGeneralVoteInfo(gnrVoteSeq);
+		System.out.println("modify vote : " + vote);
+
+		//로그인유저의 현황을 불러오는 메소드
+		VoteList voteUser = vs.selectOneGeneralVoteUserInfo(info);
+		System.out.println("modify voteUser : " + voteUser);
+
+		//선택한 선거의 총 선거율을 불러오는 메소드
+
+		//선택한 선거의 후보 리스트를 불러오는 메소드
+		ArrayList candidateList = vs.selectAllCandidateList(gnrVoteSeq);
+		System.out.println("modify candidateList : " + candidateList);
+
+		mv.addObject("vote", vote);
+		mv.addObject("candidateList", candidateList);
+		mv.addObject("voteUser", voteUser);
+		mv.setViewName("/resident/my_apartment/vote/vote_general_modify");
+
+		return mv;
 	}
 
 	@RequestMapping("/resident/endElection")
@@ -95,6 +150,82 @@ public class VoteController {
 	public String moveVote_realVote() {
 		System.out.println("/menuVote");
 		return "/resident/my_apartment/vote/vote_election_realvote";
+	}
+
+	@RequestMapping("/resident/realVoteGeneral")
+	public ModelAndView moveVote_realVoteGeneral(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/realVoteGeneral");
+		int gnrVoteSeq = Integer.parseInt(request.getParameter("gnrVoteSeq"));
+		System.out.println("modify gnrVoteSeq : " + gnrVoteSeq);
+		int residentSeq = ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentSeq();
+
+		//선택한 선거의 상세정보를 불러오는 메소드
+		VoteList info = new VoteList();
+		info.setVoteSeq(gnrVoteSeq);
+		info.setResidentSeq(residentSeq);
+		GeneralVote vote = vs.selectOneGeneralVoteInfo(gnrVoteSeq);
+		System.out.println("modify vote : " + vote);
+
+		//로그인유저의 현황을 불러오는 메소드
+		VoteList voteUser = vs.selectOneGeneralVoteUserInfo(info);
+		System.out.println("modify voteUser : " + voteUser);
+
+		//선택한 선거의 총 선거율을 불러오는 메소드
+
+		//선택한 선거의 후보 리스트를 불러오는 메소드
+		ArrayList candidateList = vs.selectAllCandidateList(gnrVoteSeq);
+		System.out.println("modify candidateList : " + candidateList);
+
+		mv.addObject("vote", vote);
+		mv.addObject("candidateList", candidateList);
+		mv.addObject("voteUser", voteUser);
+		mv.setViewName("/resident/my_apartment/vote/vote_general_realvote");
+
+		return mv;
+	}
+
+	@RequestMapping("/resident/updateGeneralVote")
+	public ModelAndView updateGeneralVote(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/updateGeneralVote");
+
+		int residentSeq = ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentSeq();
+		int gnrVoteSeq = Integer.parseInt(request.getParameter("gnrVoteSeq"));
+		int gnrVoteCndtEnrollSeq = Integer.parseInt(request.getParameter("gnrVoteCndtEnrollSeq"));
+		System.out.println("update gnrVoteSeq : " + gnrVoteSeq);
+		System.out.println("update gnrVoteCndtEnrollSeq : " + gnrVoteCndtEnrollSeq);
+
+		//해당 투표의 수정내역 update하는 메소드
+		VotePrtcpt vp = new VotePrtcpt();
+		vp.setGnrVoteSeq(gnrVoteSeq);
+		vp.setResidentSeq(residentSeq);
+		int result = vs.updateGeneralVote(vp, gnrVoteCndtEnrollSeq);
+
+		mv.setViewName("jsonView");
+
+		return mv;
+
+	}
+
+	@RequestMapping("/resident/insertGeneralVote")
+	public ModelAndView insertGeneralVote(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/updateGeneralVote");
+
+		int residentSeq = ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentSeq();
+		int gnrVoteSeq = Integer.parseInt(request.getParameter("gnrVoteSeq"));
+		int gnrVoteCndtEnrollSeq = Integer.parseInt(request.getParameter("gnrVoteCndtEnrollSeq"));
+		System.out.println("update gnrVoteSeq : " + gnrVoteSeq);
+		System.out.println("update gnrVoteCndtEnrollSeq : " + gnrVoteCndtEnrollSeq);
+
+		//해당 투표의 수정내역 insert하는 메소드
+		VotePrtcpt vp = new VotePrtcpt();
+		vp.setGnrVoteSeq(gnrVoteSeq);
+		vp.setResidentSeq(residentSeq);
+		int result = vs.insertGeneralVote(vp, gnrVoteCndtEnrollSeq);
+
+		mv.setViewName("jsonView");
+
+		return mv;
+
 	}
 
 }
