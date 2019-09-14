@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.onepart.common.PageInfo;
+import com.kh.onepart.resident.messenger.model.vo.ManagerAndDeptVO;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
 
@@ -34,5 +35,12 @@ public interface MessengerDao {
 	 */
 	ArrayList<ResponseMessengerAndResidentAndManagerVO> selectMessengerList(SqlSessionTemplate sqlSession, PageInfo pi,
 			RequestMessengerVO requestMessengerVO);
+
+	/**
+	 * 직원 명단 조회
+	 * @param sqlSession
+	 * @return
+	 */
+	ArrayList<ManagerAndDeptVO> selectManagerList(SqlSessionTemplate sqlSession);
 
 }

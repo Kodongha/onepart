@@ -51,7 +51,9 @@
 	<!-- ================== END PAGE LEVEL JS ================== -->
 
 	<script type="text/javascript">
+
 		$(function(){
+
 			loadMessenger();
 
 			$('.messengerBtn').click(function(){
@@ -71,10 +73,9 @@
 				}
 
 				// 페이지 호출
-				loadMessenger(type, null);
 
+				loadMessenger(type, 1);
 			});
-
 		});
 
 		// 쪽지 리스트 가져오기
@@ -95,6 +96,7 @@
 			console.log('type :: ' + type);
 			console.log('currentPage :: ' + currentPage);
 
+			//
 			$.ajax({
 				url : 'loadMessenger',
 				type : 'post',
@@ -106,17 +108,101 @@
 					console.log('succ');
 					console.log(data);
 
-					var $tr
+					var list = data.responseMessengerAndResidentAndManagerVOList;
+					var pi = data.pi;
+					var messengerList = $('#messengerList').children('tbody');
+
+					messengerList.children().remove();
+
+					for(var i in list){
+						var $tr = $('<tr/>');
+						var $checkBoxTd = $('<td/>', {class:"email-select"});
+						var $a = $('<a/>', {'data-click':"email-select-single"});
+						var $i = $('<i/>', {class:'fa fa-square-o fa-fw'});
+
+						// sender
+						var sender;
+						if(!list[i].residentNm){
+							sender = list[i].managerNm;
+						} else {
+							sender = list[i].residentNm;
+						}
+
+						// content
+						var content = list[i].messengerContent.substring(0, 15) + "...";
+
+						// date
+						var date = list[i].messengerEnrollDt;
+
+						var $nameTd = $('<td/>', {class:"email-sender", text:sender});
+						var $contentTd = $('<td/>', {class:"email-subject", text:content});
+						var $dateTd = $('<td/>', {class:"email-date", text:date});
+
+						$a.append($i);
+						$checkBoxTd.append($a);
+						$tr.append($checkBoxTd);
+						$tr.append($nameTd);
+						$tr.append($contentTd);
+						$tr.append($dateTd);
+
+						messengerList.append($tr);
+					}
+
+					// paging
+					messengerPaging = $('#messengerPaging');
+					messengerPaging.children().remove();
+					var $firstLi;
+					var $firstA;
+					if(pi.currentPage <= 1){
+						$firstLi = $('<li>', {class:'disabled'});
+						$firstA = $('<a>', {html:'<<'});
+						$firstLi.append($firstA);
+					} else {
+						$firstLi = $('<li>');
+						$firstA = $('<a>', {html:'<<', href:'javascript:loadMessenger(1);'});
+						$firstLi.append($firstA);
+					}
+					messengerPaging.append($firstLi);
+
+					for(var p=pi.startPage; p<=pi.endPage; p++){
+
+						var $repeatLi;
+						var $repeatA;
+
+						if(p == pi.currentPage) {
+							$repeatLi = $('<li>', {class:"active"});
+							$repeatA = $('<a>', {html:p});
+							$repeatLi.append($repeatA);
+						}
+						if(p != pi.currentPage) {
+							$repeatLi = $('<li>');
+							$repeatA = $('<a>', {html:p, href:'javascript:loadMessenger('+type+','+p+');'});
+							$repeatLi.append($repeatA);
+						}
+						messengerPaging.append($repeatLi);
+
+					} // end for
+
+					var $listLi;
+					var $listA;
+					if(pi.currentPage < pi.maxPage){
+						$listLi = $('<li>');
+						$listA = $('<a>', {html:'>>', href:'javascript:loadMessenger('+pi.maxPage+');'});
+						$listLi.append($listA);
+					} else {
+						$listLi = $('<li>', {class:'disabled'});
+						$listA = $('<a>', {html:'>>'});
+						$listLi.append($listA);
+					}
+					messengerPaging.append($listLi);
 
 
 				},
 				error : function(error){
 					console.log('error');
 				}
-
 			});
 		}
-
 	</script>
 
 </head>
@@ -147,46 +233,34 @@
                       <a href="#" class="btn btn-sm btn-inverse"><i class="fa fa-times-circle m-r-5"></i> 선택 삭제</a>
                   </div>
 	        <div class="email-content">
-                      <table class="table table-email" id="messengerList">
-                          <thead>
-                              <tr>
-                                  <th class="email-select"><a href="#" data-click="email-select-all"><i class="fa fa-square-o fa-fw"></i></a></th>
-                                  <th>Sender</th>
-                                  <th>Content</th>
-	                              <th>Date</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                          </tbody>
-                      </table>
-                      <div class="email-footer clearfix">
-                          737 messages
-                          <ul class="pagination pagination-sm m-t-0 m-b-0 pull-right">
-                              <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-double-left"></i></a></li>
-                              <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-left"></i></a></li>
-                              <li><a href="javascript:;"><i class="fa fa-angle-right"></i></a></li>
-                              <li><a href="javascript:;"><i class="fa fa-angle-double-right"></i></a></li>
-                          </ul>
-                      </div>
+				<table class="table table-email" id="messengerList">
+				    <thead>
+				        <tr>
+				            <th class="email-select"><a href="#" data-click="email-select-all"><i class="fa fa-square-o fa-fw"></i></a></th>
+				            <th>Sender</th>
+				            <th>Content</th>
+				         	<th>Date</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				    </tbody>
+				</table>
+
+				<div class="email-footer clearfix">
+				    <ul class="pagination pagination-sm m-t-0 m-b-0 pull-right" id="messengerPaging">
+				        <!--
+				        <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-double-left"></i></a></li>
+				        <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-left"></i></a></li>
+				        <li><a href="javascript:;" id=""><i class="fa fa-angle-right"></i></a></li>
+				        <li><a href="javascript:;"><i class="fa fa-angle-double-right"></i></a></li>
+				    	 -->
+				    </ul>
+				</div>
 	        </div>
 	    </div>
 	    <!-- end col-10 -->
 	</div>
 	<!-- end row -->
 	</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>

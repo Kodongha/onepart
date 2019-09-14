@@ -2,11 +2,14 @@ package com.kh.onepart.resident.messenger.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.onepart.account.model.vo.ManagerVO;
@@ -14,6 +17,7 @@ import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.common.Pagination;
 import com.kh.onepart.resident.messenger.model.service.MessengerService;
+import com.kh.onepart.resident.messenger.model.vo.ManagerAndDeptVO;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
 
@@ -61,7 +65,7 @@ public class MessengerController {
 
 		// 관리자일 경우
 		} else if(session.getAttribute("loginUser") instanceof ManagerVO) {
-			System.out.println("resident in");
+			System.out.println("manager in");
 			loginUser = String.valueOf(((ManagerVO) session.getAttribute("loginUser")).getManagerSeq());
 
 		}
@@ -89,6 +93,7 @@ public class MessengerController {
 
 
 		modelAndView.addObject("responseMessengerAndResidentAndManagerVOList", responseMessengerAndResidentAndManagerVOList);
+		modelAndView.addObject("pi", pi);
 
 		modelAndView.setViewName("jsonView");
 		return modelAndView;
@@ -101,9 +106,28 @@ public class MessengerController {
 	 * @return
 	 */
 	@RequestMapping("messenger/writeMessengerForm")
-	public String moveWriteMessengerForm() {
+	public ModelAndView moveWriteMessengerForm(HttpSession session, ModelAndView modelAndView) {
 
-		return "messenger/resident/writeMessengerForm";
+		String loginUser = "";
+
+		// 입주민일 경우, int > String 으로 형변환
+		if(session.getAttribute("loginUser") instanceof ResidentVO) {
+			System.out.println("resident in");
+			loginUser = String.valueOf(((ResidentVO) session.getAttribute("loginUser")).getResidentSeq());
+			ArrayList<ManagerAndDeptVO> managerAndDeptVOList = messengerService.selectManagerList();
+			System.out.println("managerAndDeptVOList:::" + managerAndDeptVOList);
+			modelAndView.addObject("managerAndDeptVOList", managerAndDeptVOList);
+
+		// 관리자일 경우
+		} else if(session.getAttribute("loginUser") instanceof ManagerVO) {
+			System.out.println("manager in");
+			loginUser = String.valueOf(((ManagerVO) session.getAttribute("loginUser")).getManagerSeq());
+			// ArrayList<ManagerAndDeptVO> managerAndDeptVOList = messengerService.selectResidentList();
+		}
+
+		modelAndView.setViewName("messenger/resident/writeMessengerForm");
+
+		return modelAndView;
 	}
 
 	/**
@@ -111,9 +135,12 @@ public class MessengerController {
 	 * @return
 	 */
 	@RequestMapping("messenger/writeMessenger")
-	public String insertMessenger(RequestMessengerVO requestMessengerVO, String[] tags, HttpSession session) {
+	public String insertMessenger(RequestMessengerVO requestMessengerVO, String[] tags, HttpSession session, @RequestParam(name="files[]", required=false) MultipartFile file, HttpServletRequest request) {
+
 		System.out.println("messenger/writeMessenger in!");
 		System.out.println("requestMessengerVO:::" + requestMessengerVO);
+
+		System.out.println("file : " + file);
 
 		String messengerSender = "";
 		// 입주민일 경우, int > String 으로 형변환
@@ -124,13 +151,20 @@ public class MessengerController {
 
 		// 관리자일 경우
 		} else if(session.getAttribute("loginUser") instanceof ManagerVO) {
-			System.out.println("resident in");
+			System.out.println("manager in");
 			messengerSender = String.valueOf(((ManagerVO) session.getAttribute("loginUser")).getManagerSeq());
 
 		}
 		requestMessengerVO.setMessengerSender(messengerSender);
 
-		messengerService.insertMessenger(requestMessengerVO, tags);
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String uploadFiles = "messenger";
+		String filePath = root + "\\" + uploadFiles;
+		System.out.println(root + "\\" + uploadFiles);
+
+
+
+		// messengerService.insertMessenger(requestMessengerVO, tags);
 
 		return "redirect:moveMessenger";
 	}

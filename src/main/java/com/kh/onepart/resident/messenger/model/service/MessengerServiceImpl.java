@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.resident.messenger.model.dao.MessengerDao;
+import com.kh.onepart.resident.messenger.model.vo.ManagerAndDeptVO;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
 
@@ -55,6 +56,14 @@ public class MessengerServiceImpl implements MessengerService {
 		ArrayList<ResponseMessengerAndResidentAndManagerVO> responseMessengerAndResidentAndManagerVOList = messengerDao.selectMessengerList(sqlSession, pi, requestMessengerVO);
 
 		return responseMessengerAndResidentAndManagerVOList;
+	}
+
+	/** 직원 명단 조회 */
+	@Override
+	public ArrayList<ManagerAndDeptVO> selectManagerList() {
+		// TODO Auto-generated method stub
+
+		return messengerDao.selectManagerList(sqlSession);
 	}
 
 }
