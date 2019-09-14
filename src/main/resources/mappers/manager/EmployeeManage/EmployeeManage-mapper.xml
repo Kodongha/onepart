@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="EmployeeManage">
+
+	<resultMap type="com.kh.onepart.manager.employee_manage.model.vo.EmployeeManageVO" id="EmployeeManageVOResultSet">
+		<id property="managerSeq" column="MANAGER_SEQ"/>
+		<result property="managerNm" column="MANAGER_NM"/>
+		<result property="deptCd" column="DEPT_CD"/>
+		<result property="managerId" column="MANAGER_ID"/>
+		<result property="managerPwd" column="MANAGER_PWD"/>
+		<result property="managerPhone" column="MANAGER_PHONE"/>
+		<result property="managerEmail" column="MANAGER_EMAIL"/>
+		<result property="managerEnrollDt" column="MANAGER_ENROLL_DT"/>
+		<result property="managerLeaveDt" column="MANAGER_LEAVE_DT"/>
+		<result property="managerLeaveTf" column="MANAGER_LEAVE_TF"/>
+		<result property="deptNm" column="DEPT_NM"/>
+	</resultMap>
+
+	<select id="managerList" resultMap="EmployeeManageVOResultSet">
+		SELECT *
+		FROM MANAGER M
+		JOIN DEPT D ON(M.DEPT_CD = D.DEPT_CD)
+		WHERE NOT M.DEPT_CD IN (1)
+	</select>
+
+
+</mapper>

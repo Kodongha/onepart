@@ -24,4 +24,15 @@ public class ResidentCarServiceImpl implements ResidentCarService{
 		return residentCarDao.residentCarList(sqlSession);
 	}
 
+	@Override
+	public void addResidentCar(ResidentCarVO residentCarVO) {
+		residentCarDao.addResidentCar(sqlSession,residentCarVO);
+
+	}
+
+	@Override
+	public void deleteResidentCar(String residentEnrollCar) {
+		residentCarDao.deleteResidentCar(sqlSession, residentEnrollCar);
+	}
+
 }

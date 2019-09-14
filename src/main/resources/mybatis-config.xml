@@ -39,6 +39,7 @@
 		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate" alias="ElectionVoteCandidate"/>
 		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo" alias="ApartDetailInfo"/>
 		<typeAlias type="com.kh.onepart.resident.my_apartment.vote.model.vo.VoteList" alias="vote_VoteList"/>
+		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatNoticeVO" alias="OpenChatNoticeVO"/>
 
 
 		<!-- Manager -->
@@ -49,7 +50,7 @@
     	<typeAlias type="com.kh.onepart.manager.facility.model.vo.FacReservation" alias="manager_facReservation"/>
     	<typeAlias type="com.kh.onepart.manager.facility.model.vo.Image" alias="manager_img"/>
     	<typeAlias type="com.kh.onepart.manager.facility.model.vo.FacSeatInfo" alias="manager_facSeatInfo" />
-    	<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatNoticeVO" alias="OpenChatNoticeVO"/>
+    	<typeAlias type="com.kh.onepart.manager.employee_manage.model.vo.EmployeeManageVO" alias="EmployeeManage" />
 
 	</typeAliases>
 
@@ -80,6 +81,7 @@
 		<mapper resource="mappers/manager/Faclilty/manager-faclilty-mapper.xml" />
 		<mapper resource="mappers/manager/Faclilty/manager-faclilty-mapper.xml" />
 		<mapper resource="mappers/manager/residentCar/residentCar-mapper.xml" />
+		<mapper resource="mappers/manager/EmployeeManage/EmployeeManage-mapper.xml" />
 
 
 
