@@ -16,11 +16,29 @@
 	</resultMap>
 
 	<select id="residentCarList" resultMap="ResidentCarVOResultSet">
-		SELECT BD_NM, RM_NM, CAR_NUM, ENROLL_PURPOSE, CAR_NM, CAR_TYPE, RESIDENT_NM
+		SELECT RESIDENT_ENROLL_CAR, BD_NM, RM_NM, CAR_NUM, ENROLL_PURPOSE, CAR_NM, CAR_TYPE, RESIDENT_NM
 		FROM RESIDENT_ENROLL_CAR REC
         JOIN RESIDENT R ON(R.RESIDENT_SEQ = REC.RESIDENT_SEQ)
         JOIN APT_DETAIL_INFO ADIS ON (R.APT_DETAIL_INFO_SEQ = ADIS.APT_DETAIL_INFO_SEQ)
 	</select>
 
 
+	<insert id="addResidentCar">
+		INSERT INTO RESIDENT_ENROLL_CAR
+			(RESIDENT_ENROLL_CAR, RESIDENT_SEQ, CAR_TYPE, CAR_NM, ENROLL_PURPOSE, ENROLL_DT, CAR_NUM)
+		VALUES
+			(RESIDENT_ENROLL_CAR_SEQ.nextval, (SELECT RESIDENT_SEQ
+                                                FROM RESIDENT
+                                                WHERE APT_DETAIL_INFO_SEQ = (SELECT APT_DETAIL_INFO_SEQ
+                                                                             FROM APT_DETAIL_INFO
+                                                                             WHERE BD_NM = #{bdNm} AND RM_NM = #{rmNm} )
+                                                AND RESIDENT_NM = #{residentNm}),
+                                                #{carType}, #{carNm}, #{enrollPurpose},sysdate, #{carNum})
+	</insert>
+
+	<delete id="deleteResidentCar" parameterType="String">
+		DELETE
+		FROM RESIDENT_ENROLL_CAR
+		WHERE RESIDENT_ENROLL_CAR = #{residentEnrollCar}
+	</delete>
 </mapper>

@@ -12,11 +12,63 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style type="text/css">
-.buttonTable{
+.buttonTable {
+	width: 100%;
+}
+#carnumTable{
 width:100%;
 }
-.form-control {
-	width: 90% !important;
+#address{
+width:100%;
+}
+#carinfoTable{
+width:100%;
+}
+
+#carnumTable tr td{
+width:75%;
+text-align:center;
+font-size: 1.2em;
+padding:5px;
+}
+#carinfoTable tr td{
+width:75%;
+text-align:center;
+font-size: 1.2em;
+padding:5px;
+}
+#address tr td{
+width:25%;
+text-align:center;
+font-size: 1.2em;
+padding:5px;
+}
+
+#address tr td:nth-child(3){
+width:5%;
+text-align:center;
+font-size: 1.2em;
+}
+#address tr td:nth-child(5){
+width:5%;
+text-align:center;
+font-size: 1.2em;
+}
+
+#carnumTable tr td:nth-child(1){
+width:25%;
+text-align:center;
+font-size: 1.2em;
+}
+#address tr td:nth-child(1){
+width:20.3%;
+text-align:center;
+font-size: 1.2em;
+}
+#carinfoTable tr td:nth-child(1){
+width:25%;
+text-align:center;
+font-size: 1.2em;
 }
 
 @media ( min-width : 992px) {
@@ -45,26 +97,15 @@ width:100%;
 
 #carre {
 	text-align: center;
+	margin-bottom:40px;
 }
 
-.form-control {
-	margin-right: 96px !important;
-	margin: 7px;
-}
 
-table#address tr td {
-	width: 25%;
-	text-align: center;
-}
-
-table#address {
-	width: 50%;
-	margin-left: 134px;
-}
 
 #btncar {
 	text-align: center;
 	width: 100%;
+	margin-top:20px;
 }
 
 @media ( min-width : 992px) {
@@ -76,10 +117,6 @@ table#address {
 
 .btn {
 	width: 20%;
-}
-
-table.dataTable {
-	margin-top: 40px !important;
 }
 
 button#delete {
@@ -103,7 +140,7 @@ table.dataTable tbody td:nth-child(1) {
 }
 
 table.dataTable tbody td {
-	padding: 10px 5px;
+	padding: 10px 15px;
 }
 
 input[type=checkbox] {
@@ -177,8 +214,15 @@ input[type=checkbox] {
 					<table id="data-table" class="table table-striped table-bordered">
 						<thead>
 							<tr>
-								<td colspan="3" style="border-top:1px solid white; border-right:1px solid white; border-left:1px solid white"><button type="button" id="delete" class="btn btn-sm btn-warning modal-show">삭제</button></td>
-								<td colspan="4" style="text-align:right; border-top:1px solid white; border-right:1px solid white; border-left:1px solid white"><button id="add-with-callbacks" class="btn btn-sm btn-warning modal-show" data-modal-id="createRoomDiv">차량등록</button></td>
+								<td colspan="3"
+									style="border-top: 1px solid white; border-right: 1px solid white; border-left: 1px solid white"><button
+										type="button"
+										class="btn btn-sm btn-warning modal-show" id="deleteResidentCar">삭제</button></td>
+								<td colspan="4"
+									style="text-align: right; border-top: 1px solid white; border-right: 1px solid white; border-left: 1px solid white"><button
+										id="add-with-callbacks"
+										class="btn btn-sm btn-warning modal-show"
+										data-modal-id="createRoomDiv">차량등록</button></td>
 							</tr>
 							<tr>
 								<th>선택</th>
@@ -192,19 +236,21 @@ input[type=checkbox] {
 						</thead>
 						<tbody id="tbodyDiv">
 
-						<c:forEach var="car" items="${residentCarList}" varStatus="status">
+							<c:forEach var="car" items="${residentCarList}"
+								varStatus="status">
 
-							<tr class="odd gradeX">
-								<td><input type="checkbox"></td>
-								<td class="carNum">${car.carNum }</td>
-								<td class="bdrm">${car.bdNm }동 ${ car.rmNm }호</td>
-								<td class="residentNm">${car.residentNm }</td>
-								<td class="carType">${car.carType }</td>
-								<td class="carNm">${car.carNm }</td>
-								<td class="enrollPurpose">${car.enrollPurpose }</td>
+								<tr class="odd gradeX">
 
-							</tr>
-						</c:forEach>
+									<td><input name="residentCarCheck" id="residentCarCheck" type="checkbox" value=${car.residentEnrollCar }></td>
+									<td class="carNum">${car.carNum }</td>
+									<td class="bdrm">${car.bdNm }동${ car.rmNm }호</td>
+									<td class="residentNm">${car.residentNm }</td>
+									<td class="carType">${car.carType }</td>
+									<td class="carNm">${car.carNm }</td>
+									<td class="enrollPurpose">${car.enrollPurpose }</td>
+
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 
@@ -226,59 +272,73 @@ input[type=checkbox] {
 
 					<div class="panel-body">
 						<h2 id="carre">차량등록</h2>
-						<form class="form-horizontal">
-							<div class="form-group">
-								<label class="col-md-3 control-label">차량 번호</label>
-								<div class="col-md-9">
-									<input type="text" class="form-control"
-										placeholder="차량 번호를 입력하세요." />
-								</div>
-								<label class="col-md-3 control-label">주소</label>
-								<table id="address">
-									<tr>
-										<td><input type="text" class="form-control"
-											placeholder="동수를 입력하시오." /></td>
-										<td><h5>동</h5></td>
-										<td><input type="text" class="form-control"
-											placeholder="호수를 입력하시오." /></td>
-										<td><h5>호</h5></td>
-									</tr>
-								</table>
+						<form id="addResidentCar" class="form-horizontal">
+							<table id="carnumTable">
+								<tr>
+									<td><label>차량 번호</label></td>
+									<td><input id="carNum" type="text" class="form-control"
+										placeholder="차량 번호를 입력하세요." /></td>
+								</tr>
+
+							</table>
 
 
 
 
-								<label class="col-md-3 control-label">차주</label>
-								<div class="col-md-9">
-									<input type="text" class="form-control"
-										placeholder="차주를 입력하세요." />
-								</div>
-								<label class="col-md-3 control-label">차종</label>
-								<div class="col-md-9">
-									<input type="text" class="form-control"
-										placeholder="차종을 입력하세요." />
-								</div>
-								<label class="col-md-3 control-label">차명</label>
-								<div class="col-md-9">
-									<input type="text" class="form-control"
-										placeholder="차명을 입력하세요." />
-								</div>
-								<label class="col-md-3 control-label">용도</label>
-								<div class="col-md-9">
-									<input type="text" class="form-control"
-										placeholder="용도를 입력하세요." />
-								</div>
 
+							<table id="address">
+								<tr>
+									<td><label>주소</label></td>
+									<td><input id="bdNm" type="text" class="form-control"
+										placeholder="동수를 입력하시오." /></td>
+									<td>동</td>
+									<td><input id="rmNm" type="text" class="form-control"
+										placeholder="호수를 입력하시오." /></td>
+									<td>호</td>
+								</tr>
+							</table>
+
+
+
+							<table id="carinfoTable">
+								<tr>
+									<td><label>차주</label></td>
+									<td><input id="residentNm" type="text"
+										class="form-control" placeholder="차주를 입력하세요." /></td>
+								</tr>
+								<tr>
+									<td><label>차종</label></td>
+									<td><input id="carType" type="text" class="form-control"
+										placeholder="차종을 입력하세요." /></td>
+								</tr>
+								<tr>
+									<td><label>차명</label></td>
+									<td><input id="carNm" type="text" class="form-control"
+										placeholder="차명을 입력하세요." /></td>
+								</tr>
+								<tr>
+									<td><label>용도</label></td>
+									<td><input id="enrollPurpose" type="text"
+										class="form-control" placeholder="용도를 입력하세요." /></td>
+								</tr>
+							</table>
+
+
+
+
+
+
+
+
+
+
+
+							<div class="col-md-9" id="btncar">
+								<button type="submit" class="btn btn-sm btn-success">등록</button>
+								<button type="button"
+									class="btn btn-sm btn-cancel modal-hide-btn">취소</button>
 							</div>
 
-
-							<div class="form-group">
-								<div class="col-md-9" id="btncar">
-									<button type="submit" class="btn btn-sm btn-success">등록</button>
-									<button type="button"
-										class="btn btn-sm btn-cancel modal-hide-btn">취소</button>
-								</div>
-							</div>
 						</form>
 					</div>
 				</div>
@@ -288,100 +348,96 @@ input[type=checkbox] {
 	</div>
 
 
-	<script>
+<script>
+// 선택된값 삭제하기
+	$('#deleteResidentCar').click(function() {
+		var con = window.confirm("정말 삭제하시겠습니까?");
+		if(con){
+		var items = [];
+		$('input:checkbox[name=residentCarCheck]:checked').each(function() {
+			items.push($(this).val());
+		});
+		var tmp = items.join(',');
+		$.ajax({
+			url : '/onepart/manager/deleteResidentCar',
+			type : 'post',
+			data : {'tmp': tmp},
+			dataType : 'json',
+			success : function(result) {
+				location.reload();
+			},
+			error : function(err) {
+				alert('입주민 정보를 확인하세요.');
 
-/* function getResidentCarList() {
-			$.ajax({
-				url : '/onepart/resident/getResidentCarList',
-				type : 'get',
-				data : {},
-				dataType: 'json',
-				success : function(data) {
-
-						console.log(data)
-					if(data.result == "success") {
-						let carList = data.residentCarList;
-						drawResidentCarList(carList);
-						console.log(carList);
-					}
-				},
-				error : function(err) {
-					alert('차량 목록 가져오기에 실패했습니다.');
-				}
-			});
-		}
-
-
-function drawResidentCarList(carList) {
-	let listDiv = $('#tbodyDiv');
-	console.log("carList:::" + carList);
-
-	for(var a = 0; a<100; a++){
-
-
-		for(var i = 0; i < carList.length; i++){
-
-		if(i%2==1){
-			var carDivFormat = $('.format').clone();
-			carDivFormat.removeClass('format');
-			carDivFormat.show();
-		}else{
-			var carDivFormat = $('.format2').clone();
-			carDivFormat.removeClass('format2');
-			carDivFormat.show();
-		}
-
-
-		carDivFormat.find('.carNum').text(carList[i].carNum);
-		carDivFormat.find('.bdNm').text(carList[i].bdNm);
-		carDivFormat.find('.rmNm').text(carList[i].rmNm);
-		carDivFormat.find('.residentNm').text(carList[i].residentNm);
-		carDivFormat.find('.carType').text(carList[i].carType);
-		carDivFormat.find('.carNm').text(carList[i].carNm);
-		carDivFormat.find('.enrollPurpose').text(carList[i].enrollPurpose);
-
-		listDiv.append(carDivFormat);
-
-		}
+			}
+		});
 	}
-
-} */
-
-$(function() {
-	//getResidentCarList();
-	App.init();
-	displayInit();
-	TableManageColVis.init();
-	$("th").parent().children().eq(0).removeAttr("class");
-	$(".dataTables_info").remove();
-	$("#data-table_previous").text("이전");
-	$("#data-table_next").text("다음");
-	$(".ColVis_MasterButton span").text("컬럼 보이기/숨기기")
-	//$("#data-table_filter label").html('검색 : <input type="search" class="" placeholder="" aria-controls="data-table">')
-
-
-	$(document).on('click', '.ColVis_MasterButton', function(){
-		$("ul.ColVis_collection > li:first-child").remove();
 	});
-	$(document).on('click', 'th', function(){
+
+</script>
+<script>
+	//입주민 차량 추가 처리
+	$(document).on('submit', '#addResidentCar', function(e) {
+		e.preventDefault();
+
+		const data = {
+			carNum : $('#carNum').val(), //차량번호
+			bdNm : $('#bdNm').val(), //동
+			rmNm : $('#rmNm').val(), //호
+			residentNm : $('#residentNm').val(), //차주
+			carType : $('#carType').val(), //차종
+			carNm : $('#carNm').val(), //차명
+			enrollPurpose : $('#enrollPurpose').val()
+		//용도
+
+		};
+
+		$.ajax({
+			url : '/onepart/manager/addResidentCar',
+			type : 'post',
+			data : data,
+			dataType : 'json',
+			success : function(result) {
+				location.reload();
+			},
+			error : function(err) {
+				alert('입주민 정보를 확인하세요.');
+
+			}
+		});
+	});
+
+	//처음 페이지 시작
+	$(function() {
+
+		App.init();
+		displayInit();
+		TableManageColVis.init();
 		$("th").parent().children().eq(0).removeAttr("class");
+		$(".dataTables_info").remove();
+		$("#data-table_previous").text("이전");
+		$("#data-table_next").text("다음");
+		$(".ColVis_MasterButton span").text("컬럼 보이기/숨기기")
+
+		$(document).on('click', '.ColVis_MasterButton', function() {
+			$("ul.ColVis_collection > li:first-child").remove();
+		});
+		$(document).on('click', 'th', function() {
+			$("th").parent().children().eq(0).removeAttr("class");
+		});
+
 	});
 
-});
-
-
-			function displayInit() {
-				$('.custom-modal').addClass('modal-hide');
-				$(document).on('click', '.modal-hide-btn', function(){
-					$('.custom-modal').addClass('modal-hide');
-				});
-				$(document).on('click', '.modal-show', function(){
-					const modalId = $(this).data('modal-id');
-					$('#'+modalId).removeClass('modal-hide');
-				});
-			};
-
-
+	function displayInit() {
+		$('.custom-modal').addClass('modal-hide');
+		$(document).on('click', '.modal-hide-btn', function() {
+			$('.custom-modal').addClass('modal-hide');
+		});
+		$(document).on('click', '.modal-show', function() {
+			const modalId = $(this).data('modal-id');
+			$('#' + modalId).removeClass('modal-hide');
+		});
+	};
 </script>
 
 

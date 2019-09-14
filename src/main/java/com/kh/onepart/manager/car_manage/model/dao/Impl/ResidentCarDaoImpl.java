@@ -18,4 +18,16 @@ public class ResidentCarDaoImpl implements ResidentCarDao{
 
 	}
 
+	@Override
+	public void addResidentCar(SqlSessionTemplate sqlSession, ResidentCarVO residentCarVO) {
+		sqlSession.insert("ResidentCar.addResidentCar", residentCarVO);
+
+	}
+
+	@Override
+	public void deleteResidentCar(SqlSessionTemplate sqlSession, String residentEnrollCar) {
+		sqlSession.delete("ResidentCar.deleteResidentCar", residentEnrollCar);
+
+	}
+
 }
