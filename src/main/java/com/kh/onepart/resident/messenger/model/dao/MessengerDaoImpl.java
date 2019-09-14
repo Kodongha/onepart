@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.onepart.common.PageInfo;
+import com.kh.onepart.resident.messenger.model.vo.ManagerAndDeptVO;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
 
@@ -43,6 +44,14 @@ public class MessengerDaoImpl implements MessengerDao {
 		ArrayList<ResponseMessengerAndResidentAndManagerVO> responseMessengerAndResidentAndManagerVOList = (ArrayList) sqlSession.selectList("Messenger.selectMessengerList", requestMessengerVO, rowBounds);
 
 		return responseMessengerAndResidentAndManagerVOList;
+	}
+
+	/** 직원 명단 조회 */
+	@Override
+	public ArrayList<ManagerAndDeptVO> selectManagerList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+
+		return (ArrayList) sqlSession.selectList("Messenger.selectManagerList");
 	}
 
 }

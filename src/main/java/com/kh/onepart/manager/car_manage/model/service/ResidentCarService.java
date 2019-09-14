@@ -8,4 +8,8 @@ public interface ResidentCarService {
 
 	List<ResidentCarVO> residentCarList();
 
+	void addResidentCar(ResidentCarVO residentCarVO);
+
+	void deleteResidentCar(String string);
+
 }

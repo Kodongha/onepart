@@ -90,7 +90,11 @@
 							<tr>
 								<td>참여율</td>
 								<td>
-									<div class="progress-bar progress-bar-success" style="width: ${ prtcptPercentStr }%;">${ prtcptPercentStr } %</div>
+									<div class="progress progress-striped active">
+                                        <div class="progress-bar" style="width: ${ prtcptPercentStr }%">${ prtcptPercentStr } %</div>
+                                    </div>
+
+									<%-- <div class="progress-bar progress-bar-success" style="width: ${ prtcptPercentStr }%;">${ prtcptPercentStr } %</div> --%>
 								</td>
 							</tr>
 						</table>
@@ -129,7 +133,7 @@
 
 							<c:if test="${surveyQstn.surveyQstnType == 1 }">
 								(단답형)
-								
+
 							</c:if>
 							<c:if test="${surveyQstn.surveyQstnType == 2 }">
 								(장문형)

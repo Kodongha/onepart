@@ -10,4 +10,8 @@ public interface ResidentCarDao {
 
 	List<ResidentCarVO> residentCarList(SqlSessionTemplate sqlSession);
 
+	void addResidentCar(SqlSessionTemplate sqlSession, ResidentCarVO residentCarVO);
+
+	void deleteResidentCar(SqlSessionTemplate sqlSession, String residentEnrollCar);
+
 }

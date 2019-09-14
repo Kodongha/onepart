@@ -40,19 +40,34 @@ public class CarManageController {
 		return mv;
 	}
 
-//	@RequestMapping(value="/resident/getResidentCarList", produces = "application/text; charset=utf8")
-//	@ResponseBody
-//	public String residentCarList(HttpSession session) throws JsonProcessingException {
-//		List<ResidentCarVO> residentCarList = residentCarService.residentCarList();
-//		System.out.println(residentCarList);
-//
-//		Map<String, Object> result = new HashMap<>();
-//		result.put("result", "success");
-//		result.put("residentCarList", residentCarList );
-//		System.out.println("RESULT : " + result);
-//		return new ObjectMapper().writeValueAsString(result);
-//
-//	}
+	@RequestMapping(value="/manager/addResidentCar", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String addResidentCar(HttpSession session, ResidentCarVO residentCarVO) throws JsonProcessingException {
+
+		System.out.println("12345         " + residentCarVO);
+		residentCarService.addResidentCar(residentCarVO);
+		Map<String, Object> result = new HashMap<>();
+		result.put("result", "success");
+		return new ObjectMapper().writeValueAsString(result);
+
+	}
+
+	@RequestMapping(value="/manager/deleteResidentCar", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String deleteResidentCar(HttpSession session, String tmp) throws JsonProcessingException {
+
+		String[] list = tmp.split(",");
+
+		for (int i = 0; i < list.length; i++) {
+			System.out.println(list[i]);
+			residentCarService.deleteResidentCar(list[i]);
+		}
+
+		Map<String, Object> result = new HashMap<>();
+		result.put("result", "success");
+		return new ObjectMapper().writeValueAsString(result);
+
+	}
 
 
 

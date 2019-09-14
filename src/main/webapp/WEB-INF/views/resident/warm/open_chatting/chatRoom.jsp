@@ -8,6 +8,7 @@
 <!--<![endif]-->
 <head>
 <style type="text/css">
+	.panel-heading.notice .slimScrollDiv .slimScrollBar { background:#FFF !important;}
 	.downback{ position: absolute; right: 10px; top: 0px; cursor: pointer;}
 	.panel-inverse>.panel-heading { height: 40px; background: #00acac !important; }
 	.panel-heading .label.pull-left, .panel-heading .label.pull-right {    background-color: #8a6d3b !important; position: relative; top: -20px; }
@@ -19,7 +20,7 @@
 
 	html, body { height: 100%; }
 	.chat-content .panel-heading { position: fixed; top: 0; width: 100%; }
-	.chat-content .panel-heading.notice { height: auto; position: fixed; top: 40px; width: 100%; background-color: #000 !important; opacity: 0.7; z-index: 90; border-radius: 0;}
+	.chat-content .panel-heading.notice { height: 120px; position: fixed; top: 40px; width: 100%; background-color: #000 !important; opacity: 0.7; z-index: 90; border-radius: 0;}
 
 	/* 채팅방  */
 	.chat-content.panel { height: 100%; margin-bottom: 0; padding-top: 40px; padding-bottom: 50px; }
@@ -30,7 +31,7 @@
 	.chat-content .chats>li+li { margin-bottom: 7px; }
 
 	.chat-content ul.chats { padding: 0px 5px; }
-	.chat-content .chats li:nth-child(1) { margin-top: 70px; }
+	.chat-content .chats li:nth-child(1) { margin-top: 20px; }
 	.chat-content .chats li { width: 100%; }
 	.chat-content .chats li div { display: inline-block; }
 	.chat-content .chats li div.message { max-width: 65%; margin:0; }
@@ -192,14 +193,17 @@
 				</span>
 			</h4>
 		</div>
-		<div class="panel-heading notice">
+		<div class="panel-heading notice" >
 			<h4 class="panel-title">
 				<strong>공지사항</strong>
 			</h4>
 			<h4 class="downback">
 				<strong>△</strong>
 			</h4>
+			<div class="noticeArea" data-scrollbar="true" data-height="92%">
 			<p class="noticeCon">없음</p>
+			</div>
+
 		</div>
 
 		<div id="chatDiv" class="panel-body bg-silver">
@@ -282,7 +286,10 @@
 
 <script>
 $(document).on('click', '.downback', function () {
-	$(".chat-content .panel-heading.notice").css("display", "none");
+	$(".chat-content .panel-heading.notice").css("height", "0px");
+	$(".chat-content .panel-heading.notice").css("opacity", "0");
+	$(".chat-content .panel-heading.notice").css("z-index", "-100");
+	$(".chat-content .panel-heading.notice").css("-webkit-transition", "height 0.5s, opacity 0.5s, z-index 1s");
 });
 </script>
 <script>
@@ -299,7 +306,6 @@ $(document).on('click', '.downback', function () {
 
 		$("#sendMessageBtn").attr('disabled',true);
 		$(document).keyup(function (e) {
-			$('.slimScrollBar, .slimScrollRail').css('opacity', '0');
 			inputMsgCheck();
 		});
 		$(document).mouseup(function (e) {
