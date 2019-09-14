@@ -40,7 +40,7 @@ public class AccountServiceImpl implements AccountService{
 //		ResidentVO responseResidentVO = accountDao.loginCheck(sqlSession, requestResidentVO);
 
 		if(!passwordEncoder.matches(requestResidentVO.getResidentPwd(), encPassword)) {
-			System.out.println("hi");
+//			System.out.println("hi");
 			throw new LoginException("로그인 실패!");
 		}else {
 			loginUser = accountDao.selectResident(sqlSession, requestResidentVO);

@@ -25,4 +25,12 @@ public class VisitCarDaoImpl implements VisitCarDao{
 
 	}
 
+	//방문차량 등록 삭제용 메소드
+	@Override
+	public int deleteListVisitCar(SqlSessionTemplate sqlSession, String[] visitCarSeqArr) {
+		System.out.println("visitCarSeqArr ::D:: " + visitCarSeqArr);
+
+		return sqlSession.delete("ResidentVisitCar.deleteListVisitCar", visitCarSeqArr);
+	}
+
 }

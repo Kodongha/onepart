@@ -37,10 +37,10 @@
 						<input type="checkbox">
 					</c:if>
 					<c:if test="${ myVisitcarList.status == 2}">
-						<input type="checkbox" disabled=true">
+						<input type="checkbox" disabled=true>
 					</c:if>
 					<c:if test="${ myVisitcarList.status == 3}">
-						<input type="checkbox" disabled=true">
+						<input type="checkbox" disabled=true>
 					</c:if>
 					</td>
 					<td>

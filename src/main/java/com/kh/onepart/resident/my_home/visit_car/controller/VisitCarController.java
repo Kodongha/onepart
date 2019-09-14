@@ -1,11 +1,14 @@
 package com.kh.onepart.resident.my_home.visit_car.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,22 +29,17 @@ public class VisitCarController {
 		return "/resident/my_home/visit_car/registerVisitCar";
 	}
 
-
-//	//이동 방문차량 등록 리스트 화면
-//	@RequestMapping("/resident/menuVisitCar")
-////	@RequestMapping("/resident/moveListVisitCar")
-//	public String moveListVisitCar() {
-//		System.out.println("/resident/listVisitCar3");
-//		return "/resident/my_home/visit_car/listVisitCar3";
-//	}
-
 	//이동 방문차량 등록 리스트 화면
-//	@RequestMapping("/resident/menuVisitCar")
 	@RequestMapping("/resident/moveListVisitCar")
 	public ModelAndView moveListVisitCar(ModelAndView mv, HttpSession session) {
-		System.out.println("/resident/listVisitCar3");
+		System.out.println("/resident/listVisitCar");
+
+		// residentSeq 추가
 		ResidentVO loginUser = (ResidentVO)session.getAttribute("loginUser");
-		int residentSeq = loginUser.getResidentSeq();
+		int residentSeq = 0;
+		if(loginUser != null) {
+			residentSeq = loginUser.getResidentSeq();
+		}
 		System.out.println("현재 로그인 하고있는 residentSeq ::C:: " + residentSeq);
 
 		//로그인 유저의 방문차량 등록 리스트 불러오는 메소드
@@ -49,28 +47,11 @@ public class VisitCarController {
 		System.out.println("myVisitcarList ::C:: " + myVisitcarList);
 
 		mv.addObject("myVisitcarList", myVisitcarList);
-		mv.setViewName("/resident/my_home/visit_car/listVisitCar3");
+		mv.setViewName("/resident/my_home/visit_car/listVisitCar");
 
 		return mv;
 	}
 
-//	//방문차량 등록용 메소드
-//	@RequestMapping("/resident/registerVisitCar")
-//	public String registerVisitCar(VisitCarVo requestVisitCarVo, Model model, HttpSession session) {
-//		ResidentVO loginUser = (ResidentVO)session.getAttribute("loginUser");
-//		int residentSeq = loginUser.getResidentSeq();
-//		System.out.println("현재 로그인 하고있는 residentSeq ::C:: " + residentSeq);
-//		System.out.println("requestVisitCarVo ::C::" + requestVisitCarVo);
-//		requestVisitCarVo.setResidentSeq(residentSeq);
-//
-//		int result = visitCarService.registerVisitCar(requestVisitCarVo);
-//
-//		if(result > 0) {
-//			return "redirect:menuVisitCar";
-//		}else {
-//			model.addAttribute("msg", "방문 차량 등록 실패!");
-//		    return "common/errorPage";
-//		}
 	//방문차량 등록용 메소드
 		@RequestMapping("/resident/registerVisitCar")
 		public ModelAndView registerVisitCar(ModelAndView mv, HttpSession session, String visitCarNum,
@@ -100,4 +81,22 @@ public class VisitCarController {
 			}
 			return mv;
 	}
+
+		//방문차량 등록 삭제용 메소드
+		@RequestMapping("/resident/deleteListVisitCar")
+		public String deleteListVisitCar(Model model, HttpSession session, String resultCheckArr) {
+			System.out.println("/resident/deleteListVisitCar");
+			System.out.println("resultCheckArr ::C:: " + resultCheckArr);
+
+			String[] visitCarSeqArr = resultCheckArr.split(",");
+			System.out.println("residentSeqArr ::C:: "+visitCarSeqArr);
+
+			int result = visitCarService.deleteListVisitCar(visitCarSeqArr );
+			System.out.println("DeletemyResult ::C:: " + result);
+
+//			mv.addObject("myVisitcarList", myVisitcarList1);
+//			mv.setViewName("jsonView");
+
+			return "redirect:/resident/moveListVisitCar";
+		}
 }
