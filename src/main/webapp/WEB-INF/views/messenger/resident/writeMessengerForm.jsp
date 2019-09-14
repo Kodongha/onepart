@@ -25,58 +25,149 @@
 	<script src="${contextPath}/resources/plugins/pace/pace.min.js"></script>
 	<script src="${contextPath}/resources/plugins/jquery/jquery-1.9.1.min.js"></script>
 	<!-- ================== END BASE JS ================== -->
+	<link href="${contextPath}/resources/plugins/DataTables/css/data-table.css" rel="stylesheet" />
+	<script src="${contextPath}/resources/plugins/DataTables/js/jquery.dataTables.js"></script>
+	<script src="${contextPath}/resources/js/table-manage-default.demo.min.js"></script>
+
+	<!-- Attachment -->
+	<link href="${contextPath}/resources/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css" rel="stylesheet" />
+    <link href="${contextPath}/resources/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet" />
+    <link href="${contextPath}/resources/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet" />
 
 	<style type="text/css">
-		.bg-white{
-			height: 555px;
-		}
-	</style>
 
+		#receiverInput {
+			text-align: left;
+			color: lightgray;
+			font-size: 1em;
+		}
+
+	</style>
 </head>
 <body>
+	<div id="page-loader" class="fade in"><span class="spinner"></span></div>
 	<div class="p-30 bg-white m-t-0">
 	    <!-- begin email form -->
-	    <form action="writeMessenger" method="POST" name="email_to_form">
+	    <form id="fileupload" action="writeMessenger" method="POST" name="email_to_form" enctype="multipart/form-data">
 	        <!-- begin email to -->
-	        <label class="control-label">To:</label>
 	        <div class="m-b-15">
-				<ul id="email-to" class="inverse tagit ui-widget ui-widget-content ui-corner-all">
-				</ul>
+		        <label class="control-label">To:</label>
+				<a href="#modal-dialog" class="btn btn-block btn-white" data-toggle="modal" id="receiverInput">클릭하여 수신자를 선택하세요.</a>
 			</div>
 	        <!-- end email to -->
 
 			<!-- attachment -->
-			<label class="control-label">attachment:</label>
-			<a href="javascript:;" class="btn btn-success btn-block">Add</a>
-			<ul class="attached-document clearfix">
-                 <li>
-                     <div class="document-name"><a id="attachAddBtn">flight_ticket.pdf</a></div>
-                     <div class="document-file">
-                         <a href="#">
-                             <i class="fa fa-file-pdf-o"></i>
-                         </a>
-                     </div>
-                 </li>
-                 <li>
-                     <div class="document-name"><a href="#">front_end_mockup.jpg</a></div>
-                     <div class="document-file">
-                         <a href="#">
-                             <img src="assets/img/login-bg/bg-1.jpg" alt="">
-                         </a>
-                     </div>
-                 </li>
-             </ul>
+			<div class="m-b-15">
+				<label class="control-label">attachment:</label>
+
+				<div class="panel panel-inverse">
+					<div class="row fileupload-buttonbar">
+						<div class="col-md-12">
+							<div class="col-md-6">
+								<span class="btn btn-success btn-block fileinput-button">
+									<i class="fa fa-plus"></i>
+								    <span>Add files...</span>
+								    <input type="file" name="files[]" multiple>
+								</span>
+							</div>
+							<div class="col-md-6">
+								<button type="reset" class="btn btn-warning btn-block cancel">
+								    <i class="fa fa-ban"></i>
+								    <span>Reset upload</span>
+								</button>
+							</div>
+						</div>
+						<!-- The table listing the files available for upload/download -->
+						<table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+					</div>
+				</div>
+			</div>
+
 
 	        <!-- begin email content -->
-	        <label class="control-label">Content:</label>
 	        <div class="m-b-15">
+		        <label class="control-label">Content:</label>
 				<textarea class="textarea form-control" name="messengerContent" id="messengerContent" rows="12" placeholder="Enter text ..."></textarea>
 			</div>
 	        <!-- end email content -->
 	        <button type="submit" class="btn btn-primary p-l-40 p-r-40">Send</button>
+	        <!-- tags hidden -->
+	        <div id="hiddenArea"></div>
 	    </form>
 	    <!-- end email form -->
 	</div>
+
+
+
+
+
+	<!-- The template to display files available for upload -->
+    <script id="template-upload" type="text/x-tmpl">
+        {% for (var i=0, file; file=o.files[i]; i++) { %}
+            <tr class="template-upload fade">
+                <td class="col-md-1">
+                    <span class="preview"></span>
+                </td>
+                <td>
+                    <p class="name">{%=file.name%}</p>
+                </td>
+                <td>
+                    <p class="size">Processing...</p>
+                </td>
+                <td>
+                    {% if (!i) { %}
+                        <button class="btn btn-danger btn-xs m-r-5 cancel">
+                            <i class="fa fa-ban"></i>
+                            <span>Cancel</span>
+                        </button>
+                    {% } %}
+                </td>
+            </tr>
+        {% } %}
+    </script>
+    <!-- The template to display files available for download -->
+    <script id="template-download" type="text/x-tmpl">
+        {% for (var i=0, file; file=o.files[i]; i++) { %}
+            <tr class="template-download fade">
+                <td>
+                    <span class="preview">
+                        {% if (file.thumbnailUrl) { %}
+                            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                        {% } %}
+                    </span>
+                </td>
+                <td>
+                    <p class="name">
+                        {% if (file.url) { %}
+                            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                        {% } else { %}
+                            <span>{%=file.name%}</span>
+                        {% } %}
+                    </p>
+                    {% if (file.error) { %}
+                        <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+                    {% } %}
+                </td>
+                <td>
+                    <span class="size">{%=o.formatFileSize(file.size)%}</span>
+                </td>
+                <td>
+                    {% if (file.deleteUrl) { %}
+                        <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                            <i class="glyphicon glyphicon-trash"></i>
+                            <span>Delete</span>
+                        </button>
+                        <input type="checkbox" name="delete" value="1" class="toggle">
+                    {% } else { %}
+                        <button class="btn btn-warning cancel">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            <span>Cancel</span>
+                        </button>
+                    {% } %}
+                </td>
+            </tr>
+        {% } %}
+    </script>
 
 
 
@@ -99,14 +190,34 @@
 	<script src="${contextPath}/resources/plugins/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.js"></script>
 	<script src="${contextPath}/resources/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.js"></script>
 	<script src="${contextPath}/resources/js/email-compose.demo.min.js"></script>
+
+	<script src="${contextPath}/resources/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="${contextPath}/resources/plugins/jquery-file-upload/js/vendor/tmpl.min.js"></script>
+    <script src="${contextPath}/resources/plugins/jquery-file-upload/js/vendor/load-image.min.js"></script>
+    <script src="${contextPath}/resources/plugins/jquery-file-upload/js/vendor/canvas-to-blob.min.js"></script>
+    <script src="${contextPath}/resources/plugins/jquery-file-upload/blueimp-gallery/jquery.blueimp-gallery.min.js"></script>
+    <script src="${contextPath}/resources/plugins/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+    <script src="${contextPath}/resources/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
+    <script src="${contextPath}/resources/plugins/jquery-file-upload/js/jquery.fileupload-process.js"></script>
+    <script src="${contextPath}/resources/plugins/jquery-file-upload/js/jquery.fileupload-image.js"></script>
+    <script src="${contextPath}/resources/plugins/jquery-file-upload/js/jquery.fileupload-audio.js"></script>
+    <script src="${contextPath}/resources/plugins/jquery-file-upload/js/jquery.fileupload-video.js"></script>
+    <script src="${contextPath}/resources/plugins/jquery-file-upload/js/jquery.fileupload-validate.js"></script>
+    <script src="${contextPath}/resources/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
+
+	<script src="${contextPath}/resources/js/form-multiple-upload.demo.min.js"></script>
 	<script src="${contextPath}/resources/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
 	<script type="text/javascript">
 		$(document).ready(function() {
 			App.init();
 			EmailCompose.init();
+			TableManageDefault.init();
+			FormMultipleUpload.init();
 		});
 
 	</script>
+	<jsp:include page="writeMessengerFormModal.jsp"/>
+
 </body>
 </html>

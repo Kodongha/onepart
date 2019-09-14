@@ -239,7 +239,7 @@
 				            <th class="email-select"><a href="#" data-click="email-select-all"><i class="fa fa-square-o fa-fw"></i></a></th>
 				            <th>Sender</th>
 				            <th>Content</th>
-				         <th>Date</th>
+				         	<th>Date</th>
 				        </tr>
 				    </thead>
 				    <tbody>
