@@ -35,7 +35,7 @@
 					<li style="margin-bottom:-10px;">
 						<table style="width:95%; margin:0 auto;">
 							<tr>
-								<td style="width:30%"><h4>후보${ candidateList.cndtNo }번. ${ candidateList.residentNm }
+								<td style="width:30%"><h4>후보${ candidateList.cndtNo }번 ${ candidateList.residentNm }
 								&nbsp;&nbsp;&nbsp; <small style="font-size:1em">${ candidateList.bdNm }동 ${ candidateList.rmNm }호 거주</small></h4></td>
 							</tr>
 						</table>

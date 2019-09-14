@@ -57,6 +57,7 @@
 		<result property="squareMeasure" column="SQUARE_MEASURE"/>
 		<result property="residentNm" column="RESIDENT_NM"/>
 		<result property="residentPhone" column="RESIDENT_PHONE"/>
+		<result property="residentSeq" column="RESIDENT_SEQ"/>
 	</resultMap>
 
 	<insert id="insertGeneralVote" parameterType="GeneralVote">
@@ -210,4 +211,18 @@
 		WHERE BD_NM = #{bdNm}
 		AND RM_NM = #{rmNm}
 	</select>
+
+	<update id="updateElectionVoteCandidate" parameterType="ElectionVoteCandidate">
+		UPDATE ELECT_VOTE_CNDT_SIGNUP
+		SET SIMPLE_INFO = #{simpleInfo}, DETAIL_INFO = #{detailInfo}, ETC_INFO = #{etcInfo}, CNDT_ENROLL_DT = SYSDATE, STATUS = 2
+		WHERE ELECT_VOTE_CNDT_SIGNUP_SEQ = #{electVoteCndtSignupSeq}
+	</update>
+
+	<select id="selectUserElectVoteCndtSignupSeq" resultType="_int" parameterType="ElectionVoteCandidate">
+		SELECT ELECT_VOTE_CNDT_SIGNUP_SEQ
+		FROM ELECT_VOTE_CNDT_SIGNUP
+		WHERE ELECT_VOTE_SEQ = #{electVoteSeq}
+		AND RESIDENT_SEQ = #{residentSeq}
+	</select>
+
 </mapper>

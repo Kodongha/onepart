@@ -34,8 +34,8 @@
 	<table style="width:95%">
 		<tr>
 			<td><h2>${ ev.electNm }</h2></td>
-			<td>
-				<span class="badge badge-primary">후보 등록 기간</span>
+			<td style="height:25px;">
+				<span class="badge badge-primary" style="font-size:1.25em">후보 등록 기간</span>
 			</td>
 			<td><div><h5></h5></div></td>
 			<td style="width:5%"></td>

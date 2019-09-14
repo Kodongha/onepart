@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,44 +12,60 @@
 <jsp:include page="../superintend_vote/superintend_vote_include.jsp"></jsp:include>
 <jsp:include page="../superintend_vote/superintend_vote_detail_include_2.jsp"></jsp:include>
 <!-- 후보정보 div -->
-<div style="width:95%; margin:0 auto">
-	<!-- title div -->
-	<table style="width:95%">
+<div style="width:85%; margin:0 auto">
+	<table style="width:100%">
 		<tr>
 			<td>
 				<div class="form-group">
-                    <h4>후보정보</h4>                   
+                    <h4>후보정보</h4>
                 </div>
 			</td>
-			<td></td>			
+			<td></td>
 			<td style="width:15%">
 			</td>
 		</tr>
 	</table>
+	<div class="panel-body" style="background:white" align="center">
 	<!-- 후보 상세정보 div -->
-	<div style="width:95%">
-	<hr>
-		<ul class="media-list media-list-with-divider">
-			<li class="media media-lg">
-				<a href="javascript:;" class="pull-left">
-					<img class="media-object" src="${contextPath }/resources/images/vote1.PNG" alt="" style="height:250px; width:auto;">
-				</a>
-				<div class="media-body">
-					<br><br><br>
-					<h4 class="media-heading">기호1번 김은혜</h4>
-					Nullam at risus metus. Quisque nisl purus, pulvinar ut mauris vel, elementum suscipit eros. Praesent ornare ante massa, egestas pellentesque orci convallis ut. Curabitur consequat convallis est, id luctus mauris lacinia vel. Nullam tristique lobortis mauris, ultricies fermentum lacus bibendum id. Proin non ante tortor. Suspendisse pulvinar ornare tellus nec pulvinar. Nam pellentesque accumsan mi, non pellentesque sem convallis sed. Quisque rutrum erat id auctor gravida.
-				</div>
-			</li>
-			<li class="media media-lg">
-				<a href="javascript:;" class="pull-left">
-					<img class="media-object" src="${contextPath }/resources/images/vote2.PNG" alt="" style="height:250px; width:auto;">
-				</a>
-				<div class="media-body">
-					<br><br><br>
-					<h4 class="media-heading">기호2번 임동호</h4>
-					Fusce bibendum augue nec fermentum tempus. Sed laoreet dictum tempus. Aenean ac sem quis nulla malesuada volutpat. Nunc vitae urna pulvinar velit commodo cursus. Nullam eu felis quis diam adipiscing hendrerit vel ac turpis. Nam mattis fringilla euismod. Donec eu ipsum sit amet mauris iaculis aliquet. Quisque sit amet feugiat odio. Cras convallis lorem at libero lobortis, placerat lobortis sapien lacinia. Duis sit amet elit bibendum sapien dignissim bibendum.
-				</div>
-		</ul>
+		<div style="width:95%">
+			<ul class="media-list media-list-with-divider">
+				<c:forEach var="candidateList" items="${ candidateList }">
+					<!-- 한후보 정보 div -->
+					<li style="margin-bottom:-10px;">
+						<table style="width:95%; margin:0 auto;">
+							<tr>
+								<td style="width:30%"><h4>후보${ candidateList.cndtNo }번 ${ candidateList.residentNm }
+								&nbsp;&nbsp;&nbsp; <small style="font-size:1em">${ candidateList.bdNm }동 ${ candidateList.rmNm }호 거주</small></h4></td>
+							</tr>
+						</table>
+					</li>
+					<li class="media media-lg" style="padding:15px; margin-top:10px">
+						<table style="width:95%; margin:0 auto;">
+							<tr>
+								<td>
+									<a href="javascript:;" class="pull-left">
+										<img class="media-object" src="${contextPath }/resources/images/${ candidateList.changeNm }" alt="" style="height:250px; width:auto;">
+									</a>
+								</td>
+								<td style="width:10%"></td>
+								<td>
+									<div class="media-body" style="padding-top:1%">
+										<h4 class="media-heading">후보자 간단정보</h4>
+										${ candidateList.simpleInfo }
+										<br><br><br>
+										<h4 class="media-heading">후보자 상세정보</h4>
+										${ candidateList.detailInfo }
+										<br><br><br>
+										<h4 class="media-heading">기타사항</h4>
+										${ candidateList.etcInfo }
+									</div>
+								</td>
+							</tr>
+						</table>
+					</li>
+		        </c:forEach>
+			</ul>
+		</div>
 	</div>
 </div>
 <br><br>

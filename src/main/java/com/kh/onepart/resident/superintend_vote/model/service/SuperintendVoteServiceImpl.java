@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.onepart.resident.superintend_vote.model.dao.SuperintendVoteDao;
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
+import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteCandidate;
@@ -105,6 +106,21 @@ public class SuperintendVoteServiceImpl implements SuperintendVoteService{
 		ArrayList nameList = svd.selectAllNameList(sqlSession, tdi);
 
 		return nameList;
+
+	}
+	//해당 후보를 등록처리하고 정보 update하는 메소드
+	@Override
+	public int updateElectionVoteCandidate(ElectionVoteCandidate evc) {
+
+		//해당 선거의 후보신청 고유번호를 받아오는 메소드
+		int electVoteCndtSignupSeq = svd.selectUserElectVoteCndtSignupSeq(sqlSession, evc);
+		System.out.println("service electVoteCndtSignupSeq : " + electVoteCndtSignupSeq);
+
+		//해당 후보를 등록처리하고 정보 update하는 메소드
+		evc.setElectVoteCndtSignupSeq(electVoteCndtSignupSeq);
+		int result = svd.updateElectionVoteCandidate(sqlSession, evc);
+
+		return result;
 
 	}
 }

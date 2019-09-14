@@ -6,10 +6,34 @@
 		<result property="voteSeq" column="VOTE_SEQ"/>
 		<result property="voteKind" column="VOTE_KIND"/>
 		<result property="voteNm" column="VOTE_NM"/>
+		<result property="startDt" column="START_DT"/>
 		<result property="endDt" column="END_DT"/>
 		<result property="voteStatus" column="VOTE_STATUS"/>
 		<result property="userStatus" column="USER_STATUS"/>
 		<result property="realEndDt" column="REAL_END_DT"/>
+		<result property="detailInfo" column="DETAIL_INFO"/>
+		<result property="residentSeq" column="RESIDENT_SEQ"/>
+		<result property="candidateSeq" column="GNR_VOTE_CNDT_ENROLL_SEQ"/>
+	</resultMap>
+
+	<resultMap type="vote_GeneralVoteCandidate" id="vote_GeneralVoteCandidateResultSet">
+		<id property="gnrVoteCndtEnrollSeq" column="GNR_VOTE_CNDT_ENROLL_SEQ"/>
+		<result property="gnrVoteSeq" column="GNR_VOTE_SEQ"/>
+		<result property="cndtNm" column="CNDT_NM"/>
+		<result property="cndtDetail" column="CNDT_DETAIL"/>
+		<result property="cndtEnrollDt" column="CNDT_ENROLL_DT"/>
+	</resultMap>
+
+	<resultMap type="vote_GeneralVote" id="vote_GeneralVoteResultSet">
+		<id property="gnrVoteSeq" column="GNR_VOTE_SEQ"/>
+		<result property="gnrVoteName" column="GNR_VOTE_NAME"/>
+		<result property="gnrVoteType" column="GNR_VOTE_TYPE"/>
+		<result property="gnrVoteStartDt" column="GNR_VOTE_START_DT"/>
+		<result property="gnrVoteEndDt" column="GNR_VOTE_END_DT"/>
+		<result property="gnrVoteOfflinePlace" column="GNR_VOTE_OFFLINE_PLACE"/>
+		<result property="gnrVoteDetail" column="GNR_VOTE_DETAIL"/>
+		<result property="gnrVoteEnrollDt" column="GNR_VOTE_ENROLL_DT"/>
+		<result property="gnrVoteGrant" column="GNR_VOTE_GRANT"/>
 	</resultMap>
 
 	<resultMap type="ElectionVote" id="ElectionVoteResultSet">
@@ -201,5 +225,68 @@
 			WHERE VOTE_STATUS = '후보등록기간'
 		]]>
 	</select>
+
+	<select id="selectOneGeneralVoteInfo" resultMap="vote_GeneralVoteResultSet" parameterType="_int">
+		SELECT *
+		FROM GNR_VOTE
+		WHERE GNR_VOTE_SEQ = #{voteSeq}
+	</select>
+
+	<select id="selectOneGeneralVoteUserInfo" resultMap="vote_VoteListResultSet" parameterType="vote_VoteList">
+		SELECT GNR_VOTE_CNDT_ENROLL_SEQ
+		FROM RESIDENT T1
+		LEFT JOIN (
+		            SELECT *
+		            FROM VOTE_PRTCPT T3
+                    LEFT JOIN VOTE_SELECTED T4 ON (T3.VOTE_PRTCPT_SEQ = T4.VOTE_PRTCPT_SEQ)
+		            WHERE GNR_VOTE_SEQ = #{voteSeq}
+		          ) T2 ON (T1.RESIDENT_SEQ = T2.RESIDENT_SEQ)
+		WHERE T1.RESIDENT_SEQ = #{residentSeq}
+	</select>
+
+	<select id="selectAllCandidateList" parameterType="_int" resultMap="vote_GeneralVoteCandidateResultSet">
+		SELECT *
+		FROM GNR_VOTE_CNDT_ENROLL
+		WHERE GNR_VOTE_SEQ = #{voteSeq}
+	</select>
+
+	<select id="selectUserVotePrtcptSeq" parameterType="vote_VotePrtcpt" resultType="_int">
+		SELECT VOTE_PRTCPT_SEQ
+		FROM VOTE_PRTCPT
+		WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}
+		AND RESIDENT_SEQ = #{residentSeq}
+	</select>
+
+	<update id="updateGeneralVote" parameterType="vote_VoteSelected">
+		UPDATE VOTE_SELECTED
+		SET GNR_VOTE_CNDT_ENROLL_SEQ = #{gnrVoteCndtEnrollSeq}
+		WHERE  VOTE_PRTCPT_SEQ = #{votePrtcptSeq}
+	</update>
+
+	<insert id="insertCurrentVotePrtcptSeq" parameterType="vote_VotePrtcpt">
+		INSERT INTO VOTE_PRTCPT
+		VALUES (
+					VOTE_PRTCPT_SEQ.NEXTVAL,
+					1,
+					#{gnrVoteSeq},
+					NULL,
+					#{residentSeq}
+				)
+		<selectKey keyProperty="votePrtcptSeq" resultType="Integer" order="AFTER">
+			SELECT VOTE_PRTCPT_SEQ.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<insert id="insertGeneralVote" parameterType="vote_VoteSelected">
+		INSERT INTO VOTE_SELECTED
+		VALUES (
+					VOTE_SELECTED_SEQ.NEXTVAL,
+					#{votePrtcptSeq},
+					1,
+					#{gnrVoteCndtEnrollSeq},
+					NULL,
+					#{gnrVoteCndtEnrollSeq}
+				)
+	</insert>
 
 </mapper>

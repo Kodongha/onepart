@@ -39,6 +39,10 @@
 		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate" alias="ElectionVoteCandidate"/>
 		<typeAlias type="com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo" alias="ApartDetailInfo"/>
 		<typeAlias type="com.kh.onepart.resident.my_apartment.vote.model.vo.VoteList" alias="vote_VoteList"/>
+		<typeAlias type="com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVoteCandidate" alias="vote_GeneralVoteCandidate"/>
+		<typeAlias type="com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVote" alias="vote_GeneralVote"/>
+		<typeAlias type="com.kh.onepart.resident.my_apartment.vote.model.vo.VotePrtcpt" alias="vote_VotePrtcpt"/>
+		<typeAlias type="com.kh.onepart.resident.my_apartment.vote.model.vo.VoteSelected" alias="vote_VoteSelected"/>
 
 
 		<!-- Manager -->

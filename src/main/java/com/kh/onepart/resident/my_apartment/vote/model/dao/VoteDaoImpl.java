@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteList;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.VotePrtcpt;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteSelected;
+
 @Repository
 public class VoteDaoImpl implements VoteDao{
 	//현재 진행중인 선거 리스트 불러오는 메소드
@@ -41,6 +46,68 @@ public class VoteDaoImpl implements VoteDao{
 		ArrayList candidateVoteList = (ArrayList) sqlSession.selectList("vote.selectAllCandidateVoteList");
 
 		return candidateVoteList;
+
+	}
+	//선택한 선거의 상세정보를 불러오는 메소드 (르그인 유저의 현황도 함께)
+	@Override
+	public GeneralVote selectOneGeneralVoteInfo(SqlSessionTemplate sqlSession, int voteSeq) {
+
+		GeneralVote vote = sqlSession.selectOne("vote.selectOneGeneralVoteInfo", voteSeq);
+
+		return vote;
+
+	}
+	//로그인유저의 현황을 불러오는 메소드
+	@Override
+	public VoteList selectOneGeneralVoteUserInfo(SqlSessionTemplate sqlSession, VoteList info) {
+
+		VoteList voteUser = (VoteList) sqlSession.selectOne("vote.selectOneGeneralVoteUserInfo", info);
+
+		return voteUser;
+
+	}
+	//선택한 선거의 후보 리스트를 불러오는 메소드
+	@Override
+	public ArrayList selectAllCandidateList(SqlSessionTemplate sqlSession, int voteSeq) {
+
+		ArrayList candidateList = (ArrayList) sqlSession.selectList("vote.selectAllCandidateList", voteSeq);
+
+		return candidateList;
+
+	}
+	//해당 유저가 참여한 투표참여 고유번호 받아오는 메소드
+	@Override
+	public int selectUserVotePrtcptSeq(SqlSessionTemplate sqlSession, VotePrtcpt vp) {
+
+		int votePrtcptSeq = sqlSession.selectOne("vote.selectUserVotePrtcptSeq", vp);
+
+		return votePrtcptSeq;
+	}
+	//받아온 투표참여 고유번호에 대한 선택내역 수정내역으로 update하는 메소드
+	@Override
+	public int updateGeneralVote(SqlSessionTemplate sqlSession, VoteSelected vs) {
+
+		int result = sqlSession.update("vote.updateGeneralVote", vs);
+
+		return  result;
+
+	}
+	//해당 투표내역이 insert가 되고 그에 대한 currentval값 받아오는 메소드
+	@Override
+	public int insertCurrentVotePrtcptSeq(SqlSessionTemplate sqlSession, VotePrtcpt vp) {
+
+		sqlSession.insert("vote.insertCurrentVotePrtcptSeq", vp);
+		int votePrtcptSeq = vp.getVotePrtcptSeq();
+
+		return votePrtcptSeq;
+	}
+	//해당 투표내역에 선택된 후보내역 insert 하는 메소드
+	@Override
+	public int insertGeneralVote(SqlSessionTemplate sqlSession, VoteSelected vs) {
+
+		int result = sqlSession.update("vote.insertGeneralVote", vs);
+
+		return  result;
 
 	}
 

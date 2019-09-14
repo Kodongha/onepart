@@ -34,7 +34,7 @@ $(document).ready(function() {
 	/* 수정완료 버튼 */
 	$("#modyfyGeneralOk").data("menu-url", "/onepart/resident/general");
 	/* 투표내역 수정하기 */
-	$("#modifyGeneral").data("menu-url", "/onepart/resident/modifyGeneral");
+
 
 	/* 후보신청서 제출 */
 	$("#candidateApply").click(function(){
@@ -159,16 +159,7 @@ $(document).ready(function() {
 		});
 	});
 	/* 투표내역 수정하기 */
-	$("#modifyGeneral").click(function(){
-		var voteUrl = $(this).data("menu-url");
-		$.ajax({
-			url:voteUrl,
-			dataType:"html",
-			success:function(result){
-				$("#content").html(result);
-			}
-		});
-	});
+
 });
 </script>
 <!-- 타이틀 -->

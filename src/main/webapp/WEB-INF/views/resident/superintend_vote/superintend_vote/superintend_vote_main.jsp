@@ -815,6 +815,17 @@
 
 		}else if(voteStatus == '투표기간'){
 			/* view 페이지 전환 (투표기간) */
+			$.ajax({
+				url:"/onepart/resident/votingRealvote",
+				type:"get",
+				data:{
+						'voteSeq':voteSeq,
+						'voteKind':voteKind
+					 },
+				success:function(result){
+    				$("#content").html(result);
+    			}
+			});
 
 		}else{
 			/* view 페이지 전환 (선거운동기간) */
