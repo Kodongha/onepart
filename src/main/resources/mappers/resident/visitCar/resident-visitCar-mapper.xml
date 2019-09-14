@@ -24,7 +24,7 @@
 		    #{visitPurpose},
 		    #{visitDt},
 		    SYSDATE,
-		    #{status},
+		    DEFAULT,
 		    #{residentSeq},
 		    #{rejectReason}
 		    )
@@ -37,6 +37,16 @@
 	WHERE RESIDENT_SEQ = #{residentSeq}
 	ORDER BY VISIT_CAR_ENROLL_DT DESC
 	</select>
+
+	<!-- 방문차량 등록 삭제용 메소드 -->
+	<delete id="deleteListVisitCar" parameterType="map">
+		DELETE FROM VISIT_CAR
+		WHERE VISIT_CAR_SEQ IN
+		<foreach collection="array" item="item" index="index" open="(" separator="," close=")" >
+			#{item}
+		</foreach>
+
+	</delete>
 
 
 
