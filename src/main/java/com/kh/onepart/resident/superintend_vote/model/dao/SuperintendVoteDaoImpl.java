@@ -119,6 +119,24 @@ public class SuperintendVoteDaoImpl implements SuperintendVoteDao{
 		return electVoteCndtSignupSeq;
 
 	}
+	//해당 투표 정보 담아오는 메소드
+	@Override
+	public GeneralVote selectOneGeneralVote(SqlSessionTemplate sqlSession, int voteSeq) {
+
+		GeneralVote gv = sqlSession.selectOne("Superintend.selectOneGeneralVote", voteSeq);
+
+		return gv;
+
+	}
+	//해당 투표에 등록된 후보 담아오는 메소드
+	@Override
+	public ArrayList selectAllGeneralVoteCandidate(SqlSessionTemplate sqlSession, int voteSeq) {
+
+		ArrayList candidateListGen = (ArrayList) sqlSession.selectList("Superintend.selectAllGeneralVoteCandidate", voteSeq);
+
+		return candidateListGen;
+
+	}
 
 
 }

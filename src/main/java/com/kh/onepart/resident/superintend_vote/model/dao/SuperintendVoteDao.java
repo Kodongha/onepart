@@ -36,5 +36,9 @@ public interface SuperintendVoteDao {
 	int updateElectionVoteCandidate(SqlSessionTemplate sqlSession, ElectionVoteCandidate evc);
 	//해당 선거의 후보신청 고유번호를 받아오는 메소드
 	int selectUserElectVoteCndtSignupSeq(SqlSessionTemplate sqlSession, ElectionVoteCandidate evc);
+	//해당 투표 정보 담아오는 메소드
+	GeneralVote selectOneGeneralVote(SqlSessionTemplate sqlSession, int voteSeq);
+	//해당 투표에 등록된 후보 담아오는 메소드
+	ArrayList selectAllGeneralVoteCandidate(SqlSessionTemplate sqlSession, int voteSeq);
 
 }

@@ -28,5 +28,9 @@ public interface SuperintendVoteService {
 	ArrayList selectAllNameList(ApartDetailInfo tdi);
 	//해당 후보를 등록처리하고 정보 update하는 메소드
 	int updateElectionVoteCandidate(ElectionVoteCandidate evc);
+	//해당 투표 정보 담아오는 메소드
+	GeneralVote selectOneGeneralVote(int voteSeq);
+	//해당 투표에 등록된 후보 담아오는 메소드
+	ArrayList selectAllGeneralVoteCandidate(int voteSeq);
 
 }

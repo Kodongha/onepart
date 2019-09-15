@@ -107,9 +107,15 @@ $(document).ready(function() {
 	/* 선거명부인 메세지 전송 */
 	$("#sendMessageResident").click(function(){
 		var voteUrl = $(this).data("menu-url");
+		var electVoteSeq = $("#electVoteSeq").val();
+		var voteKind = $("#voteKind").val();
 		$.ajax({
 			url:voteUrl,
 			dataType:"html",
+			data:{
+					electVoteSeq:electVoteSeq,
+					voteKind:voteKind
+				 },
 			success:function(result){
 				$("#content").html(result);
 			}

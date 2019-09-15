@@ -60,6 +60,26 @@
 		<result property="residentSeq" column="RESIDENT_SEQ"/>
 	</resultMap>
 
+	<resultMap type="GeneralVote" id="GeneralVoteResultSet">
+		<id property="gnrVoteSeq" column="GNR_VOTE_SEQ"/>
+		<result property="gnrVoteName" column="GNR_VOTE_NAME"/>
+		<result property="gnrVoteType" column="GNR_VOTE_TYPE"/>
+		<result property="gnrVoteStartDt" column="GNR_VOTE_START_DT"/>
+		<result property="gnrVoteEndDt" column="GNR_VOTE_END_DT"/>
+		<result property="gnrVoteOfflinePlace" column="GNR_VOTE_OFFLINE_PLACE"/>
+		<result property="gnrVoteDetail" column="GNR_VOTE_DETAIL"/>
+		<result property="gnrVoteEnrollDt" column="GNR_VOTE_ENROLL_DT"/>
+		<result property="gnrVoteGrant" column="GNR_VOTE_GRANT"/>
+	</resultMap>
+
+	<resultMap type="GeneralVoteCandidate" id="GeneralVoteCandidateResultSet">
+		<id property="gnrVoteCndtEnrollSeq" column="GNR_VOTE_CNDT_ENROLL_SEQ"></id>
+		<result property="gnrVoteSeq" column="GNR_VOTE_SEQ"/>
+		<result property="cndtNm" column="CNDT_NM"/>
+		<result property="cndtDetail" column="CNDT_DETAIL"/>
+		<result property="cndtEnrollDt" column="CNDT_ENROLL_DT"/>
+	</resultMap>
+
 	<insert id="insertGeneralVote" parameterType="GeneralVote">
 		INSERT INTO GNR_VOTE
 		VALUES (
@@ -223,6 +243,18 @@
 		FROM ELECT_VOTE_CNDT_SIGNUP
 		WHERE ELECT_VOTE_SEQ = #{electVoteSeq}
 		AND RESIDENT_SEQ = #{residentSeq}
+	</select>
+
+	<select id="selectOneGeneralVote" parameterType="_int" resultMap="GeneralVoteResultSet">
+		SELECT *
+		FROM GNR_VOTE
+		WHERE GNR_VOTE_SEQ = #{voteSeq}
+	</select>
+
+	<select id="selectAllGeneralVoteCandidate" parameterType="_int" resultMap="GeneralVoteCandidateResultSet">
+		SELECT *
+		FROM GNR_VOTE_CNDT_ENROLL
+		WHERE GNR_VOTE_SEQ = #{voteSeq}
 	</select>
 
 </mapper>
