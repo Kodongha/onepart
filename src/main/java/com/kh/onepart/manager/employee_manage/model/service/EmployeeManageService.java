@@ -8,5 +8,13 @@ public interface EmployeeManageService {
 
 	List<EmployeeManageVO> managerList();
 
+	void addManager(EmployeeManageVO employeeManageVO);
+
+	void deleteManager(String managerSeq);
+
+	EmployeeManageVO selectManager(EmployeeManageVO employeeManageVO);
+
+	void updateManager(String managerSeq);
+
 
 }

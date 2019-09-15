@@ -2,7 +2,6 @@ package com.kh.onepart.manager.car_manage.controller;
 
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,13 +11,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.manager.car_manage.model.service.ResidentCarService;
 import com.kh.onepart.manager.car_manage.model.vo.ResidentCarVO;
 
@@ -44,10 +41,15 @@ public class CarManageController {
 	@ResponseBody
 	public String addResidentCar(HttpSession session, ResidentCarVO residentCarVO) throws JsonProcessingException {
 
-		System.out.println("12345         " + residentCarVO);
-		residentCarService.addResidentCar(residentCarVO);
+		ResidentCarVO residentCarVO2 = residentCarService.selectResidentCar(residentCarVO);
+		System.out.println("있어 없어    : : : :" + residentCarVO2);
 		Map<String, Object> result = new HashMap<>();
-		result.put("result", "success");
+		if(residentCarVO2 == null ) {
+			residentCarService.addResidentCar(residentCarVO);
+			result.put("result", "success");
+		}
+
+
 		return new ObjectMapper().writeValueAsString(result);
 
 	}

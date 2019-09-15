@@ -30,4 +30,10 @@ public class ResidentCarDaoImpl implements ResidentCarDao{
 
 	}
 
+	@Override
+	public ResidentCarVO selectResidentCar(SqlSessionTemplate sqlSession, ResidentCarVO residentCarVO) {
+		return sqlSession.selectOne("ResidentCar.selectResidentCar", residentCarVO);
+
+	}
+
 }

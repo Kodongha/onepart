@@ -26,6 +26,30 @@ public class EmployeeManageServiceImpl implements EmployeeManageService{
 		return employeeManageDao.managerList(sqlSession);
 	}
 
+	@Override
+	public void addManager(EmployeeManageVO employeeManageVO) {
+		employeeManageDao.addManager(sqlSession, employeeManageVO);
+
+	}
+
+	@Override
+	public void deleteManager(String managerSeq) {
+		employeeManageDao.deleteManager(sqlSession, managerSeq);
+
+	}
+
+	@Override
+	public EmployeeManageVO selectManager(EmployeeManageVO employeeManageVO) {
+		// TODO Auto-generated method stub
+		return	employeeManageDao.selectManager(sqlSession, employeeManageVO);
+	}
+
+	@Override
+	public void updateManager(String managerSeq) {
+		employeeManageDao.updateManager(sqlSession, managerSeq);
+
+	}
+
 
 
 }

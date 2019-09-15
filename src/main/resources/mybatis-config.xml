@@ -55,6 +55,8 @@
     	<typeAlias type="com.kh.onepart.manager.facility.model.vo.Image" alias="manager_img"/>
     	<typeAlias type="com.kh.onepart.manager.facility.model.vo.FacSeatInfo" alias="manager_facSeatInfo" />
     	<typeAlias type="com.kh.onepart.manager.employee_manage.model.vo.EmployeeManageVO" alias="EmployeeManage" />
+		<typeAlias type="com.kh.onepart.manager.car_manage.model.vo.ResidentCarVO" alias="ResidentCarVO" />
+		<typeAlias type="com.kh.onepart.manager.employee_manage.model.vo.EmployeeManageVO" alias="EmployeeManageVO" />
 
 	</typeAliases>
 

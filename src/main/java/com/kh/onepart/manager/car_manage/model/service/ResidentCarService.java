@@ -12,4 +12,6 @@ public interface ResidentCarService {
 
 	void deleteResidentCar(String string);
 
+	ResidentCarVO selectResidentCar(ResidentCarVO residentCarVO);
+
 }

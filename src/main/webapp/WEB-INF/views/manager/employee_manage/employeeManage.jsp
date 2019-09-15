@@ -36,7 +36,6 @@
 	color: #fff;
 	background: #00acac !important;
 	border-color: #00acac !important;
-	width: 20%;
 }
 
 .btn.btn-warning:hover {
@@ -68,10 +67,6 @@
 		font-size: 15px;
 		padding-top: 14px !important;
 	}
-}
-
-.btn {
-	width: 20%;
 }
 
 button#delete {
@@ -117,7 +112,7 @@ input[type=checkbox] {
 
 .custom-modal.modal-hide {
 	opacity: 0;
-	z-index: -10;
+	z-index: -1000;
 	transition-property: opacity;
 	transition-duration: 0.5s;
 }
@@ -169,10 +164,14 @@ input[type=checkbox] {
 					<table id="data-table" class="table table-striped table-bordered">
 						<thead>
 							<tr>
-								<td colspan="5"
+								<td
 									style="border-top: 1px solid white; border-right: 1px solid white; border-left: 1px solid white"><button
 										type="button"
 										class="btn btn-sm btn-warning modal-show" id="deleteManager">삭제</button></td>
+								<td colspan="4"
+									style="border-top: 1px solid white; border-right: 1px solid white; border-left: 1px solid white"><button
+										type="button"
+										class="btn btn-sm btn-warning modal-show" id="updateManager">퇴사처리</button></td>
 								<td colspan="5"
 									style="text-align: right; border-top: 1px solid white; border-right: 1px solid white; border-left: 1px solid white"><button
 										id="add-with-callbacks"
@@ -200,7 +199,7 @@ input[type=checkbox] {
 
 								<tr class="odd gradeX">
 
-									<td><input name="managerCheck" id="managerCheck" type="checkbox"></td>
+									<td><input name="managerCheck" id="managerCheck" type="checkbox" value=${manager.managerSeq }></td>
 									<td>${manager.managerSeq }</td>
 									<td>${manager.managerNm }</td>
 									<td>${manager.deptNm }</td>
@@ -238,7 +237,7 @@ input[type=checkbox] {
 
 					<div class="panel-body">
 						<h2 id="carre">직원등록</h2>
-						<form id="addResidentCar" class="form-horizontal">
+						<form id="addManager" class="form-horizontal">
 							<table id="managerTable">
 								<tr>
 									<td><label>이름</label></td>
@@ -250,7 +249,7 @@ input[type=checkbox] {
 									<td><label>부서</label></td>
 									<td>
 
-										<select class="form-control input-sm">
+										<select id="deptCd" class="form-control input-sm">
 											<option value="2">사무</option>
 											<option value="3">시설</option>
 											<option value="4">경비</option>
@@ -259,17 +258,17 @@ input[type=checkbox] {
 								</tr>
 								<tr>
 									<td><label>아이디</label></td>
-									<td><input id="carType" type="text" class="form-control"
+									<td><input id="managerId" type="text" class="form-control"
 										placeholder="직원의 아이디를 입력하세요." /></td>
 								</tr>
 								<tr>
 									<td><label>연락처</label></td>
-									<td><input id="carNm" type="text" class="form-control"
+									<td><input id="managerPhone" type="text" class="form-control"
 										placeholder="직원의 연락처를 입력하세요." /></td>
 								</tr>
 								<tr>
 									<td><label>이메일</label></td>
-									<td><input id="enrollPurpose" type="text"
+									<td><input id="managerEmail" type="text"
 										class="form-control" placeholder="직원의 이메일을 입력하세요." /></td>
 								</tr>
 							</table>
@@ -286,11 +285,11 @@ input[type=checkbox] {
 
 							<div class="col-md-9" id="btncar">
 								<button type="submit" class="btn btn-sm btn-success">등록</button>
-								<button type="button"
-									class="btn btn-sm btn-cancel modal-hide-btn">취소</button>
+								<input type="button"
+									class="btn btn-sm btn-cancel modal-hide-btn" value="취소">
 							</div>
-
 						</form>
+
 					</div>
 				</div>
 				<!-- end panel -->
@@ -301,16 +300,16 @@ input[type=checkbox] {
 
 <script>
 // 선택된값 삭제하기
-	/* $('#deleteResidentCar').click(function() {
+	 $('#deleteManager').click(function() {
 		var con = window.confirm("정말 삭제하시겠습니까?");
 		if(con){
 		var items = [];
-		$('input:checkbox[name=residentCarCheck]:checked').each(function() {
+		$('input:checkbox[name=managerCheck]:checked').each(function() {
 			items.push($(this).val());
 		});
 		var tmp = items.join(',');
 		$.ajax({
-			url : '/onepart/manager/deleteResidentCar',
+			url : '/onepart/manager/deleteManager',
 			type : 'post',
 			data : {'tmp': tmp},
 			dataType : 'json',
@@ -318,45 +317,69 @@ input[type=checkbox] {
 				location.reload();
 			},
 			error : function(err) {
-				alert('입주민 정보를 확인하세요.');
+				alert('삭제에 실패하였습니다..');
 
 			}
 		});
 	}
-	}); */
+	});
 
-</script>
-<script>
-	/* //입주민 차량 추가 처리
-	$(document).on('submit', '#addResidentCar', function(e) {
-		e.preventDefault();
-
-		const data = {
-			carNum : $('#carNum').val(), //차량번호
-			bdNm : $('#bdNm').val(), //동
-			rmNm : $('#rmNm').val(), //호
-			residentNm : $('#residentNm').val(), //차주
-			carType : $('#carType').val(), //차종
-			carNm : $('#carNm').val(), //차명
-			enrollPurpose : $('#enrollPurpose').val()
-		//용도
-
-		};
-
+	// 퇴사처리하기
+	 $('#updateManager').click(function() {
+		var con = window.confirm("정말 퇴사처리하시겠습니까?");
+		if(con){
+		var items = [];
+		$('input:checkbox[name=managerCheck]:checked').each(function() {
+			items.push($(this).val());
+		});
+		var tmp = items.join(',');
 		$.ajax({
-			url : '/onepart/manager/addResidentCar',
+			url : '/onepart/manager/updateManager',
 			type : 'post',
-			data : data,
+			data : {'tmp': tmp},
 			dataType : 'json',
 			success : function(result) {
 				location.reload();
 			},
 			error : function(err) {
-				alert('입주민 정보를 확인하세요.');
+				alert('퇴사처리에 실패하였습니다..');
 
 			}
 		});
-	}); */
+	}
+	});
+
+</script>
+<script>
+	 //직원 추가
+	$(document).on('submit', '#addManager', function(e) {
+		e.preventDefault();
+
+		const data = {
+				managerNm : $('#managerNm').val(), //직원이름
+				deptCd : $('#deptCd').val(), //부서
+				managerId : $('#managerId').val(), //직원아이디
+				managerPhone : $('#managerPhone').val(), //연락처
+				managerEmail : $('#managerEmail').val(), //이메일
+		};
+		$.ajax({
+			url : '/onepart/manager/addManager',
+			type : 'post',
+			data : data,
+			dataType : 'json',
+			success : function(result) {
+				if(result.result == "success"){
+					location.reload();
+				}else{
+					alert('이미 등록된 아이디입니다.');
+				}
+			},
+			error : function(err) {
+				alert('직원 정보를 확인하세요.');
+
+			}
+		});
+	});
 
 	//처음 페이지 시작
 	$(function() {
@@ -387,6 +410,11 @@ input[type=checkbox] {
 		$(document).on('click', '.modal-show', function() {
 			const modalId = $(this).data('modal-id');
 			$('#' + modalId).removeClass('modal-hide');
+			$('#managerNm').val("")
+			$('#deptCd').val("2")
+			$('#managerId').val("")
+			$('#managerPhone').val("")
+			$('#managerEmail').val("")
 		});
 	};
 </script>
