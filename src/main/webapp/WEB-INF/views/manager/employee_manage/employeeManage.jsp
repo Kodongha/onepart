@@ -46,7 +46,7 @@
 .row>[class*=col-].ui-sortable {
 	width: 100%;
 	padding: 10px;
-	height: 460px;
+	height: 410px;
 }
 
 #carre {

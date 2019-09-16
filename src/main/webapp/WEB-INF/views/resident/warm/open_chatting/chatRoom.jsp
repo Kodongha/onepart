@@ -34,7 +34,9 @@
 	.chat-content .chats li:nth-child(1) { margin-top: 20px; }
 	.chat-content .chats li { width: 100%; }
 	.chat-content .chats li div { display: inline-block; }
-	.chat-content .chats li div.message { max-width: 65%; margin:0; }
+	.chat-content .chats li div.message { max-width: 75%; margin:0; }
+	.chat-content .chats li div.message img { max-width: 350px; max-height: 350px; }
+
 	.chat-content .chats li div.time { vertical-align:bottom; padding-left: 20px; }
 
 	.chat-content .chats li.right { text-align: right; }
@@ -457,6 +459,14 @@ $(document).on('click', '.downback', function () {
 
 					addMessage(senderId, msg, date, isMe);
 				}
+				else if(resultData.act == "sendImageUrl") {
+					const senderId = resultData.senderId;
+					const imageUrl = resultData.message;
+					const date = resultData.date;
+					const isMe = resultData.isMe;
+
+					addImage(senderId, imageUrl, date, isMe);
+				}
 				else if(resultData.act == "getPrevMessages") {
 
 
@@ -487,8 +497,113 @@ $(document).on('click', '.downback', function () {
 
 				}
 			};
+
+			// 드래그 앤 드랍 [파일 업로드]
+			$("html").on("dragover", function(e) {
+			    e.preventDefault();
+			    e.stopPropagation();
+			    $(this).addClass('dragging');
+			});
+
+			$("html").on("dragleave", function(e) {
+			    e.preventDefault();
+			    e.stopPropagation();
+			    $(this).removeClass('dragging');
+			});
+
+			$("html").on("drop", function(e) {
+			    e.preventDefault();
+			    e.stopPropagation();
+
+				var files = e.originalEvent.dataTransfer.files;
+				handleFileUpload(files);
+			});
 		}
 
+		function handleFileUpload(files) {
+			const fileLength = files.length;
+			if(confirm('총 '+fileLength+'개의 파일을 업로드 하시겠습니까?')) {
+				let successCount = 0;
+				for(let i=0; i<files.length; i++) {
+					let file = files[i];
+
+					if(checkFilesExt(file)) {
+						uploadFile(file);
+						successCount++;
+					}
+				}
+
+				if(successCount < fileLength) {
+					alert('총 '+successCount+'개의 파일을 전송했습니다.\njpg, png, gif 파일만 업로드 가능합니다.');
+				}
+			}
+		}
+
+		// 파일 확장자 체크
+		function checkFilesExt(file) {
+			let isValid = true;
+
+			let fileNameArr = (file.name).split('.');
+			let fileExt = fileNameArr[fileNameArr.length-1].toUpperCase();
+
+			if(fileExt != 'PNG' && fileExt != 'JPG' && fileExt != 'GIF')
+				isValid = false;
+
+			return isValid;
+		}
+
+		function uploadFile(file) {
+			let formData = new FormData();
+			formData.append("file", file);
+
+			$.ajax({
+				url : '/onepart/resident/fileUpload',
+				type : 'POST',
+				data : formData,
+				processData: false,
+				contentType: false,
+				dataType: 'json',
+				success : function(data) {
+					if(data.result == "success"){
+						// resources 경로 가져오는 부분 개선 필요, 대충 때려넣음
+						imageUrl = (location.protocol + '//' + location.host + '/onepart/resources/uploadFiles/chatting'+data.savedPath);
+						originFileName = data.originFileName
+						ext = data.ext
+						changeName = data.changeName
+						uploadPath = data.uploadPath
+						sendImageUrl(imageUrl,changeName,originFileName,ext,uploadPath);
+					}
+					//sendMessage(msg);
+				},
+				error : function(err) {
+					alert('파일 업로드를 실패했습니다.');
+				}
+			});
+		}
+
+		// 이미지 전송
+		function sendImageUrl(imageUrl,changeName,originFileName,ext,uploadPath) {
+			let urlPathArr = location.href.split('/');
+			let openChatSeq = urlPathArr[urlPathArr.length-1];
+			console.log(":::" +changeName);
+			console.log(":::" +originFileName);
+			console.log(":::" +ext);
+			console.log(":::" +uploadPath);
+			let data = {
+				'act': 'sendImageUrl',
+				'sender' : '${ sessionScope.loginUser.residentSeq }',
+				'senderId' : '${ sessionScope.loginUser.residentId }',
+				'openChatSeq' : openChatSeq,
+				'message' : imageUrl,
+				'changeName' : changeName,
+				'originFileName' : originFileName,
+				'ext' : ext,
+				'uploadPath' : uploadPath
+			};
+			webSocket.send(JSON.stringify(data));
+		}
+
+		// 메세지 하나 그리기
 		function addMessage(sender, msg, date, isMe) {
 			let msgFormat = (isMe)? $('#chatMsgFormat').find('li.right').clone() :  $('#chatMsgFormat').find('li.left').clone();
 			msgFormat.find('.name').text(sender);
@@ -502,6 +617,22 @@ $(document).on('click', '.downback', function () {
 				scrollBottom();
 			}
 		}
+
+		// 이미지 메세지 하나 그리기
+		function addImage(sender, imageUrl, date, isMe) {
+			let msgFormat = (isMe)? $('#chatMsgFormat').find('li.right').clone() :  $('#chatMsgFormat').find('li.left').clone();
+			msgFormat.find('.name').text(sender);
+			msgFormat.find('.message').html('<a href='+imageUrl+' download><img src='+imageUrl+'></a>');
+			msgFormat.find('.date-time').text(date);
+
+			$('ul.chats').append(msgFormat);
+
+			// 스크롤바 가장 하에 위치
+			if(isScrollBottom(msgFormat.height())) {
+				scrollBottom();
+			}
+		}
+
 
 		// 방에 참가
 		function enterRoom() {
@@ -527,6 +658,8 @@ $(document).on('click', '.downback', function () {
 
 			webSocket.send(JSON.stringify(data));
 		}
+
+
 
 		// 메세지 전송
 		function sendMessage(msg) {

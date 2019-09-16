@@ -27,4 +27,10 @@ public class OpenChatCommServiceImpl implements OpenChatCommService{
 	public List<OpenChatCommVO> getPrevMessages(int openChatSeq) {
 		return openChatCommDao.selectListByOpenChatSeq(sqlSession, openChatSeq);
 	}
+
+	@Override
+	public void saveOpenChatImageComm(OpenChatCommVO openChatCommVO) {
+		openChatCommDao.saveOpenChatImageComm(sqlSession, openChatCommVO);
+
+	}
 }
