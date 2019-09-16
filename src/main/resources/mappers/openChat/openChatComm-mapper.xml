@@ -52,6 +52,34 @@
 		)
 	</insert>
 
+	<insert id="saveOpenChatImageComm" parameterType="OpenChatCommVO">
+		INSERT INTO OPEN_CHAT_COMM
+		(
+			OPEN_CHAT_COMM_SEQ,
+			OPEN_CHAT_COMM_CONTENT,
+			OPEN_CHAT_MEMBER_SEQ,
+			OPEN_CHAT_COMM_SEND_DT,
+			OPEN_CHAT_COMM_ATTCH_TF,
+			OPEN_CHAT_COMM_IMG_TF
+		)
+		VALUES
+		(
+			OPEN_CHAT_COMM_SEQ.nextval,
+			#{openChatCommContent},
+		<if test="openChatMemberSeq gt 0">
+			#{openChatMemberSeq},
+		</if>
+		<if test="openChatMemberSeq lte 0">
+			(SELECT OPEN_CHAT_MEMBER_SEQ
+			 FROM OPEN_CHAT_MEMBER
+			 WHERE OPEN_CHAT_SEQ = #{openChatSeq}
+			 AND RESIDENT_SEQ = #{residentSeq}),
+		</if>
+			sysdate,
+			#{openChatCommAttchTf},
+			#{openChatCommImgTf}
+		)
+	</insert>
 
 
 </mapper>

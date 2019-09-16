@@ -14,4 +14,6 @@ public interface ResidentCarDao {
 
 	void deleteResidentCar(SqlSessionTemplate sqlSession, String residentEnrollCar);
 
+	ResidentCarVO selectResidentCar(SqlSessionTemplate sqlSession, ResidentCarVO residentCarVO);
+
 }

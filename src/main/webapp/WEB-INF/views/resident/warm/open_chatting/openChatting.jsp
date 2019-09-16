@@ -7,31 +7,38 @@
 <html>
 <!--<![endif]-->
 <head>
-<style>
-.roomNm{font-size: 1.2em;}
-.chatTable{width: 100%;}
-.passTd{text-align: left;}
-.headTd{text-align: right; font-size: 1.2em;}
-.format { display:none !important; }
-.content {
-	margin-left: 110px !important;
-}
+<link href="https://fonts.googleapis.com/css?family=Jua&display=swap" rel="stylesheet">
 
+<style>
+.fa-unlock:before { margin-right: -9px; color:#ffd700;}
+.fa-lock:before { color:#ffd700;}
+.roomNm{font-size: 1.2em; font-family: 'Noto Sans KR', sans-serif; font-weight: 600;}
+.chatTable{width: 100%;}
+.passTd{text-align: center;}
+.headTd{text-align: center; font-size: 1.2em; font-family: 'Jua', sans-serif;}
+.format { display:none !important; }
+.content {	margin-left: 110px !important;}
+.chatName{ text-align: left; width: 93%; }
 .alert.alert-success {
-	background: #00acac !important;
+	border: 3px solid #00acac;
+	background: #FFF !important;
 	color: black !important;
-	height: 80px !important;
-	padding: 15px !important;
-	margin: 0 25%;
+	padding: 10px 20px !important;
+	margin: 0 17%;
 	font-size: 1.3em !important;
 	margin-bottom: 10px !important;
-	width: 50%;
+	width: 66%;
 	display: inline-block;
+
 }
 
 .alert.alert-success:hover {
-	background: #008a8a!important;
-	-webkit-transition: background 0.2s;
+	background: #00acac !important;
+	-webkit-transform:scale(1.02); /*  크롬 */
+	-webkit-transition:transform 0.5s;
+
+
+
 }
 
 .content {
@@ -139,6 +146,7 @@
 }
 .roomDiv { cursor: pointer; }
 </style>
+
 </head>
 <body>
 	<!-- begin #content -->
@@ -206,11 +214,19 @@
 		<!-- end tab-content -->
 
 		<div class="roomDiv LeftTab format alert alert-success fade in m-b-15">
-			<strong class="roomNm"></strong>
+
 
 			<table class="chatTable">
+
+
+
+
 				<tr>
+					<td rowspan="2" class="chatName"><span class="roomNm"></span></td>
 					<td class="passTd"><span class="pass"></span></td>
+
+				</tr>
+				<tr>
 					<td class="headTd"><span class="currHead"></span><span>/</span><span class="maxHead"></span></td>
 				</tr>
 			</table>
@@ -275,8 +291,6 @@
 	</div>
 </body>
 <script>
-
-
 	$("#passwordMake").change(function(){
 		if($("#passwordMake").prop("checked")){
 			$("#openChatPwd").attr("disabled", false);
@@ -426,7 +440,7 @@
 					OpenChatRoomListTimeoutManage = setTimeout(function(){
 						if(OpenChatRoomListTimeoutEnable)
 							getRoomListAll();
-					}, 5000);
+					}, 500000);
 				},
 				error : function(err) {
 					alert('로그인 후 이용 바랍니다.');

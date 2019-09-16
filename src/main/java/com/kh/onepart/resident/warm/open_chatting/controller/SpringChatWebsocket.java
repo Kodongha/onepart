@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.warm.open_chatting.model.service.OpenChatCommService;
 import com.kh.onepart.resident.warm.open_chatting.model.service.OpenChatService;
+import com.kh.onepart.resident.warm.open_chatting.model.vo.ImageVO;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatCommVO;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO;
 
@@ -86,8 +87,52 @@ public class SpringChatWebsocket extends TextWebSocketHandler {
 					// 결과 전송
 					sess.sendMessage(new TextMessage(resultData));
 				}
-			}
-			else if(msg.get("act").equals("enterRoom")) {
+			}else if( msg.get("act").equals("sendImageUrl")) {
+				List<WebSocketSession> roomResidentList = memberMap.get(Integer.parseInt((String)msg.get("openChatSeq")));
+				for (WebSocketSession sess : roomResidentList) {
+					// 보낸사람인지
+					msg.put("isMe", sess.equals(session) );
+					// 서버 날짜
+					Date date = new Date();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd HH:mm");
+					String nowTime = dateFormat.format(date);
+					msg.put("date", nowTime);
+
+
+
+
+					// Java Object To JSON
+					String resultData = new ObjectMapper().writeValueAsString(msg);
+
+					OpenChatCommVO openChatCommVO = new OpenChatCommVO();
+
+					openChatCommVO.setOpenChatCommSendDt(new java.sql.Timestamp(date.getTime()));
+					openChatCommVO.setOpenChatCommContent((String)msg.get("message"));
+					openChatCommVO.setOpenChatCommAttchTf("N");
+					openChatCommVO.setOpenChatCommImgTf("Y");
+					openChatCommVO.setResidentSeq(Integer.parseInt((String)msg.get("sender")));
+					openChatCommVO.setOpenChatSeq(Integer.parseInt((String)msg.get("openChatSeq")));
+
+
+//					ImageVO imageVO = new ImageVO();
+//					imageVO.setChangeNm((String)msg.get("changeName"));
+//					imageVO.setFilePath((String)msg.get("uploadPath"));
+//					imageVO.setOriginNm((String)msg.get("originFileName"));
+
+
+
+					if(msg.get("isMe").equals(true)) {
+						openChatCommService.saveOpenChatImageComm(openChatCommVO);
+						//openChatCommService.saveImage(openChatCommVO);
+					}
+
+
+					System.out.println(openChatCommVO);
+
+					// 결과 전송
+					sess.sendMessage(new TextMessage(resultData));
+				}
+			}else if(msg.get("act").equals("enterRoom")) {
 
 				// 웹소켓 접속중인 채팅자 추가
 				List<WebSocketSession> roomResidentList = memberMap.get(Integer.parseInt((String)msg.get("openChatSeq")));

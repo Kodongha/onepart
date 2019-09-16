@@ -21,4 +21,10 @@ public class OpenChatCommDaoImpl implements OpenChatCommDao {
 	public void insert(SqlSessionTemplate sqlSession, OpenChatCommVO openChatCommVO) {
 		sqlSession.insert("OpenChatComm.insert", openChatCommVO);
 	}
+
+	@Override
+	public void saveOpenChatImageComm(SqlSessionTemplate sqlSession, OpenChatCommVO openChatCommVO) {
+		sqlSession.insert("OpenChatComm.saveOpenChatImageComm", openChatCommVO);
+
+	}
 }

@@ -15,60 +15,68 @@
 .buttonTable {
 	width: 100%;
 }
-#carnumTable{
-width:100%;
-}
-#address{
-width:100%;
-}
-#carinfoTable{
-width:100%;
+
+#carnumTable {
+	width: 100%;
 }
 
-#carnumTable tr td{
-width:75%;
-text-align:center;
-font-size: 1.2em;
-padding:5px;
-}
-#carinfoTable tr td{
-width:75%;
-text-align:center;
-font-size: 1.2em;
-padding:5px;
-}
-#address tr td{
-width:25%;
-text-align:center;
-font-size: 1.2em;
-padding:5px;
+#address {
+	width: 100%;
 }
 
-#address tr td:nth-child(3){
-width:5%;
-text-align:center;
-font-size: 1.2em;
-}
-#address tr td:nth-child(5){
-width:5%;
-text-align:center;
-font-size: 1.2em;
+#carinfoTable {
+	width: 100%;
 }
 
-#carnumTable tr td:nth-child(1){
-width:25%;
-text-align:center;
-font-size: 1.2em;
+#carnumTable tr td {
+	width: 75%;
+	text-align: center;
+	font-size: 1.2em;
+	padding: 5px;
 }
-#address tr td:nth-child(1){
-width:20.3%;
-text-align:center;
-font-size: 1.2em;
+
+#carinfoTable tr td {
+	width: 75%;
+	text-align: center;
+	font-size: 1.2em;
+	padding: 5px;
 }
-#carinfoTable tr td:nth-child(1){
-width:25%;
-text-align:center;
-font-size: 1.2em;
+
+#address tr td {
+	width: 25%;
+	text-align: center;
+	font-size: 1.2em;
+	padding: 5px;
+}
+
+#address tr td:nth-child(3) {
+	width: 5%;
+	text-align: center;
+	font-size: 1.2em;
+}
+
+#address tr td:nth-child(5) {
+	width: 5%;
+	text-align: center;
+	font-size: 1.2em;
+}
+
+#carnumTable tr td:nth-child(1) {
+	width: 25%;
+	text-align: center;
+	font-size: 1.2em;
+}
+
+#address tr td:nth-child(1) {
+	width: 20.3%;
+	text-align: center;
+	font-size: 1.2em;
+}
+
+#carinfoTable tr td:nth-child(1) {
+	width: 25%;
+	text-align: center;
+	font-size: 1.2em;
 }
 
 @media ( min-width : 992px) {
@@ -97,15 +105,13 @@ font-size: 1.2em;
 
 #carre {
 	text-align: center;
-	margin-bottom:40px;
+	margin-bottom: 40px;
 }
-
-
 
 #btncar {
 	text-align: center;
 	width: 100%;
-	margin-top:20px;
+	margin-top: 20px;
 }
 
 @media ( min-width : 992px) {
@@ -115,9 +121,7 @@ font-size: 1.2em;
 	}
 }
 
-.btn {
-	width: 20%;
-}
+
 
 button#delete {
 	width: 20%;
@@ -162,7 +166,7 @@ input[type=checkbox] {
 
 .custom-modal.modal-hide {
 	opacity: 0;
-	z-index: -10;
+	z-index: -1000;
 	transition-property: opacity;
 	transition-duration: 0.5s;
 }
@@ -216,8 +220,8 @@ input[type=checkbox] {
 							<tr>
 								<td colspan="3"
 									style="border-top: 1px solid white; border-right: 1px solid white; border-left: 1px solid white"><button
-										type="button"
-										class="btn btn-sm btn-warning modal-show" id="deleteResidentCar">삭제</button></td>
+										type="button" class="btn btn-sm btn-warning modal-show"
+										id="deleteResidentCar">삭제</button></td>
 								<td colspan="4"
 									style="text-align: right; border-top: 1px solid white; border-right: 1px solid white; border-left: 1px solid white"><button
 										id="add-with-callbacks"
@@ -241,7 +245,8 @@ input[type=checkbox] {
 
 								<tr class="odd gradeX">
 
-									<td><input name="residentCarCheck" id="residentCarCheck" type="checkbox" value=${car.residentEnrollCar }></td>
+									<td><input name="residentCarCheck" id="residentCarCheck"
+										type="checkbox" value=${car.residentEnrollCar }></td>
 									<td class="carNum">${car.carNum }</td>
 									<td class="bdrm">${car.bdNm }동${ car.rmNm }호</td>
 									<td class="residentNm">${car.residentNm }</td>
@@ -269,9 +274,9 @@ input[type=checkbox] {
 			<div class="col-md-6">
 				<!-- begin panel -->
 				<div class="panel panel-inverse" data-sortable-id="form-stuff-1">
-
 					<div class="panel-body">
 						<h2 id="carre">차량등록</h2>
+
 						<form id="addResidentCar" class="form-horizontal">
 							<table id="carnumTable">
 								<tr>
@@ -279,13 +284,7 @@ input[type=checkbox] {
 									<td><input id="carNum" type="text" class="form-control"
 										placeholder="차량 번호를 입력하세요." /></td>
 								</tr>
-
 							</table>
-
-
-
-
-
 							<table id="address">
 								<tr>
 									<td><label>주소</label></td>
@@ -322,24 +321,23 @@ input[type=checkbox] {
 										class="form-control" placeholder="용도를 입력하세요." /></td>
 								</tr>
 							</table>
-
-
-
-
-
-
-
-
-
-
-
 							<div class="col-md-9" id="btncar">
-								<button type="submit" class="btn btn-sm btn-success">등록</button>
-								<button type="button"
-									class="btn btn-sm btn-cancel modal-hide-btn">취소</button>
+							<button type="submit" class="btn btn-sm btn-success">등록</button>
+							<input type="button" id="cancelCar"
+								class="btn btn-sm btn-cancel modal-hide-btn" value="취소">
 							</div>
-
 						</form>
+
+
+
+
+
+
+
+
+
+
+
 					</div>
 				</div>
 				<!-- end panel -->
@@ -348,97 +346,115 @@ input[type=checkbox] {
 	</div>
 
 
-<script>
-// 선택된값 삭제하기
-	$('#deleteResidentCar').click(function() {
-		var con = window.confirm("정말 삭제하시겠습니까?");
-		if(con){
-		var items = [];
-		$('input:checkbox[name=residentCarCheck]:checked').each(function() {
-			items.push($(this).val());
+	<script>
+	// 선택된값 삭제하기
+		$('#deleteResidentCar').click(
+				function() {
+					var con = window.confirm("정말 삭제하시겠습니까?");
+					if (con) {
+						var items = [];
+						$('input:checkbox[name=residentCarCheck]:checked')
+								.each(function() {
+									items.push($(this).val());
+								});
+						var tmp = items.join(',');
+						$.ajax({
+							url : '/onepart/manager/deleteResidentCar',
+							type : 'post',
+							data : {
+								'tmp' : tmp
+							},
+							dataType : 'json',
+							success : function(result) {
+								location.reload();
+							},
+							error : function(err) {
+								alert('삭제에 실패 했습니다..');
+
+							}
+						});
+					}
+				});
+	</script>
+	<script>
+		//입주민 차량 추가 처리
+		$(document).on('submit', '#addResidentCar', function(e) {
+			e.preventDefault();
+
+			const data = {
+				carNum : $('#carNum').val(), //차량번호
+				bdNm : $('#bdNm').val(), //동
+				rmNm : $('#rmNm').val(), //호
+				residentNm : $('#residentNm').val(), //차주
+				carType : $('#carType').val(), //차종
+				carNm : $('#carNm').val(), //차명
+				enrollPurpose : $('#enrollPurpose').val()
+			//용도
+
+			};
+
+			$.ajax({
+				url : '/onepart/manager/addResidentCar',
+				type : 'post',
+				data : data,
+				dataType : 'json',
+				success : function(result) {
+						if(result.result == "success"){
+							location.reload();
+						}else{
+							alert('이미 등록된 차량입니다.');
+						}
+
+				},
+				error : function(err) {
+					alert('입주민 정보를 확인하세요.');
+
+				}
+			});
 		});
-		var tmp = items.join(',');
-		$.ajax({
-			url : '/onepart/manager/deleteResidentCar',
-			type : 'post',
-			data : {'tmp': tmp},
-			dataType : 'json',
-			success : function(result) {
-				location.reload();
-			},
-			error : function(err) {
-				alert('입주민 정보를 확인하세요.');
 
-			}
-		});
-	}
-	});
+		//처음 페이지 시작
+		$(function() {
 
-</script>
-<script>
-	//입주민 차량 추가 처리
-	$(document).on('submit', '#addResidentCar', function(e) {
-		e.preventDefault();
-
-		const data = {
-			carNum : $('#carNum').val(), //차량번호
-			bdNm : $('#bdNm').val(), //동
-			rmNm : $('#rmNm').val(), //호
-			residentNm : $('#residentNm').val(), //차주
-			carType : $('#carType').val(), //차종
-			carNm : $('#carNm').val(), //차명
-			enrollPurpose : $('#enrollPurpose').val()
-		//용도
-
-		};
-
-		$.ajax({
-			url : '/onepart/manager/addResidentCar',
-			type : 'post',
-			data : data,
-			dataType : 'json',
-			success : function(result) {
-				location.reload();
-			},
-			error : function(err) {
-				alert('입주민 정보를 확인하세요.');
-
-			}
-		});
-	});
-
-	//처음 페이지 시작
-	$(function() {
-
-		App.init();
-		displayInit();
-		TableManageColVis.init();
-		$("th").parent().children().eq(0).removeAttr("class");
-		$(".dataTables_info").remove();
-		$("#data-table_previous").text("이전");
-		$("#data-table_next").text("다음");
-		$(".ColVis_MasterButton span").text("컬럼 보이기/숨기기")
-
-		$(document).on('click', '.ColVis_MasterButton', function() {
-			$("ul.ColVis_collection > li:first-child").remove();
-		});
-		$(document).on('click', 'th', function() {
+			App.init();
+			displayInit();
+			TableManageColVis.init();
 			$("th").parent().children().eq(0).removeAttr("class");
+			$(".dataTables_info").remove();
+			$("#data-table_previous").text("이전");
+			$("#data-table_next").text("다음");
+			$(".ColVis_MasterButton span").text("컬럼 보이기/숨기기")
+
+			$(document).on('click', '.ColVis_MasterButton', function() {
+				$("ul.ColVis_collection > li:first-child").remove();
+			});
+			$(document).on('click', 'th', function() {
+				$("th").parent().children().eq(0).removeAttr("class");
+			});
+
+
+
+
 		});
 
-	});
-
-	function displayInit() {
-		$('.custom-modal').addClass('modal-hide');
-		$(document).on('click', '.modal-hide-btn', function() {
+		function displayInit() {
 			$('.custom-modal').addClass('modal-hide');
-		});
-		$(document).on('click', '.modal-show', function() {
-			const modalId = $(this).data('modal-id');
-			$('#' + modalId).removeClass('modal-hide');
-		});
-	};
-</script>
+			$(document).on('click', '.modal-hide-btn', function() {
+				$('.custom-modal').addClass('modal-hide');
+			});
+			$(document).on('click', '.modal-show', function() {
+				const modalId = $(this).data('modal-id');
+				$('#' + modalId).removeClass('modal-hide');
+				$('#carNum').val("");
+				$('#bdNm').val("");
+				$('#rmNm').val("");
+				$('#residentNm').val("");
+				$('#carType').val("");
+				$('#carNm').val("");
+				$('#enrollPurpose').val("");
+			});
+		};
+	</script>
 
 
 </body>
