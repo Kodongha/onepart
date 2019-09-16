@@ -128,7 +128,7 @@
 				console.log("hahahahahaha")
 			});
 		})
-
+		//방문차량 등록용 메소드
 		function registerVisitCar() {
 			var visitCarNum = $("#visitCarNum").val();
 			var subPhone = $("#subPhone").val();
@@ -156,7 +156,7 @@
 			});
 			return false;
 		}
-
+		//방문차량 리스트로 이동
 		function moveListVisitCar(){
 			$.ajax({
 				url:"/onepart/resident/moveListVisitCar",
