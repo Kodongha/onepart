@@ -19,6 +19,7 @@
 			</td>
 		</tr>
 	</table>
+<c:if test="${ vote != null }">
 	<div class="panel-body" style="background:white" align="center">
 	<!-- 상세정보 div -->
 		<table style="width:95%; margin:0 auto;">
@@ -49,6 +50,39 @@
 		</p>
 		<br>
 	</div>
+</c:if>
+<c:if test="${ vote2 != null }">
+	<div class="panel-body" style="background:white" align="center">
+	<!-- 상세정보 div -->
+		<table style="width:95%; margin:0 auto;">
+			<tr>
+				<td style="width:70%;"><h3>${ vote2.electNm }</h3></td>
+				<td style="width:15%; text-align:center;">
+					<span class="badge badge-primary" style="height:28px; font-size:1.25em;">투표 진행중</span>
+				</td>
+				<td style="width:15%; text-align:right;">
+					<span class="badge badge-inverse" style="height:28px; font-size:1.25em;">34% 완료</span>
+					<input type="hidden" value="${ vote2.electVoteSeq }" id="electVoteSeq">
+				</td>
+			</tr>
+		</table>
+		<table style="margin:0 auto">
+			<tr>
+				<td>
+					<hr>
+					<h5>기간 : ${ vote2.voteStartDt } ~ ${ vote2.voteEndDt }</h5>
+					<hr>
+				</td>
+			</tr>
+		</table>
+		<br>
+		<h4>상세정보</h4>
+		<p>
+			${ vote2.electVoteDetail }
+		</p>
+		<br>
+	</div>
+</c:if>
 </div>
 <br><br>
 </body>

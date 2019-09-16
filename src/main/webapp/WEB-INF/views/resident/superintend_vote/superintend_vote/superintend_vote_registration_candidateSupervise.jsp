@@ -287,8 +287,9 @@
 					type:"get",
 					data:{voteSeq:electVoteSeq},
 					success:function(result){
-						$('#modal-message').remove();
+						$('#modal-dialog_test').modal("hide");
 						$('.modal-backdrop').remove();
+						$('.modal-open').css("overflow", "visible");
 						$("#content").html(result);
 					}
 

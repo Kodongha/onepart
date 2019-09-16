@@ -2,6 +2,7 @@ package com.kh.onepart.resident.superintend_vote.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
@@ -32,5 +33,13 @@ public interface SuperintendVoteService {
 	GeneralVote selectOneGeneralVote(int voteSeq);
 	//해당 투표에 등록된 후보 담아오는 메소드
 	ArrayList selectAllGeneralVoteCandidate(int voteSeq);
+	//입력받은 정보의 거주자가 있는지 확인하는 메소드
+	int selectConfirmResident(ResidentVO rs);
+	//해당 선거에 등록된 후보신청서 리스트 담아오는 메소드
+	ArrayList selectAllElectionVoteCandidateApply(int electVoteSeq);
+	//해당 신청서 세부내역 담아오는 메소드
+	ElectionVoteCandidate selectOneElectionVoteCandidate(int electVoteCndtSignupSeq);
+	//해당 신청서 경력사항 리스트 담아오는 메소드
+	ArrayList selectAllElectionVoteCadidateCareer(int electVoteCndtSignupSeq);
 
 }

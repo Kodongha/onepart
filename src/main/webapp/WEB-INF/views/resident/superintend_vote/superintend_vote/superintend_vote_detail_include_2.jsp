@@ -14,23 +14,43 @@
 	<div style="width:85%; margin:0 auto">
 		<!-- title div -->
 		<table style="width:100%">
-			<tr>
-				<td>
-					<div class="form-group">
-	                    <h4>선거정보</h4>
-	                </div>
-				</td>
-				<td style="width:50%"></td>
-				<td style="width:15%">
-					 <a class="btn btn-success" style="width:100%" id="sendMessageResident">문자발송</a>
-				</td>
-				<td style="width:1%"></td>
-				<td style="width:15%">
-					<a class="btn btn-success" style="width:100%" id="offlineVote" href="#modal-dialog_test" data-toggle="modal">오프라인 투표모드</a>
-					<input type="hidden" value="${ ev.electVoteSeq }" id="electVoteSeq" name="electVoteSeq">
-					<input type="hidden" value="${ voteKind }" id="voteKind" name="voteKind">
-				</td>
-			</tr>
+			<c:if test="${ sit != 'offline' }">
+				<tr>
+					<td>
+						<div class="form-group">
+		                    <h4>선거정보</h4>
+		                </div>
+					</td>
+					<td style="width:50%"></td>
+					<td style="width:15%">
+						 <a class="btn btn-success" style="width:100%" id="sendMessageResident">문자발송</a>
+					</td>
+					<td style="width:1%"></td>
+					<td style="width:15%">
+						<a class="btn btn-success" style="width:100%" id="offlineVote" href="#modal-dialog_test" data-toggle="modal">오프라인 투표모드 전환</a>
+						<input type="hidden" value="${ ev.electVoteSeq }" id="electVoteSeq" name="electVoteSeq">
+						<input type="hidden" value="${ voteKind }" id="voteKind" name="voteKind">
+					</td>
+				</tr>
+			</c:if>
+			<c:if test="${ sit == 'offline' }">
+				<tr>
+					<td>
+						<div class="form-group">
+		                    <h4>선거정보</h4>
+		                </div>
+					</td>
+					<td style="width:50%"></td>
+					<td style="width:15%">
+					</td>
+					<td style="width:1%"></td>
+					<td style="width:15%">
+						<a class="btn btn-success" style="width:100%" id="offlineVote" href="#modal-dialog_test2" data-toggle="modal">오프라인 투표모드 해제</a>
+						<input type="hidden" value="${ ev.electVoteSeq }" id="electVoteSeq" name="electVoteSeq">
+						<input type="hidden" value="${ voteKind }" id="voteKind" name="voteKind">
+					</td>
+				</tr>
+			</c:if>
 		</table>
 		<div class="panel-body" style="background:white" align="center">
 		<!-- 선거상세정보 div -->
@@ -68,23 +88,43 @@
 	<div style="width:85%; margin:0 auto">
 		<!-- title div -->
 		<table style="width:100%">
-			<tr>
-				<td>
-					<div class="form-group">
-	                    <h4>투표정보</h4>
-	                </div>
-				</td>
-				<td style="width:50%"></td>
-				<td style="width:15%">
-					 <a class="btn btn-success" style="width:100%" id="sendMessageResident">문자발송</a>
-				</td>
-				<td style="width:1%"></td>
-				<td style="width:15%">
-					<a class="btn btn-success" style="width:100%" id="offlineVote" href="#modal-dialog_test" data-toggle="modal">오프라인 투표모드</a>
-					<input type="hidden" value="${ gv.gnrVoteSeq }" id="electVoteSeq" name="electVoteSeq">
-					<input type="hidden" value="${ voteKind }" id="voteKind" name="voteKind">
-				</td>
-			</tr>
+			<c:if test="${ sit != 'offline' }">
+				<tr>
+					<td>
+						<div class="form-group">
+		                    <h4>투표정보</h4>
+		                </div>
+					</td>
+					<td style="width:50%"></td>
+					<td style="width:15%">
+						 <a class="btn btn-success" style="width:100%" id="sendMessageResident">문자발송</a>
+					</td>
+					<td style="width:1%"></td>
+					<td style="width:15%">
+						<a class="btn btn-success" style="width:100%" id="offlineVote" href="#modal-dialog_test" data-toggle="modal">오프라인 투표모드 전환</a>
+						<input type="hidden" value="${ gv.gnrVoteSeq }" id="electVoteSeq" name="electVoteSeq">
+						<input type="hidden" value="${ voteKind }" id="voteKind" name="voteKind">
+					</td>
+				</tr>
+			</c:if>
+			<c:if test="${ sit == 'offline' }">
+				<tr>
+					<td>
+						<div class="form-group">
+		                    <h4>투표정보</h4>
+		                </div>
+					</td>
+					<td style="width:50%"></td>
+					<td style="width:15%">
+					</td>
+					<td style="width:1%"></td>
+					<td style="width:15%">
+						<a class="btn btn-success" style="width:100%" id="offlineVote" href="#modal-dialog_test2" data-toggle="modal">오프라인 투표모드 해제</a>
+						<input type="hidden" value="${ gv.gnrVoteSeq }" id="electVoteSeq" name="electVoteSeq">
+						<input type="hidden" value="${ voteKind }" id="voteKind" name="voteKind">
+					</td>
+				</tr>
+			</c:if>
 		</table>
 		<div class="panel-body" style="background:white" align="center">
 		<!-- 선거상세정보 div -->
@@ -134,10 +174,31 @@
 			</div>
 			<div class="modal-footer">
 				<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">닫기</a>
-				<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal" onclick="();">오프라인 투표모드로</a>
+				<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal" onclick="goOfflineVote();">오프라인 투표모드로</a>
 			</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	/* 오프라인 투표번호 view 전환 */
+	function goOfflineVote() {
+		var electVoteSeq = $("#electVoteSeq").val();
+		var voteKind = $("#voteKind").val();
+		$.ajax({
+			url:"/onepart/resident/changeOffline",
+			dataType:"html",
+			data:{
+					electVoteSeq:electVoteSeq,
+					voteKind:voteKind
+				},
+			success:function(result){
+				$('#modal-dialog_test').modal("hide");
+				$('.modal-backdrop').remove();
+				$('.modal-open').css("overflow", "visible");
+				$("#content").html(result);
+			}
+		});
+	}
+</script>
 </body>
 </html>

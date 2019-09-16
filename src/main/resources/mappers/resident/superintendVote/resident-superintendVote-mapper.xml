@@ -48,6 +48,8 @@
 		<result property="changeNm" column="CHANGE_NM"/>
 		<result property="filePath" column="FILE_PATH"/>
 		<result property="cndtNo" column="CNDT_NO"/>
+		<result property="residentBirth" column="RESIDENT_BIRTH"/>
+		<result property="residentGender" column="RESIDENT_GENDER"/>
 	</resultMap>
 
 	<resultMap type="ApartDetailInfo" id="ApartDetailInfoResultSet">
@@ -78,6 +80,13 @@
 		<result property="cndtNm" column="CNDT_NM"/>
 		<result property="cndtDetail" column="CNDT_DETAIL"/>
 		<result property="cndtEnrollDt" column="CNDT_ENROLL_DT"/>
+	</resultMap>
+
+	<resultMap type="Career" id="CareerResultSet">
+		<id property="careerSeq" column="CAREER_SEQ"/>
+		<result property="careerPeriod" column="CAREER_PERIOD"/>
+		<result property="careerDetail" column="CAREER_DETAIL"/>
+		<result property="electVoteCndtSignupSeq" column="ELECT_VOTE_CNDT_SIGNUP_SEQ"/>
 	</resultMap>
 
 	<insert id="insertGeneralVote" parameterType="GeneralVote">
@@ -216,6 +225,7 @@
 		JOIN IMAGE t4 ON (t1.ELECT_VOTE_CNDT_SIGNUP_SEQ = t4.ELECT_VOTE_CNDT_SIGNUP_SEQ)
 		WHERE t1.ELECT_VOTE_SEQ = #{voteSeq}
 		AND t1.STATUS = 2
+		ORDER BY t1.ELECT_VOTE_CNDT_SIGNUP_SEQ
 	</select>
 
 	<select id="selectAllHoList" parameterType="_int" resultMap="ApartDetailInfoResultSet">
@@ -255,6 +265,54 @@
 		SELECT *
 		FROM GNR_VOTE_CNDT_ENROLL
 		WHERE GNR_VOTE_SEQ = #{voteSeq}
+	</select>
+
+	<select id="selectConfirmResident" parameterType="ResidentVO" resultType="_int">
+		SELECT COUNT(*)
+		FROM RESIDENT
+		WHERE RESIDENT_NM = #{residentNm}
+		AND APT_DETAIL_INFO_SEQ = #{aptDetailInfoSeq}
+		AND HOUSEHOLD_AUTH_TYPE = 2
+	</select>
+
+	<select id="selectKindResident" parameterType="ResidentVO" resultType="_int">
+		SELECT COUNT(*)
+		FROM RESIDENT
+		WHERE APT_DETAIL_INFO_SEQ = #{aptDetailInfoSeq}
+		AND HOUSEHOLD_AUTH_TYPE = 2
+	</select>
+
+	<select id="selectConfirmResidents" parameterType="ResidentVO" resultType="_int">
+		SELECT COUNT(*)
+		FROM RESIDENT
+		WHERE RESIDENT_NM = #{residentNm}
+		AND APT_DETAIL_INFO_SEQ = #{aptDetailInfoSeq}
+		AND HOUSEHOLD_AUTH_TYPE = 3
+	</select>
+
+	<select id="selectAllElectionVoteCandidateApply" parameterType="_int" resultMap="ElectionVoteCandidateResultSet">
+		SELECT *
+		FROM ELECT_VOTE_CNDT_SIGNUP t1
+		JOIN RESIDENT t2 ON (t1.RESIDENT_SEQ = t2.RESIDENT_SEQ)
+		JOIN APT_DETAIL_INFO t3 ON (t3.APT_DETAIL_INFO_SEQ = t2.APT_DETAIL_INFO_SEQ)
+		JOIN IMAGE t4 ON (t1.ELECT_VOTE_CNDT_SIGNUP_SEQ = t4.ELECT_VOTE_CNDT_SIGNUP_SEQ)
+		WHERE t1.ELECT_VOTE_SEQ = #{electVoteSeq}
+		ORDER BY t1.ELECT_VOTE_CNDT_SIGNUP_SEQ
+	</select>
+
+	<select id="selectOneElectionVoteCandidate" parameterType="_int" resultMap="ElectionVoteCandidateResultSet">
+		SELECT *
+		FROM ELECT_VOTE_CNDT_SIGNUP t1
+		JOIN RESIDENT t2 ON (t1.RESIDENT_SEQ = t2.RESIDENT_SEQ)
+		JOIN APT_DETAIL_INFO t3 ON (t3.APT_DETAIL_INFO_SEQ = t2.APT_DETAIL_INFO_SEQ)
+		JOIN IMAGE t4 ON (t1.ELECT_VOTE_CNDT_SIGNUP_SEQ = t4.ELECT_VOTE_CNDT_SIGNUP_SEQ)
+        WHERE t1.ELECT_VOTE_CNDT_SIGNUP_SEQ = #{electVoteCndtSignupSeq}
+	</select>
+
+	<select id="selectAllElectionVoteCadidateCareer" parameterType="_int" resultMap="CareerResultSet">
+		SELECT *
+		FROM CAREER
+		WHERE ELECT_VOTE_CNDT_SIGNUP_SEQ = #{electVoteCndtSignupSeq}
 	</select>
 
 </mapper>

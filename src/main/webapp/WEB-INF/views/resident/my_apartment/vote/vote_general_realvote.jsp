@@ -7,6 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	.jSignature {
+		height:300px !important;
+	}
+</style>
 </head>
 <body>
 <jsp:include page="../vote/vote_include.jsp"></jsp:include>
@@ -29,7 +34,7 @@
 			</td>
 			<td style="width:15%" align="center">
 				<c:if test="${ voteUser.voteSeq == null }">
-					<a class="btn btn-success" style="width:100%" id="insertGeneralVoteResult">투표완료</a>
+					<a class="btn btn-success" style="width:100%" href="#modal-dialog_sign" data-toggle="modal">투표완료</a>
 				</c:if>
 				<c:if test="${ voteUser.voteSeq != null }">
 					<a class="btn btn-danger" style="width:100%" id="updateGeneralVoteResult">수정완료</a>
@@ -94,6 +99,27 @@
 		<br>
 	</div>
 </div>
+<!-- 서명하기 modal -->
+<div class="modal fade" id="modal-dialog_sign">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">서명하기</h4>
+			</div>
+			<div class="modal-body">
+				<br>
+				<div id="signature" style="height:300px; border:1px solid lightgray"></div>
+			</div>
+			<h5 align="center">마우스 드래그로 서명하세요</h5>
+			<br>
+			<div class="modal-footer">
+				<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">닫기</a>
+				<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal" onclick="aa();">서명 및 인증받기</a>
+			</div>
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
 	$(function(){
 		/* 선택한 후보의 버튼 class 변경하기 */
@@ -144,6 +170,9 @@
 			});
 
 		});
+
+		/* 서명란 띄우기  function */
+		$("#signature").jSignature();
 	});
 </script>
 </body>
