@@ -8,18 +8,23 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.resident.messenger.model.vo.ManagerAndDeptVO;
+import com.kh.onepart.resident.messenger.model.vo.MessengerBasicAllData;
+import com.kh.onepart.resident.messenger.model.vo.RequestAttachVO;
+import com.kh.onepart.resident.messenger.model.vo.RequestImgVO;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
+import com.kh.onepart.resident.messenger.model.vo.ResponseResidentVO;
 
 @Repository
 public class MessengerDaoImpl implements MessengerDao {
 
 	/**  쪽지 작성 */
 	@Override
-	public void insertMessenger(SqlSessionTemplate sqlSession, RequestMessengerVO requestMessengerVO) {
+	public int insertMessenger(SqlSessionTemplate sqlSession, RequestMessengerVO requestMessengerVO) {
 		// TODO Auto-generated method stub
 
 		sqlSession.insert("Messenger.insertMessenger", requestMessengerVO);
+		return requestMessengerVO.getMessengerSeq();
 	}
 
 	/** 타입별 쪽지 카운트 */
@@ -52,6 +57,34 @@ public class MessengerDaoImpl implements MessengerDao {
 		// TODO Auto-generated method stub
 
 		return (ArrayList) sqlSession.selectList("Messenger.selectManagerList");
+	}
+
+	/** 입주민 명단 조회 */
+	@Override
+	public ArrayList<ResponseResidentVO> selectResidentList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return (ArrayList) sqlSession.selectList("Messenger.selectResidentList");
+	}
+
+	/** 이미지 삽입 */
+	@Override
+	public void insertImage(SqlSessionTemplate sqlSession, RequestImgVO requestImgVO) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("Messenger.insertImage", requestImgVO);
+	}
+
+	/** 첨부파일 삽입 */
+	@Override
+	public void insertAttachment(SqlSessionTemplate sqlSession, RequestAttachVO requestAttachVO) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("Messenger.insertAttachment", requestAttachVO);
+	}
+
+	/** 쪽지 상세보기 - 기본정보 */
+	@Override
+	public MessengerBasicAllData selectMessengerDetail(SqlSessionTemplate sqlSession, String messengerSeq) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("Messenger.selectMessengerDetail", messengerSeq);
 	}
 
 }

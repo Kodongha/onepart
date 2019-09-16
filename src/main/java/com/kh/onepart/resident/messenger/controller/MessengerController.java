@@ -1,6 +1,10 @@
 package com.kh.onepart.resident.messenger.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -8,8 +12,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.onepart.account.model.vo.ManagerVO;
@@ -18,15 +22,18 @@ import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.common.Pagination;
 import com.kh.onepart.resident.messenger.model.service.MessengerService;
 import com.kh.onepart.resident.messenger.model.vo.ManagerAndDeptVO;
+import com.kh.onepart.resident.messenger.model.vo.MessengerBasicAllData;
+import com.kh.onepart.resident.messenger.model.vo.RequestAttachVO;
+import com.kh.onepart.resident.messenger.model.vo.RequestImgVO;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
+import com.kh.onepart.resident.messenger.model.vo.ResponseResidentVO;
 
 @Controller
 public class MessengerController {
 
 	@Autowired
 	MessengerService messengerService;
-
 
 	/**
 	 * 쪽지 메인페이지로 이동
@@ -59,7 +66,6 @@ public class MessengerController {
 		String loginUser = "";
 		// 입주민일 경우, int > String 으로 형변환
 		if(session.getAttribute("loginUser") instanceof ResidentVO) {
-			System.out.println("resident in");
 			loginUser = String.valueOf(((ResidentVO) session.getAttribute("loginUser")).getResidentSeq());
 
 
@@ -122,7 +128,9 @@ public class MessengerController {
 		} else if(session.getAttribute("loginUser") instanceof ManagerVO) {
 			System.out.println("manager in");
 			loginUser = String.valueOf(((ManagerVO) session.getAttribute("loginUser")).getManagerSeq());
-			// ArrayList<ManagerAndDeptVO> managerAndDeptVOList = messengerService.selectResidentList();
+			ArrayList<ResponseResidentVO> residentVOList = messengerService.selectResidentList();
+			System.out.println("residentVOList:::" + residentVOList);
+			modelAndView.addObject("residentVOList", residentVOList);
 		}
 
 		modelAndView.setViewName("messenger/resident/writeMessengerForm");
@@ -135,38 +143,116 @@ public class MessengerController {
 	 * @return
 	 */
 	@RequestMapping("messenger/writeMessenger")
-	public String insertMessenger(RequestMessengerVO requestMessengerVO, String[] tags, HttpSession session, @RequestParam(name="files[]", required=false) MultipartFile file, HttpServletRequest request) {
+	public ModelAndView insertMessenger(RequestMessengerVO requestMessengerVO, String[] tags, HttpSession session, MultipartHttpServletRequest req, HttpServletRequest request, ModelAndView modelAndView) {
 
 		System.out.println("messenger/writeMessenger in!");
 		System.out.println("requestMessengerVO:::" + requestMessengerVO);
-
-		System.out.println("file : " + file);
+		System.out.println("messengerContent : " + req.getParameter("messengerContent"));
+		System.out.println("tags:::" + tags);
 
 		String messengerSender = "";
 		// 입주민일 경우, int > String 으로 형변환
 		if(session.getAttribute("loginUser") instanceof ResidentVO) {
-			System.out.println("resident in");
 			messengerSender = String.valueOf(((ResidentVO) session.getAttribute("loginUser")).getResidentSeq());
 
-
-		// 관리자일 경우
+			// 관리자일 경우
 		} else if(session.getAttribute("loginUser") instanceof ManagerVO) {
-			System.out.println("manager in");
 			messengerSender = String.valueOf(((ManagerVO) session.getAttribute("loginUser")).getManagerSeq());
-
 		}
+
 		requestMessengerVO.setMessengerSender(messengerSender);
 
+		// ============================업로드 관련============================
+		String [] extArray = {".jpeg", ".png", ".gif", ".psd", ".bmp", ".tiff", ".eps"};
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String uploadFiles = "messenger";
-		String filePath = root + "\\" + uploadFiles;
-		System.out.println(root + "\\" + uploadFiles);
+		String uploadFiles = "uploadFiles" + File.separator + "messenger";
+		System.out.println(root + File.separator + uploadFiles);
+		String filePath = "";
+		List<MultipartFile> mf = req.getFiles("files");
+		ArrayList<RequestImgVO> requestImgVOList = new ArrayList<RequestImgVO>();
+		ArrayList<RequestAttachVO> requestAttachVOList = new ArrayList<RequestAttachVO>();
 
+		boolean imgFlag = false;
+		for(int i=0; i<mf.size(); i++){
+			// 파일명 정의
+			String originFileName = mf.get(i).getOriginalFilename();
+			String ext = originFileName.substring(originFileName.lastIndexOf('.')).toLowerCase();
+			String chageName = UUID.randomUUID().toString().replace("-", "") + ext;
 
+			System.out.println("originFileName :: " + originFileName);
+			System.out.println("ext :: " + ext);
+			System.out.println("chageName :: " + chageName);
 
-		// messengerService.insertMessenger(requestMessengerVO, tags);
+			// 이미지 확장자 체크
+			for(int j=0; j<extArray.length; j++) {
+				if(ext.equals(extArray[j])) {
+					imgFlag = true;
+				}
+			}
 
-		return "redirect:moveMessenger";
+			// 이미지
+			if(imgFlag) {
+				filePath = root + File.separator + uploadFiles + File.separator + "image";
+
+				RequestImgVO requestImgVO = new RequestImgVO();
+				requestImgVO.setOriginNm(originFileName);
+				requestImgVO.setChangeNm(chageName);
+				requestImgVO.setFilePath(filePath);
+
+				requestImgVOList.add(requestImgVO);
+
+			} else {
+				filePath = root + File.separator + uploadFiles + File.separator + "attachment";
+
+				RequestAttachVO requestAttachVO = new RequestAttachVO();
+				requestAttachVO.setOriginNm(originFileName);
+				requestAttachVO.setChangeNm(chageName);
+				requestAttachVO.setFilePath(filePath);
+				requestAttachVOList.add(requestAttachVO);
+			}
+			imgFlag = false;
+			try {
+				mf.get(i).transferTo(new File(filePath + File.separator + chageName));
+
+			} catch (IllegalStateException | IOException e) {
+				// TODO Auto-generated catch block
+				new File(filePath + File.separator + chageName + ext).delete();
+			}
+		}
+
+		System.out.println("requestImgVOList ::: " + requestImgVOList);
+		System.out.println("requestAttachVOList ::: " + requestAttachVOList);
+
+		// 메신저 보내기 DB 저장
+		messengerService.insertMessenger(requestMessengerVO, tags, requestImgVOList, requestAttachVOList);
+
+		modelAndView.setViewName("jsonView");
+
+		return modelAndView;
 	}
+
+	/**
+	 * 쪽지 상세보기
+	 * @param messengerSeq
+	 * @param session
+	 * @param modelAndView
+	 * @return
+	 */
+	@RequestMapping("messenger/moveMessengerDetail")
+	public ModelAndView selectMessengerDetail(String messengerSeq, HttpSession session, ModelAndView modelAndView) {
+
+		System.out.println("moveMessengerDetail in!@!!!");
+		System.out.println("messengerSeq :: " + messengerSeq);
+
+		ArrayList<Object> messengerDetailData = messengerService.selectMessengerDetail(messengerSeq);
+		MessengerBasicAllData basicInfo = (MessengerBasicAllData) messengerDetailData.get(0);
+		modelAndView.addObject("basicInfo", basicInfo);
+
+
+		modelAndView.setViewName("messenger/resident/messengerDetail");
+		return modelAndView;
+	}
+
+
 
 }

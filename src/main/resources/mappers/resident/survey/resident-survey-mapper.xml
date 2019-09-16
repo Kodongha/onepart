@@ -30,6 +30,17 @@
 		<result property="surveyQstnSeq" column="SURVEY_QSTN_SEQ"/>
 	</resultMap>
 
+	<!-- 설문조사 통계용 -->
+	<resultMap type="com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyStatisticsVO" id="surveyStatisticsVO">
+		<result property="aptDetailInfoSeq" column="APT_DETAIL_INFO_SEQ"/>
+		<result property="bdNm" column="BD_NM"/>
+		<result property="rmNm" column="RM_NM"/>
+		<result property="residentSeq" column="RESIDENT_SEQ"/>
+		<result property="residentNm" column="RESIDENT_NM"/>
+		<result property="selectedAnswer" column="SELECTED_ANSWER"/>
+		<result property="surveyQstnType" column="SURVEY_QSTN_TYPE"/>
+	</resultMap>
+
 
 
 	<!-- 설문조사 진행 중 카운트 - 설문조사 메인 -->
@@ -55,9 +66,6 @@
 		AND     t1.SURVEY_DEL_TF = 'N'
 		ORDER BY t1.SURVEY_ENROLL_DT DESC
 	</select>
-
-
-
 
 
 
@@ -171,6 +179,26 @@
 	    LEFT OUTER JOIN SURVEY_PRTCPT t2
 	    ON (t1.RESIDENT_SEQ = t2.RESIDENT_SEQ)
 	    WHERE t2.SURVEY_SEQ = #{surveySeq}
+	</select>
+
+	<!--  -->
+	<select id="getSelectedStatistics" resultMap="surveyStatisticsVO" parameterType="requestResidentSurveyQstn">
+		SELECT
+				t4.APT_DETAIL_INFO_SEQ,
+				t4.BD_NM,
+				t4.RM_NM,
+				t3.RESIDENT_SEQ,
+				t3.RESIDENT_NM,
+				t2.SELECTED_ANSWER,
+				t5.SURVEY_QSTN_TYPE
+		FROM 	SURVEY_PRTCPT t1
+		INNER JOIN SURVEY_SELECTED t2 ON (t1.SURVEY_PRTCPT_SEQ = t2.SURVEY_PRTCPT_SEQ)
+		INNER JOIN RESIDENT t3 ON (t1.RESIDENT_SEQ = t3.RESIDENT_SEQ)
+		INNER JOIN APT_DETAIL_INFO t4 ON (t3.APT_DETAIL_INFO_SEQ = t4.APT_DETAIL_INFO_SEQ)
+		INNER JOIN SURVEY_QSTN t5 ON (t2.SURVEY_QSTN_SEQ = t5.SURVEY_QSTN_SEQ)
+		WHERE 	t1.SURVEY_SEQ = #{surveySeq}
+		AND		t5.SURVEY_QSTN_TYPE = #{surveyQstnType}
+		AND		t5.SURVEY_QSTN_NUM = #{surveyQstnNum}
 	</select>
 
 </mapper>

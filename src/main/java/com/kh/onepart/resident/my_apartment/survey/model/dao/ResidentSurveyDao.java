@@ -7,9 +7,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyMainVO;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyPrtcpt;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyQstn;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveySelected;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstn;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstnOption;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyStatisticsVO;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyVO;
 
 public interface ResidentSurveyDao {
@@ -99,5 +101,12 @@ public interface ResidentSurveyDao {
 	 * @return
 	 */
 	int selectResidentPrtcptCount(SqlSessionTemplate sqlSession, int surveySeq);
+
+	/**
+	 * 설문조사 통계정보 가져오기
+	 * @param requestSurveyQstn
+	 * @return
+	 */
+	ArrayList<SurveyStatisticsVO> getSelectedStatistics(SqlSessionTemplate sqlSession, RequestSurveyQstn requestSurveyQstn);
 
 }

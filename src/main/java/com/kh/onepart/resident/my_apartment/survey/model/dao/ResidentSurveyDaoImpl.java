@@ -9,9 +9,11 @@ import org.springframework.stereotype.Repository;
 import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyMainVO;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyPrtcpt;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyQstn;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveySelected;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstn;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstnOption;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyStatisticsVO;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyVO;
 
 @Repository
@@ -121,6 +123,16 @@ public class ResidentSurveyDaoImpl implements ResidentSurveyDao {
 		// TODO Auto-generated method stub
 		int residentPrtcptCount = sqlSession.selectOne("ResidentSurvey.selectResidentPrtcptCount", surveySeq);
 		return residentPrtcptCount;
+	}
+
+	/** 설문조사 통계정보 가져오기 */
+	@Override
+	public ArrayList<SurveyStatisticsVO> getSelectedStatistics(SqlSessionTemplate sqlSession, RequestSurveyQstn requestSurveyQstn) {
+		// TODO Auto-generated method stub
+
+		ArrayList<SurveyStatisticsVO> surveyStatisticsVOList = (ArrayList) sqlSession.selectList("ResidentSurvey.getSelectedStatistics", requestSurveyQstn);
+
+		return surveyStatisticsVOList;
 	}
 
 }
