@@ -107,7 +107,7 @@
 					<li><a href="javascript:;">Calendar</a></li>
 					<li><a href="javascript:;">Setting</a></li>
 					<li class="divider"></li>
-					<li><a href="${contextPath }/logout">Log Out</a></li>
+					<li><a href="${contextPath }/mLogout">Log Out</a></li>
 
 				</ul>
 				</c:if>
@@ -118,7 +118,7 @@
 			<c:if test="${sessionScope.loginUser == null }">
 				<span style="height: 100%;">
 					<button type="button" onclick="location.href='${contextPath}/moveAccount'" class="btn btn-success m-r-5 m-b-5" style="margin-top: 3%;">Log In</button>
-					<button type="button" onclick="location.href='${contextPath}/moveRegister'" class="btn btn-success m-r-5 m-b-5" style="margin-top: 3%;">회원가입</button>
+					<%-- <button type="button" onclick="location.href='${contextPath}/moveRegister'" class="btn btn-success m-r-5 m-b-5" style="margin-top: 3%;">회원가입</button> --%>
 				</span>
 			</c:if>
 		</ul>

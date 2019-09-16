@@ -55,6 +55,7 @@
     	<typeAlias type="com.kh.onepart.manager.facility.model.vo.Image" alias="manager_img"/>
     	<typeAlias type="com.kh.onepart.manager.facility.model.vo.FacSeatInfo" alias="manager_facSeatInfo" />
     	<typeAlias type="com.kh.onepart.manager.employee_manage.model.vo.EmployeeManageVO" alias="EmployeeManage" />
+    	<typeAlias type="com.kh.onepart.manager.visit_car.model.vo.ManagerVisitCarVo" alias="manager_VisitCarVo" />
 
 	</typeAliases>
 
@@ -86,6 +87,7 @@
 		<mapper resource="mappers/manager/Faclilty/manager-faclilty-mapper.xml" />
 		<mapper resource="mappers/manager/residentCar/residentCar-mapper.xml" />
 		<mapper resource="mappers/manager/EmployeeManage/EmployeeManage-mapper.xml" />
+		<mapper resource="mappers/manager/visitCar/manager-visitCar-mapper.xml" />
 
 
 

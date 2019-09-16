@@ -107,6 +107,15 @@ public class AccountController {
 
 		return "redirect:resident/main";
 	}
+	//매니저 로그아웃
+	@RequestMapping("/mLogout")
+	public String mLogout(SessionStatus status) {
+		System.out.println("in resident");
+		//System.out.println("before : " + request.getSession().getAttribute("loginUser"));
+		status.setComplete();
+
+		return "redirect:manager/main";
+	}
 	//회원 가입용 메소드
 	@RequestMapping("/register")
 	public String register(ResidentVO requestResidentVO, Model model) {
