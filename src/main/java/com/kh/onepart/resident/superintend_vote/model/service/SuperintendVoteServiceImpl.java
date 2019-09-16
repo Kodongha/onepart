@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.superintend_vote.model.dao.SuperintendVoteDao;
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
@@ -121,6 +122,92 @@ public class SuperintendVoteServiceImpl implements SuperintendVoteService{
 		int result = svd.updateElectionVoteCandidate(sqlSession, evc);
 
 		return result;
+
+	}
+	//해당 투표 정보 담아오는 메소드
+	@Override
+	public GeneralVote selectOneGeneralVote(int voteSeq) {
+
+		GeneralVote gv = svd.selectOneGeneralVote(sqlSession, voteSeq);
+
+		return gv;
+
+	}
+	//해당 투표에 등록된 후보 담아오는 메소드
+	@Override
+	public ArrayList selectAllGeneralVoteCandidate(int voteSeq) {
+
+		ArrayList candidateListGen = svd.selectAllGeneralVoteCandidate(sqlSession, voteSeq);
+
+		return candidateListGen;
+
+	}
+	//입력받은 정보의 거주자가 있는지 확인하는 메소드
+	@Override
+	public int selectConfirmResident(ResidentVO rs) {
+
+		//일반 세대주 vs 복수 세대주 구분하는 메소드
+		int kind = svd.selectKindResident(sqlSession, rs);
+		int result;
+
+		if(kind == 0) {
+			//해당동에 가입되어있는 세대주 없음
+			result = 0;
+		}else if(kind == 1) {
+			//해당동에 가입되어있는 세대주 한명
+			//일반세대주 입력이름 매치하는 메소드
+			int result2 = svd.selectConfirmResident(sqlSession, rs);
+			if(result2 > 0) {
+				//매치됨
+				result = 1;
+			}else {
+				//매치안됨
+				result = 1;
+			}
+		}else {
+			//해당동에 가입되어있는 세대주 여러명
+			//복수 세대주 중 투표권을 가지고 있는 세대주 매치하는 메소드
+			int result3 = svd.selectConfirmResidents(sqlSession, rs);
+			if(result3 > 0) {
+				//매치됨
+				result = 1;
+			}else {
+				//매치안됨
+				result = 1;
+			}
+		}
+
+
+		result = svd.selectConfirmResident(sqlSession, rs);
+
+		return result;
+
+	}
+	//해당 선거에 등록된 후보신청서 리스트 담아오는 메소드
+	@Override
+	public ArrayList selectAllElectionVoteCandidateApply(int electVoteSeq) {
+
+		ArrayList candidateApplyList = svd.selectAllElectionVoteCandidateApply(sqlSession, electVoteSeq);
+
+		return candidateApplyList;
+
+	}
+	//해당 신청서 세부내역 담아오는 메소드
+	@Override
+	public ElectionVoteCandidate selectOneElectionVoteCandidate(int electVoteCndtSignupSeq) {
+
+		ElectionVoteCandidate evc = svd.selectOneElectionVoteCandidate(sqlSession, electVoteCndtSignupSeq);
+
+		return evc;
+
+	}
+	//해당 신청서 경력사항 리스트 담아오는 메소드
+	@Override
+	public ArrayList selectAllElectionVoteCadidateCareer(int electVoteCndtSignupSeq) {
+
+		ArrayList careerList = svd.selectAllElectionVoteCadidateCareer(sqlSession, electVoteCndtSignupSeq);
+
+		return careerList;
 
 	}
 }

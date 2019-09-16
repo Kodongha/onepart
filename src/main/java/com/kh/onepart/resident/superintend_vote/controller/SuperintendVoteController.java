@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.superintend_vote.model.service.SuperintendVoteService;
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
@@ -77,9 +78,22 @@ public class SuperintendVoteController {
 	}
 
 	@RequestMapping("/resident/regicandidateApply")
-	public String candidateApply() {
-		System.out.println("/menuSuperintendVote");
-		return "/resident/superintend_vote/superintend_vote/superintend_vote_registration_candidateApply";
+	public ModelAndView candidateApply(HttpServletRequest request, ModelAndView mv) {
+		System.out.println("/regicandidateApply");
+		int electVoteSeq = Integer.parseInt(request.getParameter("electVoteSeq"));
+
+		//해당 선거 정보 담아오는 메소드
+		ElectionVote ev = svs.selectOneElectionVote(electVoteSeq);
+		System.out.println("controller ev : " + ev);
+
+		//해당 선거에 등록된 후보신청서 리스트 담아오는 메소드
+		ArrayList candidateApplyList = svs.selectAllElectionVoteCandidateApply(electVoteSeq);
+
+		mv.addObject("ev", ev);
+		mv.addObject("candidateApplyList", candidateApplyList);
+		mv.setViewName("/resident/superintend_vote/superintend_vote/superintend_vote_registration_candidateApply");
+
+		return mv;
 	}
 
 	@RequestMapping("/resident/candidateSupervise")
@@ -101,7 +115,7 @@ public class SuperintendVoteController {
 
 		return mv;
 	}
-	///////////////////////////////////////////////////
+
 	@RequestMapping("/resident/votingRealvote")
 	public ModelAndView votingRealvote(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("/menuSuperintendVote");
@@ -117,10 +131,18 @@ public class SuperintendVoteController {
 
 			mv.addObject("candidateList", candidateList);
 			mv.addObject("ev", ev);
+			mv.addObject("voteKind", voteKind);
 
 		}else {
 			//해당 투표 정보 담아오는 메소드
-			//GeneralVote gv = svs.selectOneGeneralVote(voteSeq);
+			GeneralVote gv = svs.selectOneGeneralVote(voteSeq);
+
+			//해당 투표에 등록된 후보 담아오는 메소드
+			ArrayList candidateListGen = svs.selectAllGeneralVoteCandidate(voteSeq);
+
+			mv.addObject("candidateListGen", candidateListGen);
+			mv.addObject("gv", gv);
+			mv.addObject("voteKind", voteKind);
 
 		}
 
@@ -130,15 +152,87 @@ public class SuperintendVoteController {
 	}
 
 	@RequestMapping("/resident/sendMessageResident")
-	public String sendMessageResident() {
+	public ModelAndView sendMessageResident(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("/menuSuperintendVote");
-		return "/resident/superintend_vote/superintend_vote/superintend_vote_realvote_sendMessage";
+		int electVoteSeq = Integer.parseInt(request.getParameter("electVoteSeq"));
+		String voteKind = request.getParameter("voteKind");
+
+
+		if(voteKind.equals("선거")) {
+			//해당 선거 정보 담아오는 메소드
+			ElectionVote ev = svs.selectOneElectionVote(electVoteSeq);
+
+			mv.addObject("ev", ev);
+		}else {
+			//해당 투표 정보 담아오는 메소드
+			GeneralVote gv = svs.selectOneGeneralVote(electVoteSeq);
+
+			mv.addObject("gv", gv);
+		}
+
+		mv.setViewName("/resident/superintend_vote/superintend_vote/superintend_vote_realvote_sendMessage");
+
+		return mv;
 	}
 
 	@RequestMapping("/resident/changeOffline")
-	public String changeOffline() {
+	public ModelAndView changeOffline(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("/menuSuperintendVote");
-		return "/resident/superintend_vote/superintend_vote/superintend_vote_realvote_changeOffline";
+		int electVoteSeq = Integer.parseInt(request.getParameter("electVoteSeq"));
+		String voteKind = request.getParameter("voteKind");
+
+		if(voteKind.equals("선거")) {
+			//해당 선거 정보 담아오는 메소드
+			ElectionVote ev = svs.selectOneElectionVote(electVoteSeq);
+
+			//해당 선거에 등록된 후보 담아오는 메소드
+			ArrayList candidateList = svs.selectAllElectionVoteCandidate(electVoteSeq);
+
+			mv.addObject("candidateList", candidateList);
+			mv.addObject("ev", ev);
+			mv.addObject("voteKind", voteKind);
+		}else {
+			//해당 투표 정보 담아오는 메소드
+			GeneralVote gv = svs.selectOneGeneralVote(electVoteSeq);
+
+			//해당 투표에 등록된 후보 담아오는 메소드
+			ArrayList candidateListGen = svs.selectAllGeneralVoteCandidate(electVoteSeq);
+
+			mv.addObject("candidateListGen", candidateListGen);
+			mv.addObject("gv", gv);
+			mv.addObject("voteKind", voteKind);
+		}
+		String sit = "offline";
+		mv.addObject("sit", sit);
+		mv.setViewName("/resident/superintend_vote/superintend_vote/superintend_vote_realvote_changeOffline");
+
+		return mv;
+	}
+
+	@RequestMapping("/resident/confirmResident")
+	public ModelAndView confirmResident(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/confirmResident");
+		String bdNm = request.getParameter("bdNm");
+		String rmNm = request.getParameter("rmNm");
+		String residentNm = request.getParameter("residentNm");
+
+		String aptDetailInfoSeq = "1_" + bdNm + "_" + rmNm;
+
+		System.out.println(residentNm);
+		System.out.println(aptDetailInfoSeq);
+
+		//입력받은 정보의 거주자가 있는지 확인하는 메소드
+		ResidentVO rs = new ResidentVO();
+		rs.setResidentNm(residentNm);
+		rs.setAptDetailInfoSeq(aptDetailInfoSeq);
+		int result = svs.selectConfirmResident(rs);
+
+		System.out.println("controller result : " + result);
+
+		mv.addObject("result", result);
+		mv.setViewName("jsonView");
+
+		return mv;
 	}
 
 	@RequestMapping("/resident/endingCandidate")
@@ -152,11 +246,28 @@ public class SuperintendVoteController {
 		System.out.println("/menuSuperintendVote");
 		return "/resident/superintend_vote/superintend_vote/superintend_vote_endingGeneral";
 	}
-
+	///////////////////////////////////////////////////
 	@RequestMapping("/resident/candApplyDetail")
-	public String candApplyDetail() {
+	public ModelAndView candApplyDetail(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("/menuSuperintendVote");
-		return "/resident/superintend_vote/superintend_vote/superintend_vote_realvote_candApplyDetail";
+		int electVoteCndtSignupSeq = Integer.parseInt(request.getParameter("electVoteCndtSignupSeq"));
+		int electVoteSeq = Integer.parseInt(request.getParameter("electVoteSeq"));
+
+		//해당 선거 정보 담아오는 메소드
+		ElectionVote ev = svs.selectOneElectionVote(electVoteSeq);
+
+		//해당 신청서 세부내역 담아오는 메소드
+		ElectionVoteCandidate evc = svs.selectOneElectionVoteCandidate(electVoteCndtSignupSeq);
+
+		//해당 신청서 경력사항 리스트 담아오는 메소드
+		ArrayList careerList = svs.selectAllElectionVoteCadidateCareer(electVoteCndtSignupSeq);
+
+		mv.addObject("ev", ev);
+		mv.addObject("evc", evc);
+		mv.addObject("careerList", careerList);
+		mv.setViewName("/resident/superintend_vote/superintend_vote/superintend_vote_realvote_candApplyDetail");
+
+		return mv;
 	}
 
 	@RequestMapping("/resident/insert_newVote_general")

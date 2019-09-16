@@ -36,7 +36,7 @@
 		<result property="gnrVoteGrant" column="GNR_VOTE_GRANT"/>
 	</resultMap>
 
-	<resultMap type="ElectionVote" id="ElectionVoteResultSet">
+	<resultMap type="vote_ElectionVote" id="vote_ElectionVoteResultSet">
 		<id property="electVoteSeq" column="ELECT_VOTE_SEQ"/>
 		<result property="electNm" column="ELECT_NM"/>
 		<result property="electType" column="ELECT_TYPE"/>
@@ -52,7 +52,7 @@
 		<result property="bdNm" column="BD_NM"/>
 	</resultMap>
 
-	<resultMap type="ElectionVoteCandidate" id="ElectionVoteCandidateResultSet">
+	<resultMap type="vote_ElectionVoteCandidate" id="vote_ElectionVoteCandidateResultSet">
 		<id property="electVoteCndtSignupSeq" column="ELECT_VOTE_CNDT_SIGNUP_SEQ"></id>
 		<result property="electVoteSeq" column="ELECT_VOTE_SEQ"/>
 		<result property="finalEdu" column="FINAL_EDU"/>
@@ -107,17 +107,20 @@
 
 		            UNION ALL
 
-		            SELECT G.GNR_VOTE_SEQ as VOTE_SEQ,
-		                    '일반투표' as VOTE_KIND,
-		                    G.GNR_VOTE_NAME as VOTE_NM,
-		                    G.GNR_VOTE_END_DT as END_DT,
-		                    '투표기간' as VOTE_STATUS,
-		                    CASE WHEN V.RESIDENT_SEQ IS NULL THEN '미참여'
-		                         WHEN V.RESIDENT_SEQ IS NOT NULL THEN '참여' END AS USER_STATUS
-		            FROM GNR_VOTE G
-		            LEFT JOIN VOTE_PRTCPT V ON (G.GNR_VOTE_SEQ = V.GNR_VOTE_SEQ)
-		            WHERE RESIDENT_SEQ = #{residentSeq}
-		            OR RESIDENT_SEQ IS NULL
+		            SELECT A.GNR_VOTE_SEQ AS VOTE_SEQ,
+                           '일반투표' AS VOTE_KIND,
+                           A.GNR_VOTE_NAME as VOTE_NM,
+                           A.GNR_VOTE_END_DT as END_DT,
+                           '투표기간' as VOTE_STATUS,
+                           CASE WHEN C.GNR_VOTE_SEQ IS NULL THEN '미참여'
+                                WHEN C.GNR_VOTE_SEQ IS NOT NULL THEN '참여' END AS USER_STATUS
+                    FROM GNR_VOTE A
+                    LEFT JOIN (
+                                SELECT V.GNR_VOTE_SEQ GNR_VOTE_SEQ
+                                FROM GNR_VOTE V
+                                LEFT JOIN VOTE_PRTCPT G ON (V.GNR_VOTE_SEQ = G.GNR_VOTE_SEQ)
+                                WHERE RESIDENT_SEQ = #{residentSeq}
+                            ) C ON (A.GNR_VOTE_SEQ = C.GNR_VOTE_SEQ)
 		        )
 			WHERE END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD')
 			ORDER BY END_DT
@@ -146,17 +149,20 @@
 
 		            UNION ALL
 
-		            SELECT G.GNR_VOTE_SEQ as VOTE_SEQ,
-		                    '일반투표' as VOTE_KIND,
-		                    G.GNR_VOTE_NAME as VOTE_NM,
-		                    G.GNR_VOTE_END_DT as END_DT,
-		                    '투표기간' as VOTE_STATUS,
-		                    CASE WHEN V.RESIDENT_SEQ IS NULL THEN '미참여'
-		                         WHEN V.RESIDENT_SEQ IS NOT NULL THEN '참여' END AS USER_STATUS
-		            FROM GNR_VOTE G
-		            LEFT JOIN VOTE_PRTCPT V ON (G.GNR_VOTE_SEQ = V.GNR_VOTE_SEQ)
-		            WHERE RESIDENT_SEQ = #{residentSeq}
-		            OR RESIDENT_SEQ IS NULL
+		            SELECT A.GNR_VOTE_SEQ AS VOTE_SEQ,
+                           '일반투표' AS VOTE_KIND,
+                           A.GNR_VOTE_NAME as VOTE_NM,
+                           A.GNR_VOTE_END_DT as END_DT,
+                           '투표기간' as VOTE_STATUS,
+                           CASE WHEN C.GNR_VOTE_SEQ IS NULL THEN '미참여'
+                                WHEN C.GNR_VOTE_SEQ IS NOT NULL THEN '참여' END AS USER_STATUS
+                    FROM GNR_VOTE A
+                    LEFT JOIN (
+                                SELECT V.GNR_VOTE_SEQ GNR_VOTE_SEQ
+                                FROM GNR_VOTE V
+                                LEFT JOIN VOTE_PRTCPT G ON (V.GNR_VOTE_SEQ = G.GNR_VOTE_SEQ)
+                                WHERE RESIDENT_SEQ = #{residentSeq}
+                            ) C ON (A.GNR_VOTE_SEQ = C.GNR_VOTE_SEQ)
 		        )
 			WHERE END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD')
 			AND USER_STATUS = '미참여'
@@ -188,18 +194,21 @@
 
 		            UNION ALL
 
-		            SELECT G.GNR_VOTE_SEQ as VOTE_SEQ,
-		                    '일반투표' as VOTE_KIND,
-		                    G.GNR_VOTE_NAME as VOTE_NM,
-		                    G.GNR_VOTE_END_DT as END_DT,
-		                    '완료' as VOTE_STATUS,
-		                    CASE WHEN V.RESIDENT_SEQ IS NULL THEN '미참여'
-		                         WHEN V.RESIDENT_SEQ IS NOT NULL THEN '참여' END AS USER_STATUS,
-                            G.GNR_VOTE_END_DT AS REAL_END_DT
-		            FROM GNR_VOTE G
-		            LEFT JOIN VOTE_PRTCPT V ON (G.GNR_VOTE_SEQ = V.GNR_VOTE_SEQ)
-		            WHERE RESIDENT_SEQ = #{residentSeq}
-		            OR RESIDENT_SEQ IS NULL
+		            SELECT A.GNR_VOTE_SEQ AS VOTE_SEQ,
+                           '일반투표' AS VOTE_KIND,
+                           A.GNR_VOTE_NAME as VOTE_NM,
+                           A.GNR_VOTE_END_DT as END_DT,
+                           '투표기간' as VOTE_STATUS,
+                           CASE WHEN C.GNR_VOTE_SEQ IS NULL THEN '미참여'
+                                WHEN C.GNR_VOTE_SEQ IS NOT NULL THEN '참여' END AS USER_STATUS,
+                            A.GNR_VOTE_END_DT AS REAL_END_DT
+                    FROM GNR_VOTE A
+                    LEFT JOIN (
+                                SELECT V.GNR_VOTE_SEQ GNR_VOTE_SEQ
+                                FROM GNR_VOTE V
+                                LEFT JOIN VOTE_PRTCPT G ON (V.GNR_VOTE_SEQ = G.GNR_VOTE_SEQ)
+                                WHERE RESIDENT_SEQ = #{residentSeq}
+                            ) C ON (A.GNR_VOTE_SEQ = C.GNR_VOTE_SEQ)
 		        )
 			WHERE REAL_END_DT BETWEEN TO_DATE(TO_CHAR(SYSDATE - 8, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD')
 			ORDER BY REAL_END_DT
@@ -286,6 +295,89 @@
 					#{gnrVoteCndtEnrollSeq},
 					NULL,
 					#{gnrVoteCndtEnrollSeq}
+				)
+	</insert>
+
+	<select id="selectOneElectionVoteInfo" parameterType="_int" resultMap="vote_ElectionVoteResultSet">
+		SELECT *
+		FROM ELECT_VOTE
+		WHERE ELECT_VOTE_SEQ = #{voteSeq}
+	</select>
+
+	<select id="selectOneElectionVoteUserInfo" parameterType="vote_VoteList" resultMap="vote_VoteListResultSet">
+		SELECT ELECT_VOTE_CNDT_SIGNUP_SEQ
+		FROM RESIDENT T1
+		LEFT JOIN (
+		            SELECT *
+		            FROM VOTE_PRTCPT T3
+		            LEFT JOIN VOTE_SELECTED T4 ON (T3.VOTE_PRTCPT_SEQ = T4.VOTE_PRTCPT_SEQ)
+		            WHERE ELECT_VOTE_SEQ = #{voteSeq}
+		          ) T2 ON (T1.RESIDENT_SEQ = T2.RESIDENT_SEQ)
+		WHERE T1.RESIDENT_SEQ = #{residentSeq}
+	</select>
+
+	<select id="selectAllElectionCandidateList" parameterType="_int" resultMap="vote_ElectionVoteCandidateResultSet">
+		SELECT *
+		FROM ELECT_VOTE_CNDT_SIGNUP t1
+		JOIN RESIDENT t2 ON (t1.RESIDENT_SEQ = t2.RESIDENT_SEQ)
+		JOIN APT_DETAIL_INFO t3 ON (t3.APT_DETAIL_INFO_SEQ = t2.APT_DETAIL_INFO_SEQ)
+		JOIN IMAGE t4 ON (t1.ELECT_VOTE_CNDT_SIGNUP_SEQ = t4.ELECT_VOTE_CNDT_SIGNUP_SEQ)
+		WHERE t1.ELECT_VOTE_SEQ = #{voteSeq}
+		AND t1.STATUS = 2
+		ORDER BY t1.ELECT_VOTE_CNDT_SIGNUP_SEQ
+	</select>
+
+	<insert id="insertElectionCandidateApply" parameterType="vote_ElectionVoteCandidate">
+		INSERT INTO ELECT_VOTE_CNDT_SIGNUP
+		VALUES (
+					ELECT_VOTE_CNDT_SIGNUP_SEQ.NEXTVAL,
+					#{electVoteSeq},
+					#{finalEdu},
+					#{residentSeq},
+					SYSDATE,
+					#{workNm},
+					#{workPosition},
+					#{workAdd},
+					1,
+					1,
+					NULL,
+					NULL,
+					NULL,
+					NULL,
+					NULL,
+					NULL
+				)
+		<selectKey keyProperty="electVoteCndtSignupSeq" resultType="Integer" order="AFTER">
+			SELECT ELECT_VOTE_CNDT_SIGNUP_SEQ.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<insert id="insertElectionCandidateImg" parameterType="vote_Image">
+		INSERT INTO IMAGE
+		VALUES (
+					IMAGE_SEQ.NEXTVAL,
+					5,
+					#{originNm},
+					#{changeNm},
+					#{filePath},
+					SYSDATE,
+					1,
+					NULL,
+					NULL,
+					NULL,
+					NULL,
+					#{electVoteCndtSignupSeq},
+					NULL
+				)
+	</insert>
+
+	<insert id="insertElectionCandidateCareer" parameterType="vote_Career">
+		INSERT INTO CAREER
+		VALUES (
+					CAREER_SEQ.NEXTVAL,
+					#{careerPeriod},
+					#{careerDetail},
+					#{electVoteCndtSignupSeq}
 				)
 	</insert>
 

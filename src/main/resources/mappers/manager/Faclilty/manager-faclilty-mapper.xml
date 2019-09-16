@@ -122,13 +122,13 @@
 	<insert id="insertReservationImgFirst" parameterType="manager_img">
 		INSERT INTO IMAGE
 		VALUES (IMAGE_SEQ.NEXTVAL, 1, #{originNm}, #{changeNm}, #{filePath},
-		SYSDATE, 1, #{facSeq}, NULL, NULL, NULL)
+		SYSDATE, 1, #{facSeq}, NULL, NULL, NULL, NULL, NULL)
 	</insert>
 
 	<insert id="insertReservationImgSecond" parameterType="manager_img">
 		INSERT INTO IMAGE
 		VALUES (IMAGE_SEQ.NEXTVAL, 1, #{originNm}, #{changeNm}, #{filePath},
-		SYSDATE, 2, #{facSeq}, NULL, NULL, NULL)
+		SYSDATE, 2, #{facSeq}, NULL, NULL, NULL, NULL, NULL)
 	</insert>
 
 	<select id="selectOneGeneralReservation" resultMap="manager_reservationReseultSet" parameterType="_int">

@@ -18,7 +18,7 @@ $(document).ready(function() {
 	/* 메세지 전송 */
 	$("#applyGo").data("menu-url", "/onepart/resident/votingCandidate");
 	/* 후보신청서 관리 */
-	$("#candidateApply").data("menu-url", "/onepart/resident/regicandidateApply");
+	//$("#candidateApply").data("menu-url", "/onepart/resident/regicandidateApply");
 	/* 후보관리 및 후보등록 */
 	$("#candidateSupervise").data("menu-url", "/onepart/resident/candidateSupervise");
 	/* 투표기간 메인페이지 */
@@ -32,7 +32,7 @@ $(document).ready(function() {
 	/* 투표결과 상세보기 */
 	$("#endingGeneral").data("menu-url", "/onepart/resident/endingGeneral");
 	/* 후보등록 신청서 상세보기 */
-	$("#candApplyDetail").data("menu-url", "/onepart/resident/candApplyDetail");
+	//$("#candApplyDetail").data("menu-url", "/onepart/resident/candApplyDetail");
 
 	/* 후보등록기간 메인페이지 */
 	$("#votingCandidate").click(function(){
@@ -70,7 +70,7 @@ $(document).ready(function() {
 		});
 	});
 	/* 후보신청서 관리 */
-	$("#candidateApply").click(function(){
+	/* $("#candidateApply").click(function(){
 		var voteUrl = $(this).data("menu-url");
 		$.ajax({
 			url:voteUrl,
@@ -79,7 +79,7 @@ $(document).ready(function() {
 				$("#content").html(result);
 			}
 		});
-	});
+	}); */
 	/* 후보관리 및 후보등록 */
 	$("#candidateSupervise").click(function(){
 		var voteUrl = $(this).data("menu-url");
@@ -107,9 +107,15 @@ $(document).ready(function() {
 	/* 선거명부인 메세지 전송 */
 	$("#sendMessageResident").click(function(){
 		var voteUrl = $(this).data("menu-url");
+		var electVoteSeq = $("#electVoteSeq").val();
+		var voteKind = $("#voteKind").val();
 		$.ajax({
 			url:voteUrl,
 			dataType:"html",
+			data:{
+					electVoteSeq:electVoteSeq,
+					voteKind:voteKind
+				 },
 			success:function(result){
 				$("#content").html(result);
 			}
@@ -149,7 +155,7 @@ $(document).ready(function() {
 		});
 	});
 	/* 후보등록 신청서 상세보기 */
-	$("#candApplyDetail").click(function(){
+	/* $("#candApplyDetail").click(function(){
 		var voteUrl = $(this).data("menu-url");
 		$.ajax({
 			url:voteUrl,
@@ -158,7 +164,7 @@ $(document).ready(function() {
 				$("#content").html(result);
 			}
 		});
-	});
+	}); */
 });
 </script>
 <!-- 타이틀 -->

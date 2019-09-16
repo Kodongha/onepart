@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.onepart.resident.my_apartment.vote.model.vo.Career;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.Image;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteList;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VotePrtcpt;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteSelected;
@@ -32,5 +36,17 @@ public interface VoteDao {
 	int insertCurrentVotePrtcptSeq(SqlSessionTemplate sqlSession, VotePrtcpt vp);
 	//해당 투표내역에 선택된 후보내역 insert 하는 메소드
 	int insertGeneralVote(SqlSessionTemplate sqlSession, VoteSelected vs);
+	//선택한 선거의 상세정보를 불러오는 메소드 (선거)
+	ElectionVote selectOneElectionVoteInfo(SqlSessionTemplate sqlSession, int voteSeq);
+	//로그인유저의 현황을 불러오는 메소드 (선거)
+	VoteList selectOneElectionVoteUserInfo(SqlSessionTemplate sqlSession, VoteList info);
+	//선택한 선거의 후보 리스트를 불러오는 메소드(선거)
+	ArrayList selectAllElectionCandidateList(SqlSessionTemplate sqlSession, int voteSeq);
+	//신청서 insert후 seqNm return받는 메소드
+	int insertElectionCandidateApply(SqlSessionTemplate sqlSession, ElectionVoteCandidate evc);
+	//해당 신청서에 이미지 inert메소드
+	int insertElectionCandidateImg(SqlSessionTemplate sqlSession, Image img);
+	//해당 신청서에 경력 및 기간 insert메소드
+	int insertElectionCandidateCareer(SqlSessionTemplate sqlSession, Career career);
 
 }

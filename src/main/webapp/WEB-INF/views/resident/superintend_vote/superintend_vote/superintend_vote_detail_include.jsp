@@ -57,5 +57,19 @@
 	</div>
 </div>
 <br><br><br>
+<script type="text/javascript">
+	/* 후보신청서 관리 view 전환 function */
+	$("#candidateApply").click(function(){
+		var electVoteSeq = $("#electVoteSeq").val();
+		$.ajax({
+			url:"/onepart/resident/regicandidateApply",
+			data:{electVoteSeq:electVoteSeq},
+			dataType:"html",
+			success:function(result){
+				$("#content").html(result);
+			}
+		});
+	});
+</script>
 </body>
 </html>

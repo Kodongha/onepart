@@ -145,8 +145,9 @@
 					type:"post",
 					dataType:"html",
 					success:function(result){
-						$('#modal-message').remove();
+						$('#modal-dialog  ').modal("hide");
 						$('.modal-backdrop').remove();
+						$('.modal-open').css("overflow", "visible");
 						$("#content").html(result);
 
 					}

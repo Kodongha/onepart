@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
@@ -117,6 +118,79 @@ public class SuperintendVoteDaoImpl implements SuperintendVoteDao{
 		int electVoteCndtSignupSeq = sqlSession.selectOne("Superintend.selectUserElectVoteCndtSignupSeq", evc);
 
 		return electVoteCndtSignupSeq;
+
+	}
+	//해당 투표 정보 담아오는 메소드
+	@Override
+	public GeneralVote selectOneGeneralVote(SqlSessionTemplate sqlSession, int voteSeq) {
+
+		GeneralVote gv = sqlSession.selectOne("Superintend.selectOneGeneralVote", voteSeq);
+
+		return gv;
+
+	}
+	//해당 투표에 등록된 후보 담아오는 메소드
+	@Override
+	public ArrayList selectAllGeneralVoteCandidate(SqlSessionTemplate sqlSession, int voteSeq) {
+
+		ArrayList candidateListGen = (ArrayList) sqlSession.selectList("Superintend.selectAllGeneralVoteCandidate", voteSeq);
+
+		return candidateListGen;
+
+	}
+	//입력받은 정보의 거주자가 있는지 확인하는 메소드
+	@Override
+	public int selectConfirmResident(SqlSessionTemplate sqlSession, ResidentVO rs) {
+
+		int result = sqlSession.selectOne("Superintend.selectConfirmResident", rs);
+
+		return result;
+
+	}
+	//일반 세대주 vs 복수 세대주 구분하는 메소드
+	@Override
+	public int selectKindResident(SqlSessionTemplate sqlSession, ResidentVO rs) {
+
+		int kind = sqlSession.selectOne("Superintend.selectKindResident", rs);
+
+		return kind;
+
+	}
+	//복수 세대주 중 투표권을 가지고 있는 세대주 매치하는 메소드
+	@Override
+	public int selectConfirmResidents(SqlSessionTemplate sqlSession, ResidentVO rs) {
+
+		int result = sqlSession.selectOne("Superintend.selectConfirmResidents", rs);
+
+		return result;
+
+	}
+	//해당 선거에 등록된 후보신청서 리스트 담아오는 메소드
+	@Override
+	public ArrayList selectAllElectionVoteCandidateApply(SqlSessionTemplate sqlSession, int electVoteSeq) {
+
+		ArrayList candidateApplyList = (ArrayList) sqlSession.selectList("Superintend.selectAllElectionVoteCandidateApply", electVoteSeq);
+
+		return candidateApplyList;
+
+	}
+	//해당 신청서 세부내역 담아오는 메소드
+	@Override
+	public ElectionVoteCandidate selectOneElectionVoteCandidate(SqlSessionTemplate sqlSession,
+			int electVoteCndtSignupSeq) {
+
+		ElectionVoteCandidate evc = sqlSession.selectOne("Superintend.selectOneElectionVoteCandidate", electVoteCndtSignupSeq);
+
+		return evc;
+
+	}
+	//해당 신청서 경력사항 리스트 담아오는 메소드
+	@Override
+	public ArrayList selectAllElectionVoteCadidateCareer(SqlSessionTemplate sqlSession, int electVoteCndtSignupSeq) {
+
+		ArrayList careerList = (ArrayList) sqlSession.selectList("Superintend.selectAllElectionVoteCadidateCareer", electVoteCndtSignupSeq);
+
+		return careerList;
 
 	}
 

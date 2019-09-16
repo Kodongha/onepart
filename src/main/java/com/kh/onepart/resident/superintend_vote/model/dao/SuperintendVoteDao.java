@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
@@ -36,5 +37,21 @@ public interface SuperintendVoteDao {
 	int updateElectionVoteCandidate(SqlSessionTemplate sqlSession, ElectionVoteCandidate evc);
 	//해당 선거의 후보신청 고유번호를 받아오는 메소드
 	int selectUserElectVoteCndtSignupSeq(SqlSessionTemplate sqlSession, ElectionVoteCandidate evc);
+	//해당 투표 정보 담아오는 메소드
+	GeneralVote selectOneGeneralVote(SqlSessionTemplate sqlSession, int voteSeq);
+	//해당 투표에 등록된 후보 담아오는 메소드
+	ArrayList selectAllGeneralVoteCandidate(SqlSessionTemplate sqlSession, int voteSeq);
+	//입력받은 정보의 거주자가 있는지 확인하는 메소드
+	int selectConfirmResident(SqlSessionTemplate sqlSession, ResidentVO rs);
+	//일반 세대주 vs 복수 세대주 구분하는 메소드
+	int selectKindResident(SqlSessionTemplate sqlSession, ResidentVO rs);
+	//복수 세대주 중 투표권을 가지고 있는 세대주 매치하는 메소드
+	int selectConfirmResidents(SqlSessionTemplate sqlSession, ResidentVO rs);
+	//해당 선거에 등록된 후보신청서 리스트 담아오는 메소드
+	ArrayList selectAllElectionVoteCandidateApply(SqlSessionTemplate sqlSession, int electVoteSeq);
+	//해당 신청서 세부내역 담아오는 메소드
+	ElectionVoteCandidate selectOneElectionVoteCandidate(SqlSessionTemplate sqlSession, int electVoteCndtSignupSeq);
+	//해당 신청서 경력사항 리스트 담아오는 메소드
+	ArrayList selectAllElectionVoteCadidateCareer(SqlSessionTemplate sqlSession, int electVoteCndtSignupSeq);
 
 }
