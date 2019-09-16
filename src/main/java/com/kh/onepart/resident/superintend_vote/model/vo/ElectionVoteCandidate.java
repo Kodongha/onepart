@@ -30,5 +30,7 @@ public class ElectionVoteCandidate implements java.io.Serializable{
 	private String changeNm;				//변경이름
 	private String filePath;				//저장경로
 	private int cndtNo;						//후보번호
+	private String residentBirth;
+	private String residentGender;
 
 }

@@ -49,6 +49,7 @@
 	<script src="${contextPath}/resources/js/dashboard.min.js"></script>
 	<script src="${contextPath}/resources/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
+	<script src="${contextPath}/resources/js/inbox.demo.min.js"></script>
 
 	<script type="text/javascript">
 
@@ -117,11 +118,13 @@
 					for(var i in list){
 						var $tr = $('<tr/>');
 						var $checkBoxTd = $('<td/>', {class:"email-select"});
+						var $seqTd = $('<td/>', {text:list[i].messengerSeq, style:"text-align:center;"});
 						var $a = $('<a/>', {'data-click':"email-select-single"});
 						var $i = $('<i/>', {class:'fa fa-square-o fa-fw'});
 
 						// sender
 						var sender;
+						var seq;
 						if(!list[i].residentNm){
 							sender = list[i].managerNm;
 						} else {
@@ -129,23 +132,33 @@
 						}
 
 						// content
-						var content = list[i].messengerContent.substring(0, 15) + "...";
+						var content = list[i].messengerContent;
+						if(content.length > 20){
+							content = list[i].messengerContent.substring(0, 20) + "...";
+						}
 
 						// date
 						var date = list[i].messengerEnrollDt;
 
-						var $nameTd = $('<td/>', {class:"email-sender", text:sender});
+						var $nameTd = $('<td/>', {class:"email-sender", text:sender, style:"text-align:center;"});
 						var $contentTd = $('<td/>', {class:"email-subject", text:content});
 						var $dateTd = $('<td/>', {class:"email-date", text:date});
 
 						$a.append($i);
 						$checkBoxTd.append($a);
 						$tr.append($checkBoxTd);
+						$tr.append($seqTd);
 						$tr.append($nameTd);
 						$tr.append($contentTd);
 						$tr.append($dateTd);
 
 						messengerList.append($tr);
+
+						// tr event
+						$tr.click(function(){
+							var messengerSeq = $(this).children().eq(1).text();
+							location.href = 'moveMessengerDetail?messengerSeq=' + messengerSeq;
+						});
 					}
 
 					// paging
@@ -196,6 +209,7 @@
 					}
 					messengerPaging.append($listLi);
 
+					Inbox.init();
 
 				},
 				error : function(error){
@@ -203,8 +217,12 @@
 				}
 			});
 		}
-	</script>
 
+		/* $(document).on('click', $('#messengerList > tbody > tr'), function(){
+			var seq = $(this).children('td')
+			console.log(seq);
+		}); */
+	</script>
 </head>
 <body>
 	<div class="p-20">
@@ -227,17 +245,18 @@
 	    <!-- end col-2 -->
 	    <!-- begin col-10 -->
 	    <div class="col-md-10">
-                  <div class="email-btn-row hidden-xs">
-                      <a href="writeMessengerForm" class="btn btn-sm btn-inverse"><i class="fa fa-plus m-r-5"></i> 쪽지 보내기</a>
-                      <a href="#" class="btn btn-sm btn-inverse"><i class="fa fa-star-o m-r-5"></i> 보관함으로</a>
-                      <a href="#" class="btn btn-sm btn-inverse"><i class="fa fa-times-circle m-r-5"></i> 선택 삭제</a>
-                  </div>
+			<div class="email-btn-row hidden-xs">
+			    <a href="writeMessengerForm" class="btn btn-sm btn-inverse"><i class="fa fa-plus m-r-5"></i> 쪽지 보내기</a>
+			    <a href="1234" class="btn btn-sm btn-inverse"><i class="fa fa-star-o m-r-5"></i> 보관함으로</a>
+			    <a href="5678" class="btn btn-sm btn-inverse"><i class="fa fa-times-circle m-r-5"></i> 선택 삭제</a>
+			</div>
 	        <div class="email-content">
 				<table class="table table-email" id="messengerList">
 				    <thead>
 				        <tr>
 				            <th class="email-select"><a href="#" data-click="email-select-all"><i class="fa fa-square-o fa-fw"></i></a></th>
-				            <th>Sender</th>
+				            <th style="text-align:center;">seq</th>
+				            <th style="text-align:center;">Sender</th>
 				            <th>Content</th>
 				         	<th>Date</th>
 				        </tr>
@@ -262,5 +281,11 @@
 	</div>
 	<!-- end row -->
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+		});
+	</script>
+
 </body>
 </html>

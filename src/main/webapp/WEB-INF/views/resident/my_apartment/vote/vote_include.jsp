@@ -22,7 +22,7 @@ $(document).ready(function() {
 	/* 투표 완료내역 상세보기 */
 	$("#endGeneral").data("menu-url", "/onepart/resident/endGeneral");
 	/* 후보신청서 제출 완료 */
-	$("#applyCandidate").data("menu-url", "/onepart/resident/menuVote");
+	//$("#applyCandidate").data("menu-url", "/onepart/resident/menuVote");
 	/* 후보신청서 제출 취소 */
 	$("#cancelCandidate").data("menu-url", "/onepart/resident/menuVote");
 	/* 후보 정보 상세보기 */
@@ -92,7 +92,7 @@ $(document).ready(function() {
 		});
 	});
 	/* 후보신청서 제출 완료 */
-	$("#applyCandidate").click(function(){
+	/* $("#applyCandidate").click(function(){
 		var voteUrl = $(this).data("menu-url");
 		$.ajax({
 			url:voteUrl,
@@ -101,7 +101,7 @@ $(document).ready(function() {
 				$("#content").html(result);
 			}
 		});
-	});
+	}); */
 
 	/* 후보신청서 제출 취소 */
 	$("#cancelCandidate").click(function(){

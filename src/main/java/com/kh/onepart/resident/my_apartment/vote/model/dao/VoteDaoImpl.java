@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.onepart.resident.my_apartment.vote.model.vo.Career;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.Image;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteList;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VotePrtcpt;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteSelected;
@@ -108,6 +112,61 @@ public class VoteDaoImpl implements VoteDao{
 		int result = sqlSession.update("vote.insertGeneralVote", vs);
 
 		return  result;
+
+	}
+	//선택한 선거의 상세정보를 불러오는 메소드 (선거)
+	@Override
+	public ElectionVote selectOneElectionVoteInfo(SqlSessionTemplate sqlSession, int voteSeq) {
+
+		ElectionVote vote = sqlSession.selectOne("vote.selectOneElectionVoteInfo", voteSeq);
+
+		return vote;
+
+	}
+	//로그인유저의 현황을 불러오는 메소드 (선거)
+	@Override
+	public VoteList selectOneElectionVoteUserInfo(SqlSessionTemplate sqlSession, VoteList info) {
+
+		VoteList voteUser = (VoteList) sqlSession.selectOne("vote.selectOneElectionVoteUserInfo", info);
+
+		return voteUser;
+
+	}
+	//선택한 선거의 후보 리스트를 불러오는 메소드(선거)
+	@Override
+	public ArrayList selectAllElectionCandidateList(SqlSessionTemplate sqlSession, int voteSeq) {
+
+		ArrayList candidateList = (ArrayList) sqlSession.selectList("vote.selectAllElectionCandidateList", voteSeq);
+
+		return candidateList;
+
+
+	}
+	//신청서 insert후 seqNm return받는 메소드
+	@Override
+	public int insertElectionCandidateApply(SqlSessionTemplate sqlSession, ElectionVoteCandidate evc) {
+
+		sqlSession.insert("vote.insertElectionCandidateApply", evc);
+		int electVoteCndtSignupSeq = evc.getElectVoteCndtSignupSeq();
+
+		return electVoteCndtSignupSeq;
+
+	}
+	//해당 신청서에 이미지 inert메소드
+	@Override
+	public int insertElectionCandidateImg(SqlSessionTemplate sqlSession, Image img) {
+
+		int result = sqlSession.insert("vote.insertElectionCandidateImg", img);
+
+		return result;
+	}
+	//해당 신청서에 경력 및 기간 insert메소드
+	@Override
+	public int insertElectionCandidateCareer(SqlSessionTemplate sqlSession, Career career) {
+
+		int result2 = sqlSession.insert("vote.insertElectionCandidateCareer", career);
+
+		return result2;
 
 	}
 

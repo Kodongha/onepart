@@ -41,4 +41,10 @@
 		FROM RESIDENT_ENROLL_CAR
 		WHERE RESIDENT_ENROLL_CAR = #{residentEnrollCar}
 	</delete>
+
+	<select id="selectResidentCar" parameterType="ResidentCarVO" resultMap="ResidentCarVOResultSet">
+		SELECT *
+		FROM RESIDENT_ENROLL_CAR
+		WHERE CAR_NUM=#{carNum}
+	</select>
 </mapper>

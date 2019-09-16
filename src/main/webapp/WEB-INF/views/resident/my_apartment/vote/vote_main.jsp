@@ -164,7 +164,19 @@
 		}else if(voteKind == '일반투표' && voteStatus == '완료'){
 
 		}else if(voteKind == '선거' && voteStatus == '투표기간'){
-			console.log("c");
+			$.ajax({
+				url:"/onepart/resident/election",
+				type:"get",
+				dataType:"html",
+				data:{
+						voteSeq:voteSeq,
+						voteKind:voteKind,
+						voteStatus:voteStatus
+					},
+				success:function(result){
+					$("#content").html(result);
+				}
+			});
 		}else if(voteKind == '선거' && voteStatus == '완료'){
 			console.log("d");
 		}else{

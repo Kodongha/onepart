@@ -1,17 +1,27 @@
 package com.kh.onepart.resident.my_apartment.vote.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.onepart.account.model.vo.ResidentVO;
+import com.kh.onepart.common.CommonUtils;
 import com.kh.onepart.resident.my_apartment.vote.model.service.VoteService;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.Career;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.Image;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteList;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VotePrtcpt;
 
@@ -57,11 +67,138 @@ public class VoteController {
 
 		return mv;
 	}
+	///////////////////////////////////////////////
+	@RequestMapping("/resident/applyCandidate")
+	public ModelAndView moveVote_applyCandidate(ModelAndView mv, HttpServletRequest request, MultipartHttpServletRequest req) {
+		System.out.println("/moveVote_applyCandidate");
+		int residentSeq = ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentSeq();
+		int electVoteSeq = Integer.parseInt(request.getParameter("electVoteSeq"));
+		String finalEdu = request.getParameter("finalEdu");
+		String workNm = request.getParameter("workNm");
+		String workPosition = request.getParameter("workPosition");
+		String workAdd = request.getParameter("workAdd");
+		System.out.println("controller workNm : " + workNm);
+		String careerTm1 = request.getParameter("careerTm1");
+		String careerTm2 = request.getParameter("careerTm2");
+		String careerTm3 = request.getParameter("careerTm3");
+		String careerTm4 = request.getParameter("careerTm4");
+		String careerCon1 = request.getParameter("careerCon1");
+		String careerCon2 = request.getParameter("careerCon2");
+		String careerCon3 = request.getParameter("careerCon3");
+		String careerCon4 = request.getParameter("careerCon4");
+
+		List<MultipartFile> mf = req.getFiles("thumbnailImg1");
+
+		Image img = new Image();
+		if (mf.size() == 1 && mf.get(0).getOriginalFilename().equals("")) {
+
+        } else {
+            for (int i = 0; i < mf.size(); i++) {
+                // 파일 중복명 처리
+                String genId = CommonUtils.getRandomString();
+                // 본래 파일명
+                String originalfileName = mf.get(i).getOriginalFilename();
+
+                System.out.println("originalfileName : " + originalfileName);
+
+                String saveFileName = genId + "." + originalfileName.substring(originalfileName.lastIndexOf("."));
+                // 저장되는 파일 이름
+
+                String root = request.getSession().getServletContext().getRealPath("resources");
+        		String filePath = root + "\\uploadFiles\\reservation";
+
+                // 저장 될 파일 경로
+                long fileSize = mf.get(i).getSize();
+
+                img.setOriginNm(originalfileName);
+                img.setChangeNm(saveFileName);
+                img.setFilePath(filePath);
+
+                System.out.println("controller img : " + img);
+
+                try {
+					mf.get(i).transferTo(new File(filePath + "\\" + saveFileName));
+				} catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} // 파일 저장
+
+            }
+        }
+
+		//신청서 insert 메소드
+		ElectionVoteCandidate evc = new ElectionVoteCandidate();
+		evc.setFinalEdu(finalEdu);
+		evc.setWorkNm(workNm);
+		evc.setWorkPosition(workPosition);
+		evc.setWorkAdd(workAdd);
+		evc.setElectVoteSeq(electVoteSeq);
+		evc.setResidentSeq(residentSeq);
+		System.out.println("Controller evc : " + evc);
+		ArrayList<Career> careerArr = new ArrayList<Career>();
+		if(careerTm1 != null) {
+			Career career = new Career();
+			career.setCareerPeriod(careerTm1);
+			career.setCareerDetail(careerCon1);
+			careerArr.add(career);
+		}
+
+		if(careerTm2 != null) {
+			Career career = new Career();
+			career.setCareerPeriod(careerTm2);
+			career.setCareerDetail(careerCon2);
+			careerArr.add(career);
+		}
+
+		if(careerTm3 != null) {
+			Career career = new Career();
+			career.setCareerPeriod(careerTm3);
+			career.setCareerDetail(careerCon3);
+			careerArr.add(career);
+		}
+
+		if(careerTm4 != null) {
+			Career career = new Career();
+			career.setCareerPeriod(careerTm4);
+			career.setCareerDetail(careerCon4);
+			careerArr.add(career);
+		}
+
+		int result = vs.insertElectionCandidateApply(img, evc, careerArr);
+
+		mv.setViewName("jsonView");
+		return mv;
+	}
 
 	@RequestMapping("/resident/election")
-	public String moveVote_election() {
+	public ModelAndView moveVote_election(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("/menuVote");
-		return "/resident/my_apartment/vote/vote_election";
+		int voteSeq = Integer.parseInt(request.getParameter("voteSeq"));
+		System.out.println("controller voteSeq : " + voteSeq);
+		int residentSeq = ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentSeq();
+
+		//선택한 선거의 상세정보를 불러오는 메소드 (선거)
+		VoteList info = new VoteList();
+		info.setVoteSeq(voteSeq);
+		info.setResidentSeq(residentSeq);
+		ElectionVote vote = vs.selectOneElectionVoteInfo(voteSeq);
+		System.out.println("controller vote : " + vote);
+
+		//로그인유저의 현황을 불러오는 메소드 (선거)
+		VoteList voteUser = vs.selectOneElectionVoteUserInfo(info);
+		System.out.println("controller voteUser : " + voteUser);
+
+		//선택한 선거의 총 선거율을 불러오는 메소드
+
+		//선택한 선거의 후보 리스트를 불러오는 메소드 (선거)
+		ArrayList candidateList = vs.selectAllElectionCandidateList(voteSeq);
+
+		mv.addObject("vote2", vote);
+		mv.addObject("voteUser", voteUser);
+		mv.addObject("candidateList", candidateList);
+		mv.setViewName("/resident/my_apartment/vote/vote_election");
+
+		return mv;
 	}
 
 	@RequestMapping("/resident/general")

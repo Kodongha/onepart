@@ -4,8 +4,11 @@ import java.util.ArrayList;
 
 import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.resident.messenger.model.vo.ManagerAndDeptVO;
+import com.kh.onepart.resident.messenger.model.vo.RequestAttachVO;
+import com.kh.onepart.resident.messenger.model.vo.RequestImgVO;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
+import com.kh.onepart.resident.messenger.model.vo.ResponseResidentVO;
 
 public interface MessengerService {
 
@@ -13,8 +16,10 @@ public interface MessengerService {
 	 * 쪽지 작성
 	 * @param requestMessengerVO
 	 * @param tags
+	 * @param requestAttachVOList
+	 * @param requestImgVOList
 	 */
-	void insertMessenger(RequestMessengerVO requestMessengerVO, String[] tags);
+	void insertMessenger(RequestMessengerVO requestMessengerVO, String[] tags, ArrayList<RequestImgVO> requestImgVOList, ArrayList<RequestAttachVO> requestAttachVOList);
 
 	/**
 	 * 타입별 쪽지 카운트
@@ -37,5 +42,18 @@ public interface MessengerService {
 	 * @return
 	 */
 	ArrayList<ManagerAndDeptVO> selectManagerList();
+
+	/**
+	 * 입주민 명단 조회
+	 * @return
+	 */
+	ArrayList<ResponseResidentVO> selectResidentList();
+
+	/**
+	 * 메신저 상세보기
+	 * @param messengerSeq
+	 * @return
+	 */
+	ArrayList<Object> selectMessengerDetail(String messengerSeq);
 
 }

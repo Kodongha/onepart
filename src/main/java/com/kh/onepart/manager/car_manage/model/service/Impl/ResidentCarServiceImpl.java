@@ -35,4 +35,10 @@ public class ResidentCarServiceImpl implements ResidentCarService{
 		residentCarDao.deleteResidentCar(sqlSession, residentEnrollCar);
 	}
 
+	@Override
+	public ResidentCarVO selectResidentCar(ResidentCarVO residentCarVO) {
+		return residentCarDao.selectResidentCar(sqlSession, residentCarVO);
+
+	}
+
 }

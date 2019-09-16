@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="${ contextPath }/resources/js/jSignature.min.js"></script>
 </head>
 <body>
 <jsp:include page="../vote/vote_include.jsp"></jsp:include>
@@ -129,7 +130,10 @@
 				}
 			});
 		});
+
+
 	});
+
 </script>
 </body>
 </html>

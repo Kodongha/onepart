@@ -11,6 +11,7 @@
 <body>
 <jsp:include page="../superintend_vote/superintend_vote_include.jsp"></jsp:include>
 <jsp:include page="../superintend_vote/superintend_vote_detail_include_2.jsp"></jsp:include>
+<c:if test="${ candidateList != null }">
 <!-- 후보정보 div -->
 <div style="width:85%; margin:0 auto">
 	<table style="width:100%">
@@ -44,7 +45,7 @@
 							<tr>
 								<td>
 									<a href="javascript:;" class="pull-left">
-										<img class="media-object" src="${contextPath }/resources/images/${ candidateList.changeNm }" alt="" style="height:250px; width:auto;">
+										<img class="media-object" src="${ contextPath }/resources/uploadFiles/reservation/${ candidateList.changeNm }" alt="" style="height:250px; width:auto;">
 									</a>
 								</td>
 								<td style="width:10%"></td>
@@ -69,5 +70,56 @@
 	</div>
 </div>
 <br><br>
+</c:if>
+<c:if test="${ candidateListGen != null }">
+<!-- 후보정보 div -->
+<div style="width:85%; margin:0 auto">
+	<table style="width:100%">
+		<tr>
+			<td>
+				<div class="form-group">
+                    <h4>후보정보</h4>
+                </div>
+			</td>
+			<td></td>
+			<td style="width:15%">
+			</td>
+		</tr>
+	</table>
+	<div class="panel-body" style="background:white" align="center">
+	<!-- 후보 상세정보 div -->
+		<div style="width:95%">
+			<ul class="media-list media-list-with-divider">
+				<c:forEach var="candidateListGen" items="${ candidateListGen }">
+					<!-- 한후보 정보 div -->
+					<li style="margin-bottom:-10px;">
+						<table style="width:95%; margin:0 auto;">
+							<tr>
+								<td style="width:30%"><h4>${ candidateListGen.cndtNm }
+								</h4></td>
+							</tr>
+						</table>
+					</li>
+					<li class="media media-lg" style="padding:15px; margin-top:10px">
+						<table style="width:95%; margin:0 auto;">
+							<tr>
+								<td style="width:10%"></td>
+								<td>
+									<div class="media-body" style="padding-top:1%">
+										<h4 class="media-heading">상세정보</h4>
+										${ candidateListGen.cndtDetail }
+										<br><br><br>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</li>
+		        </c:forEach>
+			</ul>
+		</div>
+	</div>
+</div>
+<br><br>
+</c:if>
 </body>
 </html>

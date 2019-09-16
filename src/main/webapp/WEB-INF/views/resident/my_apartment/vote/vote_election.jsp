@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,74 +11,72 @@
 <body>
 <jsp:include page="../vote/vote_include.jsp"></jsp:include>
 <jsp:include page="../vote/vote_detail_include.jsp"></jsp:include>
-<div>
-					<table style="width:100%">
-						<tr>
-							<td style="width:80%"></td>
-							<td style="width:10%"><h5>미완료</h5></td>
-							<td style="width:10%"><a class="btn btn-white" style="width: 100%" id="realVote">투표하기</a></td>
-						</tr>
-					</table>
-				</div>		
-			</div>
-			<hr>
-			<br>
+<div style="width:85%; margin:0 auto">
+	<table style="width:100%">
+		<tr>
+			<td>
+				<div class="form-group">
+                    <h4>후보정보</h4>
+                </div>
+			</td>
+			<td style="width:15%" align="center">
+				<c:if test="${ voteUser.voteSeq == null }">
+					<span class="badge badge-danger" style="height:28px; font-size:1.25em;">미완료</span>
+				</c:if>
+				<c:if test="${ voteUser.voteSeq != null }">
+					<span class="badge badge-success" style="height:28px; font-size:1.25em;">완료</span>
+				</c:if>
+			</td>
+			<td style="width:15%" align="center">
+				<c:if test="${ voteUser.voteSeq == null }">
+					<a class="btn btn-success" style="width:100%" id="insertElectionVote">투표하기</a>
+				</c:if>
+			</td>
+		</tr>
+	</table>
+	<!-- 후보 개개인 정보 div -->
+	<div class="panel-body" style="background:white" align="center">
+		<div style="width:95%">
+			<ul class="media-list media-list-with-divider">
+				<c:forEach var="candidateList" items="${ candidateList }">
+					<!-- 한후보 정보 div -->
+					<li style="margin-bottom:-10px;">
+						<table style="width:95%; margin:0 auto;">
+							<tr>
+								<td style="width:30%"><h4>후보${ candidateList.cndtNo }번 ${ candidateList.residentNm }
+								&nbsp;&nbsp;&nbsp; <small style="font-size:1em">${ candidateList.bdNm }동 ${ candidateList.rmNm }호 거주</small></h4></td>
+							</tr>
+						</table>
+					</li>
+					<li class="media media-lg" style="padding:15px; margin-top:10px">
+						<table style="width:95%; margin:0 auto;">
+							<tr>
+								<td>
+									<a href="javascript:;" class="pull-left">
+										<img class="media-object" src="${ contextPath }/resources/uploadFiles/reservation/${ candidateList.changeNm }" alt="" style="height:250px; width:auto;">
+									</a>
+								</td>
+								<td style="width:10%"></td>
+								<td>
+									<div class="media-body" style="padding-top:1%">
+										<h4 class="media-heading">후보자 간단정보</h4>
+										${ candidateList.simpleInfo }
+										<br><br><br>
+										<h4 class="media-heading">후보자 상세정보</h4>
+										${ candidateList.detailInfo }
+										<br><br><br>
+										<h4 class="media-heading">기타사항</h4>
+										${ candidateList.etcInfo }
+									</div>
+								</td>
+							</tr>
+						</table>
+					</li>
+		        </c:forEach>
+			</ul>
 		</div>
-			<!-- 후보정보 div -->
-			<div style="width:95%; margin:0 auto">
-				<h4>후보정보</h4>
-				<h5>후보자의 이름을 클릭하면 상세정보를 확인할 수 있습니다.</h5>
-				<br>
-				<!-- 후보 개개인 정보 div -->
-				<div>
-					<table style="width:100%">
-						<tr>
-							<!-- 홀수기호 정보 div -->
-							<td style="width:40%">
-								<div>
-									<table>
-										<tr>
-											<td rowspan="2">
-												<img alt="" src="${contextPath }/resources/images/vote1.PNG" style="height:200px">
-											</td>
-											<td style="width:5%"></td>
-											<td><a id="candidateDetail"><h4>기호1번 김은혜</h4></a></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td>
-												<h5>방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는</h5>
-											</td>
-										</tr>
-									</table>
-								</div>
-							</td>
-							<td style="width:5%"></td>
-							<!-- 짝수기호 정보 div -->
-							<td style="width:40%">
-								<div>
-									<table>
-										<tr>
-											<td rowspan="2">
-												<img alt="" src="${contextPath}/resources/images/vote2.PNG" style="height:200px">
-											</td>
-											<td style="width:5%"></td>
-											<td><a><h4>기호2번 고동하</h4></a></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td>
-												<h5>방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는 방지하는 소금이라 할지니 인생에 가치를 주는</h5>
-											</td>
-										</tr>
-									</table>
-								</div>
-							</td>
-						</tr>
-					</table>
-					<br><br>
-				</div>
-			</div>
+	</div>
 	<!-- end #content -->
+</div>
 </body>
 </html>

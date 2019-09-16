@@ -14,16 +14,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.onepart.account.model.vo.ResidentVO;
+import com.kh.onepart.common.CommonUtils;
+import com.kh.onepart.common.UploadFileUtils;
 import com.kh.onepart.resident.warm.open_chatting.model.service.OpenChatMemberService;
 import com.kh.onepart.resident.warm.open_chatting.model.service.OpenChatNoticeService;
 import com.kh.onepart.resident.warm.open_chatting.model.service.OpenChatService;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatNoticeVO;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO;
+
+
 
 @Controller
 public class OpenChattingController {
@@ -219,5 +224,36 @@ public class OpenChattingController {
 
 		return new ObjectMapper().writeValueAsString(result);
 
+	}
+
+	// 파일 업로드
+	@RequestMapping(value="/resident/fileUpload", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String fileUpload(MultipartFile file, HttpSession session) throws JsonProcessingException {
+		Map<String, Object> result = new HashMap<>();
+
+		try {
+            String root = session.getServletContext().getRealPath("resources");
+    		String uploadPath = root + "\\uploadFiles\\chatting\\";
+
+    		String originFileName = file.getOriginalFilename();
+    		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+    		String changeName = CommonUtils.getRandomString();
+
+			String savedUrl = UploadFileUtils.uploadFiles(uploadPath, file.getOriginalFilename(), file.getBytes());
+
+			result.put("result", "success");
+			result.put("savedPath", savedUrl);
+			result.put("originFileName", originFileName);
+			result.put("changeName", changeName);
+			result.put("uploadPath", uploadPath);
+			result.put("ext", ext);
+
+		} catch (Exception e) {
+			result.put("result", "failure");
+			e.printStackTrace();
+		}
+
+		return new ObjectMapper().writeValueAsString(result);
 	}
 }

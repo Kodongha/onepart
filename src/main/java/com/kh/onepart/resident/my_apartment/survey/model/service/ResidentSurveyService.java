@@ -2,10 +2,11 @@ package com.kh.onepart.resident.my_apartment.survey.model.service;
 
 import java.util.ArrayList;
 
-import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyMainVO;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyPrtcpt;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyQstn;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveySelected;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyStatisticsVO;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyVO;
 
 
@@ -48,5 +49,12 @@ public interface ResidentSurveyService {
 	 * @return
 	 */
 	public double selectPrtcptPercent(int surveySeq, int surveyType);
+
+	/**
+	 * 설문조사 통계정보 가져오기
+	 * @param surveySeq
+	 * @return
+	 */
+	public ArrayList<SurveyStatisticsVO> getSelectedStatistics(int surveySeq, RequestSurveyQstn requestSurveyQstn);
 
 }

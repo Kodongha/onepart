@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.onepart.resident.my_apartment.vote.model.dao.VoteDao;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.Career;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.Image;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteList;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VotePrtcpt;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteSelected;
@@ -112,6 +116,55 @@ public class VoteServiceImple implements VoteService{
 
 		return result;
 	}
+	//선택한 선거의 상세정보를 불러오는 메소드 (선거)
+	@Override
+	public ElectionVote selectOneElectionVoteInfo(int voteSeq) {
+
+		ElectionVote vote = vd.selectOneElectionVoteInfo(sqlSession, voteSeq);
+
+		return vote;
+
+	}
+	//로그인유저의 현황을 불러오는 메소드 (선거)
+	@Override
+	public VoteList selectOneElectionVoteUserInfo(VoteList info) {
+
+		VoteList voteUser = vd.selectOneElectionVoteUserInfo(sqlSession, info);
+
+		return voteUser;
+
+	}
+	//선택한 선거의 후보 리스트를 불러오는 메소드(선거)
+	@Override
+	public ArrayList selectAllElectionCandidateList(int voteSeq) {
+
+		ArrayList candidateList = vd.selectAllElectionCandidateList(sqlSession, voteSeq);
+
+		return candidateList;
+
+	}
+	//신청서 insert 메소드
+	@Override
+	public int insertElectionCandidateApply(Image img, ElectionVoteCandidate evc, ArrayList<Career> careerArr) {
+
+		//신청서 insert후 seqNm return받는 메소드
+		int electVoteCndtSignupSeq = vd.insertElectionCandidateApply(sqlSession, evc);
+
+		//해당 신청서에 이미지 inert메소드
+		img.setElectVoteCndtSignupSeq(electVoteCndtSignupSeq);
+		int result = vd.insertElectionCandidateImg(sqlSession, img);
+
+		//해당 신청서에 경력 및 기간 insert메소드
+		int result2 = 0;
+		for(int i = 0; i < careerArr.size(); i++) {
+			careerArr.get(i).setElectVoteCndtSignupSeq(electVoteCndtSignupSeq);
+			result2 = vd.insertElectionCandidateCareer(sqlSession, careerArr.get(i));
+		}
+
+		return result2;
+
+	}
+
 
 
 }
