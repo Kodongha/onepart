@@ -51,6 +51,13 @@
 		<result property="deptNm" column="DEPT_NM"/>
 	</resultMap>
 
+	<resultMap type="com.kh.onepart.resident.messenger.model.vo.ResponseResidentVO" id="responseResidentVO">
+		<id property="residentSeq" column="RESIDENT_SEQ"/>
+		<result property="residentNm" column="RESIDENT_NM"/>
+		<result property="bdNm" column="BD_NM"/>
+		<result property="rmNm" column="RM_NM"/>
+	</resultMap>
+
 
 	<!-- 쪽지 작성 -->
 	<insert id="insertMessenger" parameterType="requestMessengerVO">
@@ -126,6 +133,16 @@
 	    ON (t1.DEPT_CD = t2.DEPT_CD)
 	    WHERE   t1.MANAGER_LEAVE_TF = 'N'
 	    ORDER BY t1.MANAGER_SEQ
+	</select>
+
+	<select id="selectResidentList" resultMap="responseResidentVO">
+		SELECT  t1.RESIDENT_SEQ, t1.RESIDENT_NM, t2.BD_NM, t2.RM_NM
+		FROM    RESIDENT t1
+		INNER JOIN APT_DETAIL_INFO t2
+		ON (t1.APT_DETAIL_INFO_SEQ = t2.APT_DETAIL_INFO_SEQ)
+		WHERE   t1.LEAVE_TF = 'N'
+		AND     t1.CONFIRM_TF = 'Y'
+		ORDER BY t2.BD_NM, t2.RM_NM, t1.HOUSEHOLD_AUTH_TYPE
 	</select>
 
 </mapper>

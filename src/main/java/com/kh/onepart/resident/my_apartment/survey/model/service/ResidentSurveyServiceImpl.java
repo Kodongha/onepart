@@ -1,6 +1,7 @@
 package com.kh.onepart.resident.my_apartment.survey.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,11 @@ import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.resident.my_apartment.survey.model.dao.ResidentSurveyDao;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyMainVO;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyPrtcpt;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyQstn;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveySelected;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstn;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstnOption;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyStatisticsVO;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyVO;
 
 @Service
@@ -125,6 +128,16 @@ public class ResidentSurveyServiceImpl implements ResidentSurveyService {
 		}
 
 		return prtcptPercent;
+	}
+
+	/** 설문조사 통계정보 가져오기 */
+	@Override
+	public ArrayList<SurveyStatisticsVO> getSelectedStatistics(int surveySeq, RequestSurveyQstn requestSurveyQstn) {
+		// TODO Auto-generated method stub
+
+		ArrayList<SurveyStatisticsVO> surveyStatisticsVOList = residentSurveyDao.getSelectedStatistics(sqlSession, requestSurveyQstn);
+
+		return surveyStatisticsVOList;
 	}
 
 }

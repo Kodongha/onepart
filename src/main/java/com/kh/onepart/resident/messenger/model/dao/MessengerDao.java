@@ -8,6 +8,7 @@ import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.resident.messenger.model.vo.ManagerAndDeptVO;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
+import com.kh.onepart.resident.messenger.model.vo.ResponseResidentVO;
 
 public interface MessengerDao {
 
@@ -42,5 +43,12 @@ public interface MessengerDao {
 	 * @return
 	 */
 	ArrayList<ManagerAndDeptVO> selectManagerList(SqlSessionTemplate sqlSession);
+
+	/**
+	 * 입주민 명단 조회
+	 * @param sqlSession
+	 * @return
+	 */
+	ArrayList<ResponseResidentVO> selectResidentList(SqlSessionTemplate sqlSession);
 
 }

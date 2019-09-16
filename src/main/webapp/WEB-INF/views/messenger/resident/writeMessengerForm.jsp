@@ -67,7 +67,7 @@
 								<span class="btn btn-success btn-block fileinput-button">
 									<i class="fa fa-plus"></i>
 								    <span>Add files...</span>
-								    <input type="file" name="files[]" multiple>
+								    <input type="file" name="files[]" multiple id="fileInput">
 								</span>
 							</div>
 							<div class="col-md-6">
@@ -83,21 +83,40 @@
 				</div>
 			</div>
 
-
 	        <!-- begin email content -->
 	        <div class="m-b-15">
 		        <label class="control-label">Content:</label>
 				<textarea class="textarea form-control" name="messengerContent" id="messengerContent" rows="12" placeholder="Enter text ..."></textarea>
 			</div>
 	        <!-- end email content -->
-	        <button type="submit" class="btn btn-primary p-l-40 p-r-40">Send</button>
+	        <button id='saveFileBtn' class="btn btn-primary p-l-40 p-r-40">Send</button>
 	        <!-- tags hidden -->
 	        <div id="hiddenArea"></div>
 	    </form>
 	    <!-- end email form -->
 	</div>
 
+	<script type="text/javascript">
 
+		$(function(){
+			$('.btn-primary').click(function(){
+				console.log($('#files').val());
+			});
+
+			$('#files').change(function(){
+				console.log("in");
+				var fileInput = document.getElementById("files");
+				var file;
+				var files = fileInput.files;
+
+
+				for(var i=0; i<files.length; i++){
+					file = files[i];
+					console.log(file);
+				}
+			});
+		});
+	</script>
 
 
 
@@ -210,14 +229,54 @@
 	<!-- ================== END PAGE LEVEL JS ================== -->
 	<script type="text/javascript">
 		$(document).ready(function() {
-			App.init();
-			EmailCompose.init();
-			TableManageDefault.init();
-			FormMultipleUpload.init();
-		});
+	        App.init();
+	        EmailCompose.init();
+	        TableManageDefault.init();
+	        FormMultipleUpload.init();
+	     });
+
+	     var fileData = [];
+	     $("#fileInput").change(function(){
+	        var fileList = $("#fileInput")[0].files;
+	        for(var i=0; i<fileList.length; i++){
+	           fileData.push(fileList[i]);
+	        }
+	     });
+
+	     $("#saveFileBtn").click(function(){
+	        var formData = new FormData($('#fileUploadForm')[0]);
+	        if(fileData.length > 0){
+	           for(var i in fileData){
+	              formData.append("files", fileData[i]);
+	           }
+	        }
+
+	        var messengerContent = $("#messengerContent").val();
+	        formData.append("messengerContent", messengerContent);
+
+	        $.ajax({
+	           url : "writeMessenger",
+	           data : formData,
+	           type : "POST",
+	           dataType : "json",
+	           cache: false,
+	           contentType: false,
+	           processData: false,
+	           success : function(data) {
+	              console.log(data);
+	           }
+	        });
+	     });
+
+
 
 	</script>
 	<jsp:include page="writeMessengerFormModal.jsp"/>
 
+
+
+<script type="text/javascript">
+
+</script>
 </body>
 </html>

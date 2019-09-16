@@ -38,7 +38,9 @@
 				$('#receiverInput').text(str);
 				$('#receiverInput').css({"background":"white", "color":"black"});
 			}
+
 			$('#modal-dialog').modal('hide');
+
 		});
 	});
 

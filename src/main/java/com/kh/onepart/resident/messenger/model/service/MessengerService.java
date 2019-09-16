@@ -6,6 +6,7 @@ import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.resident.messenger.model.vo.ManagerAndDeptVO;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
+import com.kh.onepart.resident.messenger.model.vo.ResponseResidentVO;
 
 public interface MessengerService {
 
@@ -37,5 +38,11 @@ public interface MessengerService {
 	 * @return
 	 */
 	ArrayList<ManagerAndDeptVO> selectManagerList();
+
+	/**
+	 * 입주민 명단 조회
+	 * @return
+	 */
+	ArrayList<ResponseResidentVO> selectResidentList();
 
 }

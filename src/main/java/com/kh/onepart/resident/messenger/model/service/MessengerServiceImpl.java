@@ -11,6 +11,7 @@ import com.kh.onepart.resident.messenger.model.dao.MessengerDao;
 import com.kh.onepart.resident.messenger.model.vo.ManagerAndDeptVO;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
+import com.kh.onepart.resident.messenger.model.vo.ResponseResidentVO;
 
 @Service
 public class MessengerServiceImpl implements MessengerService {
@@ -64,6 +65,13 @@ public class MessengerServiceImpl implements MessengerService {
 		// TODO Auto-generated method stub
 
 		return messengerDao.selectManagerList(sqlSession);
+	}
+
+	/** 입주민 명단 조회 */
+	@Override
+	public ArrayList<ResponseResidentVO> selectResidentList() {
+		// TODO Auto-generated method stub
+		return messengerDao.selectResidentList(sqlSession);
 	}
 
 }

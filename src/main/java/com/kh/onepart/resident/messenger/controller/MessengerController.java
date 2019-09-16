@@ -1,6 +1,7 @@
 package com.kh.onepart.resident.messenger.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -8,8 +9,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.onepart.account.model.vo.ManagerVO;
@@ -20,13 +21,13 @@ import com.kh.onepart.resident.messenger.model.service.MessengerService;
 import com.kh.onepart.resident.messenger.model.vo.ManagerAndDeptVO;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
+import com.kh.onepart.resident.messenger.model.vo.ResponseResidentVO;
 
 @Controller
 public class MessengerController {
 
 	@Autowired
 	MessengerService messengerService;
-
 
 	/**
 	 * 쪽지 메인페이지로 이동
@@ -122,7 +123,9 @@ public class MessengerController {
 		} else if(session.getAttribute("loginUser") instanceof ManagerVO) {
 			System.out.println("manager in");
 			loginUser = String.valueOf(((ManagerVO) session.getAttribute("loginUser")).getManagerSeq());
-			// ArrayList<ManagerAndDeptVO> managerAndDeptVOList = messengerService.selectResidentList();
+			ArrayList<ResponseResidentVO> residentVOList = messengerService.selectResidentList();
+			System.out.println("residentVOList:::" + residentVOList);
+			modelAndView.addObject("residentVOList", residentVOList);
 		}
 
 		modelAndView.setViewName("messenger/resident/writeMessengerForm");
@@ -134,13 +137,22 @@ public class MessengerController {
 	 * 쪽지 작성
 	 * @return
 	 */
-	@RequestMapping("messenger/writeMessenger")
-	public String insertMessenger(RequestMessengerVO requestMessengerVO, String[] tags, HttpSession session, @RequestParam(name="files[]", required=false) MultipartFile file, HttpServletRequest request) {
 
-		System.out.println("messenger/writeMessenger in!");
-		System.out.println("requestMessengerVO:::" + requestMessengerVO);
 
-		System.out.println("file : " + file);
+
+
+      @RequestMapping("messenger/writeMessenger")
+      public String insertMessenger(RequestMessengerVO requestMessengerVO, String[] tags, HttpSession session, MultipartHttpServletRequest req, HttpServletRequest request) {
+
+         System.out.println("messenger/writeMessenger in!");
+         System.out.println("requestMessengerVO:::" + requestMessengerVO);
+         System.out.println("messengerContent : " + req.getParameter("messengerContent"));
+         List<MultipartFile> mf = req.getFiles("files");
+
+         for(int i=0; i<mf.size(); i++){
+            System.out.println("oriName  : " + mf.get(i).getOriginalFilename() );
+            System.out.println("size  : " + mf.get(i).getSize() );
+         }
 
 		String messengerSender = "";
 		// 입주민일 경우, int > String 으로 형변환
@@ -161,7 +173,6 @@ public class MessengerController {
 		String uploadFiles = "messenger";
 		String filePath = root + "\\" + uploadFiles;
 		System.out.println(root + "\\" + uploadFiles);
-
 
 
 		// messengerService.insertMessenger(requestMessengerVO, tags);
