@@ -41,8 +41,8 @@
 			color: lightgray;
 			font-size: 1em;
 		}
-
 	</style>
+
 </head>
 <body>
 	<div id="page-loader" class="fade in"><span class="spinner"></span></div>
@@ -71,7 +71,7 @@
 								</span>
 							</div>
 							<div class="col-md-6">
-								<button type="reset" class="btn btn-warning btn-block cancel">
+								<button type="reset" class="btn btn-warning btn-block cancel" id="resetUploadBtn">
 								    <i class="fa fa-ban"></i>
 								    <span>Reset upload</span>
 								</button>
@@ -89,36 +89,12 @@
 				<textarea class="textarea form-control" name="messengerContent" id="messengerContent" rows="12" placeholder="Enter text ..."></textarea>
 			</div>
 	        <!-- end email content -->
-	        <button id='saveFileBtn' class="btn btn-primary p-l-40 p-r-40">Send</button>
+	        <input id='saveFileBtn' class="btn btn-primary p-l-40 p-r-40" value="sned">
 	        <!-- tags hidden -->
 	        <div id="hiddenArea"></div>
 	    </form>
 	    <!-- end email form -->
 	</div>
-
-	<script type="text/javascript">
-
-		$(function(){
-			$('.btn-primary').click(function(){
-				console.log($('#files').val());
-			});
-
-			$('#files').change(function(){
-				console.log("in");
-				var fileInput = document.getElementById("files");
-				var file;
-				var files = fileInput.files;
-
-
-				for(var i=0; i<files.length; i++){
-					file = files[i];
-					console.log(file);
-				}
-			});
-		});
-	</script>
-
-
 
 	<!-- The template to display files available for upload -->
     <script id="template-upload" type="text/x-tmpl">
@@ -195,11 +171,6 @@
 	<script src="${contextPath}/resources/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
 	<script src="${contextPath}/resources/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
 	<script src="${contextPath}/resources/plugins/bootstrap/js/bootstrap.min.js"></script>
-	<!--[if lt IE 9]>
-		<script src="${contextPath}/resources/crossbrowserjs/html5shiv.js"></script>
-		<script src="${contextPath}/resources/crossbrowserjs/respond.min.js"></script>
-		<script src="${contextPath}/resources/crossbrowserjs/excanvas.min.js"></script>
-	<![endif]-->
 	<script src="${contextPath}/resources/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="${contextPath}/resources/plugins/jquery-cookie/jquery.cookie.js"></script>
 	<!-- ================== END BASE JS ================== -->
@@ -244,7 +215,7 @@
 	     });
 
 	     $("#saveFileBtn").click(function(){
-	        var formData = new FormData($('#fileUploadForm')[0]);
+	    	 var formData = new FormData($('#fileUploadForm')[0]);
 	        if(fileData.length > 0){
 	           for(var i in fileData){
 	              formData.append("files", fileData[i]);
@@ -252,8 +223,14 @@
 	        }
 
 	        var messengerContent = $("#messengerContent").val();
-	        formData.append("messengerContent", messengerContent);
+	        var tags = [];
 
+	        $("input[name=tags]").each(function(){
+	        	tags.push($(this).val());
+	        });
+
+	        formData.append("messengerContent", messengerContent);
+	        formData.append("tags", tags);
 	        $.ajax({
 	           url : "writeMessenger",
 	           data : formData,
@@ -263,20 +240,29 @@
 	           contentType: false,
 	           processData: false,
 	           success : function(data) {
-	              console.log(data);
+	        	   console.log("잉?");
+	        	   location.href = 'moveMessenger';
 	           }
 	        });
 	     });
 
+	     $('#resetUploadBtn').click(function(){
+	    	 for(var i=0; i<fileData.length; i++){
+	        	delete fileData[i];
+	        }
+	     });
 
+		$(document).on('click', '.cancel', function(){
+			var deleteFileNm = $(this).parents('tr').children('td').eq(1).find('p').text();
+			for(var i in fileData){
+				if(fileData[i].name == deleteFileNm){
+					delete fileData[i];
+				}
+			}
+		});
 
 	</script>
 	<jsp:include page="writeMessengerFormModal.jsp"/>
 
-
-
-<script type="text/javascript">
-
-</script>
 </body>
 </html>

@@ -64,18 +64,15 @@
 		});
 
 		if(addFlag){
-			console.log("make!!!")
 			hiddenArea.append($('<input>', {type:'hidden', name:'tags', value:seq, 'data-name':name}));
 
 		} else {
 			hiddenArea.children().each(function(){
 				if($(this).val() == seq){
-					console.log("remove!!!")
 					$(this).remove();
 				}
 			});
 		}
-		console.log(hiddenArea);
 	});
 
 </script>

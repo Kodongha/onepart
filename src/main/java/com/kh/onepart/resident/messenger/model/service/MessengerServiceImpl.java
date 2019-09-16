@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.resident.messenger.model.dao.MessengerDao;
 import com.kh.onepart.resident.messenger.model.vo.ManagerAndDeptVO;
+import com.kh.onepart.resident.messenger.model.vo.MessengerBasicAllData;
+import com.kh.onepart.resident.messenger.model.vo.RequestAttachVO;
+import com.kh.onepart.resident.messenger.model.vo.RequestImgVO;
 import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseResidentVO;
@@ -24,17 +27,29 @@ public class MessengerServiceImpl implements MessengerService {
 
 	/** 쪽지 작성 */
 	@Override
-	public void insertMessenger(RequestMessengerVO requestMessengerVO, String[] tags) {
+	public void insertMessenger(RequestMessengerVO requestMessengerVO, String[] tags, ArrayList<RequestImgVO> requestImgVOList, ArrayList<RequestAttachVO> requestAttachVOList) {
 		// TODO Auto-generated method stub
-
 
 		for(int i=0; i<tags.length; i++) {
 			System.out.println("받는 이 : " + tags[i]);
 			requestMessengerVO.setMessengerReceiver(tags[i]);
 			System.out.println("최종 requestMessengerVO ::: " + requestMessengerVO);
-			messengerDao.insertMessenger(sqlSession, requestMessengerVO);
-		}
+			int messengerSeq = messengerDao.insertMessenger(sqlSession, requestMessengerVO);
 
+			// image
+			for(int j=0; j<requestImgVOList.size(); j++) {
+				System.out.println("이미지를 !!!");
+				requestImgVOList.get(j).setMessengerSeq(messengerSeq);
+				messengerDao.insertImage(sqlSession, requestImgVOList.get(j));
+			}
+
+			// attachment
+			for(int j=0; j<requestAttachVOList.size(); j++) {
+				System.out.println("첨부파일 !!!");
+				requestAttachVOList.get(j).setMessengerSeq(messengerSeq);
+				messengerDao.insertAttachment(sqlSession, requestAttachVOList.get(j));
+			}
+		}
 	}
 
 	/** 타입별 쪽지 카운트 */
@@ -72,6 +87,24 @@ public class MessengerServiceImpl implements MessengerService {
 	public ArrayList<ResponseResidentVO> selectResidentList() {
 		// TODO Auto-generated method stub
 		return messengerDao.selectResidentList(sqlSession);
+	}
+
+	/** 쪽지 상세보기 */
+	@Override
+	public ArrayList<Object> selectMessengerDetail(String messengerSeq) {
+		// TODO Auto-generated method stub
+
+		ArrayList<Object> messengerDetailData = new ArrayList<Object>();
+
+		// 기본 정보 가져오기
+		MessengerBasicAllData basicInfo = messengerDao.selectMessengerDetail(sqlSession, messengerSeq);
+		System.out.println("basicInfo ::" + basicInfo);
+
+		//
+
+		messengerDetailData.add(basicInfo);
+
+		return messengerDetailData;
 	}
 
 }
