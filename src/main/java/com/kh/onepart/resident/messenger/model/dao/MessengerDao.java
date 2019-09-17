@@ -76,4 +76,36 @@ public interface MessengerDao {
 	 */
 	MessengerBasicAllData selectMessengerDetail(SqlSessionTemplate sqlSession, String messengerSeq);
 
+	/**
+	 * 쪽지 상세보기 - 이미지
+	 * @param sqlSession
+	 * @param messengerSeq
+	 * @return
+	 */
+	ArrayList<RequestImgVO> selectImgList(SqlSessionTemplate sqlSession, String messengerSeq);
+
+	/**
+	 * 쪽지 상세보기 - 첨부파일
+	 * @param sqlSession
+	 * @param messengerSeq
+	 * @return
+	 */
+	ArrayList<RequestAttachVO> selectAttachmentList(SqlSessionTemplate sqlSession, String messengerSeq);
+
+	/**
+	 * 이미지 다운로드
+	 * @param sqlSession
+	 * @param imageSeq
+	 * @return
+	 */
+	RequestImgVO selectDownloadImg(SqlSessionTemplate sqlSession, int imageSeq);
+
+	/**
+	 * 첨부파일 다운로드
+	 * @param sqlSession
+	 * @param attchSeq
+	 * @return
+	 */
+	RequestAttachVO selectDownloadAttach(SqlSessionTemplate sqlSession, int attchSeq);
+
 }

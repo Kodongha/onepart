@@ -100,11 +100,34 @@ public class MessengerServiceImpl implements MessengerService {
 		MessengerBasicAllData basicInfo = messengerDao.selectMessengerDetail(sqlSession, messengerSeq);
 		System.out.println("basicInfo ::" + basicInfo);
 
-		//
+		// 이미지
+		ArrayList<RequestImgVO> imgVOList = messengerDao.selectImgList(sqlSession, messengerSeq);
+
+		// 첨부파일
+		ArrayList<RequestAttachVO> attachVOList = messengerDao.selectAttachmentList(sqlSession, messengerSeq);
+
+		System.out.println("imgVOList :: " + imgVOList);
+		System.out.println("attachVOList :: " + attachVOList);
 
 		messengerDetailData.add(basicInfo);
+		messengerDetailData.add(imgVOList);
+		messengerDetailData.add(attachVOList);
 
 		return messengerDetailData;
+	}
+
+	/** 이미지 다운로드 */
+	@Override
+	public RequestImgVO selectDownloadImg(RequestImgVO requestImgVO) {
+		// TODO Auto-generated method stub
+		return messengerDao.selectDownloadImg(sqlSession, requestImgVO.getImageSeq());
+	}
+
+	/** 첨부파일 다운로드 */
+	@Override
+	public RequestAttachVO selectDownloadAttach(RequestAttachVO requestAttachVO) {
+		// TODO Auto-generated method stub
+		return messengerDao.selectDownloadAttach(sqlSession, requestAttachVO.getAttchSeq());
 	}
 
 }

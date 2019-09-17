@@ -87,4 +87,32 @@ public class MessengerDaoImpl implements MessengerDao {
 		return sqlSession.selectOne("Messenger.selectMessengerDetail", messengerSeq);
 	}
 
+	/** 쪽지 상세보기 - 이미지 */
+	@Override
+	public ArrayList<RequestImgVO> selectImgList(SqlSessionTemplate sqlSession, String messengerSeq) {
+		// TODO Auto-generated method stub
+		return (ArrayList) sqlSession.selectList("Messenger.selectImgList", messengerSeq);
+	}
+
+	/** 쪽지 상세보기 - 첨부파일 */
+	@Override
+	public ArrayList<RequestAttachVO> selectAttachmentList(SqlSessionTemplate sqlSession, String messengerSeq) {
+		// TODO Auto-generated method stub
+		return (ArrayList) sqlSession.selectList("Messenger.selectAttachmentList", messengerSeq);
+	}
+
+	/** 이미지 다운로드 */
+	@Override
+	public RequestImgVO selectDownloadImg(SqlSessionTemplate sqlSession, int imageSeq) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("Messenger.selectDownloadImg", imageSeq);
+	}
+
+	/** 첨부파일 다운로드 */
+	@Override
+	public RequestAttachVO selectDownloadAttach(SqlSessionTemplate sqlSession, int attchSeq) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("Messenger.selectDownloadAttach", attchSeq);
+	}
+
 }

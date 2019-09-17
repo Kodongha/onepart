@@ -56,4 +56,18 @@ public interface MessengerService {
 	 */
 	ArrayList<Object> selectMessengerDetail(String messengerSeq);
 
+	/**
+	 * 이미지 다운로드
+	 * @param requestImgVO
+	 * @return
+	 */
+	RequestImgVO selectDownloadImg(RequestImgVO requestImgVO);
+
+	/**
+	 * 첨부파일 다운로드
+	 * @param requestAttachVO
+	 * @return
+	 */
+	RequestAttachVO selectDownloadAttach(RequestAttachVO requestAttachVO);
+
 }

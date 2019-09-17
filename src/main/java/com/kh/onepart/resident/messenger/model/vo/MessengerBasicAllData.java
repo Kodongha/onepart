@@ -20,19 +20,19 @@ public class MessengerBasicAllData {
 	private String deleteTf;
 
 	// sender resident
-	private int sendResidentSeq;
+	private String sendResidentSeq;
 	private String sendResidentNm;
 
 	// sender manager
-	private int sendManagerSeq;
+	private String sendManagerSeq;
 	private String sendManagerNm;
 
 	// receiver resident
-	private int receiverResidentSeq;
+	private String receiverResidentSeq;
 	private String receiverResidentNm;
 
 	// receiver manager
-	private int receiverManagerSeq;
+	private String receiverManagerSeq;
 	private String receiverManagerNm;
 
 	// aptdetailinfo

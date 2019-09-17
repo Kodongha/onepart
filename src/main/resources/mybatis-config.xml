@@ -101,7 +101,8 @@
 		<mapper resource="mappers/manager/EmployeeManage/EmployeeManage-mapper.xml" />
 		<mapper resource="mappers/manager/visitCar/manager-visitCar-mapper.xml" />
 
-
+		<!-- Batch -->
+		<mapper resource="mappers/batch/batch-mapper.xml" />
 
 	</mappers>
 </configuration>
