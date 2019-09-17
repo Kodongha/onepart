@@ -35,7 +35,7 @@
 	.chat-content .chats li { width: 100%; }
 	.chat-content .chats li div { display: inline-block; }
 	.chat-content .chats li div.message { max-width: 75%; margin:0; }
-	.chat-content .chats li div.message img { max-width: 350px; max-height: 350px; }
+	.chat-content .chats li div.message img { max-width: 300px; max-height: 350px; }
 
 	.chat-content .chats li div.time { vertical-align:bottom; padding-left: 20px; }
 

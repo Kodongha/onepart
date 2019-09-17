@@ -225,6 +225,23 @@ public class OpenChattingController {
 		return new ObjectMapper().writeValueAsString(result);
 
 	}
+	//검색 목록 방 가져오기
+
+	@RequestMapping(value="/resident/searchChat", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String searchChat(@RequestParam("searchText") String searchText, HttpSession session) throws JsonProcessingException {
+
+		Map<String, Object> result = new HashMap<>();
+		int countChatSearchRoom = openChatService.countChatSearchRoom(searchText);
+		List<OpenChatVO> openChatRoomSearchList = openChatService.openChatRoomSearchList(searchText);
+		System.out.println(openChatRoomSearchList);
+		result.put("openChatRoomSearchList",openChatRoomSearchList);
+		result.put("countChatSearchRoom",countChatSearchRoom);
+		result.put("result", "success");
+
+		return new ObjectMapper().writeValueAsString(result);
+
+	}
 
 	// 파일 업로드
 	@RequestMapping(value="/resident/fileUpload", method = RequestMethod.POST, produces = "application/text; charset=utf8")

@@ -66,6 +66,16 @@ public class OpenChatServiceImpl implements OpenChatService {
 		return openChatDao.getMyRoomListAll(sqlSession, residentSeq);
 	}
 
+	@Override
+	public int countChatSearchRoom(String searchText) {
+		return openChatDao.countChatSearchRoom(sqlSession, searchText);
+	}
+
+	@Override
+	public List<OpenChatVO> openChatRoomSearchList(String searchText) {
+		return openChatDao.openChatRoomSearchList(sqlSession, searchText);
+	}
+
 
 
 
