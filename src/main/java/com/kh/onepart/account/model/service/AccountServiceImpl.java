@@ -11,6 +11,7 @@ import com.kh.onepart.account.model.dao.AccountDao;
 import com.kh.onepart.account.model.exception.ManagerLoginException;
 import com.kh.onepart.account.model.exception.findIdException;
 import com.kh.onepart.account.model.exception.findPwdException;
+import com.kh.onepart.account.model.vo.HouseholdVo;
 import com.kh.onepart.account.model.vo.ManagerVO;
 import com.kh.onepart.account.model.vo.ResidentVO;
 
@@ -54,7 +55,21 @@ public class AccountServiceImpl implements AccountService{
 	@Override
 	public int insertResident(ResidentVO requestResidentVO) {
 		System.out.println("requestResidentVO in svcImpl : " + requestResidentVO);
-		return accountDao.insertResident(sqlSession, requestResidentVO);
+
+		int residentSeq = accountDao.insertResident(sqlSession, requestResidentVO);
+		System.out.println("residentSeq ::S:: " + residentSeq);
+
+		HouseholdVo householdVo = new HouseholdVo();
+		householdVo.setAptDetailInfoSeq(requestResidentVO.getAptDetailInfoSeq());
+		householdVo.setResidentSeq(residentSeq);
+
+//		if(result > 0) {
+			return accountDao.insertHouseHold(sqlSession, householdVo);
+//		}else {
+
+
+//		}
+
 	}
 
 	//아이디 찾기용 메소드
@@ -111,6 +126,13 @@ public class AccountServiceImpl implements AccountService{
 		}
 
 		return loginUser;
+	}
+
+	//아이디 중복 체크
+	@Override
+	public int idcheck(String residentId) {
+		System.out.println("residentId ::S:: " + residentId);
+		return accountDao.idcheck(sqlSession, residentId);
 	}
 
 

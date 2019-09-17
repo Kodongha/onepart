@@ -27,6 +27,9 @@ public interface AccountService {
 	//관리자 로그인 정보 확인용 메소드
 	ManagerVO managerLoginCheck(ManagerVO requestManagerVO) throws ManagerLoginException;
 
+	//아이디 중복 체크
+	int idcheck(String residentId);
+
 
 
 }

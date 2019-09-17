@@ -1,5 +1,7 @@
 package com.kh.onepart.account.controller;
 
+import java.util.ArrayList;
+
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,6 +23,7 @@ import com.kh.onepart.account.model.exception.findPwdException;
 import com.kh.onepart.account.model.service.AccountService;
 import com.kh.onepart.account.model.vo.ManagerVO;
 import com.kh.onepart.account.model.vo.ResidentVO;
+import com.kh.onepart.resident.superintend_vote.model.service.SuperintendVoteService;
 
 @Controller
 //자동 세션 등록 어노테이션
@@ -32,6 +35,8 @@ public class AccountController {
 	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	private DataSourceTransactionManager transactionManager;
+	@Autowired
+	private SuperintendVoteService svs;
 
 	/**
 	 * 로그인 페이지 이동
@@ -140,23 +145,6 @@ public class AccountController {
 		}
 	}
 
-//	//아이디 찾기용 메소드
-//		@RequestMapping(value="/findId", method=RequestMethod.POST)
-//		public String findId(ResidentVO requestResidentVO, Model model) {
-//			System.out.println("/findId");
-//			System.out.println("requestResidentVO in Controller:::" + requestResidentVO);
-//
-//			ResidentVO findId;
-//			try {
-//				findId = accountService.findId(requestResidentVO);
-//				model.addAttribute("findId", findId);
-//				System.out.println("findId in controller" + findId);
-//				return "redirect: account/findId";
-//			} catch (findIdException e) {
-//				model.addAttribute("msg", e.getMessage());
-//				return "common/errorPage";
-//			}
-//		}
 
 		//아이디 찾기용 메소드
 		@RequestMapping(value="/findId", method=RequestMethod.POST)
@@ -260,5 +248,36 @@ public class AccountController {
 
 		return "redirect:manager/main";
 	}
+
+	//아파트 동에 따른 호수 셀렉트형으로 불러오는 메소드
+	@RequestMapping("/resident/changeBdNm2")
+	public ModelAndView changeBdNm(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/resident/changeBdNm2");
+		int bdNm = Integer.parseInt(request.getParameter("bdNm"));
+		System.out.println("controller bdNm : " + bdNm);
+
+		//해당 선택동에 포함된 호 리스트 불러오는 메소드
+		ArrayList hoList = svs.selectAllHoList(bdNm);
+
+		mv.addObject("hoList", hoList);
+		mv.setViewName("jsonView");
+
+		return mv;
+	}
+
+	//아이디 중복 체크
+	@RequestMapping("/resident/idcheck")
+    public ModelAndView idcheck(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/resident/idcheck");
+		String residentId = request.getParameter("residentId");
+		System.out.println("residentId ::C:: " + residentId);
+        int count = 0;
+        count = accountService.idcheck(residentId);
+
+        mv.addObject("cnt", count);
+		mv.setViewName("jsonView");
+
+        return mv;
+    }
 
 }

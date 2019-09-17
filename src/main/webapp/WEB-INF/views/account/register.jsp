@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if !IE]><!-->
@@ -17,7 +17,7 @@
 
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-	<link href="${contextPath}/resources/plugins/jquery-ui/themes/base/minified/jquery-uimin.css" rel="stylesheet" />
+	<link href="${contextPath}/resources/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
 	<link href="${contextPath}/resources/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="${contextPath}/resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 	<link href="${contextPath}/resources/css/animate.min.css" rel="stylesheet" />
@@ -53,9 +53,10 @@
 					<h4 class="caption-title">
 						<i class="fa fa-edit text-success"></i> 원파트에서 스마트 홈라이프를 누리세요!
 					</h4>
-					<p>아파트 입주민 여러분 환영합니다. <br>
-					원파트는 보다 원활한 소통과 편의를 위해 스마트한 아파트 생활을 더욱더 편리하게 살 수 있는 기능을 담아,<br>
-					입주민들 간 커뮤니케이션을 용이하게 만든 아파트 생활밀착 서비스입니다.
+					<p>
+						아파트 입주민 여러분 환영합니다. <br> 원파트는 보다 원활한 소통과 편의를 위해 스마트한 아파트 생활을
+						더욱더 편리하게 살 수 있는 기능을 담아,<br> 입주민들 간 커뮤니케이션을 용이하게 만든 아파트 생활밀착
+						서비스입니다.
 					</p>
 				</div>
 			</div>
@@ -71,13 +72,14 @@
 				<!-- end register-header -->
 				<!-- begin register-content -->
 				<div class="register-content">
-					<form action="${ contextPath }/register" method="POST" class="margin-bottom-0">
+					<form action="${ contextPath }/register" method="POST" class="margin-bottom-0" name="frm" id="frm">
 						<label class="control-label">아이디</label>
 						<div class="row m-b-15" style="margin-bottom: 0%;">
-<!-- 						<div class="row row-space-10"> -->
-							<div class="col-md-12">
-								<input name="residentId" id="residentId" type="text" class="form-control" placeholder="아이디(영문, 숫자만 가능)" style="width: 77%; display: inline-block;" />&nbsp;
-								<button type="button" class="btn btn-default m-r-5 m-b-5">중복확인</button>
+							<!-- 						<div class="row row-space-10"> -->
+							<div class="col-md-12" id="divInputId">
+								<input name="residentId" id="residentId" type="text" class="form-control" placeholder="아이디(영문, 숫자만 가능)" style="width: 77%; display: inline-block;"
+								 required />&nbsp;
+								<button id="idck" type="button" class="btn btn-default m-r-5 m-b-5">중복확인</button>
 							</div>
 						</div>
 
@@ -85,40 +87,49 @@
 						<!-- <div class="row m-b-15" style="margin-bottom: 0%;"> -->
 						<div class="row row-space-10">
 							<div class="col-md-12">
-								<input name="residentPwd" id="residentPwd" type="password" class="form-control" placeholder="비밀번호" style="margin-bottom: 1%;" />
+								<input name="residentPwd" id="residentPwd" type="password" class="form-control" placeholder="비밀번호" style="margin-bottom: 1%;"
+								 required />
 								<p style="color: graytext; margin-bottom: 0%;">&nbsp;비밀번호는
-									최소 8자 이상, 영문과 숫자 혼합하여 설정</p>
+									최소 8자 ~ 최대 20자리, 영문과 숫자 혼합하여 설정</p>
 							</div>
 						</div>
 						<label class="control-label">비밀번호 확인</label>
 						<div class="row m-b-15">
 							<div class="col-md-12">
-								<input name="residentPwd2" id="residentPwd2" type="password" class="form-control" placeholder="비밀번호 재입력" />
+								<input name="residentPwd2" id="residentPwd2" type="password" class="form-control" placeholder="비밀번호 재입력"
+								 required />
 							</div>
 						</div>
 
 						<label class="control-label">이름</label>
 						<div class="row m-b-15">
 							<div class="col-md-12">
-								<input name="residentNm" id="residentNm" type="text" class="form-control" placeholder="실명 입력" />
+								<input name="residentNm" id="residentNm" type="text" class="form-control" placeholder="실명 입력" required />
 							</div>
 						</div>
 
 						<label class="control-label">주민등록번호</label>
 						<div class="row m-b-15">
 							<div class="col-md-12">
-          						<input name="residentBirth" id="residentBirth" type="text" class="form-control" placeholder="" name="birthDay" size="6" maxlength="6" style="width: 20%; text-align:center; display: inline-block;" />&nbsp;&nbsp;-&nbsp;&nbsp;
-								<input name="residentGender" id="residentGender" type="text" class="form-control" placeholder="" name="gender" size="1" maxlength="1" style="width: 5%; text-align:center; display: inline-block; padding: 6px 1px;" />&nbsp;******&nbsp;
-								<p style="color: graytext; margin-bottom: 0%;">&nbsp;전자투표에 필요한 정보입니다.</p>
+								<input name="residentBirth" id="residentBirth" type="text" class="form-control" placeholder="" name="birthDay"
+								 size="6" maxlength="6" style="width: 20%; text-align: center; display: inline-block;" required />&nbsp;&nbsp;-&nbsp;&nbsp;
+								<input name="residentGender" id="residentGender" type="text" class="form-control" placeholder="" name="gender"
+								 size="1" maxlength="1" style="width: 5%; text-align: center; display: inline-block; padding: 6px 1px;"
+								 required />&nbsp;******&nbsp;
+								<p style="color: graytext; margin-bottom: 0%;">&nbsp;전자투표에
+									필요한 정보입니다.</p>
 							</div>
 						</div>
 
 						<label class="control-label">휴대전화번호 인증</label>
 						<div class="row m-b-15">
 							<div class="col-md-12">
-								<input name="residentPhone" id="residentPhone" type="tel" class="form-control" placeholder="휴대전화번호 입력" style="width: 77%; display: inline-block;" />&nbsp;
+								<input name="residentPhone" id="residentPhone" type="tel" class="form-control" placeholder="휴대전화번호 입력" style="width: 77%; display: inline-block;"
+								 required />&nbsp;
 								<button type="button" class="btn btn-default m-r-5 m-b-5">인증번호</button>
-								<br><!-- **인증번호 클릭 시 아래 창 생김 or 새창 --><br> <input type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
+								<br>
+								<!-- **인증번호 클릭 시 아래 창 생김 or 새창 -->
+								<br> <input required type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
 								<button type="button" class="btn btn-default m-r-5 m-b-5">확인</button>
 							</div>
 						</div>
@@ -133,57 +144,81 @@
 							</div>
 						</div>
 						<br>
-						<h3><label class="control-label">아파트 정보</label></h3>
+						<h3>
+							<label class="control-label">아파트 정보</label>
+						</h3>
 						<div class="row row-space-10">
 							<div class="col-md-12">
-								<input name="aptNm" id="aptNm" type="text" class="form-control" placeholder="아파트명 검색" style="width: 77%; display: inline-block;" />&nbsp;
-								<button type="button" class="btn btn-default m-r-5 m-b-5" style="background-color: black;">검색</button>
-								<p style="color: blue; margin-bottom: 0%;">예) 서울시 송파구 신천동 잠실5단지의 경우 '신천동'이라고 입력하세요.</p>
-								<br>
+								<input name="aptNm" id="aptNm" type="text" class="form-control" placeholder="성현동아 아파트" style="width: 77%; display: inline-block;"
+								 readonly="readonly" />&nbsp;
+								<!-- <button type="button" class="btn btn-default m-r-5 m-b-5" style="background-color: black;">검색</button> -->
+								<!-- <p style="color: blue; margin-bottom: 0%;">예) 서울시 송파구 신천동 잠실5단지의 경우 '신천동'이라고 입력하세요.</p> -->
+								<br> <br>
 
-								<input name="aptDetailInfoSeq" id="aptDetailInfoSeq" type="hidden">
+								<!-- <input name="aptDetailInfoSeq" id="aptDetailInfoSeq" type="hidden">
 								<input name="dong" id="dong" type="text" class="form-control" placeholder="동 입력" style="width: 30%; display: inline-block;" />&nbsp;동&nbsp;&nbsp;
-								<input name="ho" id="ho" type="text" class="form-control" placeholder="호수 입력" style="width: 30%; display: inline-block;" />&nbsp;호&nbsp;
+								<input name="ho" id="ho" type="text" class="form-control" placeholder="호수 입력" style="width: 30%; display: inline-block;" />&nbsp;호&nbsp; -->
+								<table style="width: 100%; height: 30px; margin: 0 auto;">
+									<tr>
+										<td><select class="form-control input-sm" id="candidateInfoDong" required="required">
+												<option value="">원하는 동 선택</option>
+												<c:forEach var="dong" begin="101" end="105">
+													<option value='${ dong }'>${ dong }동</option>
+												</c:forEach>
+											</select></td>
+										<td style="width: 3%"></td>
+										<td><select class="form-control input-sm" id="candidateInfoHo" required="required">
+												<option value="">원하는 호 선택</option>
+											</select></td>
+										<td style="width: 3%"></td>
+
+									</tr>
+
+								</table>
+								<input name="aptDetailInfoSeq" id="aptDetailInfoSeq" type="hidden">
+								<!-- <input name="dong" id="dong" type="text" class="form-control" placeholder="동 입력" style="width: 30%; display: inline-block;" />&nbsp;동&nbsp;&nbsp;
+								<input name="ho" id="ho" type="text" class="form-control" placeholder="호수 입력" style="width: 30%; display: inline-block;" />&nbsp;호&nbsp; -->
 							</div>
 						</div>
-						<br>
-						<br>
-						<h3><label class="control-label">세대주 여부</label></h3>
+						<br> <br>
+						<h3>
+							<label class="control-label">세대주 여부</label>
+						</h3>
 						<div class="radio">
 							<label> <input type="radio" name="householdAuthType" value="1" data-parsley-required="true"
-								 data-parsley-multiple="radiorequired" data-parsley-id="2688">
-								세대주
+								 data-parsley-multiple="radiorequired" data-parsley-id="2688" required> 세대주
 							</label>
 							<ul class="parsley-errors-list" id="parsley-id-multiple-radiorequired"></ul>
 						</div>
 						<div class="radio">
 							<label> <input type="radio" name="householdAuthType" value="2" data-parsley-multiple="radiorequired"
-								 data-parsley-id="2688">
-								세대원
+								 data-parsley-id="2688" required> 세대원
 							</label>
 						</div>
-						<div class="radio">
+						<!-- <div class="radio">
 							<label> <input type="radio" name="householdAuthType" value="3" data-parsley-multiple="radiorequired"
 								 data-parsley-id="2688">
 								복수 세대주 대표
 							</label>
-						</div>
+						</div> -->
 						<br>
-						<h3><label class="control-label">약관 및 개인정보 취급방침</label></h3>
+						<h3>
+							<label class="control-label">약관 및 개인정보 취급방침</label>
+						</h3>
 
 						<!-- <div class="col-md-6"> -->
-							<div class="panel-group" id="accordion">
-								<div class="panel panel-inverse overflow-hidden">
-									<div class="panel-heading">
-										<h3 class="panel-title">
-											<a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion"
-											 href="#collapseOne" aria-expanded="false"> <i class="fa fa-plus-circle pull-right"></i> 이용약관
-											</a>
-										</h3>
-									</div>
-									<div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-										<div class="panel-body">
-											<textarea rows="15" cols="48%" id="generalRules">
+						<div class="panel-group" id="accordion">
+							<div class="panel panel-inverse overflow-hidden">
+								<div class="panel-heading">
+									<h3 class="panel-title">
+										<a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion"
+										 href="#collapseOne" aria-expanded="false"> <i class="fa fa-plus-circle pull-right"></i> 이용약관
+										</a>
+									</h3>
+								</div>
+								<div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+									<div class="panel-body">
+										<textarea rows="15" cols="48%" id="generalRules">
 제 1 장 총칙
 
 제 1조 목적
@@ -258,20 +293,20 @@
 공고일자 : 2019-09-14
 시행일자 : 2019-09-29
 										</textarea>
-										</div>
 									</div>
 								</div>
-								<div class="panel panel-inverse overflow-hidden">
-									<div class="panel-heading">
-										<h3 class="panel-title">
-											<a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion"
-											 href="#collapseTwo" aria-expanded="false"> <i class="fa fa-plus-circle pull-right"></i> 개인정보 취급방침
-											</a>
-										</h3>
-									</div>
-									<div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-										<div class="panel-body">
-											<textarea rows="15" cols="48%" id="privacyPolicy">
+							</div>
+							<div class="panel panel-inverse overflow-hidden">
+								<div class="panel-heading">
+									<h3 class="panel-title">
+										<a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion"
+										 href="#collapseTwo" aria-expanded="false"> <i class="fa fa-plus-circle pull-right"></i> 개인정보 취급방침
+										</a>
+									</h3>
+								</div>
+								<div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+									<div class="panel-body">
+										<textarea rows="15" cols="48%" id="privacyPolicy">
 
 1. 인사말 및 서비스 명의 정의
 원파트 이용자 여러분 반갑습니다!
@@ -298,19 +333,21 @@
 공고 일자 : 2019-09-14
 시행 일자 : 2019-09-29
 										</textarea>
-										</div>
 									</div>
 								</div>
 							</div>
+						</div>
 						<!-- </div> -->
 
 
 
 						<div class="checkbox m-b-30">
-							<label> <input type="checkbox" />(필수) 위 사항을 숙지하였으며, 이에 동의합니다.
+							<label> <input type="checkbox" required />(필수) 위 사항을
+								숙지하였으며, 이에 동의합니다.
 							</label>
 						</div>
 						<div class="register-buttons">
+<!-- 							<button type="button" class="btn btn-primary btn-block btn-lg" id="submitBtn">가입하기</button> -->
 							<button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBtn">가입하기</button>
 						</div>
 						<div class="m-t-20 m-b-40 p-b-40">
@@ -326,94 +363,6 @@
 			<!-- end right-content -->
 		</div>
 		<!-- end register -->
-
-		<!-- begin theme-panel -->
-		<!-- <div class="theme-panel">
-			<a href="javascript:;" data-click="theme-panel-expand" class="theme-collapse-btn"><i class="fa fa-cog"></i></a>
-			<div class="theme-panel-content">
-				<h5 class="m-t-0">Color Theme</h5>
-				<ul class="theme-list clearfix">
-					<li class="active"><a href="javascript:;" class="bg-green" data-theme="default" data-click="theme-selector"
-						 data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Default">&nbsp;</a></li>
-					<li><a href="javascript:;" class="bg-red" data-theme="red" data-click="theme-selector" data-toggle="tooltip"
-						 data-trigger="hover" data-container="body" data-title="Red">&nbsp;</a></li>
-					<li><a href="javascript:;" class="bg-blue" data-theme="blue" data-click="theme-selector" data-toggle="tooltip"
-						 data-trigger="hover" data-container="body" data-title="Blue">&nbsp;</a></li>
-					<li><a href="javascript:;" class="bg-purple" data-theme="purple" data-click="theme-selector" data-toggle="tooltip"
-						 data-trigger="hover" data-container="body" data-title="Purple">&nbsp;</a></li>
-					<li><a href="javascript:;" class="bg-orange" data-theme="orange" data-click="theme-selector" data-toggle="tooltip"
-						 data-trigger="hover" data-container="body" data-title="Orange">&nbsp;</a></li>
-					<li><a href="javascript:;" class="bg-black" data-theme="black" data-click="theme-selector" data-toggle="tooltip"
-						 data-trigger="hover" data-container="body" data-title="Black">&nbsp;</a></li>
-				</ul>
-				<div class="divider"></div>
-				<div class="row m-t-10">
-					<div class="col-md-5 control-label double-line">Header
-						Styling</div>
-					<div class="col-md-7">
-						<select name="header-styling" class="form-control input-sm">
-							<option value="1">default</option>
-							<option value="2">inverse</option>
-						</select>
-					</div>
-				</div>
-				<div class="row m-t-10">
-					<div class="col-md-5 control-label">Header</div>
-					<div class="col-md-7">
-						<select name="header-fixed" class="form-control input-sm">
-							<option value="1">fixed</option>
-							<option value="2">default</option>
-						</select>
-					</div>
-				</div>
-				<div class="row m-t-10">
-					<div class="col-md-5 control-label double-line">Sidebar
-						Styling</div>
-					<div class="col-md-7">
-						<select name="sidebar-styling" class="form-control input-sm">
-							<option value="1">default</option>
-							<option value="2">grid</option>
-						</select>
-					</div>
-				</div>
-				<div class="row m-t-10">
-					<div class="col-md-5 control-label">Sidebar</div>
-					<div class="col-md-7">
-						<select name="sidebar-fixed" class="form-control input-sm">
-							<option value="1">fixed</option>
-							<option value="2">default</option>
-						</select>
-					</div>
-				</div>
-				<div class="row m-t-10">
-					<div class="col-md-5 control-label double-line">Sidebar
-						Gradient</div>
-					<div class="col-md-7">
-						<select name="content-gradient" class="form-control input-sm">
-							<option value="1">disabled</option>
-							<option value="2">enabled</option>
-						</select>
-					</div>
-				</div>
-				<div class="row m-t-10">
-					<div class="col-md-5 control-label double-line">Content
-						Styling</div>
-					<div class="col-md-7">
-						<select name="content-styling" class="form-control input-sm">
-							<option value="1">default</option>
-							<option value="2">black</option>
-						</select>
-					</div>
-				</div>
-				<div class="row m-t-10">
-					<div class="col-md-12">
-						<a href="#" class="btn btn-inverse btn-block btn-sm" data-click="reset-local-storage"><i class="fa fa-refresh m-r-3"></i>
-							Reset Local Storage</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		end theme-panel -->
 	</div>
 	<!-- end page container -->
 
@@ -436,23 +385,170 @@
 	<script src="${contextPath}/resources/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
 
-	<script>
+<script>
 		$(document).ready(function () {
 			App.init();
-		});
-	</script>
-<script type="text/javascript">
-	$(document).ready(function(){
 
-		$('#submitBtn').click(function(){
-			var aptDetailInfoSeqVal = 1 + "_" + $("#dong").val() + "_" + $("#ho").val();
+			$('#residentPwd').blur(function(){
+				if(!/^[a-zA-Z0-9]{8,20}$/.test($('#residentPwd').val())){
+					if($('#residentPwd').val() != ''){
+					   alert('비밀번호는 숫자와 영문자 조합으로 8~20자리를 사용해야 합니다.');
+					   $('#residentPwd').val('');
+					   $('#residentPwd2').val('');
+					   $('#residentPwd').focus();;
+				       return false;
+					}
+				   }
+			});
+
+			$('#residentPwd2').blur(function(){
+			   if($('#residentPwd').val() != $('#residentPwd2').val()){
+			    	if($('#residentPwd2').val()!=''){
+				    alert("비밀번호가 일치하지 않습니다.");
+			    	    $('#residentPwd2').val('');
+			          $('#residentPwd2').focus();
+			       }
+			    }
+			});
+
+
+			$('#residentBirth').blur(function(){
+				if(!/^[0-9]{6}$/.test($('#residentBirth').val())){
+					if($('#residentBirth').val() != ''){
+					   alert('6자리 숫자만 사용해야 합니다.');
+					   $('#residentBirth').val('');
+					   $('#residentBirth').focus();;
+				       return false;
+				    }
+				 }
+			});
+
+			$('#residentGender').blur(function(){
+				if(!/^[1-4]{1}$/.test($('#residentGender').val())){
+					if($('#residentGender').val() != ''){
+					   alert('1~4 숫자만 사용해야 합니다.');
+					   $('#residentGender').val('');
+					   $('#residentGender').focus();;
+				       return false;
+					}
+				 }
+			});
+
+		});
+</script>
+
+	<script type="text/javascript">
+		//아이디 체크여부 확인 (아이디 중복일 경우 = 0 , 중복이 아닐경우 = 1 )
+
+		var idck = 0;
+		$(function () {
+			//idck 버튼을 클릭했을 때
+			$("#idck").click(function () {
+
+				//userid 를 param.
+				var residentId = $("#residentId").val();
+				console.log("residentId : " + residentId);
+
+
+
+				$.ajax({
+					async: true,
+					url: "/onepart/resident/idcheck",
+					type: 'POST',
+					data: {residentId:residentId},
+					dataType: "json",
+					/* contentType: "application/json; charset=UTF-8", 이것때문에 값이 콘트롤러로 전달 안됐다.*/
+					success: function (data) {
+						if (data.cnt > 0) {
+
+							alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
+							//아이디가 존제할 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인
+							$("#divInputId").addClass("has-error")
+							$("#divInputId").removeClass("has-success")
+							$("#residentId").focus();
+
+
+						} else {
+							alert("사용가능한 아이디입니다.");
+							//아이디가 존제할 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인
+							$("#divInputId").addClass("has-success")
+							$("#divInputId").removeClass("has-error")
+							$("#userpwd").focus();
+							//아이디가 중복하지 않으면  idck = 1
+							idck = 1;
+
+						}
+					},
+					error: function (error) {
+
+						alert("error : " + error);
+					}
+				});
+			});
+		});
+
+		$('#submitBtn').click(function () {
+			var aptDetailInfoSeqVal = 1 + "_" + $("#candidateInfoDong option:selected").val() + "_" + $("#candidateInfoHo option:selected").val();
 			console.log("aptDetailInfoSeq : " + aptDetailInfoSeqVal);
 			$("#aptDetailInfoSeq").val(aptDetailInfoSeqVal);
 			console.log("#aptDetailInfoSeq : " + $("#aptDetailInfoSeq").val());
-		});
-	});
 
-</script>
+			/* if (confirm("회원가입을 하시겠습니까?")) {
+				if (idck == 0) {
+					alert('아이디 중복체크를 해주세요');
+					return false;
+				} else {
+					alert("회원가입을 축하합니다");
+					$("#frm").submit();
+				}
+			} */
+
+			if (idck == 0) {
+				alert('아이디 중복체크를 해주세요');
+				return false;
+			} else {
+				/* alert("회원가입을 축하합니다");
+				$("#frm").submit(); */
+			}
+		});
+
+
+		/* 선택된 동에 따라 호수 변화 function */
+		$(function () {
+			var bdNm = 0;
+
+			$("#candidateInfoDong").change(function () {
+				bdNm = $(this).val();
+				console.log(bdNm);
+
+				$.ajax({
+					url: "/onepart/resident/changeBdNm2",
+					data: { bdNm: bdNm },
+					type: "get",
+					success: function (data) {
+						console.log(data);
+						$("#candidateInfoHo option").remove();
+						var $option1 = $("<option>").text("원하는 호 선택").val("");
+
+						$("#candidateInfoHo").append($option1);
+
+						console.log(data.hoList[0].rmNm);
+
+						for (var i = 0; i < data.hoList.length; i++) {
+							console.log("aa");
+							var $optionText = data.hoList[i].rmNm + "호";
+							var $optionHo = $("<option>").val(data.hoList[i].rmNm);
+							$optionHo.append($optionText);
+							$("#candidateInfoHo").append($optionHo);
+						}
+
+					},
+				});
+			});
+		});
+	</script>
+
+
 </body>
 
 </html>
