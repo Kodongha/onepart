@@ -10,17 +10,22 @@
 <link href="https://fonts.googleapis.com/css?family=Jua&display=swap" rel="stylesheet">
 
 <style>
+#searchBtn{    right: 22px;
+    top: 6px;}
 .fa-unlock:before { margin-right: -9px; color:#ffd700;}
 .fa-lock:before { color:#ffd700;}
 .roomNm{font-size: 1.2em; font-family: 'Noto Sans KR', sans-serif; font-weight: 600;}
+.roomNo{font-family: 'Noto Sans KR', sans-serif; font-weight: 600;}
 .chatTable{width: 100%;}
 .passTd{text-align: center;}
 .headTd{text-align: center; font-size: 1.2em; font-family: 'Jua', sans-serif;}
 .format { display:none !important; }
 .content {	margin-left: 110px !important;}
-.chatName{ text-align: left; width: 93%; }
+.chatName{ text-align: left; width: 90%; }
+.chatNo{ text-align: left; width: 90%; }
+#searchArea{    margin: 6px;}
 .alert.alert-success {
-	border: 3px solid #00acac;
+	border: 2px solid #337ab7;
 	background: #FFF !important;
 	color: black !important;
 	padding: 10px 20px !important;
@@ -29,14 +34,15 @@
 	margin-bottom: 10px !important;
 	width: 66%;
 	display: inline-block;
+	-webkit-transition:transform 0.4s, background 0.3s, color 0.2s;
 
 }
 
 .alert.alert-success:hover {
-	background: #00acac !important;
+	background: #337ab7e8  !important;
 	-webkit-transform:scale(1.02); /*  크롬 */
-	-webkit-transition:transform 0.5s;
-
+	-webkit-transition:transform 0.4s, background 0.3s, color 0.2s;
+    color: #FFF !important;
 
 
 }
@@ -170,7 +176,9 @@
 
 		<!-- begin nav-tabs -->
 		<ul id="ioniconsTab" class="nav nav-tabs">
-			<li class="active"><a href="#leftTab" data-toggle="tab"> <span
+			<li class="active"><a href="#leftTab" data-toggle="tab">
+
+			<span
 					class="hidden-xs m-l-3">모든 채팅방<span
 						class="badge badge-inverse m-l-3" id="allroom"></span></span>
 			</a></li>
@@ -178,16 +186,20 @@
 					class="hidden-xs m-l-3">참여중인 채팅방<span
 						class="badge badge-inverse m-l-3" id="myroom"></span></span>
 			</a></li>
+
+
+
 			<li class="search-li">
-				<form class="navbar-form full-width">
+				<div class="navbar-form full-width" id="searchArea">
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="채팅방 검색" />
-						<button type="submit" class="btn btn-search">
+						<input id="searchText" type="text" class="form-control" placeholder="모든 채팅방에서 검색" />
+						<button class="btn btn-search" id="searchBtn" disabled>
 							<span class="fa fa-search"></span>
 						</button>
 					</div>
-				</form>
+				</div>
 			</li>
+
 		</ul>
 		<!-- end nav-tabs -->
 
@@ -222,11 +234,12 @@
 
 
 				<tr>
-					<td rowspan="2" class="chatName"><span class="roomNm"></span></td>
+					<td class="chatNo">No. <span class="roomNo"></span></td>
 					<td class="passTd"><span class="pass"></span></td>
 
 				</tr>
 				<tr>
+					<td class="chatName"><span class="roomNm"></span></td>
 					<td class="headTd"><span class="currHead"></span><span>/</span><span class="maxHead"></span></td>
 				</tr>
 			</table>
@@ -234,11 +247,16 @@
 		</div>
 
 		<div class="roomDiv RightTab format alert alert-success fade in m-b-15">
-			<strong class="roomNm"></strong>
+
 
 			<table class="chatTable">
 				<tr>
+					<td class="chatNo">No. <span class="roomNo"></span></td>
 					<td class="passTd"><span class="pass"></span></td>
+
+				</tr>
+				<tr>
+					<td class="chatName"><span class="roomNm"></span></td>
 					<td class="headTd"><span class="currHead"></span><span>/</span><span class="maxHead"></span></td>
 				</tr>
 			</table>
@@ -302,6 +320,28 @@
 
 </script>
 <script>
+	//검색창
+	$("#searchText").on("change paste keyup", function() {
+		console.log($('#searchText').val());
+		let searchText = $('#searchText').val();
+		$.ajax({
+			url : '/onepart/resident/searchChat',
+			type : 'get',
+			dataType: 'json',
+			data : {'searchText': searchText},
+			success : function(data) {
+				let roomList = data.openChatRoomSearchList;
+				OpenChatting.drawRoomList(roomList);
+
+				$("#allroom").text(data.countChatSearchRoom);
+			},error : function(err) {
+
+			}
+		});
+
+	});
+
+
 
 	// 모달 창
 	const CustomModal = (function() {
@@ -434,12 +474,12 @@
 						drawMyRoomList(myRoomList)
 						$("#allroom").text(data.countChatRoom);
 						$("#myroom").text(data.countMyChatRoom);
-						console.log(data.countMyChatRoom);
 					}
 					// 방 목록 불러오기
 					OpenChatRoomListTimeoutManage = setTimeout(function(){
 						if(OpenChatRoomListTimeoutEnable)
 							getRoomListAll();
+
 					}, 500000);
 				},
 				error : function(err) {
@@ -461,8 +501,10 @@
 				roomDivFormat.find('.roomNm').text(roomInfo.openChatRoomNm);
 				roomDivFormat.find('.currHead').text(roomInfo.openChatCurrHead);
 				roomDivFormat.find('.maxHead').text(roomInfo.openChatMaxHead);
+				roomDivFormat.find('.roomNo').text(roomInfo.openChatSeq);
 				if(roomInfo.openChatPwd != null){
 					roomDivFormat.find('.pass').html('<i class="fa fa-2x fa-lock"></i>');
+
 				}else{
 					roomDivFormat.find('.pass').html('<i class="fa fa-2x fa-unlock"></i>');
 				}
@@ -485,6 +527,7 @@
 				roomDivFormat.find('.roomNm').text(roomInfo.openChatRoomNm);
 				roomDivFormat.find('.currHead').text(roomInfo.openChatCurrHead);
 				roomDivFormat.find('.maxHead').text(roomInfo.openChatMaxHead);
+				roomDivFormat.find('.roomNo').text(roomInfo.openChatSeq);
 				if(roomInfo.openChatPwd != null){
 					roomDivFormat.find('.pass').html('<i class="fa fa-2x fa-lock"></i>');
 				}else{
@@ -498,7 +541,8 @@
 
 		return {
 			'init' : init,
-			'getRoomListAll' : getRoomListAll
+			'getRoomListAll' : getRoomListAll,
+			'drawRoomList' : drawRoomList
 		};
 	})();
 
@@ -506,6 +550,15 @@
 		CustomModal.init();
 		OpenChatting.init();
 		$("#openChatPwd").attr("disabled", true);
+		$(document).on('click', 'li', function () {
+			if($(this).find('a').attr('href') == '#leftTab'){
+				$(".search-li").css('display','inline');
+			}else if($(this).find('a').attr('href') == null){
+				$(".search-li").css('display','inline');
+			}else{
+				$(".search-li").css('display','none');
+			}
+		});
 	});
 </script>
 

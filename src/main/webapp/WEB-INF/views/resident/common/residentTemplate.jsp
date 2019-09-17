@@ -173,7 +173,6 @@
 							}
 						}else {
 							OpenChatRoomListTimeoutEnable = true;
-							OpenChatting.getRoomListAll();
 						}
 					}
 				});

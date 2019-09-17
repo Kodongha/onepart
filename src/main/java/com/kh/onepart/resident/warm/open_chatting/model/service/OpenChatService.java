@@ -16,6 +16,9 @@ public interface OpenChatService {
 	public void updateOpenChatDelete(OpenChatVO openChatVO);
 	public int countChatMyRoom(ResidentVO loginResident);
 	public List<OpenChatVO> getMyRoomListAll(int residentSeq);
+	public int countChatSearchRoom(String searchText);
+	public List<OpenChatVO> openChatRoomSearchList(String searchText);
+
 
 
 

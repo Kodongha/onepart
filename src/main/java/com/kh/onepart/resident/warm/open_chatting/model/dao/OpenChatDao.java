@@ -20,5 +20,7 @@ public interface OpenChatDao {
 	public void updateOpenChatDelete(SqlSessionTemplate sqlSession, OpenChatVO openChatVO);
 	public int countChatMyRoom(SqlSessionTemplate sqlSession, ResidentVO loginResident);
 	public List<OpenChatVO> getMyRoomListAll(SqlSessionTemplate sqlSession, int residentSeq);
+	public int countChatSearchRoom(SqlSessionTemplate sqlSession, String searchText);
+	public List<OpenChatVO> openChatRoomSearchList(SqlSessionTemplate sqlSession, String searchText);
 
 }
