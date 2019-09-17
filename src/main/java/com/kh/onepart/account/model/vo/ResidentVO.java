@@ -17,7 +17,7 @@ public class ResidentVO {
 	private String residentNm;
 	private String residentPhone;
 	private String residentEmail;
-	private String aptDetailInfoSeq;//
+	private String aptDetailInfoSeq;
 	private int householdAuthType;
 	private Date residentEnrollDt;
 	private String leaveTf;

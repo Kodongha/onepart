@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.onepart.account.model.exception.findIdException;
 import com.kh.onepart.account.model.exception.findPwdException;
+import com.kh.onepart.account.model.vo.HouseholdVo;
 import com.kh.onepart.account.model.vo.ManagerVO;
 import com.kh.onepart.account.model.vo.ResidentVO;
 
@@ -19,6 +20,8 @@ public interface AccountDao {
 
 	//회원 가입용 메소드
 	int insertResident(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO);
+	//House Hold 값 입력 메소드
+	int insertHouseHold(SqlSessionTemplate sqlSession, HouseholdVo householdVo);
 
 	//아이디 찾기용 메소드
 	ResidentVO findId(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO) throws findIdException;
@@ -34,5 +37,8 @@ public interface AccountDao {
 
 	// 관리자 비밀번호 일치 시 회원 정보 조회용 메소드
 	ManagerVO selectManager(SqlSessionTemplate sqlSession, ManagerVO requestManagerVO);
+
+	//아이디 중복 체크
+	int idcheck(SqlSessionTemplate sqlSession, String residentId);
 
 }

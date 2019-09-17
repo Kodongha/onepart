@@ -68,7 +68,7 @@
 										<div class="panel-heading">
 											<h3 class="panel-title">
 												<a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion"
-												 href="#collapseOne" aria-expanded="true"> <i class="fa fa-plus-circle pull-right"></i> 회원정보에 등록한 휴대전화로 인증
+												 href="#collapseOne" aria-expanded="true" id="findIdToggleByHP"> <i class="fa fa-plus-circle pull-right"></i> 회원정보에 등록한 휴대전화로 인증
 												</a>
 											</h3>
 										</div>
@@ -87,7 +87,7 @@
 														<input name="residentPhone" id="residentPhone" type="tel" class="form-control" placeholder="' - ' 없이 숫자만 입력" style="width: 77%; display: inline-block;" />&nbsp;
 														<button type="button" class="btn btn-default m-r-5 m-b-5">인증번호</button>
 														<br><br>
-														<input type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
+														<input name="verifiedNum" type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
 														<button type="button" class="btn btn-default m-r-5 m-b-5">확인</button>
 													</div>
 												</div>
@@ -97,7 +97,7 @@
 									<div class="panel panel-inverse overflow-hidden">
 										<div class="panel-heading">
 											<h3 class="panel-title">
-												<a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion"
+												<a id="findIdToggleByEmail" class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion"
 												 href="#collapseTwo" aria-expanded="false"> <i class="fa fa-plus-circle pull-right"></i> 본인확인 이메일로 인증
 												</a>
 											</h3>
@@ -116,7 +116,7 @@
 													<div class="col-md-12">
 													<input name="residentEmail" id="residentEmail" type="email" class="form-control" placeholder="이메일 주소" style="width: 77%; display: inline-block;" />&nbsp;
 														<button type="button" class="btn btn-default m-r-5 m-b-5">인증번호</button>
-														<br><br> <input type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
+														<br><br> <input name="verifiedNum" type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
 													</div>
 												</div>
 											</div>
@@ -193,7 +193,22 @@
 	<script>
 		$(document).ready(function () {
 			App.init();
+
+
 		});
+
+		$("#findIdToggleByHP").click(function(){
+			$("#residentNm2").val('');
+			$("#residentEmail").val('');
+			$("input[name=verifiedNum]").val('');
+		});
+
+		$("#findIdToggleByEmail").click(function(){
+			$("#residentNm").val('');
+			$("#residentPhone").val('');
+			$("input[name=verifiedNum]").val('');
+		});
+
 
 		//아이디 찾기 결과 보여주는 함수
 		function showId() {

@@ -106,6 +106,7 @@
 
 	<script>
 		$(document).ready(function() {
+
 			$("#visitCarPanel").css("background-color","white");
 			TableManageDefault.init();
 

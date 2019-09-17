@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.onepart.account.model.exception.findIdException;
 import com.kh.onepart.account.model.exception.findPwdException;
+import com.kh.onepart.account.model.vo.HouseholdVo;
 import com.kh.onepart.account.model.vo.ManagerVO;
 import com.kh.onepart.account.model.vo.ResidentVO;
 
@@ -42,7 +43,17 @@ public class AccountDaoImpl implements AccountDao {
 		System.out.println("sqlSession in daoImpl : " + sqlSession);
 		System.out.println("requestResidentVO in daoImpl : " + requestResidentVO);
 		//System.out.println("result in daoImle : " + sqlSession.insert("Account.insertResident", requestResidentVO));
-		return sqlSession.insert("Account.insertResident", requestResidentVO);
+		sqlSession.insert("Account.insertResident", requestResidentVO);
+
+		int residentSeq = requestResidentVO.getResidentSeq();
+	    return residentSeq;
+
+	}
+	//House Hold 값 입력 메소드
+	@Override
+	public int insertHouseHold(SqlSessionTemplate sqlSession, HouseholdVo householdVo) {
+		System.out.println("householdVo ::D:: " + householdVo);
+		return sqlSession.insert("Account.insertHouseHold", householdVo);
 	}
 
 	//아이디 찾기용 메소드
@@ -95,5 +106,13 @@ public class AccountDaoImpl implements AccountDao {
 	public ManagerVO selectManager(SqlSessionTemplate sqlSession, ManagerVO requestManagerVO) {
 		return sqlSession.selectOne("Account.selectManagerLoginUser", requestManagerVO);
 	}
+
+	//아이디 중복 체크
+	@Override
+	public int idcheck(SqlSessionTemplate sqlSession, String residentId) {
+		System.out.println("residentId ::D:: " + residentId);
+		return sqlSession.selectOne("Account.idcheck",residentId);
+	}
+
 
 }

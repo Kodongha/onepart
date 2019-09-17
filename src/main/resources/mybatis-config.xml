@@ -12,6 +12,7 @@
 		<!-- account -->
 		<typeAlias type="com.kh.onepart.account.model.vo.ResidentVO" alias="ResidentVO" />
 		<typeAlias type="com.kh.onepart.account.model.vo.ManagerVO" alias="ManagerVO" />
+		<typeAlias type="com.kh.onepart.account.model.vo.HouseholdVo" alias="HouseholdVo" />
 
 		<!-- messenger -->
 		<typeAlias type="com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO" alias="requestMessengerVO" />
