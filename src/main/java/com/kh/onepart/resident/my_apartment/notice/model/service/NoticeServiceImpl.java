@@ -27,13 +27,13 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public ArrayList<NoticeVo> insertNoticeVo() {
 		ArrayList<NoticeVo> list = nd.insertNoticeVo(sqlSession);
-		return null;
+		return list;
 	}
 	
 	//공지사항 글수정
 	@Override
 	public ArrayList<NoticeVo> updateNoticeVo() {
-		// TODO Auto-generated method stub
+//		ArrayList<NoticeVo> list = nd.updateNoticeVo(sqlSession);
 		return null;
 	}
 	

@@ -2,15 +2,15 @@ package com.kh.onepart.manager.notice.model.vo;
 
 import java.sql.Date;
 
-public class NoticeManager {
+public class NoticeManagerVo {
 	private int noticeSeq;
 	private String noticeTitle;
 	private String noticeContent;
 	private Date noticeEnrollDt;
 	
-	public NoticeManager() {}
+	public NoticeManagerVo() {}
 
-	public NoticeManager(int noticeSeq, String noticeTitle, String noticeContent, Date noticeEnrollDt) {
+	public NoticeManagerVo(int noticeSeq, String noticeTitle, String noticeContent, Date noticeEnrollDt) {
 		super();
 		this.noticeSeq = noticeSeq;
 		this.noticeTitle = noticeTitle;
@@ -52,7 +52,7 @@ public class NoticeManager {
 
 	@Override
 	public String toString() {
-		return "NoticeManager [noticeSeq=" + noticeSeq + ", noticeTitle=" + noticeTitle + ", noticeContent="
+		return "NoticeManagerVo [noticeSeq=" + noticeSeq + ", noticeTitle=" + noticeTitle + ", noticeContent="
 				+ noticeContent + ", noticeEnrollDt=" + noticeEnrollDt + "]";
 	}
 	

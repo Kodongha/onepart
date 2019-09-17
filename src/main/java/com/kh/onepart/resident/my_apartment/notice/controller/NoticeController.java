@@ -51,7 +51,6 @@ public class NoticeController {
 	 * n.setNoticeSeq(noticeSeq); n.setNoticeTitle(noticeTitle);
 	 * n.setNoticeContent(noticeContent); n.setNoticeEnrollDt(noticeEnrollDt);
 	 * 
-	 * 
 	 * //확인 System.out.println("controller NoticeVo :" + n.toString());
 	 * ArrayList<NoticeVo> list = service.insertNoticeVo();
 	 * 
