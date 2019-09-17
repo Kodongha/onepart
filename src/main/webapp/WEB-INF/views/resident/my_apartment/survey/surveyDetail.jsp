@@ -29,9 +29,30 @@
 <script src="${contextPath}/resources/js/table-manage-default.demo.min.js"></script>\
 <script src="${contextPath}/resources/js/apps.min.js"></script>
 <link href="${contextPath}/resources/plugins/DataTables/css/data-table.css" rel="stylesheet" />
-<!-- chart -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="${contextPath}/resources/js/apps.min.js"></script>
 <script type="text/javascript">
+
+	/* char color array */
+	var backgroundColorList =
+		['rgba(255, 99, 132, 0.2)',
+		'rgba(54, 162, 235, 0.2)',
+		'rgba(255, 206, 86, 0.2)',
+		'rgba(75, 192, 192, 0.2)',
+		'rgba(153, 102, 255, 0.2)',
+		'rgba(255, 159, 64, 0.2)',
+		'rgba(48, 47, 48, 0.2)',
+		'rgba(248, 162, 252, 0.2)'];
+
+	var borderColorList =
+		['rgba(255, 99, 132, 1)',
+		'rgba(54, 162, 235, 1)',
+		'rgba(255, 206, 86, 1)',
+		'rgba(75, 192, 192, 1)',
+		'rgba(153, 102, 255, 1)',
+		'rgba(255, 159, 64, 1)',
+		'rgba(48, 47, 48, 1)',
+		'rgba(248, 162, 252, 1)'];
+
 
 	$(function(){
 		// 설문 통계 정보 세팅
@@ -42,7 +63,6 @@
 	function getSelectedInfo(){
 
 		var surveySeq = '${surveyVO.surveySeq}';
-		console.log('surveySeq::' + surveySeq);
 
 		$.ajax({
 			url : 'getSelectedInfo',
@@ -51,11 +71,8 @@
 			async: false,
 			data : {surveySeq:surveySeq},
 			success : function(data) {
-				console.log('succ');
 				var surveyQstnList = data.surveyQstnList;
 				var surveyQstnOptionList = data.surveyQstnOptionList;
-				console.log(surveyQstnList);
-				console.log(surveyQstnOptionList);
 
 				var surveyInfoBody = $('#surveyInfoBody');
 
@@ -63,7 +80,6 @@
 					var surveyQstnNum = surveyQstnList[i].surveyQstnNum;
 					var surveyQstnTitle = surveyQstnList[i].surveyQstnTitle;
 					var surveyQstnType = surveyQstnList[i].surveyQstnType;
-					console.log(surveyQstnNum + ":" + surveyQstnTitle + ":" + surveyQstnType);
 
 					var surveyQstnTypeStr = '';
 					if(surveyQstnType == 1){
@@ -77,7 +93,6 @@
 					}
 
 					var title = '[' + surveyQstnNum + '] ' + surveyQstnTitle + '(' + surveyQstnTypeStr + ')';
-					console.log('title ::' + title);
 					var $h3 = $('<h3>', {text:surveyQstnNum + title});
 					surveyInfoBody.append($h3);
 
@@ -86,7 +101,12 @@
 					// 단답형
 					if(surveyQstnType == 1 || surveyQstnType == 2){
 						getSelectedStatisticsType1(surveySeq, surveyQstnType, surveyInfoBody, surveyQstnNum);
+					} else if(surveyQstnType == 3 || surveyQstnType == 4){
+						getSelectedStatisticsType4(surveySeq, surveyQstnType, surveyInfoBody, surveyQstnNum);
 					}
+
+
+
 					surveyInfoBody.append($hr);
 				}
 			},
@@ -110,7 +130,7 @@
 			success : function(data){
 				console.log(data);
 				var tableId = "dataTable"+surveyQstnNum;
-				var surveyArr = data.surveyStatisticsVOList
+				var surveyArr = data.surveyStatisticsVOList;
 				var $table_responsiveDiv = $('<div>', {class:'table-responsive'});
 				var $data_tableTable =  $('<table>', {id:tableId, class:"table table-striped table-bordered"});
 
@@ -140,53 +160,103 @@
 		});
 	}
 
+	// 체크박스
+	function getSelectedStatisticsType4(surveySeq, surveyQstnType, surveyInfoBody, surveyQstnNum) {
+		$.ajax({
+			url : 'getSelectedStatisticsType4',
+			type : 'post',
+			async: false,
+			data : {
+				surveySeq : surveySeq,
+				surveyQstnType : surveyQstnType,
+				surveyQstnNum : surveyQstnNum
+				},
+				success : function(data){
+					console.log("================================================================");
+					console.log(data);
+
+					var optionInfoList = data.list[0];
+					var countInfoList = data.list[1];
+
+					var canvasId = surveyQstnNum + "_char";
+
+					var $canvas = $("<canvas>", {id:canvasId, height:"50%"});
+					surveyInfoBody.append($canvas);
+
+					var optionInfoListLength  = optionInfoList.length;
+					var labelsValue = [];
+					for(var i=0; i<optionInfoList.length; i++){
+						labelsValue.push(optionInfoList[i]);
+		        	}
+
+					var countInfoListLength = countInfoList.length;
+					var dataValue = [];
+					for(var i=0; i<countInfoList.length; i++){
+						dataValue.push(countInfoList[i]);
+		        	}
+
+					console.log("labelsValue : " + labelsValue);
+					console.log("dataValue : " + dataValue);
+
+					var colorList = [];
+					for(var i=0; i<countInfoList.length; i++){
+						colorList.push(backgroundColorList[i]);
+					}
+
+					var boarderList = [];
+					for(var i=0; i<countInfoList.length; i++){
+						boarderList.push(borderColorList[i]);
+					}
+
+					var graphType = "bar"
+					if(surveyQstnType == 3){
+						graphType = 'doughnut';
+					}
+
+					console.log("colorList:::" + colorList);
+
+					$(function(){
+						var ctx = document.getElementById(canvasId);
+						var myChart = new Chart(ctx, {
+						    type: graphType,
+						    data: {
+						        labels: labelsValue,
+						        datasets: [{
+						            label: '',
+						            data: dataValue,
+						            backgroundColor: colorList,
+						            borderColor: boarderList,
+						            borderWidth: 1
+						        }]
+						    },
+						    options: {
+						        scales: {
+						            yAxes: [{
+						                ticks: {
+						                    beginAtZero: true,
+						                    stacked: true
+						                }
+						            }]
+						        }
+						    }
+						});
+					});
+
+				}
+
+		});
+
+	}
+
 </script>
 <script type="text/javascript">
 
-	$(function(){
-		var ctx = document.getElementById('myChart');
-		var myChart = new Chart(ctx, {
-		    type: 'bar',
-		    data: {
-		        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-		        datasets: [{
-		            label: '# of Votes',
-		            data: [12, 19, 3, 5, 2, 3],
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0.2)',
-		                'rgba(54, 162, 235, 0.2)',
-		                'rgba(255, 206, 86, 0.2)',
-		                'rgba(75, 192, 192, 0.2)',
-		                'rgba(153, 102, 255, 0.2)',
-		                'rgba(255, 159, 64, 0.2)'
-		            ],
-		            borderColor: [
-		                'rgba(255, 99, 132, 1)',
-		                'rgba(54, 162, 235, 1)',
-		                'rgba(255, 206, 86, 1)',
-		                'rgba(75, 192, 192, 1)',
-		                'rgba(153, 102, 255, 1)',
-		                'rgba(255, 159, 64, 1)'
-		            ],
-		            borderWidth: 1
-		        }]
-		    },
-		    options: {
-		        scales: {
-		            yAxes: [{
-		                ticks: {
-		                    beginAtZero: true
-		                }
-		            }]
-		        }
-		    }
-		});
-	});
+
+
+
 </script>
 </head>
 <body>
-	<canvas id="myChart" height="20%;"></canvas>
-
 	<div class="row">
 	    <div class="col-md-1"></div>
 	    <div class="col-md-10">
@@ -238,8 +308,9 @@
 							<tr>
 								<td>참여율</td>
 								<td>
-									${ prtcptPercentStr } %
-									<%-- <div class="progress-bar progress-bar-success" style="width: ${ prtcptPercentStr }%;">${ prtcptPercentStr } %</div> --%>
+									<div class="progress progress-striped active">
+                                        <div class="progress-bar" style="width: ${ prtcptPercentStr }%">${ prtcptPercentStr } %</div>
+                                    </div>
 								</td>
 							</tr>
 						</table>

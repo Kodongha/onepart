@@ -181,7 +181,7 @@
 	    WHERE t2.SURVEY_SEQ = #{surveySeq}
 	</select>
 
-	<!--  -->
+	<!-- 통계관련 정보 -->
 	<select id="getSelectedStatistics" resultMap="surveyStatisticsVO" parameterType="requestResidentSurveyQstn">
 		SELECT
 				t4.APT_DETAIL_INFO_SEQ,
@@ -200,5 +200,16 @@
 		AND		t5.SURVEY_QSTN_TYPE = #{surveyQstnType}
 		AND		t5.SURVEY_QSTN_NUM = #{surveyQstnNum}
 	</select>
+
+	<!-- 옵션 정보 -->
+	<select id="getSurveyQstnOptionList" resultMap="surveyQstnOptionResultSet" parameterType="requestResidentSurveyQstn">
+		SELECT  *
+        FROM    SURVEY_QSTN t1
+        INNER JOIN SURVEY_QSTN_OPTION t2
+        ON (t1.SURVEY_QSTN_SEQ = t2.SURVEY_QSTN_SEQ)
+        WHERE 	t1.SURVEY_SEQ = #{surveySeq}
+        AND     t1.SURVEY_QSTN_NUM = #{surveyQstnNum}
+	</select>
+
 
 </mapper>
