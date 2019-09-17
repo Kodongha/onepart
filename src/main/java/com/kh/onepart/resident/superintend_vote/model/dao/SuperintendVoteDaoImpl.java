@@ -9,9 +9,12 @@ import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
+import com.kh.onepart.resident.superintend_vote.model.vo.ElectoralRegister;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteCandidate;
+import com.kh.onepart.resident.superintend_vote.model.vo.VotePrtcpt;
+import com.kh.onepart.resident.superintend_vote.model.vo.VoteSelected;
 
 @Repository
 public class SuperintendVoteDaoImpl implements SuperintendVoteDao{
@@ -191,6 +194,91 @@ public class SuperintendVoteDaoImpl implements SuperintendVoteDao{
 		ArrayList careerList = (ArrayList) sqlSession.selectList("Superintend.selectAllElectionVoteCadidateCareer", electVoteCndtSignupSeq);
 
 		return careerList;
+
+	}
+	//선거 참여내역 확인하는 메소드
+	@Override
+	public int selectConfirmHistoryElectionVote(SqlSessionTemplate sqlSession, VotePrtcpt vp) {
+
+		int result = sqlSession.selectOne("Superintend.selectConfirmHistoryElectionVote", vp);
+
+		return result;
+
+	}
+	//일반투표 참여내역 확인하는 메소드
+	@Override
+	public int selectConfirmHistoryGeneralVote(SqlSessionTemplate sqlSession, VotePrtcpt vp) {
+
+		int result = sqlSession.selectOne("Superintend.selectConfirmHistoryGeneralVote", vp);
+
+		return result;
+
+	}
+	//선거 참여내역 insert하는 메소드 (return votePrtcptSeq)
+	@Override
+	public int insertRealVoteElection(SqlSessionTemplate sqlSession, VotePrtcpt vp) {
+
+		sqlSession.insert("Superintend.insertRealVoteElection", vp);
+		int votePrtcptSeq = vp.getVotePrtcptSeq();
+
+		return votePrtcptSeq;
+
+	}
+	//해당 선거 참여내역의 선택 후보 insert하는 메소드
+	@Override
+	public int insertRealVoteElectionCandidate(SqlSessionTemplate sqlSession, VoteSelected vs) {
+
+		int result = sqlSession.insert("Superintend.insertRealVoteElectionCandidate", vs);
+
+		return result;
+
+	}
+	//일반투표 참여내역 insert하는 메소드 (return votePrtcptSeq)
+	@Override
+	public int insertRealVoteGeneral(SqlSessionTemplate sqlSession, VotePrtcpt vp) {
+
+		sqlSession.insert("Superintend.insertRealVoteGeneral", vp);
+		int votePrtcptSeq = vp.getVotePrtcptSeq();
+
+		return votePrtcptSeq;
+
+	}
+	//해당 일반투표 참여내역의 선택 후보 insert하는 메소드
+	@Override
+	public int insertRealVoteGeneralCandidate(SqlSessionTemplate sqlSession, VoteSelected vs) {
+
+		int result = sqlSession.insert("Superintend.insertRealVoteGeneralCandidate", vs);
+
+		return result;
+
+	}
+	//해당 선거의 구분 (동별/모든세대주) 가져오는 메소드
+	@Override
+	public ElectoralRegister selectElectionStatus(SqlSessionTemplate sqlSession, int electVoteSeq) {
+
+		ElectoralRegister status = sqlSession.selectOne("Superintend.selectElectionStatus", electVoteSeq);
+
+		return status;
+
+	}
+	//모든 세대주 명부 가져오는 메소드
+	@Override
+	public ArrayList selectAllElectoralRegister(SqlSessionTemplate sqlSession, int electVoteSeq) {
+
+		ArrayList electoralList = (ArrayList) sqlSession.selectList("Superintend.selectAllElectoralRegister", electVoteSeq);
+
+		return electoralList;
+
+	}
+	//동별 세대주 명부 가져오는 메소드
+	@Override
+	public ArrayList selectDongElectoralRegister(SqlSessionTemplate sqlSession, ElectoralRegister er){
+
+		System.out.println("controller er : " + er);
+
+		ArrayList electoralList = (ArrayList) sqlSession.selectList("Superintend.selectDongElectoralRegister", er);
+
+		return electoralList;
 
 	}
 

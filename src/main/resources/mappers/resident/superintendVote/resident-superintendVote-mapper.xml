@@ -89,6 +89,15 @@
 		<result property="electVoteCndtSignupSeq" column="ELECT_VOTE_CNDT_SIGNUP_SEQ"/>
 	</resultMap>
 
+	<resultMap type="ElectoralRegister" id="ElectoralRegisterResultSet">
+		<id property="residentSeq" column="RESIDENT_SEQ"/>
+		<result property="aptDetailInfoSeq" column="APT_DETAIL_INFO_SEQ"/>
+		<result property="residentNm" column="RESIDENT_NM"/>
+		<result property="residentPhone" column="RESIDENT_PHONE"/>
+		<result property="voteStatue" column="VOTE_STATUS"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
+
 	<insert id="insertGeneralVote" parameterType="GeneralVote">
 		INSERT INTO GNR_VOTE
 		VALUES (
@@ -268,7 +277,7 @@
 	</select>
 
 	<select id="selectConfirmResident" parameterType="ResidentVO" resultType="_int">
-		SELECT COUNT(*)
+		SELECT RESIDENT_SEQ
 		FROM RESIDENT
 		WHERE RESIDENT_NM = #{residentNm}
 		AND APT_DETAIL_INFO_SEQ = #{aptDetailInfoSeq}
@@ -283,7 +292,7 @@
 	</select>
 
 	<select id="selectConfirmResidents" parameterType="ResidentVO" resultType="_int">
-		SELECT COUNT(*)
+		SELECT RESIDENT_SEQ
 		FROM RESIDENT
 		WHERE RESIDENT_NM = #{residentNm}
 		AND APT_DETAIL_INFO_SEQ = #{aptDetailInfoSeq}
@@ -313,6 +322,144 @@
 		SELECT *
 		FROM CAREER
 		WHERE ELECT_VOTE_CNDT_SIGNUP_SEQ = #{electVoteCndtSignupSeq}
+	</select>
+
+	<select id="selectConfirmHistoryElectionVote" parameterType="VotePrtcpt" resultType="_int">
+		SELECT COUNT(*)
+		FROM VOTE_PRTCPT
+		WHERE ELECT_VOTE_SEQ = #{electVoteSeq}
+		AND RESIDENT_SEQ = #{residentSeq}
+	</select>
+
+	<select id="selectConfirmHistoryGeneralVote" parameterType="VotePrtcpt" resultType="_int">
+		SELECT COUNT(*)
+		FROM VOTE_PRTCPT
+		WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}
+		AND RESIDENT_SEQ = #{residentSeq}
+	</select>
+
+	<insert id="insertRealVoteElection" parameterType="VotePrtcpt">
+		INSERT INTO VOTE_PRTCPT
+		VALUES (
+					VOTE_PRTCPT_SEQ.NEXTVAL,
+					2,
+					NULL,
+					#{electVoteSeq},
+					#{residentSeq}
+				)
+
+		<selectKey keyProperty="votePrtcptSeq" resultType="Integer" order="AFTER">
+	        SELECT VOTE_PRTCPT_SEQ.CURRVAL FROM DUAL
+      	</selectKey>
+	</insert>
+
+	<insert id="insertRealVoteElectionCandidate" parameterType="VoteSelected">
+		INSERT INTO VOTE_SELECTED
+		VALUES (
+					VOTE_SELECTED_SEQ.NEXTVAL,
+					#{votePrtcptSeq},
+					2,
+					NULL,
+					#{electVoteCndtSignupSeq},
+					#{electVoteCndtSignupSeq}
+				)
+	</insert>
+
+	<insert id="insertRealVoteGeneral" parameterType="VotePrtcpt">
+		INSERT INTO VOTE_PRTCPT
+		VALUES (
+					VOTE_PRTCPT_SEQ.NEXTVAL,
+					1,
+					#{gnrVoteSeq},
+					NULL,
+					#{residentSeq}
+				)
+
+		<selectKey keyProperty="votePrtcptSeq" resultType="Integer" order="AFTER">
+	        SELECT VOTE_PRTCPT_SEQ.CURRVAL FROM DUAL
+      	</selectKey>
+	</insert>
+
+	<insert id="insertRealVoteGeneralCandidate" parameterType="VoteSelected">
+		INSERT INTO VOTE_SELECTED
+		VALUES (
+					VOTE_SELECTED_SEQ.NEXTVAL,
+					#{votePrtcptSeq},
+					1,
+					#{gnrVoteCndtEnrollSeq},
+					NULL,
+					#{gnrVoteCndtEnrollSeq}
+				)
+	</insert>
+
+	<select id="selectElectionStatus" parameterType="_int" resultMap="ElectoralRegisterResultSet">
+		SELECT CASE ELECT_TYPE WHEN 3 THEN TO_CHAR(BD_NM)
+                       WHEN 1 THEN '세대주'
+                       WHEN 2 THEN '세대주' END AS STATUS
+		FROM ELECT_VOTE
+		WHERE ELECT_VOTE_SEQ = #{electVoteSeq}
+	</select>
+
+	<select id="selectAllElectoralRegister" parameterType="_int" resultMap="ElectoralRegisterResultSet">
+		SELECT A.RESIDENT_SEQ,
+		       A.APT_DETAIL_INFO_SEQ,
+		       A.RESIDENT_NM,
+		       A.RESIDENT_PHONE,
+		       CASE WHEN B.ELECT_VOTE_SEQ IS NULL THEN '미참여'
+		            WHEN B.ELECT_VOTE_SEQ IS NOT NULL THEN '참여' END AS VOTE_STATUS
+		FROM (
+		        SELECT *
+		        FROM RESIDENT
+		        WHERE (APT_DETAIL_INFO_SEQ, HOUSEHOLD_AUTH_TYPE)
+		        IN (
+		            SELECT *
+		            FROM (
+		                    SELECT APT_DETAIL_INFO_SEQ, MAX(HOUSEHOLD_AUTH_TYPE) AS HOUSEHOLD_AUTH_TYPE
+		                    FROM RESIDENT
+		                    GROUP BY APT_DETAIL_INFO_SEQ
+		                 )
+		            WHERE HOUSEHOLD_AUTH_TYPE = 3
+		            OR HOUSEHOLD_AUTH_TYPE = 2
+		           )
+		        ) A
+		LEFT JOIN (
+		            SELECT *
+		            FROM VOTE_PRTCPT
+		            WHERE ELECT_VOTE_SEQ = #{electVoteSeq}
+		          ) B
+		ON ( A.RESIDENT_SEQ = B.RESIDENT_SEQ )
+	</select>
+
+	<select id="selectDongElectoralRegister" parameterType="ElectoralRegister" resultMap="ElectoralRegisterResultSet">
+		SELECT A.RESIDENT_SEQ,
+		       A.APT_DETAIL_INFO_SEQ,
+		       A.RESIDENT_NM,
+		       A.RESIDENT_PHONE,
+		       CASE WHEN QCSJ_C000000000800000 IS NULL THEN '미참여'
+		            WHEN QCSJ_C000000000800000 IS NOT NULL THEN '참여' END AS VOTE_STATUS
+		FROM (
+		        SELECT *
+		        FROM RESIDENT
+		        WHERE (APT_DETAIL_INFO_SEQ, HOUSEHOLD_AUTH_TYPE)
+		        IN (
+		            SELECT *
+		            FROM (
+		                    SELECT APT_DETAIL_INFO_SEQ, MAX(HOUSEHOLD_AUTH_TYPE) AS HOUSEHOLD_AUTH_TYPE
+		                    FROM RESIDENT
+		                    GROUP BY APT_DETAIL_INFO_SEQ
+		                 )
+		            WHERE HOUSEHOLD_AUTH_TYPE = 3
+		            OR HOUSEHOLD_AUTH_TYPE = 2
+		           )
+		        ) A
+		LEFT JOIN (
+		            SELECT *
+		            FROM VOTE_PRTCPT V
+		            LEFT JOIN ELECT_VOTE E ON (V.ELECT_VOTE_SEQ = E.ELECT_VOTE_SEQ)
+		            WHERE V.ELECT_VOTE_SEQ = #{electVoteSeq}
+		          ) B
+		ON ( A.RESIDENT_SEQ = B.RESIDENT_SEQ)
+		WHERE SUBSTR(APT_DETAIL_INFO_SEQ, 3, 3) = #{status}
 	</select>
 
 </mapper>

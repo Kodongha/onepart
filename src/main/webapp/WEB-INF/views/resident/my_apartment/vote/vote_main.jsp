@@ -22,7 +22,6 @@
 			</td>
 			<td></td>
 			<td style="width:15%">
-				<a class="btn btn-success" style="width:100%" id="candidateApply">후보 신청서 제출</a>
 			</td>
 		</tr>
 	</table>

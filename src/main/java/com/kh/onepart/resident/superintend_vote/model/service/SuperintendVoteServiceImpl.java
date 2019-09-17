@@ -11,9 +11,12 @@ import com.kh.onepart.resident.superintend_vote.model.dao.SuperintendVoteDao;
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
+import com.kh.onepart.resident.superintend_vote.model.vo.ElectoralRegister;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteCandidate;
+import com.kh.onepart.resident.superintend_vote.model.vo.VotePrtcpt;
+import com.kh.onepart.resident.superintend_vote.model.vo.VoteSelected;
 
 @Service
 public class SuperintendVoteServiceImpl implements SuperintendVoteService{
@@ -159,26 +162,24 @@ public class SuperintendVoteServiceImpl implements SuperintendVoteService{
 			int result2 = svd.selectConfirmResident(sqlSession, rs);
 			if(result2 > 0) {
 				//매치됨
-				result = 1;
+				result = result2;
 			}else {
 				//매치안됨
-				result = 1;
+				result = -1;
 			}
 		}else {
 			//해당동에 가입되어있는 세대주 여러명
 			//복수 세대주 중 투표권을 가지고 있는 세대주 매치하는 메소드
-			int result3 = svd.selectConfirmResidents(sqlSession, rs);
-			if(result3 > 0) {
+			try{
+				int result3 = svd.selectConfirmResidents(sqlSession, rs);
+				System.out.println("result3 : " + result3);
 				//매치됨
-				result = 1;
-			}else {
+				result = result3;
+			}catch(NullPointerException e){
 				//매치안됨
-				result = 1;
+				result = -1;
 			}
 		}
-
-
-		result = svd.selectConfirmResident(sqlSession, rs);
 
 		return result;
 
@@ -209,5 +210,73 @@ public class SuperintendVoteServiceImpl implements SuperintendVoteService{
 
 		return careerList;
 
+	}
+	//선거 참여내역 확인하는 메소드
+	@Override
+	public int selectConfirmHistoryElectionVote(VotePrtcpt vp) {
+
+		int result = svd.selectConfirmHistoryElectionVote(sqlSession, vp);
+
+		return result;
+
+	}
+	//일반투표 참여내역 확인하는 메소드
+	@Override
+	public int selectConfirmHistoryGeneralVote(VotePrtcpt vp) {
+
+		int result = svd.selectConfirmHistoryGeneralVote(sqlSession, vp);
+
+		return result;
+
+	}
+	//선거내역 insert하는 메소드
+	@Override
+	public int insertRealVoteElection(VotePrtcpt vp, VoteSelected vs) {
+
+		//선거 참여내역 insert하는 메소드 (return votePrtcptSeq)
+		int votePrtcptSeq = svd.insertRealVoteElection(sqlSession, vp);
+
+		//해당 선거 참여내역의 선택 후보 insert하는 메소드
+		vs.setVotePrtcptSeq(votePrtcptSeq);
+		int result = svd.insertRealVoteElectionCandidate(sqlSession, vs);
+
+		return result;
+
+	}
+	//일반투표 insert하는 메소드
+	@Override
+	public int insertRealVoteGeneral(VotePrtcpt vp, VoteSelected vs) {
+
+		//일반투표 참여내역 insert하는 메소드 (return votePrtcptSeq)
+		int votePrtcptSeq = svd.insertRealVoteGeneral(sqlSession, vp);
+
+		//해당 일반투표 참여내역의 선택 후보 insert하는 메소드
+		vs.setVotePrtcptSeq(votePrtcptSeq);
+		int result = svd.insertRealVoteGeneralCandidate(sqlSession, vs);
+
+		return result;
+
+	}
+	//해당 선거에 투표권이 있는 선거인 명부 리스트 가져오는 메소드
+	@Override
+	public ArrayList selectAllElectionElectoralList(int electVoteSeq) {
+
+		//해당 선거의 구분 (동별/모든세대주) 가져오는 메소드
+		ElectoralRegister status = svd.selectElectionStatus(sqlSession, electVoteSeq);
+		System.out.println("service status.getStatus() : " + status.getStatus());
+		ArrayList electoralList = null;
+		if(status.getStatus().equals("세대주")) {
+			//모든 세대주 명부 가져오는 메소드
+			electoralList = svd.selectAllElectoralRegister(sqlSession, electVoteSeq);
+		}else {
+			//동별 세대주 명부 가져오는 메소드
+			ElectoralRegister er = new ElectoralRegister();
+			er.setElectVoteSeq(electVoteSeq);
+			er.setStatus(status.getStatus());
+			electoralList = svd.selectDongElectoralRegister(sqlSession, er);
+		}
+
+
+		return electoralList;
 	}
 }

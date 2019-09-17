@@ -87,6 +87,7 @@ public class VoteController {
 		String careerCon3 = request.getParameter("careerCon3");
 		String careerCon4 = request.getParameter("careerCon4");
 
+
 		List<MultipartFile> mf = req.getFiles("thumbnailImg1");
 
 		Image img = new Image();
@@ -136,32 +137,36 @@ public class VoteController {
 		evc.setResidentSeq(residentSeq);
 		System.out.println("Controller evc : " + evc);
 		ArrayList<Career> careerArr = new ArrayList<Career>();
-		if(careerTm1 != null) {
+		if(!careerTm1.equals("")) {
 			Career career = new Career();
 			career.setCareerPeriod(careerTm1);
 			career.setCareerDetail(careerCon1);
 			careerArr.add(career);
+			System.out.println("1");
 		}
 
-		if(careerTm2 != null) {
+		if(!careerTm2.equals("")) {
 			Career career = new Career();
 			career.setCareerPeriod(careerTm2);
 			career.setCareerDetail(careerCon2);
 			careerArr.add(career);
+			System.out.println("2");
 		}
 
-		if(careerTm3 != null) {
+		if(!careerTm3.equals("")) {
 			Career career = new Career();
 			career.setCareerPeriod(careerTm3);
 			career.setCareerDetail(careerCon3);
 			careerArr.add(career);
+			System.out.println("3");
 		}
 
-		if(careerTm4 != null) {
+		if(!careerTm4.equals("")) {
 			Career career = new Career();
 			career.setCareerPeriod(careerTm4);
 			career.setCareerDetail(careerCon4);
 			careerArr.add(career);
+			System.out.println("4");
 		}
 
 		int result = vs.insertElectionCandidateApply(img, evc, careerArr);
