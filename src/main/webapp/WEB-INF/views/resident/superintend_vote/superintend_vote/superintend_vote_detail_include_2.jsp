@@ -182,6 +182,7 @@
 <script type="text/javascript">
 	/* 오프라인 투표번호 view 전환 */
 	function goOfflineVote() {
+		console.log("off");
 		var electVoteSeq = $("#electVoteSeq").val();
 		var voteKind = $("#voteKind").val();
 		$.ajax({
@@ -192,7 +193,7 @@
 					voteKind:voteKind
 				},
 			success:function(result){
-				$('#modal-dialog_test').modal("hide");
+				/* $('#modal-dialog_test').modal("hide"); */
 				$('.modal-backdrop').remove();
 				$('.modal-open').css("overflow", "visible");
 				$("#content").html(result);

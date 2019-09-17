@@ -372,6 +372,7 @@
 	</insert>
 
 	<insert id="insertElectionCandidateCareer" parameterType="vote_Career">
+		<if test="careerPeriod != null">
 		INSERT INTO CAREER
 		VALUES (
 					CAREER_SEQ.NEXTVAL,
@@ -379,6 +380,7 @@
 					#{careerDetail},
 					#{electVoteCndtSignupSeq}
 				)
+		</if>
 	</insert>
 
 </mapper>

@@ -17,6 +17,8 @@ import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteCandidate;
+import com.kh.onepart.resident.superintend_vote.model.vo.VotePrtcpt;
+import com.kh.onepart.resident.superintend_vote.model.vo.VoteSelected;
 
 @Controller
 public class SuperintendVoteController {
@@ -157,19 +159,27 @@ public class SuperintendVoteController {
 		int electVoteSeq = Integer.parseInt(request.getParameter("electVoteSeq"));
 		String voteKind = request.getParameter("voteKind");
 
-
+		ArrayList electoralList = null;
 		if(voteKind.equals("선거")) {
 			//해당 선거 정보 담아오는 메소드
 			ElectionVote ev = svs.selectOneElectionVote(electVoteSeq);
+
+			//해당 선거에 투표권이 있는 선거인 명부 리스트 가져오는 메소드
+			electoralList = svs.selectAllElectionElectoralList(electVoteSeq);
 
 			mv.addObject("ev", ev);
 		}else {
 			//해당 투표 정보 담아오는 메소드
 			GeneralVote gv = svs.selectOneGeneralVote(electVoteSeq);
 
+			//해당 투표에 투표권이 있는 선거인 명부 리스트 가져오는 메소드
+			//electoralList = svs.selectAllGeneralElectoralList(electVoteSeq);
+
 			mv.addObject("gv", gv);
 		}
 
+		mv.addObject("electoralList", electoralList);
+		mv.addObject("voteKind", voteKind);
 		mv.setViewName("/resident/superintend_vote/superintend_vote/superintend_vote_realvote_sendMessage");
 
 		return mv;
@@ -422,6 +432,71 @@ public class SuperintendVoteController {
 		mv.setViewName("jsonView");
 
 		return mv;
+	}
+
+	@RequestMapping("/resident/confirmHistoryVote")
+	public ModelAndView confirmHistoryVote(ModelAndView mv, HttpServletRequest request) {
+		int residentSeq = Integer.parseInt(request.getParameter("residentSeq"));
+		String voteKind = request.getParameter("voteKind");
+		int voteSeq = Integer.parseInt(request.getParameter("voteSeq"));
+		System.out.println("voteSeq : " + voteSeq);
+
+
+		int result = 0;
+		if(voteKind.equals("선거")) {
+			VotePrtcpt vp = new VotePrtcpt();
+			vp.setElectVoteSeq(voteSeq);
+			vp.setResidentSeq(residentSeq);
+			//선거 참여내역 확인하는 메소드
+			result = svs.selectConfirmHistoryElectionVote(vp);
+		}else {
+			VotePrtcpt vp = new VotePrtcpt();
+			vp.setGnrVoteSeq(voteSeq);
+			vp.setResidentSeq(residentSeq);
+			//일반투표 참여내역 확인하는 메소드
+			result = svs.selectConfirmHistoryGeneralVote(vp);
+		}
+
+		mv.addObject("result", result);
+		mv.setViewName("jsonView");
+
+		return mv;
+
+	}
+
+	@RequestMapping("/resident/insertRealVote")
+	public ModelAndView insertRealVote(ModelAndView mv, HttpServletRequest request) {
+		int residentSeq = Integer.parseInt(request.getParameter("residentSeq"));
+		String voteKind = request.getParameter("voteKind");
+		int voteSeq = Integer.parseInt(request.getParameter("voteSeq"));
+		int resultCandidate = Integer.parseInt(request.getParameter("resultCandidate"));
+		System.out.println("voteSeq : " + voteSeq);
+
+
+		int result = 0;
+		if(voteKind.equals("선거")) {
+			VotePrtcpt vp = new VotePrtcpt();
+			vp.setElectVoteSeq(voteSeq);
+			vp.setResidentSeq(residentSeq);
+			VoteSelected vs = new VoteSelected();
+			vs.setElectVoteCndtSignupSeq(resultCandidate);
+			//선거내역 insert하는 메소드
+			result = svs.insertRealVoteElection(vp, vs);
+		}else {
+			VotePrtcpt vp = new VotePrtcpt();
+			vp.setGnrVoteSeq(voteSeq);
+			vp.setResidentSeq(residentSeq);
+			VoteSelected vs = new VoteSelected();
+			vs.setGnrVoteCndtEnrollSeq(resultCandidate);
+			//일반투표 insert하는 메소드
+			result = svs.insertRealVoteGeneral(vp, vs);
+		}
+
+		mv.addObject("result", result);
+		mv.setViewName("jsonView");
+
+		return mv;
+
 	}
 
 }

@@ -19,6 +19,8 @@
 	<meta content="" name="author" />
 
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="${contextPath}/resources/plugins/ionicons/css/ionicons.min.css" rel="stylesheet" />
+	<link href="${contextPath}/resources/plugins/simple-line-icons/simple-line-icons.css" rel="stylesheet" />
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 	<link href="${contextPath}/resources/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
 	<link href="${contextPath}/resources/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -27,6 +29,7 @@
 	<link href="${contextPath}/resources/css/style.min.css" rel="stylesheet" />
 	<link href="${contextPath}/resources/css/style-responsive.min.css" rel="stylesheet" />
 	<link href="${contextPath}/resources/css/theme/default.css" rel="stylesheet" id="theme" />
+	<link href="${contextPath}/resources/plugins/DataTables/css/data-table.css"	rel="stylesheet" />
 	<!-- ================== END BASE CSS STYLE ================== -->
 
 	<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
@@ -89,6 +92,9 @@
 	<!-- ================== END BASE JS ================== -->
 
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	<script	src="${contextPath}/resources/plugins/DataTables/js/jquery.dataTables.js"></script>
+	<script	src="${contextPath}/resources/plugins/DataTables/js/dataTables.colVis.js"></script>
+	<script src="${contextPath}/resources/js/table-manage-colvis.demo.min.js"></script>
 	<script src="${contextPath}/resources/plugins/gritter/js/jquery.gritter.js"></script>
 	<script src="${contextPath}/resources/plugins/flot/jquery.flot.min.js"></script>
 	<script src="${contextPath}/resources/plugins/flot/jquery.flot.time.min.js"></script>

@@ -45,7 +45,7 @@
 							<tr>
 								<td>
 									<a href="javascript:;" class="pull-left">
-										<img class="media-object" src="${contextPath }/resources/images/${ candidateList.changeNm }" alt="" style="height:250px; width:auto;">
+										<img class="media-object" src="${contextPath }/resources/uploadFiles/reservation/${ candidateList.changeNm }" alt="" style="height:250px; width:auto;">
 									</a>
 								</td>
 								<td style="width:10%"></td>

@@ -73,12 +73,14 @@
 				<tr>
 					<c:forEach var="candidateList" items="${ candidateList }">
 						<td>
+							<input type="hidden" value="${ ev.electVoteSeq }" id="electVoteSeq">
+							<input type="hidden" value="선거" id="voteKind">
 							<table style="margin:0 auto">
 								<tr>
 									<td><h2>기호${ candidateList.cndtNo }번 ${ candidateList.residentNm }</h2></td>
 								</tr>
 								<tr>
-									<td><a class="btn btn-white" style="width: 100%" id="">해당후보 선택</a></td>
+									<td><button class="btn btn-white" style="width: 100%" value="${ candidateList.electVoteCndtSignupSeq }" name="choiceCandidate">해당후보 선택</button></td>
 								</tr>
 						</table>
 						</td>
@@ -89,12 +91,14 @@
 				<tr>
 					<c:forEach var="candidateListGen" items="${ candidateListGen }">
 						<td>
+							<input type="hidden" value="${ gv.gnrVoteSeq }" id="gnrVoteSeq">
+							<input type="hidden" value="일반투표" id="voteKind">
 							<table style="margin:0 auto">
 								<tr>
 									<td><h2>${ candidateListGen.cndtNm }</h2></td>
 								</tr>
 								<tr>
-									<td><a class="btn btn-white" style="width: 100%" id="">해당후보 선택</a></td>
+									<td><button class="btn btn-white" style="width: 100%" value="${ candidateListGen.gnrVoteCndtEnrollSeq }" name="choiceCandidate">해당후보 선택</button></td>
 								</tr>
 						</table>
 						</td>
@@ -105,7 +109,7 @@
 		<br><br><br><br><br><br>
 		<table style="width:95%; margin:0 auto;">
 			<tr>
-				<td><a class="btn btn-primary" style="width: 100%" id="">투표하기</a></td>
+				<td><button class="btn btn-primary" style="width: 100%" id="realVoteBtns" disabled>투표하기</button></td>
 			</tr>
 		</table>
 		</div>
@@ -113,6 +117,7 @@
 	</div>
 </div>
 <script type="text/javascript">
+	var residentSeq;
 	/* 거주인증 function */
 	function confirmResident() {
 		var bdNm = $("#bdNm").val();
@@ -135,12 +140,102 @@
 				console.log(data.result);
 				if(data.result > 0){
 					alert("투표권이 있는 입주민 입니다.");
+					residentSeq = data.result;
+					$("#realVoteBtns").prop("disabled", false);
 				}else{
 					alert("입주민이나 투표권이 있는 입주민이 아닙니다")
 				}
 			}
 		});
 	}
+
+	$(function(){
+		var resultCandidate;
+		/* 선택한 후보의 버튼 class 변경하기 */
+		$("button[name=choiceCandidate]").each(function(){
+			$(this).click(function(){
+				if($(this).hasClass("btn-white")){
+					$("button[name=choiceCandidate]").each(function(){
+						if($(this).hasClass("btn-success")){
+							$(this).addClass("btn-white");
+							$(this).removeClass("btn-success");
+						}else{
+
+						}
+					})
+					$(this).removeClass("btn-white");
+					$(this).addClass("btn-success");
+
+					resultCandidate = $(this).val();
+					console.log(resultCandidate);
+				}else{
+					$(this).addClass("btn-white");
+					$(this).removeClass("btn-success");
+				}
+			});
+		});
+
+		/* 선거완료 후 선거내역 추가하기 */
+		$("#realVoteBtns").click(function(){
+			/* 해당선거에 참여했는지 여부 판단 */
+			var voteKind = $("#voteKind").val();
+			var electVoteSeq = $("#electVoteSeq").val();
+			var gnrVoteSeq = $("#gnrVoteSeq").val();
+			var voteSeq;
+			console.log(gnrVoteSeq);
+			console.log(electVoteSeq);
+			if(electVoteSeq != null){
+				voteSeq = electVoteSeq;
+			}else{
+				voteSeq = gnrVoteSeq;
+			}
+			console.log("voteSeq : " + voteSeq);
+
+			$.ajax({
+				url:"/onepart/resident/confirmHistoryVote",
+				data:{
+						voteKind:voteKind,
+						residentSeq:residentSeq,
+						voteSeq:voteSeq
+					},
+				type:"get",
+				success:function(data){
+					console.log(data.result);
+					if(data.result > 0){
+						alert("이미 투표한 세대주 입니다.");
+					}else{
+						/* 미참여시 선거 내역 insert */
+						console.log("미참여");
+						$.ajax({
+							url:"/onepart/resident/insertRealVote",
+							data:{
+								voteKind:voteKind,
+								residentSeq:residentSeq,
+								voteSeq:voteSeq,
+								resultCandidate:resultCandidate
+							},
+							type:"get",
+							success:function(){
+								$.ajax({
+									url:"/onepart/resident/changeOffline",
+									dataType:"html",
+									data:{
+											electVoteSeq:voteSeq,
+											voteKind:voteKind
+										},
+									success:function(result){
+										alert("투표가 완료되었습니다.");
+										$("#content").html(result);
+									}
+								});
+							}
+						});
+					}
+				}
+			});
+			console.log(voteKind);
+		})
+	})
 </script>
 </body>
 </html>

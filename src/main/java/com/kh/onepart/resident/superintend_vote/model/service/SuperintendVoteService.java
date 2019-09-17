@@ -9,6 +9,8 @@ import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteCandidate;
+import com.kh.onepart.resident.superintend_vote.model.vo.VotePrtcpt;
+import com.kh.onepart.resident.superintend_vote.model.vo.VoteSelected;
 
 public interface SuperintendVoteService {
 	//투표정보 insert 하는 메소드
@@ -41,5 +43,15 @@ public interface SuperintendVoteService {
 	ElectionVoteCandidate selectOneElectionVoteCandidate(int electVoteCndtSignupSeq);
 	//해당 신청서 경력사항 리스트 담아오는 메소드
 	ArrayList selectAllElectionVoteCadidateCareer(int electVoteCndtSignupSeq);
+	//선거 참여내역 확인하는 메소드
+	int selectConfirmHistoryElectionVote(VotePrtcpt vp);
+	//일반투표 참여내역 확인하는 메소드
+	int selectConfirmHistoryGeneralVote(VotePrtcpt vp);
+	//선거내역 insert하는 메소드
+	int insertRealVoteElection(VotePrtcpt vp, VoteSelected vs);
+	//일반투표 insert하는 메소드
+	int insertRealVoteGeneral(VotePrtcpt vp, VoteSelected vs);
+	//해당 선거에 투표권이 있는 선거인 명부 리스트 가져오는 메소드
+	ArrayList selectAllElectionElectoralList(int electVoteSeq);
 
 }

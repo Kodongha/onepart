@@ -8,9 +8,12 @@ import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
+import com.kh.onepart.resident.superintend_vote.model.vo.ElectoralRegister;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteBdNm;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVoteCandidate;
+import com.kh.onepart.resident.superintend_vote.model.vo.VotePrtcpt;
+import com.kh.onepart.resident.superintend_vote.model.vo.VoteSelected;
 
 public interface SuperintendVoteDao {
 	//투표테이블 insert 메소드 (return gnrVoteSeq)
@@ -53,5 +56,23 @@ public interface SuperintendVoteDao {
 	ElectionVoteCandidate selectOneElectionVoteCandidate(SqlSessionTemplate sqlSession, int electVoteCndtSignupSeq);
 	//해당 신청서 경력사항 리스트 담아오는 메소드
 	ArrayList selectAllElectionVoteCadidateCareer(SqlSessionTemplate sqlSession, int electVoteCndtSignupSeq);
+	//선거 참여내역 확인하는 메소드
+	int selectConfirmHistoryElectionVote(SqlSessionTemplate sqlSession, VotePrtcpt vp);
+	//일반투표 참여내역 확인하는 메소드
+	int selectConfirmHistoryGeneralVote(SqlSessionTemplate sqlSession, VotePrtcpt vp);
+	//선거 참여내역 insert하는 메소드 (return votePrtcptSeq)
+	int insertRealVoteElection(SqlSessionTemplate sqlSession, VotePrtcpt vp);
+	//해당 선거 참여내역의 선택 후보 insert하는 메소드
+	int insertRealVoteElectionCandidate(SqlSessionTemplate sqlSession, VoteSelected vs);
+	//일반투표 참여내역 insert하는 메소드 (return votePrtcptSeq)
+	int insertRealVoteGeneral(SqlSessionTemplate sqlSession, VotePrtcpt vp);
+	//해당 일반투표 참여내역의 선택 후보 insert하는 메소드
+	int insertRealVoteGeneralCandidate(SqlSessionTemplate sqlSession, VoteSelected vs);
+	//해당 선거의 구분 (동별/모든세대주) 가져오는 메소드
+	ElectoralRegister selectElectionStatus(SqlSessionTemplate sqlSession, int electVoteSeq);
+	//모든 세대주 명부 가져오는 메소드
+	ArrayList selectAllElectoralRegister(SqlSessionTemplate sqlSession, int electVoteSeq);
+	//동별 세대주 명부 가져오는 메소드
+	ArrayList selectDongElectoralRegister(SqlSessionTemplate sqlSession, ElectoralRegister er);
 
 }
