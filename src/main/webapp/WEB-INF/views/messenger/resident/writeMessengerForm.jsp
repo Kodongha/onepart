@@ -45,7 +45,6 @@
 
 </head>
 <body>
-	<div id="page-loader" class="fade in"><span class="spinner"></span></div>
 	<div class="p-30 bg-white m-t-0">
 	    <!-- begin email form -->
 	    <form id="fileupload" action="writeMessenger" method="POST" name="email_to_form" enctype="multipart/form-data">
@@ -89,12 +88,18 @@
 				<textarea class="textarea form-control" name="messengerContent" id="messengerContent" rows="12" placeholder="Enter text ..."></textarea>
 			</div>
 	        <!-- end email content -->
-	        <input id='saveFileBtn' class="btn btn-primary p-l-40 p-r-40" value="sned">
-	        <!-- tags hidden -->
-	        <div id="hiddenArea"></div>
-	    </form>
-	    <!-- end email form -->
-	</div>
+	        <div class="col-md-12 p-0">
+		        <div class="col-md-6 p-0 p-r-5">
+		        	<input type="button" id='cancleBtn' class="btn btn-danger btn-block" value="cancle">
+		        </div>
+		        <div class="col-md-6 p-0 p-l-5">
+		        	<input type="button" id='saveFileBtn' class="btn btn-primary btn-block" value="send">
+		        </div>
+		        </div>
+		        <!-- tags hidden -->
+		        <div id="hiddenArea"></div>
+	    	</form>
+        </div>
 
 	<!-- The template to display files available for upload -->
     <script id="template-upload" type="text/x-tmpl">
@@ -250,6 +255,10 @@
 	    	 for(var i=0; i<fileData.length; i++){
 	        	delete fileData[i];
 	        }
+	     });
+
+	     $('#cancleBtn').click(function(){
+	    	 location.href = 'moveMessenger';
 	     });
 
 		$(document).on('click', '.cancel', function(){

@@ -31,16 +31,6 @@
 <link href="${contextPath}/resources/plugins/DataTables/css/data-table.css" rel="stylesheet" />
 <!-- chart -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- chart -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js" integrity="sha256-qSIshlknROr4J8GMHRlW3fGKrPki733tLq+qeMCR05Q=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css" integrity="sha256-IvM9nJf/b5l2RoebiFno92E5ONttVyaEEsdemDC6iQA=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js" integrity="sha256-arMsf+3JJK2LoTGqxfnuJPFTU4hAK57MtIPdFpiHXOU=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
-
-
-
 <script type="text/javascript">
 
 	$(function(){
@@ -70,7 +60,6 @@
 				var surveyInfoBody = $('#surveyInfoBody');
 
 				for(var i in surveyQstnList){
-
 					var surveyQstnNum = surveyQstnList[i].surveyQstnNum;
 					var surveyQstnTitle = surveyQstnList[i].surveyQstnTitle;
 					var surveyQstnType = surveyQstnList[i].surveyQstnType;
@@ -151,8 +140,6 @@
 		});
 	}
 
-
-
 </script>
 <script type="text/javascript">
 
@@ -198,7 +185,7 @@
 </script>
 </head>
 <body>
-	<canvas id="myChart" width="400" height="400"></canvas>
+	<canvas id="myChart" height="20%;"></canvas>
 
 	<div class="row">
 	    <div class="col-md-1"></div>

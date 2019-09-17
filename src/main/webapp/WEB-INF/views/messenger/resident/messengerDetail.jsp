@@ -49,18 +49,11 @@
 		            <!-- begin wrapper -->
                     <div class="wrapper bg-silver-lighter clearfix">
                         <div class="btn-group m-r-5">
-                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-reply"></i></a>
-                        </div>
-                        <div class="btn-group m-r-5">
                             <a href="#" class="btn btn-white btn-sm p-l-20 p-r-20"><i class="fa fa-trash"></i></a>
                         </div>
                         <div class="pull-right">
-                            <div class="btn-group btn-toolbar">
-                                <a href="inbox_v2.html" class="btn btn-white btn-sm disabled"><i class="fa fa-arrow-up"></i></a>
-                                <a href="inbox_v2.html" class="btn btn-white btn-sm"><i class="fa fa-arrow-down"></i></a>
-                            </div>
                             <div class="btn-group m-l-5">
-                                <a href="inbox_v2.html" class="btn btn-white btn-sm"><i class="fa fa-times"></i></a>
+                                <a href="moveMessenger" class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></a>
                             </div>
                         </div>
                     </div>
@@ -68,10 +61,8 @@
 		            <!-- begin wrapper -->
                     <div class="wrapper">
                         <ul class="media-list underline m-b-20 p-b-15">
-                            <li class="media media-sm clearfix">
-                                <a href="javascript:;" class="pull-left">
-                                    <img class="media-object rounded-corner" alt="" src="assets/img/user-14.jpg" />
-                                </a>
+                            <li class="media media-sm clearfix" >
+                                <span class="pull-left"><i class="fa fa-4x fa-envelope-o"></i></span>
                                 <div class="media-body">
                                     <span class="email-from text-inverse f-w-600">
                                         from :
@@ -81,7 +72,9 @@
                                         <c:if test="${basicInfo.sendManagerNm != null }">
 	                                        <c:out value="${basicInfo.sendManagerNm }"/>
                                         </c:if>
-                                    </span><span class="text-muted m-l-5"><i class="fa fa-clock-o fa-fw"></i> 8: 30 AM</span><br />
+                                    </span>
+                                    <br />
+
                                     <span class="email-to">
                                         To:
                                         <c:if test="${basicInfo.receiverResidentNm != null }">
@@ -91,26 +84,39 @@
 	                                        <c:out value="${basicInfo.receiverManagerNm }"/>
                                         </c:if>
                                     </span>
+
+                                    <br />
+
+                                    <span class="text-muted "><i class="fa fa-clock-o fa-fw"></i> <c:out value="${basicInfo.messengerEnrollDt }"/></span>
                                 </div>
                             </li>
 						</ul>
                         <ul class="attached-document clearfix">
+
+                            <!-- 첨부파일 -->
+                            <c:forEach var="attachVO" items="${attachVOList}">
                             <li>
-                                <div class="document-name"><a href="#">flight_ticket.pdf</a></div>
+                                <div class="document-name">
+                                	<a href="downloadAttachment?attchSeq=${attachVO.attchSeq }">${attachVO.originNm }</a></div>
                                 <div class="document-file">
-                                    <a href="#">
+                                    <a href="downloadAttachment?attchSeq=${attachVO.attchSeq }">
                                         <i class="fa fa-file-pdf-o"></i>
                                     </a>
                                 </div>
                             </li>
+                            </c:forEach>
+
+                            <!-- 이미지 -->
+                            <c:forEach var="imgVO" items="${imgVOList}">
                             <li>
-                                <div class="document-name"><a href="#">front_end_mockup.jpg</a></div>
-                                <div class="document-file">
-                                    <a href="#">
-                                        <img src="assets/img/login-bg/bg-1.jpg" alt="" />
-                                    </a>
-                                </div>
+	                            <div class="document-name"><a href="#">${imgVO.originNm }</a></div>
+	                            <div class="document-file">
+	                                <a href="downloadImage?imageSeq=${imgVO.imageSeq}">
+	                                    <img src="${contextPath}/resources/uploadFiles/messenger/image/${imgVO.changeNm}" alt="${imgVO.originNm }" />
+	                                </a>
+	                            </div>
                             </li>
+                            </c:forEach>
                         </ul>
 						<hr>
 						<div class="wrapper">

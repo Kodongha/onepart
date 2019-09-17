@@ -1,12 +1,16 @@
 package com.kh.onepart.resident.messenger.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -244,15 +248,85 @@ public class MessengerController {
 		System.out.println("moveMessengerDetail in!@!!!");
 		System.out.println("messengerSeq :: " + messengerSeq);
 
+		// 쪽지 기본정보, 첨부파일, 이미지 조회
 		ArrayList<Object> messengerDetailData = messengerService.selectMessengerDetail(messengerSeq);
 		MessengerBasicAllData basicInfo = (MessengerBasicAllData) messengerDetailData.get(0);
+		ArrayList<RequestImgVO> imgVOList = (ArrayList<RequestImgVO>) messengerDetailData.get(1);
+		ArrayList<RequestAttachVO> attachVOList = (ArrayList<RequestAttachVO>) messengerDetailData.get(2);
 		modelAndView.addObject("basicInfo", basicInfo);
+		modelAndView.addObject("imgVOList", imgVOList);
+		modelAndView.addObject("attachVOList", attachVOList);
 
 
 		modelAndView.setViewName("messenger/resident/messengerDetail");
 		return modelAndView;
 	}
 
+	/**
+	 * 이미지 다운로드
+	 * @param requestImgVO
+	 * @throws IOException
+	 */
+	@RequestMapping("messenger/downloadImage")
+	public void downloadImage(RequestImgVO requestImgVO, HttpServletResponse response) throws IOException {
+		System.out.println(requestImgVO);
+		RequestImgVO responseImgVO = messengerService.selectDownloadImg(requestImgVO);
+		System.out.println("contoller result : " + responseImgVO);
 
+		BufferedInputStream buf = null;
+
+		ServletOutputStream downOut = response.getOutputStream();
+
+		File downFile = new File(responseImgVO.getFilePath() + File.separator +responseImgVO.getChangeNm());
+
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + new String(responseImgVO.getOriginNm().getBytes("UTF-8"), "ISO-8859-1") + "\"");
+
+		response.setContentLength((int) downFile.length());
+
+		buf = new BufferedInputStream(new FileInputStream(downFile));
+
+		int readBytes = 0;
+
+		while((readBytes = buf.read()) != -1) {
+			downOut.write(readBytes);
+		}
+
+		downOut.close();
+		buf.close();
+	}
+
+	/**
+	 * 이미지 다운로드
+	 * @param requestImgVO
+	 * @throws IOException
+	 */
+	@RequestMapping("messenger/downloadAttachment")
+	public void downloadAttachment(RequestAttachVO requestAttachVO, HttpServletResponse response) throws IOException {
+		System.out.println(requestAttachVO);
+		RequestAttachVO responseAttachVO = messengerService.selectDownloadAttach(requestAttachVO);
+		System.out.println("contoller result : " + responseAttachVO);
+
+		BufferedInputStream buf = null;
+
+		ServletOutputStream downOut = response.getOutputStream();
+
+		File downFile = new File(responseAttachVO.getFilePath() + File.separator +responseAttachVO.getChangeNm());
+
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + new String(responseAttachVO.getOriginNm().getBytes("UTF-8"), "ISO-8859-1") + "\"");
+
+		response.setContentLength((int) downFile.length());
+
+		buf = new BufferedInputStream(new FileInputStream(downFile));
+
+		int readBytes = 0;
+
+		while((readBytes = buf.read()) != -1) {
+			downOut.write(readBytes);
+		}
+
+		downOut.close();
+		buf.close();
+
+	}
 
 }
