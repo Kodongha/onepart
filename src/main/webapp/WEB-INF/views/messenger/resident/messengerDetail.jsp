@@ -39,6 +39,12 @@
 	<script src="${contextPath}/resources/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
 
+	<style type="text/css">
+		.bg-white {
+			height: 620px;
+		}
+
+	</style>
 </head>
 <body>
 	 <!-- begin vertical-box -->

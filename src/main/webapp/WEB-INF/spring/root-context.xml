@@ -64,8 +64,6 @@
 			expression="execution(* com.kh.onepart..*ServiceImpl.*(..))"/>
 		<aop:advisor id="transactionAdvisor" pointcut-ref="serviceMethod"
 			advice-ref="txAdvice"/>
-
 	</aop:config>
-
 
 </beans>

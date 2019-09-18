@@ -26,7 +26,8 @@
 					    <span>관리자</span>
 				    </a>
 					<ul class="sub-menu">
-					    <li class="active"><a id="menuNotice">공지사항</a></li>
+					    <li class="active"><a id="menuMain">메인페이지</a></li>
+					    <li><a id="menuNotice">공지사항</a></li>
 					    <li><a id="menuCarManage">차량관리</a></li>
 					    <li><a id="menuVote">투표</a></li>
 					    <li><a id="menuSurvey">설문조사</a></li>

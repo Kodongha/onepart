@@ -39,7 +39,23 @@
 	   <beans:property name="order" value="1"/>
 	</beans:bean>
 
-  <!-- 동적 프록시 사용 설정 -->
+	<!-- Interceptor -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <beans:property name="prefix" value="/WEB-INF/views/" />
+        <beans:property name="suffix" value=".jsp"/>
+    </beans:bean>
+
+	<!-- 인터셉터 객체 생성 -->
+    <beans:bean id="onepartInterceptor" class="com.kh.onepart.interceptor.OnepartInterceptor">
+    </beans:bean>
+    <interceptors>
+        <interceptor>
+            <mapping path="/**"/>
+            <beans:ref bean="onepartInterceptor"/>
+        </interceptor>
+    </interceptors>
+
+  	<!-- 동적 프록시 사용 설정 -->
 	<aop:aspectj-autoproxy proxy-target-class="true"/>
 
 	<!-- 파일 업로드를 하기 위해 bean 등록 -->
@@ -71,5 +87,6 @@
 		<bean id="openChatRoom" class="com.kh.onepart.resident.warm.open_chatting.controller.SpringChatWebsocket"/>
 		<bean id="messengerWebSocket" class="com.kh.onepart.resident.messenger.controller.MessengerWebSocket"/>
 	</beans>
+
 
 </beans:beans>

@@ -204,6 +204,8 @@
 			Dashboard.init();
 			PageHtmlLoader.load();
 
+			/* 메인페이지 */
+			$("#menuMain").data("menu-url", "/onepart/resident/menuMain"); 	// 공지사항
 
 			/* 우리 아파트 */
 			$("#menuNotice").data("menu-url", "/onepart/resident/menuNotice"); 	// 공지사항

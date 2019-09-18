@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class ResedentMainController {
+public class ResedentTemplateController {
 
 	@RequestMapping("/resident/main")
 	public String moveMain() {
-		System.out.println("/resident/main");
 		return "/resident/common/residentTemplate";
 	}
 
