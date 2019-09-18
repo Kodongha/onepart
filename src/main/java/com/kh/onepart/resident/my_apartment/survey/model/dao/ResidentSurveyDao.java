@@ -109,4 +109,13 @@ public interface ResidentSurveyDao {
 	 */
 	ArrayList<SurveyStatisticsVO> getSelectedStatistics(SqlSessionTemplate sqlSession, RequestSurveyQstn requestSurveyQstn);
 
+	/**
+	 * 설문조사 옵션 정보 가져오기
+	 * @param sqlSession
+	 * @param requestSurveyQstn
+	 * @return
+	 */
+	ArrayList<SurveyQstnOption> getSurveyQstnOptionList(SqlSessionTemplate sqlSession,
+			RequestSurveyQstn requestSurveyQstn);
+
 }

@@ -135,4 +135,14 @@ public class ResidentSurveyDaoImpl implements ResidentSurveyDao {
 		return surveyStatisticsVOList;
 	}
 
+	/** 설문조사 옵션 정보 가져오기 */
+	@Override
+	public ArrayList<SurveyQstnOption> getSurveyQstnOptionList(SqlSessionTemplate sqlSession,
+			RequestSurveyQstn requestSurveyQstn) {
+		// TODO Auto-generated method stub
+
+		ArrayList<SurveyQstnOption> surveyQstnOptionList = (ArrayList) sqlSession.selectList("ResidentSurvey.getSurveyQstnOptionList", requestSurveyQstn);
+		return surveyQstnOptionList;
+	}
+
 }

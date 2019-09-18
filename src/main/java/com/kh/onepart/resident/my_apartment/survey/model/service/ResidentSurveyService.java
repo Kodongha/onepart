@@ -6,6 +6,7 @@ import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyMainVO;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyPrtcpt;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveyQstn;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.RequestSurveySelected;
+import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyQstnOption;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyStatisticsVO;
 import com.kh.onepart.resident.my_apartment.survey.model.vo.SurveyVO;
 
@@ -56,5 +57,21 @@ public interface ResidentSurveyService {
 	 * @return
 	 */
 	public ArrayList<SurveyStatisticsVO> getSelectedStatistics(int surveySeq, RequestSurveyQstn requestSurveyQstn);
+
+	/**
+	 * 설문조사 옵션 정보 가져오기
+	 * @param surveySeq
+	 * @param requestSurveyQstn
+	 * @return
+	 */
+	public ArrayList<SurveyQstnOption> getSurveyQstnOptionList(int surveySeq, RequestSurveyQstn requestSurveyQstn);
+
+	/**
+	 * 통계정보 정리
+	 * @param surveyStatisticsVOList
+	 * @param surveyQstnOptionList
+	 */
+	public ArrayList<Object> surveyStatisticsVOListGroupBy(ArrayList<SurveyStatisticsVO> surveyStatisticsVOList,
+			ArrayList<SurveyQstnOption> surveyQstnOptionList);
 
 }

@@ -82,9 +82,9 @@
 				data : {resultStr : resultStr},
 				success : function(data) {
 					console.log('succ');
-					$('#modal-dialog').remove();
+					$('#modal-dialog').modal("hide");
 					$('.modal-backdrop').remove();
-					$("#content *").remove();
+					$('.modal-open').css("overflow", "visible");
 					$("#content").html(data);
 				},
 				error : function(error) {

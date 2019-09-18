@@ -366,10 +366,10 @@ public class ResidentSurveyController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/resident/getSelectedStatisticsType2")
+    @RequestMapping(value = "/resident/getSelectedStatisticsType4")
     public ModelAndView getSelectedStatisticsType2(int surveySeq, int surveyQstnType, int surveyQstnNum, ModelAndView modelAndView, HttpSession session) {
 
-        System.out.println("getSelectedStatisticsType1 in");
+        System.out.println("getSelectedStatisticsType4 in");
         System.out.println("surveySeq:::" + surveySeq);
         System.out.println("surveyQstnType:::" + surveyQstnType);
 
@@ -380,8 +380,12 @@ public class ResidentSurveyController {
         requestSurveyQstn.setSurveyQstnNum(surveyQstnNum);
 
         ArrayList<SurveyStatisticsVO> surveyStatisticsVOList = residentSurveyService.getSelectedStatistics(surveySeq, requestSurveyQstn);
-        System.out.println("surveyStatisticsVOList:::" + surveyStatisticsVOList);
-        modelAndView.addObject(surveyStatisticsVOList);
+        ArrayList<SurveyQstnOption> surveyQstnOptionList = residentSurveyService.getSurveyQstnOptionList(surveySeq, requestSurveyQstn);
+
+        // 통계 정보 정리
+        ArrayList<Object> list = residentSurveyService.surveyStatisticsVOListGroupBy(surveyStatisticsVOList, surveyQstnOptionList);
+
+        modelAndView.addObject("list", list);
 
         modelAndView.setViewName("jsonView");
         return modelAndView;

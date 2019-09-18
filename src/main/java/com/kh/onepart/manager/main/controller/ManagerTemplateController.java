@@ -4,13 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class ManagerMainController {
+public class ManagerTemplateController {
 
-	@RequestMapping("/manager/menuMain")
+	@RequestMapping("/manager/main")
 	public String moveMain() {
 		System.out.println("in moveMain");
 
-		return "/manager/main/main";
+		return "/manager/common/managerTemplate";
 	}
 
 }

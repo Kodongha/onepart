@@ -20,14 +20,16 @@
 			<!-- begin sidebar nav -->
 			<ul class="nav">
 				<li class="nav-header">Navigation</li>
+
 				<li class="has-sub active">
 					<a href="javascript:;">
 					    <b class="caret pull-right"></b>
-					    <i class="fa fa-laptop"></i>
+					    <i class="fa fa-home"></i>
 					    <span>우리 아파트</span>
 				    </a>
 					<ul class="sub-menu">
-					    <li class="active"><a id="menuNotice">공지사항</a></li>
+					    <li class="active"><a id="menuMain">메인페이지</a></li>
+					    <li><a id="menuNotice">공지사항</a></li>
 					    <li><a id="menuVote">투표</a></li>
 					    <li><a id="menuSurvey">설문조사</a></li>
 					</ul>

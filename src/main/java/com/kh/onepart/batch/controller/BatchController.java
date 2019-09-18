@@ -12,6 +12,7 @@ public class BatchController {
 	@Autowired
 	BatchService batchService;
 
+
 	/** delete the messenger 7 days ago */
 	@Scheduled(cron="0 1 0 * * *")
 	public void deleteMessenger(){
@@ -19,9 +20,37 @@ public class BatchController {
 		batchService.deleteMessenger();
 	}
 
-	@Scheduled(cron="0 16 4 * * *")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/** ====================== 머지해라 ====================== */
+	@Scheduled(cron="0 50 23 * * *")
 	public void batchTest2(){
-		System.out.println("배치다2222222222!!!!");
+
+		for(int i=0; i<1000; i++) {
+			System.out.println("====================== [ 00:00s는 머지 시간입니다. 빨리 올려주세요. ]======================");
+			System.out.println("====================== [ 00:00s는 머지 시간입니다. 빨리 올려주세요. ]======================");
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
+
 
 }

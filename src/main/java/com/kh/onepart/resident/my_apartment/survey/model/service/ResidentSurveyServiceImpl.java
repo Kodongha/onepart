@@ -124,9 +124,7 @@ public class ResidentSurveyServiceImpl implements ResidentSurveyService {
 			System.out.println("residentPrtcptCount :: " + residentPrtcptCount);
 
 			prtcptPercent = (double) residentPrtcptCount / totalResidentCount * 100;
-
 		}
-
 		return prtcptPercent;
 	}
 
@@ -136,8 +134,52 @@ public class ResidentSurveyServiceImpl implements ResidentSurveyService {
 		// TODO Auto-generated method stub
 
 		ArrayList<SurveyStatisticsVO> surveyStatisticsVOList = residentSurveyDao.getSelectedStatistics(sqlSession, requestSurveyQstn);
-
 		return surveyStatisticsVOList;
+	}
+
+	/** 설문조사 옵션 정보 가져오기 */
+	@Override
+	public ArrayList<SurveyQstnOption> getSurveyQstnOptionList(int surveySeq, RequestSurveyQstn requestSurveyQstn) {
+		// TODO Auto-generated method stub
+
+		ArrayList<SurveyQstnOption> surveyQstnOptionList = residentSurveyDao.getSurveyQstnOptionList(sqlSession, requestSurveyQstn);
+		return surveyQstnOptionList;
+	}
+
+	/** 통계정보 정리 */
+	@Override
+	public ArrayList<Object> surveyStatisticsVOListGroupBy(ArrayList<SurveyStatisticsVO> surveyStatisticsVOList,
+			ArrayList<SurveyQstnOption> surveyQstnOptionList) {
+		// TODO Auto-generated method stub
+		ArrayList<String> optionInfoList = new ArrayList<String>();
+		ArrayList<Integer> countInfoList = new ArrayList<Integer>();
+		for(SurveyQstnOption surveyQstnOption : surveyQstnOptionList) {
+			optionInfoList.add(surveyQstnOption.getSurveyQstnOptionContent());
+			int count = 0;
+
+			for(SurveyStatisticsVO surveyStatisticsVO : surveyStatisticsVOList) {
+				String selectedAnswer = surveyStatisticsVO.getSelectedAnswer();
+				selectedAnswer = selectedAnswer.replace("[", "");
+				selectedAnswer = selectedAnswer.replace("]", "");
+				String tmp[] = selectedAnswer.split(", ");
+				for(int i=0; i<tmp.length; i++) {
+					if(surveyQstnOption.getSurveyQstnOptionContent().equals(tmp[i])) {
+						count ++;
+					}
+				} // end for i
+			} // end second for
+			countInfoList.add(count);
+		} // end first for
+
+		for(int i=0; i<optionInfoList.size(); i++) {
+			System.out.println(optionInfoList.get(i) + "::::" + countInfoList.get(i));
+		}
+
+		ArrayList<Object> list = new ArrayList<Object>();
+		list.add(optionInfoList);
+		list.add(countInfoList);
+
+		return list;
 	}
 
 }

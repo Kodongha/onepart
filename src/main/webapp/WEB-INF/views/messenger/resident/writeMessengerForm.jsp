@@ -41,6 +41,23 @@
 			color: lightgray;
 			font-size: 1em;
 		}
+
+		.bg-white {
+			height : 614px;
+		}
+
+		.m-b-15 {
+			margin-bottom: 55px !important;
+		}
+
+		body {
+			background: white;
+		}
+
+		.p-0 {
+			margin-bottom: 15px;
+		}
+
 	</style>
 
 </head>
