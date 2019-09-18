@@ -47,12 +47,10 @@
             <!-- begin brand -->
             <div class="login-header">
                 <div class="brand">
-                    <span class="logo"></span> OnePart(원파트)
-                    <small>아파트 스마트 홈라이프의 시작</small>
+                    <img style=" width: 200px; position: absolute; left: 120px;" src="${contextPath}/resources/images/onpart (2).png" alt="" />
+                    <small style=" position: absolute; top: -30px; left: 10px;">아파트 스마트 홈라이프의 시작</small>
                 </div>
-                <div class="icon">
-                    <i class="fa fa-sign-in"></i>
-                </div>
+
             </div>
             <!-- end brand -->
             <div class="login-content">

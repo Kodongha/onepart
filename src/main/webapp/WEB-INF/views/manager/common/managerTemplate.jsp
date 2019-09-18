@@ -180,7 +180,6 @@
 			$("#menuVote").data("menu-url", "/onepart/manager/menuVote");
 			$("#menuSurvey").data("menu-url", "/onepart/manager/menuSurvey");
 			$("#menuFacility").data("menu-url", "/onepart/manager/menuFacility");
-			$("#menuEvent").data("menu-url", "/onepart/manager/menuEvent");
 			$("#menuComplaint").data("menu-url", "/onepart/manager/menuComplaint");
 			$("#menuResidentManage").data("menu-url", "/onepart/manager/menuResidentManage");
 			$("#menuEmployeeManage").data("menu-url", "/onepart/manager/menuEmployeeManage");

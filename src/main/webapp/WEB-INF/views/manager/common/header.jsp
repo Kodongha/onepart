@@ -25,7 +25,7 @@
 	<div class="container-fluid">
 		<!-- begin mobile sidebar expand / collapse button -->
 		<div class="navbar-header">
-			<a href="index.html" class="navbar-brand"><span class="navbar-logo"></span>Onepart | V i-F i</a>
+			<a href="${contextPath}/manager/main" class="navbar-brand"><img style="position: absolute; width: 110px; top: 8px; left: 14px;" src="${contextPath}/resources/images/onpart (1).png" alt="" /> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; | V i-F i</a>
 			<button type="button" class="navbar-toggle" data-click="sidebar-toggled">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>

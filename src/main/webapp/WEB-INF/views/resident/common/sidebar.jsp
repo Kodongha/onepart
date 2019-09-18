@@ -54,7 +54,6 @@
 					</a>
 					<ul class="sub-menu">
 						<li><a id="menuOpenChatting">오픈채팅</a></li>
-						<li><a id="menuEvent">이벤트 신청 및 조회</a></li>
 					</ul>
 				</li>
 				<li class="has-sub">

@@ -47,11 +47,8 @@
             <!-- begin brand -->
             <div class="login-header">
                 <div class="brand">
-                    <span class="logo"></span> OnePart(원파트)
-                    <small>관리자 페이지 로그인</small>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-sign-in"></i>
+                    <img style=" width: 200px; position: absolute; left: 120px;" src="${contextPath}/resources/images/onpart (1).png" alt="" />
+                    <small style=" position: absolute; top: -30px; left: 10px;">관리자 페이지 로그인</small>
                 </div>
             </div>
             <!-- end brand -->
