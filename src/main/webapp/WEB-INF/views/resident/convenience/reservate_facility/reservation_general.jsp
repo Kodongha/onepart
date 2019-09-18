@@ -161,23 +161,23 @@
 												</div>
 												<br><br>
 												<div>
-													<label style="font-weight:bold">상세정보</label>
+													<a style="font-weight:bold; color:black;" onclick="voiceInfo(1);">상세정보 </a><small> 클릭시 음성으로 들으실 수 있습니다.</small>
 													<div>
-														<textarea placeholder="${ reserv.facDetailInfo }" cols="5" style="resize:none; width:100%; height:80px" readonly="readonly" ></textarea>
+														<textarea placeholder="${ reserv.facDetailInfo }" data-placeholder="${ reserv.facDetailInfo }" cols="5" style="resize:none; width:100%; height:80px" readonly="readonly" id="facDetailInfo"></textarea>
 													</div>
 												</div>
 												<br>
 												<div>
-													<label style="font-weight:bold">예약안내</label>
+													<a style="font-weight:bold; color:black;" onclick="voiceInfo(2);">예약안내 </a><small> 클릭시 음성으로 들으실 수 있습니다.</small>
 													<div>
-														<textarea placeholder="${ reserv.facRsrvInfo }" cols="5" style="resize:none; width:100%; height:80px" readonly="readonly" ></textarea>
+														<textarea placeholder="${ reserv.facRsrvInfo }" data-placeholder="${ reserv.facRsrvInfo }" cols="5" style="resize:none; width:100%; height:80px" readonly="readonly" id="facRsrvInfo"></textarea>
 													</div>
 												</div>
 												<br>
 												<div>
-													<label style="font-weight:bold">이용안내</label>
+													<a style="font-weight:bold; color:black;" onclick="voiceInfo(3);">이용안내 </a><small> 클릭시 음성으로 들으실 수 있습니다.</small>
 													<div>
-														<textarea placeholder="${ reserv.facUseInfo }" cols="5" style="resize:none; width:100%; height:80px" readonly="readonly" ></textarea>
+														<textarea placeholder="${ reserv.facUseInfo }" data-placeholder="${ reserv.facUseInfo }" cols="5" style="resize:none; width:100%; height:80px" readonly="readonly" id="facUseInfo"></textarea>
 													</div>
 												</div>
 												<br>
@@ -406,6 +406,49 @@
 		});
 
 		return false;
+	}
+
+	/* 카카오 뉴톤 function */
+	function voiceInfo(data) {
+		console.log(data);
+		var voiceData;
+		var resultData;
+
+		if(data == 1){
+			/* 상세정보 */
+			voiceData = $("#facDetailInfo").data("placeholder");
+			console.log(voiceData);
+			resultData = "<speak><voice>" + voiceData + "</voice></speak>"
+		}else if(data == 2){
+			/* 예약안내 */
+			voiceData = $("#facRsrvInfo").data("placeholder");
+			console.log(voiceData);
+		}else{
+			/* 이용안내 */
+			voiceData = $("#facUseInfo").data("placeholder");
+			console.log(voiceData);
+		}
+
+		console.log(resultData);
+
+		/* ajax를 통한 통신 */
+		$.ajax({
+			url:"/onepart/resident/voiceForKaKao",
+			type:"get",
+			data:{resultData:resultData},
+			success:function(data){
+				console.log("성공");
+				console.log(data);
+				var audio = new Audio();
+			    audio.src = data;
+			    audio.play();
+			},
+			error:function(data){
+				console.log("실패");
+				console.log(data);
+			}
+		});
+
 	}
 </script>
 

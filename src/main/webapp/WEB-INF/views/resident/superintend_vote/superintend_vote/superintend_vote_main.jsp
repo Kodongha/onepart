@@ -12,6 +12,13 @@
 <script type="text/javascript" src="${contextPath}/resources/js/moment_ko.min.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/js/jquery.daterangepicker.min.js"></script>
 <link rel="stylesheet" href="${contextPath}/resources/css/daterangepicker.min.css">
+<link href="${contextPath}/resources/plugins/switchery/switchery.min.css" rel="stylesheet">
+<link href="${contextPath}/resources/plugins/powerange/powerange.min.css" rel="stylesheet">
+<style type="text/css">
+	.m-b-5 {
+    margin-bottom: 0px!important;
+	}
+</style>
 </head>
 <jsp:include page="../superintend_vote/superintend_vote_include.jsp"></jsp:include>
 <body>
@@ -30,21 +37,18 @@
 	<div class="tab-content" data-sortable-id="index-3"
 		style="height: 100%">
 		<!-- 첫번째 탭 div -->
+		<br>
 		<div class="tab-pane fade active in" id="latest-post"
 			style="height: 100%">
 			<div class="slimScrollDiv"
 				style="position: relative; overflow: hidden; width: auto; height: 100%;">
 				<br>
 				<div>
-					<table style="width:100%">
+					<table style="width:15%;">
 						<tr>
-							<td><h4>&nbsp;&nbsp;&nbsp;&nbsp;진행중인 선거</h4></td>
-							<td style="width: 20%"><select
-								class="form-control input-sm" id="conChoice">
-									<option value="choice">모두</option>
-									<option value="con1">선거</option>
-									<option value="con2">일반투표</option>
-							</select></td>
+							<td align="center">
+								<span class="label label-warning" style="font-size:1.5em;">진행중</span>
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -76,15 +80,11 @@
 				<!-- 선거결과보기 및 정렬 div -->
 				<br> <br>
 				<div>
-					<table style="width: 95%">
+					<table style="width:15%;">
 						<tr>
-							<td><h4>&nbsp;&nbsp;&nbsp;&nbsp;선거 결과보기</h4></td>
-							<td style="width: 20%"><select
-								class="form-control input-sm" id="conChoice">
-									<option value="choice">모두</option>
-									<option value="con1">선거</option>
-									<option value="con2">일반투표</option>
-							</select></td>
+							<td align="center">
+								<span class="label label-info" style="font-size:1.5em; width: 75px;">종료</span>
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -168,7 +168,7 @@
 							<td>
 								<div class="form-group">
                                        <label for="exampleInputEmail1">후보등록 기간</label>
-                                       <p id="dandidateEnroll" style="background-color:#49e; color:white;padding:3px; cursor:pointer; border-radius:4px; height:35px; text-align:center;">select</p>
+                                       <p id="dandidateEnroll" style="background-color:#49e; color:white;padding:3px; cursor:pointer; border-radius:4px; height:35px; text-align:center;">클릭하여 후보등록 기간을 선택하세요.</p>
                                    </div>
                                    <input type="hidden" id="cnddEnrollStartDt" name="cnddEnrollStartDt">
                                    <input type="hidden" id="cnddEnrollEndDt" name="cnddEnrollEndDt">
@@ -178,7 +178,7 @@
 							<td>
 								<div class="form-group">
                                        <label for="exampleInputEmail1">선거운동 기간</label>
-                                       <p id="campaign" style="background-color:#49e; color:white;padding:3px; cursor:pointer; border-radius:4px; height:35px; text-align:center;">select</p>
+                                       <p id="campaign" style="background-color:#49e; color:white;padding:3px; cursor:pointer; border-radius:4px; height:35px; text-align:center;">클릭하여 선거운동 기간을 선택하세요.</p>
                                    </div>
                                    <input type="hidden" id="campaignStartDt" name="campaignStartDt">
                                    <input type="hidden" id="campaignEndDt" name="campaignEndDt">
@@ -188,7 +188,7 @@
 							<td>
 								<div class="form-group">
                                        <label for="exampleInputEmail1">투표 기간</label>
-                                       <p id="realVote" style="background-color:#49e; color:white;padding:3px; cursor:pointer; border-radius:4px; height:35px; text-align:center;">select</p>
+                                       <p id="realVote" style="background-color:#49e; color:white;padding:3px; cursor:pointer; border-radius:4px; height:35px; text-align:center;">클릭하여 투표 기간을 선택하세요.</p>
                                    </div>
                                    <input type="hidden" id="voteStartDt" name="voteStartDt">
                                    <input type="hidden" id="voteEndDt" name="voteEndDt">
@@ -290,7 +290,10 @@
                                     <label for="exampleInputEmail1" style="font-weight:bold;">투표구별</label>
                                 </div>
 								<div class="form-group" style="margin-bottom:10px;">
-                                    &nbsp;&nbsp;&nbsp;<input type="checkbox" id="votekind1" name="votekind" value="1"><label for="exampleInputEmail1">&nbsp;&nbsp;&nbsp;일반투표</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<!-- <span class="switchery" style="background-color: rgb(255, 91, 87); border-color: rgb(255, 91, 87); box-shadow: rgb(255, 91, 87) 0px 0px 0px 16px inset; transition: border 0.5s ease 0s, box-shadow 0.5s ease 0s, background-color 1.5s ease 0s;">
+										<small style="left: 20px; transition: left 0.25s ease 0s;"></small>
+									</span> -->
+                                   &nbsp;&nbsp;&nbsp;<input type="checkbox" id="votekind1" name="votekind" value="1"><label for="exampleInputEmail1">&nbsp;&nbsp;&nbsp;일반투표</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;<input type="checkbox" id="votekind2" name="votekind" value="2"><label for="exampleInputEmail1">&nbsp;&nbsp;&nbsp;익명투표</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;<input type="checkbox" id="votekind3" name="votekind" value="3"><label for="exampleInputEmail1">&nbsp;&nbsp;&nbsp;복수선택</label>
                                     <input type="hidden" id="gnrVoteType" name="gnrVoteType">
@@ -301,7 +304,7 @@
 							<td>
 								<div class="form-group" style="margin-bottom: 45px;">
                                        <label for="exampleInputEmail1" style="font-weight:bold;">투표 종료기간</label>
-                                       <p id="testDatepicker" style="background-color:#49e; color:white;padding:3px; cursor:pointer; border-radius:4px; height:35px; text-align:center;">select</p>
+                                       <p id="testDatepicker" style="background-color:#49e; color:white;padding:3px; cursor:pointer; border-radius:4px; height:35px; text-align:center;">클릭하여 투표 기간을 선택하세요.</p>
                                        <input type="hidden" id="gnrVoteEndDt" name="gnrVoteEndDt">
                                    </div>
 							</td>
@@ -356,9 +359,9 @@
                                      <label for="exampleInputEmail1" style="font-weight:bold;">후보등록</label>
                                 </div>
 							</td>
-							<td style="width:30%;">
+							<td style="width:30%; text-align:right">
 								<div class="form-group">
-                                    <a href="#modal-dialog_test" data-toggle="modal" class="btn btn-default" style="width:100%" id="newCandidateBtn">새 후보 추가</a>
+                                    <a href="#modal-dialog_test" data-toggle="modal" class="btn btn-default" style="width:15%" id="newCandidateBtn">+</a>
                                 </div>
 							</td>
 						</tr>
@@ -833,5 +836,13 @@
 
 	}
 </script>
+<script>
+		$(document).ready(function() {
+			FormSliderSwitcher.init();
+		});
+</script>
+<script src="${contextPath}/resources/plugins/switchery/switchery.min.js"></script>
+<script src="${contextPath}/resources/plugins/powerange/powerange.min.js"></script>
+<script src="${contextPath}/resources/js/form-slider-switcher.demo.min.js"></script>
 </body>
 </html>

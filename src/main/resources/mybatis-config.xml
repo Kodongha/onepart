@@ -74,6 +74,12 @@
     	<typeAlias type="com.kh.onepart.manager.visit_car.model.vo.ManagerVisitCarVo" alias="manager_VisitCarVo" />
 		<typeAlias type="com.kh.onepart.manager.car_manage.model.vo.ResidentCarVO" alias="ResidentCarVO" />
 		<typeAlias type="com.kh.onepart.manager.employee_manage.model.vo.EmployeeManageVO" alias="EmployeeManageVO" />
+		<typeAlias type="com.kh.onepart.manager.vote.model.vo.VoteList" alias="manager_voteList" />
+		<typeAlias type="com.kh.onepart.manager.vote.model.vo.GeneralVote" alias="manager_generalVote" />
+		<typeAlias type="com.kh.onepart.manager.vote.model.vo.GeneralVoteCandidate" alias="manager_generalVoteCandidate" />
+		<typeAlias type="com.kh.onepart.manager.vote.model.vo.ElectionVote" alias="manager_ElectionVote" />
+		<typeAlias type="com.kh.onepart.manager.vote.model.vo.ElectionVoteCandidate" alias="manager_ElectionVoteCandidate" />
+		<typeAlias type="com.kh.onepart.manager.vote.model.vo.Superintend" alias="manager_Superintend" />
 
 
 	</typeAliases>
@@ -108,6 +114,7 @@
 		<mapper resource="mappers/manager/residentCar/residentCar-mapper.xml" />
 		<mapper resource="mappers/manager/EmployeeManage/EmployeeManage-mapper.xml" />
 		<mapper resource="mappers/manager/visitCar/manager-visitCar-mapper.xml" />
+		<mapper resource="mappers/manager/vote/manager-vote-mapper.xml" />
 
 		<!-- Batch -->
 		<mapper resource="mappers/batch/batch-mapper.xml" />

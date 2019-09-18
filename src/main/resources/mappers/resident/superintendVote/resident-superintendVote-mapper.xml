@@ -288,7 +288,8 @@
 		SELECT COUNT(*)
 		FROM RESIDENT
 		WHERE APT_DETAIL_INFO_SEQ = #{aptDetailInfoSeq}
-		AND HOUSEHOLD_AUTH_TYPE = 2
+		AND ( HOUSEHOLD_AUTH_TYPE = 2
+		OR HOUSEHOLD_AUTH_TYPE = 3 )
 	</select>
 
 	<select id="selectConfirmResidents" parameterType="ResidentVO" resultType="_int">
