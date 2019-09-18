@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	String checkNo = Integer.toString((int)(Math.random()*999999) + 100000);
-%>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
@@ -127,24 +124,13 @@
 						<label class="control-label">휴대전화번호 인증</label>
 						<div class="row m-b-15">
 							<div class="col-md-12">
-								<input name="residentPhone" id="residentPhone" type="tel" class="form-control" placeholder="-를 포함한 전화번호 입력" style="width: 77%; display: inline-block;"
+								<input name="residentPhone" id="residentPhone" type="tel" class="form-control" placeholder="휴대전화번호 입력" style="width: 77%; display: inline-block;"
 								 required />&nbsp;
-								 <!-- <input type="text" maxlength="3" name="tel1" id="tel" placeholder="010"> -
-								<input type="text" maxlength="4" name="tel2" id="tel" placeholder="0000"> -
-								<input type="text" maxlength="4" name="tel3" id="tel" placeholder="0000"> -->
-								<button id="checkPhone" type="button" class="btn btn-default m-r-5 m-b-5">인증번호</button>
+								<button name="verifiedBtn" id="verifiedBtn" type="button" class="btn btn-default m-r-5 m-b-5">인증번호</button>
 								<br>
 								<!-- **인증번호 클릭 시 아래 창 생김 or 새창 -->
-								<br> <input name="checkNo" id="checkNo" required type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
-									<input type="hidden" name="action" value="go"> <!-- 발송타입 -->
-							        <input type="hidden" name="msg" value="<%=checkNo%>">
-									<input type="hidden" name="rphone">
-									<input type="hidden" name="smsType" value="S"> <!-- 단문(SMS) -->
-									<input type="hidden" name="sphone1" value="010">
-							        <input type="hidden" name="sphone2" value="1111">
-							        <input type="hidden" name="sphone3" value="2222">
-
-								<button id="checkNumber" type="button" class="btn btn-default m-r-5 m-b-5">확인</button>
+								<br> <input required type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
+								<button type="button" class="btn btn-default m-r-5 m-b-5">확인</button>
 							</div>
 						</div>
 
@@ -370,8 +356,19 @@
 						<hr />
 						<p class="text-center text-inverse">&copy; Color Admin All
 							Right Reserved 2015</p>
+
+
+
 					</form>
 				</div>
+				<form method="post" name="smsForm" action="smssend.jsp">
+					<input type="hidden" name="rphone">
+					<input type="hidden" name="action" value="go"> <!-- 발송타입 -->
+					<input type="hidden" name="smsType" value="S"> <!-- 단문(SMS) -->
+					<input type="hidden" name="sphone1" value="010">
+			        <input type="hidden" name="sphone2" value="1111">
+			        <input type="hidden" name="sphone3" value="2222">
+				</form>
 				<!-- end register-content -->
 			</div>
 			<!-- end right-content -->
@@ -499,6 +496,54 @@
 				}
 			});
 		});
+
+		//휴대폰 인증번호 json
+           function loadJSON() {
+               var data_file = "/calljson.jsp";
+               var http_request = new XMLHttpRequest();
+               try {
+                   // Opera 8.0+, Firefox, Chrome, Safari
+                   http_request = new XMLHttpRequest();
+               } catch (e) {
+                   // Internet Explorer Browsers
+                   try {
+                       http_request = new ActiveXObject("Msxml2.XMLHTTP");
+
+                   } catch (e) {
+
+                       try {
+                           http_request = new ActiveXObject("Microsoft.XMLHTTP");
+                       } catch (e) {
+                           // Eror
+                           alert("지원하지 않는브라우저!");
+                           return false;
+                       }
+
+                   }
+               }
+               http_request.onreadystatechange = function() {
+                   if (http_request.readyState == 4) {
+                       // Javascript function JSON.parse to parse JSON data
+                       var jsonObj = JSON.parse(http_request.responseText);
+                       if (jsonObj['result'] == "Success") {
+                           var aList = jsonObj['list'];
+                           var selectHtml = "<select name=\"sendPhone\" onchange=\"setPhoneNumber(this.value)\">";
+                           selectHtml += "<option value='' selected>발신번호를 선택해주세요</option>";
+                           for (var i = 0; i < aList.length; i++) {
+                               selectHtml += "<option value=\"" + aList[i] + "\">";
+                               selectHtml += aList[i];
+                               selectHtml += "</option>";
+                           }
+                           selectHtml += "</select>";
+                           document.getElementById("sendPhoneList").innerHTML = selectHtml;
+                       }
+                   }
+               }
+
+               http_request.open("GET", data_file, true);
+               http_request.send();
+           }
+
 	});
 
 
@@ -565,54 +610,37 @@
 
 
 	//휴대폰 인증번호 메소드
-	$("#checkPhone").click(function () {
+	$("#verifiedBtn").click(function () {
 		var rphone = $("#residentPhone").val();
-		var sphone1 = $("input[name='sphone1']").val();
-		var sphone2 = $("input[name='sphone2']").val();
-		var sphone3 = $("input[name='sphone3']").val();
-		var msg = $("input[name='msg']").val();
-		console.log("msg :::: " + msg);
-		var action = $("input[name='action']").val();
+		console.log("rphone : ", rphone);
+		$("#rphone").attr("value", rphone);
+		console.log('$("#rphone").attr("value", rphone); : ' + $("#rphone").attr("value", rphone));
 
-		// 인증번호 입력창
+		function setPhoneNumber(val) {
+               var numList = val.split("-");
+               document.smsForm.sphone1.value = numList[0];
+               document.smsForm.sphone2.value = numList[1];
+           if(numList[2] != undefined){
+                   document.smsForm.sphone3.value = numList[2];
+       		}
+           }
+
+		var verifiedForm = $("#verifiedForm").serialize();
+
 		$.ajax({
-			url:"moveSmssend",
-			data:{rphone:rphone, sphone1:sphone1, sphone2:sphone2, sphone3:sphone3, msg:msg, action:action},
-			dataType:"text",
-			type:"post",
-			success:function(data){
-				alert("인증번호가 발송되었습니다.");
+  			url:"smssend",
+  			type:"post",
+  			data:verifiedForm,
+  			success:function(data){
+				/* var jsonObj = JSON.parse(data); */
 				console.log("data : " + data);
-				var checkPhone = data;
-
-				$("#checkPhone").hide();
-
-
-				$("#checkNumber").on("click", function(){
-
-					var checkNo = $("input[name='checkNo']").val();
-
-					console.log("checkNo :::: " + checkNo);
-					console.log("checkPhone ::::" + checkPhone);
-
-					if(checkNo == checkPhone){
-						$("#checkNo").attr({"readonly":"true"});
-						$("#checkNumber").hide();
-						alert("인증이 완료되었습니다.");
-						num = 1;
-					}else{
-						alert("인증번호가 틀렸습니다. 다시 입력하세요.");
-						$("#checkPhone").show();
-					}
-
-				});
-			},
-			error:function(request,status,error){
-				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		    }
-		});
+				alert("인증번호가 발송되었습니다.")
+  			},
+  			error:function(xhr, status){
+  				alert(xhr + " : " + status);
+  			}
+  		});
 	});
-
 </script>
 
 

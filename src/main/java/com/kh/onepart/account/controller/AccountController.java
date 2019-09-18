@@ -72,6 +72,13 @@ public class AccountController {
 		System.out.println("in moveFindId");
 		return "account/findId";
 	}
+
+	@RequestMapping("/moveSmssend")
+	public String moveSmssend() {
+		System.out.println("in moveSmssend");
+		return "account/smssend";
+	}
+
 	//이동 비밀번호 찾기 화면
 	@RequestMapping("/moveFindPwd")
 	public String moveFindPwd() {
