@@ -82,9 +82,7 @@ $(document).ready(function() {
 
 <!-- 타이틀 -->
 <div style="width:85%; margin:0 auto">
-	<h2>우리 아파트 투표</h2>
-	<hr>
-	<br>
+	<h3>우리 아파트 투표</h3>
 </div>
 </body>
 </html>

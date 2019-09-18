@@ -172,10 +172,9 @@ $(document).ready(function() {
 	<br>
 	<table style="width:100%; margin-bottom:-10px;">
 		<tr>
-			<td><h2>선거관리 위원회</h2></td>
+			<td><h3 style="font-weight:bold;">선거관리 위원회</h3></td>
 		</tr>
 	</table>
-	<hr>
 	<br>
 </div>
 </body>

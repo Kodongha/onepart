@@ -7,6 +7,8 @@
 <html lang="en">
 <!--<![endif]-->
 <head>
+<link href="${contextPath}/resources/plugins/jquery-tag-it/css/jquery.tagit.css" rel="stylesheet">
+<link href="${contextPath}/resources/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.css" rel="stylesheet">
 <meta charset="utf-8" />
 <title>Color Admin | Managed Tables - ColVis</title>
 <jsp:include page="../superintend_vote/superintend_vote_include.jsp"></jsp:include>
@@ -14,6 +16,7 @@
 <script
    src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style type="text/css">
+
 .buttonTable {
    width: 100%;
 }
@@ -272,7 +275,24 @@ input[type=checkbox] {
 			<tr>
 				<td style="text-align:center;"><h5>수신인</h5></td>
 				<td style="width:2%"></td>
-				<td style="width:78%"><input class="form-control" type="text" readonly id="sendResident" name="sendResiden" style="width:100%"></td>
+				<td style="width:78%">
+					<ul id="email-to" class="inverse tagit ui-widget ui-widget-content ui-corner-all">
+                         <li class="tagit-choice ui-widget-content ui-state-default ui-corner-all tagit-choice-editable"><span class="tagit-label">bootstrap@gmail.com</span>
+	                          <a class="tagit-close">
+								<span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span>
+							  </a>
+							  <input type="hidden" value="bootstrap@gmail.com" name="tags" class="tagit-hidden-field">
+						 </li>
+						 <li class="tagit-choice ui-widget-content ui-state-default ui-corner-all tagit-choice-editable"><span class="tagit-label">google@gmail.com</span>
+						 	<a class="tagit-close">
+						 		<span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span>
+						 	</a>
+						 	<input type="hidden" value="google@gmail.com" name="tags" class="tagit-hidden-field"></li>
+						 <li class="tagit-new"><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+						 	<input type="text" class="ui-widget-content ui-autocomplete-input" autocomplete="off">
+						 </li>
+					</ul>
+				</td>
 				<td style="width:2%"></td>
 				<td><button class="btn btn-danger">전송하기</button></td>
 			</tr>
@@ -329,7 +349,17 @@ input[type=checkbox] {
          });
       };
    </script>
-
+   <script>
+		$(document).ready(function() {
+			App.init();
+			EmailCompose.init();
+		});
+	</script>
+	<script src="${contextPath}/resources/js/email-compose.demo.min.js"></script>
+	<script src="${contextPath}/resources/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.js"></script>
+	<script src="${contextPath}/resources/plugins/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.js"></script>
+	<script src="${contextPath}/resources/plugins/jquery-tag-it/js/tag-it.min.js"></script>
+	<script src="${contextPath}/resources/js/apps.min.js"></script>
 
 </body>
 

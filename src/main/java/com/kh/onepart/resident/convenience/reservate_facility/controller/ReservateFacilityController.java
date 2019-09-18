@@ -1,13 +1,24 @@
 package com.kh.onepart.resident.convenience.reservate_facility.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.onepart.account.model.vo.ResidentVO;
@@ -215,5 +226,63 @@ public class ReservateFacilityController {
 		mv.setViewName("jsonView");
 
 		return mv;
+	}
+
+	@RequestMapping("/resident/voiceForKaKao")
+	@ResponseBody
+	public File voiceForKaKao(ModelAndView mv, HttpServletRequest request) {
+
+		String resultData = request.getParameter("resultData");
+		System.out.println(resultData);
+
+		String url = "https://kakaoi-newtone-openapi.kakao.com/v1/synthesize";
+		URL object;
+		File f = null;
+
+		try {
+			object = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) object.openConnection();
+			con.setDoOutput(true);
+			con.setDoInput(true);
+			con.setRequestProperty("Content-Type", "application/xml");
+			con.setRequestProperty("Authorization", "KakaoAK c855aa08eb4a7540112bc314f63385ab");
+			con.setRequestMethod("POST");
+
+			OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
+			wr.write(resultData);
+			wr.flush();
+
+			int HttpResult = con.getResponseCode();
+			if (HttpResult == HttpURLConnection.HTTP_OK) {
+				InputStream is = con.getInputStream();
+				int read = 0;
+                byte[] bytes = new byte[1024];
+                String tempname = Long.valueOf(new Date().getTime()).toString();
+                f = new File(tempname + ".mp3");
+                f.createNewFile();
+                OutputStream outputStream = new FileOutputStream(f);
+                while ((read =is.read(bytes)) != -1) {
+                    outputStream.write(bytes, 0, read);
+                }
+                is.close();
+                System.out.println(f);
+			    System.out.println(con.getResponseCode());
+			    mv.addObject("outputStream", f);
+			} else {
+			    System.out.println(con.getResponseCode());
+			}
+
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		mv.setViewName("jsonView");
+
+		return f;
 	}
 }

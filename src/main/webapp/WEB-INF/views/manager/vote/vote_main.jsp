@@ -10,9 +10,10 @@
 </head>
 <body>
 <jsp:include page="../vote/vote_include.jsp"></jsp:include>
-<div style="width:85%; margin:0 auto">
+<div style="width:85%; margin:0 auto; background:white">
+	<br>
 	<!-- 현재 진행중인 투표 div -->
-	<table style="width:100%">
+	<table style="width:95%; margin:0 auto;">
 		<tr>
 			<td>
 				<div class="form-group">
@@ -21,7 +22,7 @@
 			</td>
 			<td></td>
 			<td style="width:15%">
-				<a class="btn btn-success" style="width:100%" id="candidateApply">후보 신청서 제출</a>
+				<a class="btn btn-success" style="width:100%" id="superintendApply">선관위 선임 및 해임</a>
 			</td>
 		</tr>
 	</table>
@@ -34,7 +35,6 @@
                            <th class="text-center">투표종류</th>
                            <th class="text-center">투표명</th>
                            <th class="text-center">투표현황</th>
-                           <th class="text-center">내 현황</th>
                            <th class="text-center">투표종료날짜</th>
                        </tr>
                    </thead>
@@ -45,7 +45,6 @@
 							<td>${ ingVoteList.voteKind }</td>
 							<td>${ ingVoteList.voteNm }</td>
 							<td>${ ingVoteList.voteStatus }</td>
-							<td>${ ingVoteList.userStatus }</td>
 							<td>${ ingVoteList.endDt }</td>
 						</tr>
 					</c:forEach>
@@ -53,12 +52,22 @@
 			</table>
 		</div>
 	</div>
-	<br>
-	<br>
+</div>
+<br>
+<br>
+<div style="width:85%; margin:0 auto; background:white">
+<br>
 	<!-- 최근 완료된 투표 div -->
 	<div>
-		<h4>최근 완료된 투표</h4>
-		<h5>일주일 이내에 완료된 투표 내역입니다.</h5>
+		<table style="width:95%; margin:0 auto;">
+		<tr>
+			<td>
+				<div class="form-group">
+                    <h4>최근 완료된 투표</h4>
+                </div>
+			</td>
+		</tr>
+	</table>
 		<div class="panel-body" style="background:white" align="center">
 			<table class="table table-hover" style="text-align: center; width:100%">
 				<thead>
@@ -67,7 +76,6 @@
                            <th class="text-center">투표종류</th>
                            <th class="text-center">투표명</th>
                            <th class="text-center">투표현황</th>
-                           <th class="text-center">내 현황</th>
                            <th class="text-center">투표종료날짜</th>
                        </tr>
                    </thead>
@@ -78,8 +86,7 @@
 							<td>${ endVoteList.voteKind }</td>
 							<td>${ endVoteList.voteNm }</td>
 							<td>${ endVoteList.voteStatus }</td>
-							<td>${ endVoteList.userStatus }</td>
-							<td>${fn:substring(endVoteList.realEndDt,0,10)}</td>
+							<td>${fn:substring(endVoteList.endDt,0,10)}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -87,13 +94,14 @@
 		</div>
 	</div>
 </div>
+<br>
 <script type="text/javascript">
 	/* 선거 및 투표 상세보기 (투표기간) function */
 	function detailAllTypeVote(voteSeq, voteKind, voteStatus) {
 		var voteSeq = voteSeq;
 		if(voteKind == '일반투표' && voteStatus == '투표기간'){
 			$.ajax({
-				url:"/onepart/resident/general",
+				url:"/onepart/manager/detailvote_general",
 				type:"get",
 				dataType:"html",
 				data:{
@@ -110,7 +118,7 @@
 
 		}else if(voteKind == '선거' && voteStatus == '투표기간'){
 			$.ajax({
-				url:"/onepart/resident/election",
+				url:"/onepart/manager/detailvote_candidate",
 				type:"get",
 				dataType:"html",
 				data:{
@@ -128,6 +136,20 @@
 			alert("현재 선택하신 선거는 상세보기가 불가능합니다. \n투표가 진행중인 선거만 상세보기를 하실 수 있습니다.")
 		}
 	}
+
+	$(function(){
+		/* 선관위 선임 및 해임 페이지 이동 function */
+		$("#superintendApply").click(function(){
+			$.ajax({
+				url:"/onepart/manager/delegationSuperintend",
+				type:"get",
+				dataType:"html",
+				success:function(result){
+					$("#content").html(result);
+				}
+			});
+		});
+	});
 </script>
 </body>
 </html>
