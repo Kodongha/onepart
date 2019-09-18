@@ -31,7 +31,6 @@
 					    <li><a id="menuVote">투표</a></li>
 					    <li><a id="menuSurvey">설문조사</a></li>
 					    <li><a id="menuFacility">시설물 관리</a></li>
-					    <li><a id="menuEvent">이벤트 관리</a></li>
 					    <li><a id="menuComplaint">민원접수</a></li>
 					    <li><a id="menuResidentManage">입주민 관리</a></li>
 					    <li><a id="menuEmployeeManage">직원 관리</a></li>

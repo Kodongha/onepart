@@ -464,8 +464,9 @@ $(document).on('click', '.downback', function () {
 					const imageUrl = resultData.message;
 					const date = resultData.date;
 					const isMe = resultData.isMe;
+					const uploadPath = resultData.uploadPath
 
-					addImage(senderId, imageUrl, date, isMe);
+					addImage(senderId, imageUrl, date, isMe, uploadPath);
 				}
 				else if(resultData.act == "getPrevMessages") {
 
@@ -619,7 +620,7 @@ $(document).on('click', '.downback', function () {
 		}
 
 		// 이미지 메세지 하나 그리기
-		function addImage(sender, imageUrl, date, isMe) {
+		function addImage(sender, imageUrl, date, isMe, uploadPath) {
 			let msgFormat = (isMe)? $('#chatMsgFormat').find('li.right').clone() :  $('#chatMsgFormat').find('li.left').clone();
 			msgFormat.find('.name').text(sender);
 			msgFormat.find('.message').html('<a href='+imageUrl+' download><img src='+imageUrl+'></a>');

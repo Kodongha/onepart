@@ -12,9 +12,20 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style type="text/css">
+#deleteResidentCar{
+  background: #ff5b57 !important;
+    border-color: #ff5b57 !important;
+}
+#deleteResidentCar:hover {
+    background: #cc4946 !important;
+    border-color: #cc4946 !important;
+}
 .buttonTable {
 	width: 100%;
+	    background: #00acac !important;
+    border-color: #00acac !important;
 }
+
 
 #carnumTable {
 	width: 100%;
@@ -89,7 +100,7 @@
 	color: #fff;
 	background: #00acac !important;
 	border-color: #00acac !important;
-	width: 20%;
+	width: 100%;
 }
 
 .btn.btn-warning:hover {
@@ -218,11 +229,11 @@ input[type=checkbox] {
 					<table id="data-table" class="table table-striped table-bordered">
 						<thead>
 							<tr>
-								<td colspan="3"
+								<td
 									style="border-top: 1px solid white; border-right: 1px solid white; border-left: 1px solid white"><button
 										type="button" class="btn btn-sm btn-warning modal-show"
 										id="deleteResidentCar">삭제</button></td>
-								<td colspan="4"
+								<td colspan="6"
 									style="text-align: right; border-top: 1px solid white; border-right: 1px solid white; border-left: 1px solid white"><button
 										id="add-with-callbacks"
 										class="btn btn-sm btn-warning modal-show"

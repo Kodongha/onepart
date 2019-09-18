@@ -107,23 +107,19 @@ public class SpringChatWebsocket extends TextWebSocketHandler {
 					OpenChatCommVO openChatCommVO = new OpenChatCommVO();
 
 					openChatCommVO.setOpenChatCommSendDt(new java.sql.Timestamp(date.getTime()));
-					openChatCommVO.setOpenChatCommContent((String)msg.get("message"));
+					String Image = ("<a href=" + (String)msg.get("message") + " download><img src= "+(String)msg.get("message")+"></a>");
+					openChatCommVO.setOpenChatCommContent(Image);
 					openChatCommVO.setOpenChatCommAttchTf("N");
 					openChatCommVO.setOpenChatCommImgTf("Y");
 					openChatCommVO.setResidentSeq(Integer.parseInt((String)msg.get("sender")));
 					openChatCommVO.setOpenChatSeq(Integer.parseInt((String)msg.get("openChatSeq")));
 
 
-//					ImageVO imageVO = new ImageVO();
-//					imageVO.setChangeNm((String)msg.get("changeName"));
-//					imageVO.setFilePath((String)msg.get("uploadPath"));
-//					imageVO.setOriginNm((String)msg.get("originFileName"));
-
 
 
 					if(msg.get("isMe").equals(true)) {
 						openChatCommService.saveOpenChatImageComm(openChatCommVO);
-						//openChatCommService.saveImage(openChatCommVO);
+
 					}
 
 

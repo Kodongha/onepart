@@ -15,6 +15,14 @@
 .buttonTable {
 	width: 100%;
 }
+#deleteManager{
+  background: #ff5b57 !important;
+    border-color: #ff5b57 !important;
+}
+#deleteManager:hover {
+    background: #cc4946 !important;
+    border-color: #cc4946 !important;
+}
 #managerTable{width:100%;}
 #managerTable tr td:first-child{
 	width:25%;
@@ -36,6 +44,7 @@
 	color: #fff;
 	background: #00acac !important;
 	border-color: #00acac !important;
+	width:100%;
 }
 
 .btn.btn-warning:hover {

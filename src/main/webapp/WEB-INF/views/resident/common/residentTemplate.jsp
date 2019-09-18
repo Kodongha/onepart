@@ -217,8 +217,7 @@
 
 			/* 따뜻함 */
 			$("#menuOpenChatting").data("menu-url", "/onepart/resident/menuOpenChatting");	// 오픈채팅
-			$("#menuEvent").data("menu-url", "/onepart/resident/menuEvent");					// 이벤트 신청 및 조회
-
+			
 			/* 편의 */
 			$("#menuReservateFacility").data("menu-url", "/onepart/resident/menuReservateFacility")	// 시설물 예약
 			$("#menuOpserveMeeting").data("menu-url", "/onepart/resident/menuOpserveMeeting");		// 회의 참관

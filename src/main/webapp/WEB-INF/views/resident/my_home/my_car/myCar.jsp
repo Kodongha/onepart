@@ -202,7 +202,7 @@ function getMyCarList() {
 					}
 				},
 				error : function(err) {
-					alert('차량 목록 가져오기에 실패했습니다.');
+					alert('로그인 후 이용 바랍니다.');
 				}
 			});
 		}
