@@ -29,6 +29,10 @@ public class ManagerVoteController {
 		//일주일 이내에 종료된 선거 리스트 불러오는 메소드
 		ArrayList endVoteList = vs.selectAllEndVoteList();
 
+		//현재 선임되어있는 선관위 리스트 불러오는 메소드
+		ArrayList superintendList = vs.selectAllSuperintendList();
+
+		mv.addObject("superintendList", superintendList);
 		mv.addObject("ingVoteList", ingVoteList);
 		mv.addObject("endVoteList", endVoteList);
 		mv.setViewName("/manager/vote/vote_main");
@@ -94,6 +98,23 @@ public class ManagerVoteController {
 
 		mv.addObject("superintendList", superintendList);
 		mv.setViewName("/manager/vote/vote_delegation_superintend");
+
+		return mv;
+	}
+
+	@RequestMapping("/manager/deleteSuperientend")
+	public ModelAndView deleteSuperientend(HttpServletRequest request, ModelAndView mv) {
+		System.out.println("/menuVote");
+		int residentSeq = Integer.parseInt(request.getParameter("residentSeq"));
+
+		//해당 입주민 선관위 해임처리 하는 메소드
+		int result = vs.deleteSuperiented(residentSeq);
+
+		//현재 선임되어있는 선관위 리스트 불러오는 메소드
+		ArrayList superintendList = vs.selectAllSuperintendList();
+
+		mv.addObject("superintendList", superintendList);
+		mv.setViewName("jsonView");
 
 		return mv;
 	}

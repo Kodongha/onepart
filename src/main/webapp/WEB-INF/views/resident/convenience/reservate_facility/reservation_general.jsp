@@ -213,14 +213,14 @@
                                                  </div>
                                                  <br>
                                                  <div class="form-group">
-                                                     <label style="font-weight:bold">사용목적</label>
+                                                     <a style="font-weight:bold; color:black;" onclick="voiceWrite(1);">사용목적 </a><small> 클릭시 음성으로 입력하실 수 있습니다.</small>
                                                      <div class="controls">
                                                          <textarea id="usePurpose" style="resize:none" rows="10" cols="50" name="username" class="form-control" data-parsley-group="wizard-step-2" required></textarea>
                                                      </div>
                                                  </div>
                                                  <br>
                                                  <div class="form-group">
-                                                     <label style="font-weight:bold">기타사항</label>
+                                                     <a style="font-weight:bold; color:black;" onclick="voiceWrite(2);">기타사항 </a><small> 클릭시 음성으로 입력하실 수 있습니다.</small>
                                                      <div class="controls">
                                                          <textarea id="etc" style="resize:none" rows="10" cols="50" name="username" class="form-control" data-parsley-group="wizard-step-2" required></textarea>
                                                      </div>
@@ -450,6 +450,33 @@
 		});
 
 	}
+
+	/* 카카오 뉴통톡 function */
+	function voiceWrite(data) {
+		console.log(data);
+
+		$.ajax({
+			url:"/onepart/resident/voiceTalkForKaKao",
+			type:"get",
+			success:function(data){
+				console.log("성공");
+				console.log(data);
+				var audio = new Audio();
+			    audio.src = data;
+			    audio.play();
+			},
+			error:function(data){
+				console.log("실패");
+				console.log(data);
+			}
+		});
+
+		if(data == 1){
+			/* 사용목적 */
+		}else{
+			/* 기타사항 */
+		}
+	}
 </script>
 
 <!-- wizard 전용 script -->
@@ -471,7 +498,6 @@
 
 <script>
 	$(document).ready(function() {
-		App.init();
 		FormWizardValidation.init();
 	});
 </script>

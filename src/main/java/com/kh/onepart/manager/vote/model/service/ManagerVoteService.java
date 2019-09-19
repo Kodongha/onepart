@@ -22,5 +22,7 @@ public interface ManagerVoteService {
 	ArrayList selectAllElectionCandidateList(int voteSeq);
 	//현재 선임되어있는 선관위 리스트 불러오는 메소드
 	ArrayList selectAllSuperintendList();
+	//해당 입주민 선관위 해임처리 하는 메소드
+	int deleteSuperiented(int residentSeq);
 
 }

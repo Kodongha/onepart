@@ -73,5 +73,14 @@ public class ManagerVoteDaoImpl implements ManagerVoteDao{
 		return superintendList;
 
 	}
+	//해당 입주민 선관위 해임처리 하는 메소드
+	@Override
+	public int deleteSuperiented(SqlSessionTemplate sqlSession, int residentSeq) {
+
+		int result = sqlSession.update("manager_vote.deleteSuperiented", residentSeq);
+
+		return result;
+
+	}
 
 }

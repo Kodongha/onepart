@@ -185,4 +185,10 @@
 		ORDER BY APT_AUTH_CD
 	</select>
 
+	<update id="deleteSuperiented" parameterType="_int">
+		UPDATE RESIDENT
+		SET APT_AUTH_CD = 0
+		WHERE RESIDENT_SEQ = #{residentSeq}
+	</update>
+
 </mapper>
