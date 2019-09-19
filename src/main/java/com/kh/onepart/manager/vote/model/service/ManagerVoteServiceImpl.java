@@ -81,5 +81,14 @@ public class ManagerVoteServiceImpl implements ManagerVoteService{
 		return superintendList;
 
 	}
+	//해당 입주민 선관위 해임처리 하는 메소드
+	@Override
+	public int deleteSuperiented(int residentSeq) {
+
+		int result = vd.deleteSuperiented(sqlSession, residentSeq);
+
+		return result;
+
+	}
 
 }

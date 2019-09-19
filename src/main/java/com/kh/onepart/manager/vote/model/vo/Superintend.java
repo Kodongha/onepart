@@ -19,10 +19,10 @@ public class Superintend {
 	private String residentEmail;
 	private String aptDetailInfoSeq;
 	private int householdAuthType;
-	private Date residentEnrollDt;
+	private String residentEnrollDt;
 	private String leaveTf;
 	private int aptAuthCd;
-	private Date leaveDt;
+	private String leaveDt;
 	private String residentBirth;
 	private String confirmTf;
 	private String residentGender;

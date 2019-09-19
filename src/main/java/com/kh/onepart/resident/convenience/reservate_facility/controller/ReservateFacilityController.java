@@ -2,6 +2,7 @@ package com.kh.onepart.resident.convenience.reservate_facility.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.onepart.account.model.vo.ResidentVO;
@@ -266,6 +266,10 @@ public class ReservateFacilityController {
                 }
                 is.close();
                 System.out.println(f);
+
+                FileWriter output = new FileWriter(f);
+                output.write("C:\\Users\\eunhye\\git\\onepart\\src\\main\\webapp\\resources\\uploadFiles\\audioFile");
+
 			    System.out.println(con.getResponseCode());
 			    mv.addObject("outputStream", f);
 			} else {
