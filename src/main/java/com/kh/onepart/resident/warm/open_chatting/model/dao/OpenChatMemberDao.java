@@ -17,5 +17,6 @@ public interface OpenChatMemberDao {
 	public void getOutThisRoom(SqlSessionTemplate sqlSession, OpenChatMemberVO openChatMemberVO);
 	public int pastMemberEnter(SqlSessionTemplate sqlSession, OpenChatMemberVO openChatMemberVO);
 	public void reEnterOpenChatMember(SqlSessionTemplate sqlSession, OpenChatMemberVO openChatMemberVO);
+	public List<ResidentVO> chatPerson(SqlSessionTemplate sqlSession, int openChatSeq);
 
 }

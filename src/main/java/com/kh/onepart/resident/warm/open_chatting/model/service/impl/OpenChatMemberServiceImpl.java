@@ -10,7 +10,6 @@ import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.warm.open_chatting.model.dao.OpenChatMemberDao;
 import com.kh.onepart.resident.warm.open_chatting.model.service.OpenChatMemberService;
 import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatMemberVO;
-import com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatVO;
 
 @Service
 public class OpenChatMemberServiceImpl implements OpenChatMemberService{
@@ -73,6 +72,15 @@ public class OpenChatMemberServiceImpl implements OpenChatMemberService{
 	public void reEnterOpenChatMember(OpenChatMemberVO openChatMemberVO) {
 		 openChatMemberDao.reEnterOpenChatMember(sqlSession, openChatMemberVO);
 
+	}
+
+
+
+
+
+	@Override
+	public List<ResidentVO> chatPerson(int openChatSeq) {
+		return  openChatMemberDao.chatPerson(sqlSession, openChatSeq);
 	}
 
 

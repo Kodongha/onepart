@@ -111,6 +111,22 @@ public class OpenChattingController {
 		return new ObjectMapper().writeValueAsString(result);
 
 	}
+	@RequestMapping("/resident/chatPerson")
+	@ResponseBody
+	public String chatPerson(@RequestParam("openChatSeq") int openChatSeq,HttpSession session) throws JsonProcessingException {
+		Map<String, Object> result = new HashMap<>();
+		OpenChatMemberVO openChatMemberVO = new OpenChatMemberVO();
+
+		List<ResidentVO> residentList = openChatMemberService.chatPerson(openChatSeq);
+		OpenChatVO openChatVO = openChatService.selectOneById(openChatSeq);
+
+		result.put("result", "success");
+		result.put("residentList",residentList);
+		result.put("openChatVO",openChatVO);
+		return new ObjectMapper().writeValueAsString(result);
+
+	}
+
 
 	@RequestMapping("/resident/deleteNotice")
 	@ResponseBody
