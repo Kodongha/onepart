@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	String checkNo = Integer.toString((int)(Math.random()*999999) + 1);
+%>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 
 <!DOCTYPE html>
@@ -36,6 +39,11 @@
 	<!-- 제이쿼리 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<!-- ================== END BASE JS ================== -->
+	<style>
+	td {
+		padding: 2px;
+	}
+	</style>
 </head>
 <body class="pace-top">
 	<!-- begin #page-loader -->
@@ -48,13 +56,13 @@
 		<!-- <div id="content" class="content"> -->
 			<div class="register register-with-news-feed" style="width: 70%; margin: auto;">
 		<!-- 반응형 시작 -->
- 			<div class="col-md-6">
+ 			<div class="col-lg-10" style="margin: auto;">
 				<ul class="nav nav-tabs">
 					<li class=""><a href="${contextPath }/moveFindId"  aria-expanded="false">아이디 찾기</a></li>
 					<li class="active"><a href="#default-tab-2" data-toggle="tab" aria-expanded="true">비밀번호 찾기</a></li>
 				</ul>
 				<!-- 아이디 찾기, 비밀번호 찾기 탭 시작 -->
-				<div class="tab-content">
+				<div class="tab-content" style="height: 650px;">
 					<!-- 아이디 찾기 시작 -->
 					<div class="tab-pane fade " id="default-tab-1"></div>
 					<!-- 아이디 찾기 끝 -->
@@ -71,7 +79,7 @@
 						        <!-- begin panel -->
 			                    <div class="panel panel-inverse">
 
-			                        <div class="panel-body">
+			                        <div class="panel-body" style="padding:1px;">
 			                            <form method="POST" data-parsley-validate="true" name="form-wizard" id="findPwdForm">
 											<div id="wizard" >
 												<ol>
@@ -97,9 +105,9 @@
 			                                        <fieldset>
 			                                            <legend class="pull-left width-full">아이디 입력 </legend>
 			                                            <!-- begin row -->
-			                                            <div class="row">
-			                                                <!-- begin col-4 -->
-			                                                <div class="col-md-4">
+			                                            <div class="row" style="margin: 5px 25% !important;">
+			                                                <!-- begin col-10 -->
+			                                                <div class="col-md-10">
 																<div class="form-group block1">
 																	<label>아이디</label>
 																	<input name="residentId" id="residentId" type="text" placeholder="아이디 입력" class="form-control" data-parsley-group="wizard-step-1" required />
@@ -119,9 +127,11 @@
 			                                            	<!-- begin col-4 -->
 			                                                <div class="col-md-4">
 			                                                    <div class="form-group">
-			                                                        <label>사용자 이름</label>
+
+			                                                        <!-- <label>사용자 이름</label> -->
 			                                                        <div class="controls">
-			                                                            <input type="text" name="residentNm" id="residentNm" placeholder="실명 입력" class="form-control" data-parsley-group="wizard-step-2" required />
+			                                                            <!-- <input type="text" name="residentNm" id="residentNm" placeholder="실명 입력" class="form-control" data-parsley-group="wizard-step-2" required />
+			                                                            <br> -->
 			                                                        </div>
 			                                                    </div>
 			                                                </div>
@@ -130,12 +140,54 @@
 			                                                <div class="col-md-6">
 																<div class="form-group">
 																<table>
-																	<tr><label>휴대전화번호 인증</label></tr>
 																	<tr>
 																		<td>
-																		<input name="residentPhone" id="residentPhone" type="tel" placeholder="' - ' 없이 숫자만 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" style="width: 300px; display: inline-block;" required/></td>
-																		<td>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default m-r-5 m-b-5" style="display: inline-block; align-self: flex-start;" onclick="confirmNumber()">인증번호</button></td>
+																			<label>사용자 이름</label>
+																		</td>
+																		<td></td>
 																	</tr>
+																	<tr>
+																		<td>
+																			<input type="text" name="residentNm" id="residentNm" placeholder="실명 입력" class="form-control" data-parsley-group="wizard-step-2"  style="width: 300px;" required />
+																			<br>
+																		</td>
+																		<td></td>
+																	</tr>
+																	<tr>
+																		<td>
+																			<label>휴대전화번호 인증</label>
+																		</td>
+																		<td></td>
+																	</tr>
+																	<tr>
+																		<td>
+																		<input name="residentPhone" id="residentPhone" type="tel" placeholder="' - ' 없이 숫자만 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" style="width: 300px;" required/></td>
+																		<br>
+																		<td>&nbsp;&nbsp;&nbsp;<button id="checkPhone" type="button" class="btn btn-default m-r-5 m-b-5" style="display: inline-block; align-self: flex-start;">인증번호</button></td>
+																	</tr>
+																	<tr>
+																		<td>
+																				<label>인증번호</label>
+																		</td>
+																		<td></td>
+																	</tr>
+																	<tr>
+																	<td>
+																	<input type="hidden" name="action" value="go"> <!-- 발송타입 -->
+															        <input type="hidden" name="msg" value="<%=checkNo%>">
+																	<input type="hidden" name="rphone">
+																	<input type="hidden" name="sphone1" value="010">
+															        <input type="hidden" name="sphone2" value="2603">
+															        <input type="hidden" name="sphone3" value="9932">
+																	<input name="checkNo" id="checkNo" required type="text" class="form-control" placeholder="인증번호 입력"
+																		style="width: 100%; display: inline-block;" data-parsley-group="wizard-step-2" data-parsley-type="number"/>&nbsp;
+
+																			</td>
+																			<td>
+																	<!-- <input type="text" name="vNumber" placeholder="인증번호 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" style="width: 50%;" required /> -->
+																		<button id="checkNumber" type="button" class="btn btn-default m-r-5 m-b-5" style="margin-left: 10px;">확인</button>
+																			</td>
+																		</tr>
 																</table>
 																</div>
 			                                                </div>
@@ -143,13 +195,13 @@
 			                                                <!-- begin col-6 -->
 			                                                <div class="col-md-6">
 																<div class="form-group">
-																	<label>인증번호</label>
-																	<input type="text" name="vNumber" placeholder="인증번호 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" style="width: 50%;" required />
+																	<!-- <label>인증번호</label> -->
+
 																</div>
 			                                                </div>
 			                                                <!-- end col-6 -->
 			                                                <!-- 시작 모달로 결과 보내기 버튼 -->
-															<a href="#modal-dialog" class="btn btn-sm btn-success" data-toggle="modal" onclick="showPwd(); return false;" style="float:right;">비밀번호 재설정 하기</a>
+															<a href="#modal-dialog" class="btn btn-sm btn-success" data-toggle="modal" id="submitBtn" style="float:right;">비밀번호 재설정 하기</a>
 															<!-- 끝= 모달로 결과 보내기 버튼 -->
 
 			                                            </div>
@@ -270,90 +322,181 @@
 	<script src="${contextPath}/resources/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
 
-	<script>
-		$(document).ready(function() {
-			App.init();
-			FormWizardValidation.init();
-		});
-		//비밀번호 찾기에서 인증번호 단추 클릭 함수
-		function confirmNumber() {
-			//next버튼 없애
-			$('.next').children().eq(0).css("display", "none")
-		}
+<script>
+	var verifiedNo = 0;
+	$(document).ready(function() {
+		App.init();
+		FormWizardValidation.init();
 
-		//비밀번호 찾기 결과 보여주는 함수
-		function showPwd() {
-			var findPwdForm =$("#findPwdForm").serialize();
+		$('#residentPwd').blur(function(){
+			if(!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/.test($('#residentPwd').val())){
+				if($('#residentPwd').val() != ''){
+				   alert('비밀번호는 숫자와 영문자 조합으로 8~20자리를 사용해야 합니다.');
+				   $('#residentPwd').val('');
+				   $('#residentPwd2').val('');
+				   $('#residentPwd').focus();;
+			       return false;
+				}
+			   }
+		});
+
+		$('#residentPwd2').blur(function(){
+		   if($('#residentPwd').val() != $('#residentPwd2').val()){
+		    	if($('#residentPwd2').val()!=''){
+			    alert("비밀번호가 일치하지 않습니다.");
+		    	    $('#residentPwd2').val('');
+		          $('#residentPwd2').focus();
+		       }
+		    }
+		});
+	});
+	//비밀번호 찾기에서 인증번호 단추 클릭 함수
+
+
+	//비밀번호 찾기 결과 보여주는 함수
+	/* function showPwd() { */
+
+
+	$('#submitBtn').click(function () {
+		if (verifiedNo == 0) {
+			alert('휴대전화번호 본인 인증을 해주세요.');
+			return false;
+		}else{
+
+
+		var findPwdForm =$("#findPwdForm").serialize();
+
+	$.ajax({
+ 			url:"findPwd",
+ 			type:"post",
+ 			data:findPwdForm,
+ 			success:function(data){
+
+			$("#showResultPwd").empty();
+ 				if(data.findPwd != null){
+				console.log("data : " + data.findPwd.residentId);
+				var resultId = data.findPwd.residentId;
+				$("#residentIdResult").val(resultId);
+				console.log($("#residentIdResult").val());
+				$('#setNewPassword').css("display", "");
+				$('#changeNewPasswordBtn').css("display", "");
+ 				}else{
+
+				$("#showResultPwd").append("<h3>"+"입력하신 정보가 일치하지 않습니다.");
+				$('#setNewPassword').css("display", "none");
+				$('#changeNewPasswordBtn').css("display", "none");
+ 				}
+
+
+
+			if(data == ''){
+			}else{
+			}
+ 			},
+ 			error:function(xhr, status){
+ 				alert(xhr + " : " + status);
+ 			}
+ 		});
+		}
+		});
+
+	//새로운 비밀번호 설정 함수
+	function setNewPwd() {
+
+		var setNewPwdForm =$("#setNewPwdForm").serialize();
 
 		$.ajax({
-  			url:"findPwd",
-  			type:"post",
-  			data:findPwdForm,
-  			success:function(data){
+ 			url:"setNewPwd",
+ 			type:"post",
+ 			data:setNewPwdForm,
+ 			success:function(data){
+			console.log("data : " + data);
+			//$("body").html(data);
+			/* $("#showResultPwd").empty(); */
 
-				$("#showResultPwd").empty();
-  				if(data.findPwd != null){
-					console.log("data : " + data.findPwd.residentId);
-					var resultId = data.findPwd.residentId;
-					$("#residentIdResult").val(resultId);
-					console.log($("#residentIdResult").val());
-					$('#setNewPassword').css("display", "");
-					$('#changeNewPasswordBtn').css("display", "");
-  				}else{
+		/* 	if(data == ''){
+			$("#showResultPwd").append("<h3>"+"입력하신 정보가 일치하지 않습니다.");
+			}else{
+				var resultPwd = data.findPwd.residentId;
+				$("#showResultPwd").append("<h3>"+"회원님의 아이디는 '" + resultPwd + "' 입니다.</h3>");
 
-					$("#showResultPwd").append("<h3>"+"입력하신 정보가 일치하지 않습니다.");
-					$('#setNewPassword').css("display", "none");
-					$('#changeNewPasswordBtn').css("display", "none");
-  				}
+			} */
+			$('#step2').attr("class", "wizard-step-2 hide")
+			$('#step4').attr("class", "bwizard-activated")
+			/* $('#tabStep2').attr("aria-selected", "false")
+			$('#tabStep4').attr("aria-selected", "true") */
+			$('#tabStep2').attr("class", "")
+			$('#tabStep4').attr("class", "active")
+			$('.next').children().eq(0).css("display", "none")
+			$('.previous').children().eq(0).css("display", "none")
+
+ 				},
+ 				error:function(xhr, status){
+ 				alert(xhr + " : " + status);
+ 			}
+ 		});
+	}
 
 
 
-				if(data == ''){
-				}else{
-				}
-  			},
-  			error:function(xhr, status){
-  				alert(xhr + " : " + status);
-  			}
-  		});
-		}
+	//휴대폰 인증번호 메소드
+	$("#checkPhone").click(function () {
+		//next버튼 없애기
+		$('.next').children().eq(0).css("display", "none")
+		var rphone = $("#residentPhone").val();
+		var sphone1 = $("input[name='sphone1']").val();
+		var sphone2 = $("input[name='sphone2']").val();
+		var sphone3 = $("input[name='sphone3']").val();
+		var msg = $("input[name='msg']").val();
+		console.log("msg :::: " + msg);
+		var action = $("input[name='action']").val();
 
-		//새로운 비밀번호 설정 함수
-		function setNewPwd() {
+		// 인증번호 입력창
+		$.ajax({
+			url:"moveSmssend",
+			data:{rphone:rphone, sphone1:sphone1, sphone2:sphone2, sphone3:sphone3, msg:msg, action:action},
+			type:"post",
+			success:function(data){
+				alert("인증번호가 발송되었습니다.");
+				console.log(data);
+				console.log("data : " + data.msgRnd);
 
-			var setNewPwdForm =$("#setNewPwdForm").serialize();
+				var checkPhone = data.msgRnd;
+				console.log(data.msgRnd);
+				console.log("checkPhone : ::" + checkPhone);
+				console.log(msg);
 
-			$.ajax({
-  			url:"setNewPwd",
-  			type:"post",
-  			data:setNewPwdForm,
-  			success:function(data){
-				console.log("data : " + data);
-				$("body").html(data);
-				/* $("#showResultPwd").empty(); */
 
-			/* 	if(data == ''){
-				$("#showResultPwd").append("<h3>"+"입력하신 정보가 일치하지 않습니다.");
-				}else{
-					var resultPwd = data.findPwd.residentId;
-					$("#showResultPwd").append("<h3>"+"회원님의 아이디는 '" + resultPwd + "' 입니다.</h3>");
+				$("#checkPhone").hide();
 
-				} */
-				$('#step2').attr("class", "wizard-step-2 hide")
-				$('#step4').attr("class", "bwizard-activated")
-				/* $('#tabStep2').attr("aria-selected", "false")
-				$('#tabStep4').attr("aria-selected", "true") */
-				$('#tabStep2').attr("class", "")
-				$('#tabStep4').attr("class", "active")
-				$('.next').children().eq(0).css("display", "none")
-				$('.previous').children().eq(0).css("display", "none")
 
-  				},
-  				error:function(xhr, status){
-  				alert(xhr + " : " + status);
-  			}
-  		});
-		}
+				$("#checkNumber").on("click", function(){
+
+					var checkNo = $("input[name='checkNo']").val();
+
+					console.log("checkNo :::: " + checkNo);
+					console.log("checkPhone ::::" + checkPhone);
+
+					if(checkNo == checkPhone){
+						$("#checkNo").attr({"readonly":"true"});
+						$("#checkNumber").hide();
+						alert("인증이 완료되었습니다.");
+						verifiedNo = 1;
+					}else{
+						alert("인증번호가 틀렸습니다. 다시 입력하세요.");
+						$("#checkPhone").show();
+					}
+
+				});
+			},
+			error:function(request,status,error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		    }
+		});
+	});
+
+
+
 
 
 	</script>

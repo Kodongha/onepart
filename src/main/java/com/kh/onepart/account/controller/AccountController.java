@@ -1,6 +1,18 @@
 package com.kh.onepart.account.controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.URL;
+import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +41,48 @@ import com.kh.onepart.resident.superintend_vote.model.service.SuperintendVoteSer
 //자동 세션 등록 어노테이션
 @SessionAttributes("loginUser")
 public class AccountController {
+
+	 public static String nullcheck(String str,  String Defaultvalue ) throws Exception
+     {
+          String ReturnDefault = "" ;
+          if (str == null)
+          {
+              ReturnDefault =  Defaultvalue ;
+          }
+          else if (str == "" )
+         {
+              ReturnDefault =  Defaultvalue ;
+          }
+          else
+          {
+                      ReturnDefault = str ;
+          }
+           return ReturnDefault ;
+     }
+     /**
+     * BASE64 Encoder
+     * @param str
+     * @return
+     */
+    public static String base64Encode(String str)  throws java.io.IOException {
+        sun.misc.BASE64Encoder encoder = new sun.misc.BASE64Encoder();
+        byte[] strByte = str.getBytes();
+        String result = encoder.encode(strByte);
+        return result ;
+    }
+
+    /**
+     * BASE64 Decoder
+     * @param str
+     * @return
+     */
+    public static String base64Decode(String str)  throws java.io.IOException {
+        sun.misc.BASE64Decoder decoder = new sun.misc.BASE64Decoder();
+        byte[] strByte = decoder.decodeBuffer(str);
+        String result = new String(strByte);
+        return result ;
+    }
+
 	@Autowired
 	private AccountService accountService;
 	@Autowired
@@ -72,13 +126,6 @@ public class AccountController {
 		System.out.println("in moveFindId");
 		return "account/findId";
 	}
-
-	@RequestMapping("/moveSmssend")
-	public String moveSmssend() {
-		System.out.println("in moveSmssend");
-		return "account/smssend";
-	}
-
 	//이동 비밀번호 찾기 화면
 	@RequestMapping("/moveFindPwd")
 	public String moveFindPwd() {
@@ -92,7 +139,6 @@ public class AccountController {
 		System.out.println("after : " + request.getSession().getAttribute("managerLoginUser"));
 		return "account/managerLogin";
 	}
-
 
 	//로그인용 메소드
 	@RequestMapping(value="/loginCheck", method=RequestMethod.POST)
@@ -152,82 +198,81 @@ public class AccountController {
 		}
 	}
 
+	//아이디 찾기용 메소드
+	@RequestMapping(value="/findId", method=RequestMethod.POST)
+	public ModelAndView findId(ResidentVO requestResidentVO, ModelAndView mv, HttpSession session) {
+		System.out.println("/findId");
+		System.out.println("requestResidentVO in Controller:::" + requestResidentVO);
 
-		//아이디 찾기용 메소드
-		@RequestMapping(value="/findId", method=RequestMethod.POST)
-		public ModelAndView findId(ResidentVO requestResidentVO, ModelAndView mv, HttpSession session) {
-			System.out.println("/findId");
-			System.out.println("requestResidentVO in Controller:::" + requestResidentVO);
-
-			ResidentVO findId;
-			try {
-				findId = accountService.findId(requestResidentVO);
-				System.out.println("findId in ctr: " + findId);
-				if(findId != null) {
-					mv.addObject("findId", findId);
-					mv.setViewName("jsonView");
-				}else {
-					return null;
-				}
-
-			} catch (findIdException e) {
-				mv.addObject("msg", e.getMessage());
-				mv.setViewName("common/errorPage");
+		ResidentVO findId;
+		try {
+			findId = accountService.findId(requestResidentVO);
+			System.out.println("findId in ctr: " + findId);
+			if(findId != null) {
+				mv.addObject("findId", findId);
+				mv.setViewName("jsonView");
+			}else {
+				return null;
 			}
 
-			return mv;
+		} catch (findIdException e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/errorPage");
 		}
 
-		//비밀번호 찾기용 정보조회 메소드
-				@RequestMapping(value="/findPwd", method=RequestMethod.POST)
-				public ModelAndView findPwd(ResidentVO requestResidentVO, ModelAndView mv, HttpSession session) {
-					System.out.println("/findPwd");
-					System.out.println("requestResidentVO in Controller:::" + requestResidentVO);
+		return mv;
+	}
 
-					ResidentVO findPwd;
-					try {
-						findPwd = accountService.findPwd(requestResidentVO);
-						System.out.println("findPwd in ctr: " + findPwd);
-						if(findPwd != null) {
-							mv.addObject("findPwd", findPwd);
-							mv.setViewName("jsonView");
-						}else {
-							mv.addObject("findPwd", findPwd);
-							mv.setViewName("jsonView");
-						}
+	//비밀번호 찾기용 정보조회 메소드
+	@RequestMapping(value="/findPwd", method=RequestMethod.POST)
+	public ModelAndView findPwd(ResidentVO requestResidentVO, ModelAndView mv, HttpSession session) {
+		System.out.println("/findPwd");
+		System.out.println("requestResidentVO in Controller:::" + requestResidentVO);
 
-					} catch (findPwdException e) {
-						mv.addObject("msg", e.getMessage());
-						System.out.println("아이디없음!");
-						mv.setViewName("common/errorPage");
-					}
+		ResidentVO findPwd;
+		try {
+			findPwd = accountService.findPwd(requestResidentVO);
+			System.out.println("findPwd in ctr: " + findPwd);
+			if(findPwd != null) {
+				mv.addObject("findPwd", findPwd);
+				mv.setViewName("jsonView");
+			}else {
+				mv.addObject("findPwd", findPwd);
+				mv.setViewName("jsonView");
+			}
 
-					return mv;
-				}
+		} catch (findPwdException e) {
+			mv.addObject("msg", e.getMessage());
+			System.out.println("아이디없음!");
+			mv.setViewName("common/errorPage");
+		}
 
-		//비밀번호 재설정용 메소드
-				@RequestMapping("/setNewPwd")
-				public ModelAndView setNewPwd(ResidentVO requestResidentVO, ModelAndView mv) {
-					String encPassword = passwordEncoder.encode(requestResidentVO.getResidentPwd());
-					System.out.println("encPassword in ctr: " + encPassword);
-					requestResidentVO.setResidentPwd(encPassword);
+		return mv;
+	}
 
-					System.out.println("requestResidentVO in ctr : " + requestResidentVO);
+	//비밀번호 재설정용 메소드
+	@RequestMapping("/setNewPwd")
+	public ModelAndView setNewPwd(ResidentVO requestResidentVO, ModelAndView mv) {
+		String encPassword = passwordEncoder.encode(requestResidentVO.getResidentPwd());
+		System.out.println("encPassword in ctr: " + encPassword);
+		requestResidentVO.setResidentPwd(encPassword);
 
-					int result = accountService.setNewPwd(requestResidentVO);
-					System.out.println("result in ctr : " + result);
+		System.out.println("requestResidentVO in ctr : " + requestResidentVO);
 
-					if(result > 0) {
-						mv.addObject("result", result);
-						mv.setViewName("jsonView");
-					}else {
-						System.out.println("비밀번호 재설정 오류");
-						mv.addObject("msg", "비밀번호 재설정 오류");
-						mv.setViewName("common/errorPage");
+		int result = accountService.setNewPwd(requestResidentVO);
+		System.out.println("result in ctr : " + result);
 
-					}
-					return mv;
-				}
+		if(result > 0) {
+			mv.addObject("result", result);
+			mv.setViewName("jsonView");
+		}else {
+			System.out.println("비밀번호 재설정 오류");
+			mv.addObject("msg", "비밀번호 재설정 오류");
+			mv.setViewName("common/errorPage");
+
+		}
+		return mv;
+	}
 
 	//관리자 로그인용 메소드
 	@RequestMapping(value="/managerLoginCheck", method=RequestMethod.POST)
@@ -286,5 +331,180 @@ public class AccountController {
 
         return mv;
     }
+
+	//휴대폰 인증번호 체크
+	@RequestMapping("/moveSmssend")
+	public ModelAndView phoneMe(ModelAndView mv , HttpServletRequest request) throws IOException, Exception {
+
+
+	      String msg2 = "";
+
+	       String  action  = nullcheck(request.getParameter("action"), "");
+
+	       String msgRnd = request.getParameter("msg");
+	       msg2 = "원파트 인증 번호 입니다. " + msgRnd;
+
+	       System.out.println("msg :::" + msg2);
+
+	       if(action.equals("go1")) {
+
+
+	           String sms_url = "https://sslsms.cafe24.com/sms_sender.php"; // SMS 전송요청 URL
+	           String user_id = base64Encode("ho6132"); // SMS아이디
+	           String secure = base64Encode("b8757f7462341bd8911014e4557741b9");//인증키
+	           String msg = base64Encode(nullcheck(msg2 , ""));
+	           String rphone = base64Encode(nullcheck(request.getParameter("rphone"), ""));
+	           String sphone1 = base64Encode(nullcheck(request.getParameter("sphone1"), ""));
+	           String sphone2 = base64Encode(nullcheck(request.getParameter("sphone2"), ""));
+	           String sphone3 = base64Encode(nullcheck(request.getParameter("sphone3"), ""));
+	           String rdate = base64Encode(nullcheck(request.getParameter("rdate"), ""));
+	           String rtime = base64Encode(nullcheck(request.getParameter("rtime"), ""));
+	           String mode = base64Encode("1");
+	           String subject = "";
+
+	           String testflag = base64Encode(nullcheck(request.getParameter("testflag"), ""));
+	           String destination = base64Encode(nullcheck(request.getParameter("destination"), ""));
+	           String repeatFlag = base64Encode(nullcheck(request.getParameter("repeatFlag"), ""));
+	           String repeatNum = base64Encode(nullcheck(request.getParameter("repeatNum"), ""));
+	           String repeatTime = base64Encode(nullcheck(request.getParameter("repeatTime"), ""));
+	           String returnurl = nullcheck(request.getParameter("returnurl"), "");
+	           String nointeractive = nullcheck(request.getParameter("nointeractive"), "");
+	           String smsType = base64Encode(nullcheck(request.getParameter("smsType"), ""));
+
+	           String[] host_info = sms_url.split("/");
+	           String host = host_info[2];
+	           String path = "/" + host_info[3];
+	           int port = 80;
+
+	           // 데이터 맵핑 변수 정의
+	           String arrKey[]
+	               = new String[] {"user_id","secure","msg", "rphone","sphone1","sphone2","sphone3","rdate","rtime"
+	                           ,"mode","testflag","destination","repeatFlag","repeatNum", "repeatTime", "smsType", "subject"};
+	           String valKey[]= new String[arrKey.length] ;
+	           valKey[0] = user_id;
+	           valKey[1] = secure;
+	           valKey[2] = msg;
+	           valKey[3] = rphone;
+	           valKey[4] = sphone1;
+	           valKey[5] = sphone2;
+	           valKey[6] = sphone3;
+	           valKey[7] = rdate;
+	           valKey[8] = rtime;
+	           valKey[9] = mode;
+	           valKey[10] = testflag;
+	           valKey[11] = destination;
+	           valKey[12] = repeatFlag;
+	           valKey[13] = repeatNum;
+	           valKey[14] = repeatTime;
+	           valKey[15] = smsType;
+	           valKey[16] = subject;
+
+	           String boundary = "";
+	           Random rnd = new Random();
+	           String rndKey = Integer.toString(rnd.nextInt(32000));
+	           MessageDigest md = MessageDigest.getInstance("MD5");
+	           byte[] bytData = rndKey.getBytes();
+	           md.update(bytData);
+	           byte[] digest = md.digest();
+	           for(int i =0;i<digest.length;i++)
+	           {
+	               boundary = boundary + Integer.toHexString(digest[i] & 0xFF);
+	           }
+	           boundary = "---------------------"+boundary.substring(0,11);
+
+	           // 본문 생성
+	           String data = "";
+	           String index = "";
+	           String value = "";
+	           for (int i=0;i<arrKey.length; i++)
+	           {
+	               index =  arrKey[i];
+	               value = valKey[i];
+	               data +="--"+boundary+"\r\n";
+	               data += "Content-Disposition: form-data; name=\""+index+"\"\r\n";
+	               data += "\r\n"+value+"\r\n";
+	               data +="--"+boundary+"\r\n";
+	           }
+
+	           //out.println(data);
+
+	           InetAddress addr = InetAddress.getByName(host);
+	           Socket socket = new Socket(host, port);
+	           // 헤더 전송
+	           BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"));
+	           wr.write("POST "+path+" HTTP/1.0\r\n");
+	           wr.write("Content-Length: "+data.length()+"\r\n");
+	           wr.write("Content-type: multipart/form-data, boundary="+boundary+"\r\n");
+	           wr.write("\r\n");
+
+	           // 데이터 전송
+	           wr.write(data);
+	           wr.flush();
+
+	           // 결과값 얻기
+	           BufferedReader rd = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+	           String line;
+	           String alert = "";
+	           ArrayList tmpArr = new ArrayList();
+	           while ((line = rd.readLine()) != null) {
+	               tmpArr.add(line);
+	           }
+	           wr.close();
+	           rd.close();
+
+	           String tmpMsg = (String)tmpArr.get(tmpArr.size()-1);
+	           String[] rMsg = tmpMsg.split(",");
+	           String Result= rMsg[0]; //발송결과
+	           String Count= ""; //잔여건수
+	           if(rMsg.length>1) {Count= rMsg[1]; }
+
+
+
+	       }
+
+
+	       try {
+	              String apiUrl =  "https://sslsms.cafe24.com/smsSenderPhone.php";
+	               String userAgent = "Mozilla/5.0";
+	               String postParams = "userId=ho6132&passwd=b8757f7462341bd8911014e4557741b9";
+	               URL obj = new URL(apiUrl);
+	               HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+	               con.setRequestMethod("POST");
+	               con.setRequestProperty("User-Agent", userAgent);
+
+	               // For POST only - START
+	               con.setDoOutput(true);
+	               OutputStream os = con.getOutputStream();
+	               os.write(postParams.getBytes());
+	               os.flush();
+	               os.close();
+	               // For POST only - END
+
+	               int responseCode = con.getResponseCode();
+
+	               if (responseCode == HttpURLConnection.HTTP_OK) { //success
+	                   BufferedReader in = new BufferedReader(new InputStreamReader(
+	                           con.getInputStream()));
+	                   String inputLine;
+	                   StringBuffer buf = new StringBuffer();
+
+	                   while ((inputLine = in.readLine()) != null) {
+	                       buf.append(inputLine);
+	                   }
+	                   in.close();
+	               } else {
+
+	               }
+	       } catch(IOException ex){
+
+	       }
+
+
+	      mv.addObject("msgRnd" , msgRnd);
+	      mv.setViewName("jsonView");
+
+	      System.out.println("넘어가기전 mv 값 : " + mv);
+	      return mv;
+	   }
 
 }
