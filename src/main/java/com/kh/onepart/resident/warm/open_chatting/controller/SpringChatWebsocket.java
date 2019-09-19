@@ -50,10 +50,7 @@ public class SpringChatWebsocket extends TextWebSocketHandler {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> msg = new ObjectMapper().readValue(message.getPayload(), HashMap.class);
 
-			if(msg.get("act").equals("getPastData")) {
-				// DB에서 이전 대화내용 꺼내서 전달
-			}
-			else if(msg.get("act").equals("sendMsg")) {
+			if(msg.get("act").equals("sendMsg")) {
 				List<WebSocketSession> roomResidentList = memberMap.get(Integer.parseInt((String)msg.get("openChatSeq")));
 				for (WebSocketSession sess : roomResidentList) {
 					// 보낸사람인지

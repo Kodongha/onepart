@@ -67,7 +67,13 @@ public class OpenChatMemberDaoImpl implements OpenChatMemberDao {
 
 	}
 
-	
+	@Override
+	public List<ResidentVO> chatPerson(SqlSessionTemplate sqlSession, int openChatSeq) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("OpenChatMember.chatPerson", openChatSeq);
+	}
+
+
 
 
 

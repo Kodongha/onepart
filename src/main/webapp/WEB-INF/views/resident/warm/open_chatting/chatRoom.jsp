@@ -8,6 +8,7 @@
 <!--<![endif]-->
 <head>
 <style type="text/css">
+	.format{display:none;}
 	.panel-heading.notice .slimScrollDiv .slimScrollBar { background:#FFF !important;}
 	.downback{ position: absolute; right: 10px; top: 0px; cursor: pointer;}
 	.panel-inverse>.panel-heading { height: 40px; background: #00acac !important; }
@@ -23,6 +24,9 @@
 	.chat-content .panel-heading.notice { height: 120px; position: fixed; top: 40px; width: 100%; background-color: #000 !important; opacity: 0.7; z-index: 90; border-radius: 0;}
 
 	/* 채팅방  */
+	.table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th{ text-align: center; font-weight: bold; }
+	.table-striped>tbody>tr:nth-child(even)>td, .table-striped>tbody>tr:nth-child(even)>th{ text-align: center; font-weight: bold; }
+	.icon-arrow-right:before{ position: fixed; top: 60px; right: 20px; }
 	.chat-content.panel { height: 100%; margin-bottom: 0; padding-top: 40px; padding-bottom: 50px; }
 	.chat-content .slimScrollDiv { padding: 0 5px; }
 	.chat-content #chatpeople button { background: none; border: none; outline: none; }
@@ -49,7 +53,7 @@
 
 	/* 채팅방 참여자 목록 */
 	.member-content { background: rgba(0,0,0, 0.2); position: fixed; top: 40px; right: 0; height: 100%; padding: 10px; padding-bottom: 180px; }
-	.member-content { width: 200px; opacity: 1;  z-index: 100; transition-property: width; transition-duration: 0.5s; }
+	.member-content { width: 160px; opacity: 1;  z-index: 100; transition-property: width; transition-duration: 0.5s; }
 	.member-content.modal-hide {  width: 0px; opacity: 0; z-index: 0; transition-property: width, opacity; transition-duration: 0.5s; }
 	.member-content .member-title { white-space: nowrap; border-color: #e2e7eb; padding: 10px 15px; background: #348fe2; color: #FFF; }
 	.member-content .member-title div { display: inline-block; width: 50%; }
@@ -191,7 +195,7 @@
 				</div>
 
 				<span class="label label-success pull-right" id="chatpeople">
-					<button class="modal-show" data-modal-id="memberContentDiv">${ openChatVO.openChatCurrHead }/${ openChatVO.openChatMaxHead }</button>
+					<button class="modal-show" data-modal-id="memberContentDiv"><span id="openChatCurrHead">${ openChatVO.openChatCurrHead }</span>/${ openChatVO.openChatMaxHead }</button>
 				</span>
 			</h4>
 		</div>
@@ -256,24 +260,32 @@
 				<i class="icon-arrow-right modal-hide-btn"></i>
 			</div>
 		</div>
-		<div data-scrollbar="true" data-height="100%">
-			<table id="memberTable " class="table table-striped table-bordered">
+		<div data-scrollbar="true" data-height="100%" class="memberDiv">
+
+			<table id="memberTable" class="table table-striped table-bordered memberTable" >
 				<tbody>
 
 					<c:forEach var="residentVO" items="${residentList}">
 						<tr>
-						<td>
-							<span><c:out value="${residentVO.residentId}" /></span>
-						</td>
-						<td>
-							<i class="icon-close"></i>
-						</td>
-					</tr>
+							<td>
+								<span class="member"><c:out value="${residentVO.residentId}" /></span>
+							</td>
+						</tr>
 					</c:forEach>
 
 				</tbody>
 			</table>
+
 		</div>
+
+			<table id="memberTable" class="table table-striped table-bordered memberTable format" >
+				<tbody>
+					<tr>
+						<td><span class="member"></span></td>
+					</tr>
+				</tbody>
+			</table>
+
 		<div>
 			<button id="exitBtn" class="btn btn-danger" onclick="getOut()">방나가기</button>
 		</div>
@@ -304,6 +316,7 @@ $(document).on('click', '.downback', function () {
 		CustomModal.init();
 
 		ChatMessage.init();
+
 		ChatMessage.scrollBottom();
 
 		$("#sendMessageBtn").attr('disabled',true);
@@ -313,9 +326,59 @@ $(document).on('click', '.downback', function () {
 		$(document).mouseup(function (e) {
 			inputMsgCheck();
 		});
-		window.setTimeout('window.location.reload()',180000);
+
+		setInterval(function(){
+			notice()
+			chatPerson()
+
+		}, 200000);
 
 	});
+
+	function chatPerson(){
+		let urlPathArr = location.href.split('/');
+		let openChatSeq = urlPathArr[urlPathArr.length-1];
+
+		$.ajax({
+			url : '/onepart/resident/chatPerson',
+			type : 'get',
+			data : {openChatSeq : openChatSeq},
+			dataType: 'json',
+			success : function(data) {
+				if(data.result == 'success'){
+				let residentList = data.residentList;
+				drawResidentList(residentList);
+
+				console.log(data.openChatVO.openChatCurrHead);
+
+				$("#openChatCurrHead").text(data.openChatVO.openChatCurrHead);
+
+				}
+
+
+			},
+			error : function(err) {
+				alert("참여자 목록을 가져오지 못했습니다.");
+			}
+	})
+	}
+
+	function drawResidentList(residentList) {
+		let memberDiv = $('.memberDiv');
+		memberDiv.html('');
+
+		residentList.forEach(memeberInfo => {
+			let memberDivFormat = $('.memberTable.format').clone();
+			memberDivFormat.removeClass('format');
+			memberDivFormat.show();
+			console.log(memeberInfo.residentId);
+			memberDivFormat.find('.member').text(memeberInfo.residentId);
+
+
+
+			memberDiv.append(memberDivFormat);
+		});
+	}
 
 
 	$(document).on('click', '#noticeIcon', function () {

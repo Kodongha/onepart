@@ -18,5 +18,7 @@ public interface OpenChatMemberService {
 
 	public void reEnterOpenChatMember(OpenChatMemberVO openChatMemberVO);
 
-	
+	public List<ResidentVO> chatPerson(int openChatSeq);
+
+
 }

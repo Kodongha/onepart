@@ -480,7 +480,7 @@
 						if(OpenChatRoomListTimeoutEnable)
 							getRoomListAll();
 
-					}, 500000);
+					}, 3000);
 				},
 				error : function(err) {
 					alert('로그인 후 이용 바랍니다.');
