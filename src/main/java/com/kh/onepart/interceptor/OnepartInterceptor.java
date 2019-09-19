@@ -24,7 +24,7 @@ public class OnepartInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		// TODO Auto-generated method stub
 
-		System.out.println("preHandle 실행!!!!");
+		//System.out.println("preHandle 실행!!!!");
 
 //		String requestURL  = URLUtils.URL_SUBSTRING(request.getRequestURL().toString());
 //		System.out.println("requestURL :: " + requestURL);
@@ -61,7 +61,7 @@ public class OnepartInterceptor extends HandlerInterceptorAdapter {
 			ModelAndView modelAndView) throws Exception {
 		// TODO Auto-generated method stub
 
-		System.out.println("postHandle 실행!!!!");
+		//System.out.println("postHandle 실행!!!!");
 
 		super.postHandle(request, response, handler, modelAndView);
 	}
@@ -72,7 +72,7 @@ public class OnepartInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		// TODO Auto-generated method stub
 
-		System.out.println("afterCompletion 실행!!!!");
+		//System.out.println("afterCompletion 실행!!!!");
 
 		super.afterCompletion(request, response, handler, ex);
 	}

@@ -29,7 +29,6 @@
 <script src="${contextPath}/resources/js/table-manage-default.demo.min.js"></script>\
 <script src="${contextPath}/resources/js/apps.min.js"></script>
 <link href="${contextPath}/resources/plugins/DataTables/css/data-table.css" rel="stylesheet" />
-<script src="${contextPath}/resources/js/apps.min.js"></script>
 <script type="text/javascript">
 
 	/* char color array */
