@@ -174,6 +174,7 @@
 			App.init();
 			Dashboard.init();
 			PageHtmlLoader.load();
+
 			$("#menuMain").data("menu-url", "/onepart/manager/menuMain");
 			$("#menuNotice").data("menu-url", "/onepart/manager/menuNotice");
 			$("#menuCarManage").data("menu-url", "/onepart/manager/menuCarManage");

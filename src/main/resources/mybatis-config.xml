@@ -88,6 +88,7 @@
 		<!-- account -->
 		<mapper resource="mappers/account/account-mapper.xml" />
 
+
 		<!-- messenger -->
 		<mapper resource="mappers/messenger/messenger-mapper.xml" />
 
@@ -106,6 +107,7 @@
 
 
 		<!-- Manager -->
+		<mapper resource="mappers/manager/main/main-mapper.xml"/>
 		<mapper resource="mappers/manager/notice/notice-mapper.xml"/>
 		<mapper resource="mappers/manager/resident_manage/resident-manage-mapper.xml"/>
 		<mapper resource="mappers/manager/survey/manager-survey-mapper.xml" />
@@ -116,8 +118,10 @@
 		<mapper resource="mappers/manager/visitCar/manager-visitCar-mapper.xml" />
 		<mapper resource="mappers/manager/vote/manager-vote-mapper.xml" />
 
+
 		<!-- Batch -->
 		<mapper resource="mappers/batch/batch-mapper.xml" />
+
 
 	</mappers>
 </configuration>
