@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	String checkNo = Integer.toString((int)(Math.random()*999999) + 100000);
+	String checkNo = Integer.toString((int)(Math.random()*999999) + 1);
 %>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
@@ -127,7 +127,7 @@
 						<label class="control-label">휴대전화번호 인증</label>
 						<div class="row m-b-15">
 							<div class="col-md-12">
-								<input name="residentPhone" id="residentPhone" type="tel" class="form-control" placeholder="-를 포함한 전화번호 입력" style="width: 77%; display: inline-block;"
+								<input name="residentPhone" id="residentPhone" type="tel" class="form-control" placeholder="휴대전화번호 입력" style="width: 77%; display: inline-block;"
 								 required />&nbsp;
 								 <!-- <input type="text" maxlength="3" name="tel1" id="tel" placeholder="010"> -
 								<input type="text" maxlength="4" name="tel2" id="tel" placeholder="0000"> -
@@ -139,10 +139,9 @@
 									<input type="hidden" name="action" value="go"> <!-- 발송타입 -->
 							        <input type="hidden" name="msg" value="<%=checkNo%>">
 									<input type="hidden" name="rphone">
-									<input type="hidden" name="smsType" value="S"> <!-- 단문(SMS) -->
 									<input type="hidden" name="sphone1" value="010">
-							        <input type="hidden" name="sphone2" value="1111">
-							        <input type="hidden" name="sphone3" value="2222">
+							        <input type="hidden" name="sphone2" value="2603">
+							        <input type="hidden" name="sphone3" value="9932">
 
 								<button id="checkNumber" type="button" class="btn btn-default m-r-5 m-b-5">확인</button>
 							</div>
@@ -404,7 +403,7 @@
 			App.init();
 
 			$('#residentPwd').blur(function(){
-				if(!/^[a-zA-Z0-9]{8,20}$/.test($('#residentPwd').val())){
+				if(!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/.test($('#residentPwd').val())){
 					if($('#residentPwd').val() != ''){
 					   alert('비밀번호는 숫자와 영문자 조합으로 8~20자리를 사용해야 합니다.');
 					   $('#residentPwd').val('');
@@ -453,8 +452,8 @@
 
 <script type="text/javascript">
 	//아이디 체크여부 확인 (아이디 중복일 경우 = 0 , 중복이 아닐경우 = 1 )
-
 	var idck = 0;
+	var verifiedNo = 0;
 	$(function () {
 		//idck 버튼을 클릭했을 때
 		$("#idck").click(function () {
@@ -524,6 +523,11 @@
 			/* alert("회원가입을 축하합니다");
 			$("#frm").submit(); */
 		}
+
+		if (verifiedNo == 0) {
+			alert('휴대전화번호 본인 인증을 해주세요.');
+			return false;
+		}
 	});
 
 
@@ -578,12 +582,17 @@
 		$.ajax({
 			url:"moveSmssend",
 			data:{rphone:rphone, sphone1:sphone1, sphone2:sphone2, sphone3:sphone3, msg:msg, action:action},
-			dataType:"text",
 			type:"post",
 			success:function(data){
 				alert("인증번호가 발송되었습니다.");
-				console.log("data : " + data);
-				var checkPhone = data;
+				console.log(data);
+				console.log("data : " + data.msgRnd);
+
+				var checkPhone = data.msgRnd;
+				console.log(data.msgRnd);
+				console.log("checkPhone : ::" + checkPhone);
+				console.log(msg);
+
 
 				$("#checkPhone").hide();
 
@@ -599,7 +608,7 @@
 						$("#checkNo").attr({"readonly":"true"});
 						$("#checkNumber").hide();
 						alert("인증이 완료되었습니다.");
-						num = 1;
+						verifiedNo = 1;
 					}else{
 						alert("인증번호가 틀렸습니다. 다시 입력하세요.");
 						$("#checkPhone").show();

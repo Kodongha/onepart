@@ -49,19 +49,19 @@
 		<!-- 아이디 찾기, 비밀번호 찾기 시작 -->
 		<div class="register register-with-news-feed" style="width: 70%; margin: auto;">
 			<!-- 반응형 시작 -->
-			<div class="col-md-6">
+			<div class="col-lg-10" style="margin: auto;">
 				<ul class="nav nav-tabs">
 					<li class="active"><a href="#default-tab-1" data-toggle="tab" aria-expanded="false">아이디 찾기</a></li>
 					<li class=""><a href="moveFindPwd" aria-expanded="true">비밀번호 찾기</a></li>
 				</ul>
 				<!-- 아이디 찾기, 비밀번호 찾기 탭 시작 -->
-				<div class="tab-content">
+				<div class="tab-content" style="height: 500px;">
 					<!-- 아이디 찾기 시작 -->
 					<div class="tab-pane fade active in" id="default-tab-1">
 						<h3 class="m-t-10">
 							<i class="fa fa-cog"></i> 아이디 찾기
 						</h3>
-						<div class="col-md-6">
+						<div class="col-lg-10">
 							<form  method="POST" class="margin-bottom-0" id="findIdForm">
 								<div class="panel-group" id="accordion">
 									<div class="panel panel-inverse overflow-hidden">
