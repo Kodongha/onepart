@@ -256,22 +256,16 @@
 
 					<hr>
 
-					<div class="col-md-6">
+					<div class="col-md-6" id="calenderDiv">
 						<h4><i class="fa fa-calendar"></i> 설문기간 설정</h4>
-						<input type="text" class="form-control" placeholder="설문 기간을 설정해주세요." id="surveyPeriod" name="surveyPeriod" autocomplete="off">
+						<input type="text" class="form-control pull-right datepicker" placeholder="설문 기간을 설정해주세요." id="surveyPeriod" name="surveyPeriod" autocomplete="off">
 					</div>
 
 					<script type="text/javascript">
 					$('#surveyPeriod').dateRangePicker({
 
 						startDate: new Date(),
-						selectForward: true,
-						beforeShowDay: function(t)
-						{
-							$('.date-picker-wrapper').css('z-index', 99999999999999);
-							var valid = !(t.getDay() == 0 || t.getDay() == 6);  //disable saturday and sunday
-							return [valid];
-						}
+						container: '#calenderDiv'
 
 					});
 
