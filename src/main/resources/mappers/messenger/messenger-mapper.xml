@@ -303,4 +303,11 @@
 		WHERE   ATTCH_SEQ = #{_parameter}
 	</select>
 
+	<!-- 메신저 읽기 처리 -->
+	<update id="updateMessengerReadProcess" parameterType="String">
+		UPDATE	MESSENGER
+		SET		READ_TM = SYSDATE
+		WHERE	MESSENGER_SEQ = #{_parameter}
+	</update>
+
 </mapper>

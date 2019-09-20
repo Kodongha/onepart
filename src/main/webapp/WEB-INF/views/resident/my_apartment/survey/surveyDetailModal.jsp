@@ -104,30 +104,33 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h3 class="modal-title">설문조사</h3>
+					<h3 class="modal-title"><i class="fa fa-pencil-square-o"></i>설문조사</h3>
 				</div>
 				<div class="modal-body">
 					<h4><c:out value="${ surveyVO.surveyTitle }"/></h4>
 					<p><c:out value="${ surveyVO.surveySimpleIntro }"/></p>
-
+					<hr>
 					<div>
 						<c:forEach var="surveyQstn" items="${surveyQstnList }">
 							<div class="questionArea">
 								<input type="hidden" class="numData" value="${ surveyQstn.surveyQstnNum }">
-								<h4><c:out value="[${ surveyQstn.surveyQstnNum }] "/><c:out value="${surveyQstn.surveyQstnTitle }"/></h4>
 
 								<!-- 단답형 -->
 								<c:if test="${surveyQstn.surveyQstnType == 1 }">
+
+									<h4><i class="fa fa-pencil"></i><c:out value=" ${surveyQstn.surveyQstnTitle }"/></h4>
 									<input type="text" class="form-control answer" placeholder="내용을 입력해주세요." name="answer">
 								</c:if>
 
 								<!-- 장문형 -->
 								<c:if test="${surveyQstn.surveyQstnType == 2 }">
-									<textarea class="form-control answer" placeholder="내용을 입력해주세요." rows="5" name="answer"></textarea>
+									<h4><i class="fa fa-pencil-square-o"></i><c:out value=" ${surveyQstn.surveyQstnTitle }"/></h4>
+									<textarea class="form-control answer" placeholder="내용을 입력해주세요." rows="5" name="answer" style="resize: none;"></textarea>
 								</c:if>
 
 								<!-- 객관식 -->
 								<c:if test="${surveyQstn.surveyQstnType == 3 }">
+									<h4><i class="fa fa-dot-circle-o"></i><c:out value=" ${surveyQstn.surveyQstnTitle }"/></h4>
 									<c:forEach var="surveyQstnOption" items="${surveyQstnOptionList}">
 										<c:if test="${surveyQstnOption.surveyQstnSeq == surveyQstn.surveyQstnSeq}">
 											<input type="radio" class="answer" data-render="switchery" data-theme="default" name="answer" id="${surveyQstnOption.surveyQstnSeq}_${surveyQstnOption.surveyQstnOptionNum}" value="${surveyQstnOption.surveyQstnOptionContent}">
@@ -139,6 +142,7 @@
 
 								<!-- 체크박스 -->
 								<c:if test="${surveyQstn.surveyQstnType == 4 }">
+									<h4><i class="fa fa-check-square-o"></i><c:out value=" ${surveyQstn.surveyQstnTitle }"/></h4>
 									<c:forEach var="surveyQstnOption" items="${surveyQstnOptionList}">
 										<c:if test="${surveyQstnOption.surveyQstnSeq == surveyQstn.surveyQstnSeq}">
 											<input type="checkbox" class='answer' data-render="switchery" data-theme="default" name="answer" id="${surveyQstnOption.surveyQstnSeq}_${surveyQstnOption.surveyQstnOptionNum}" value="${surveyQstnOption.surveyQstnOptionContent}">

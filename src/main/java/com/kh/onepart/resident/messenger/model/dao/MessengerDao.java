@@ -108,4 +108,11 @@ public interface MessengerDao {
 	 */
 	RequestAttachVO selectDownloadAttach(SqlSessionTemplate sqlSession, int attchSeq);
 
+	/**
+	 * 메신저 읽기 처리
+	 * @param sqlSession
+	 * @param messengerSeq
+	 */
+	void updateMessengerReadProcess(SqlSessionTemplate sqlSession, String messengerSeq);
+
 }

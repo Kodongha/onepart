@@ -253,10 +253,16 @@ public class MessengerController {
 		MessengerBasicAllData basicInfo = (MessengerBasicAllData) messengerDetailData.get(0);
 		ArrayList<RequestImgVO> imgVOList = (ArrayList<RequestImgVO>) messengerDetailData.get(1);
 		ArrayList<RequestAttachVO> attachVOList = (ArrayList<RequestAttachVO>) messengerDetailData.get(2);
+
+		System.out.println("basicInfo.getReadTm() : " + basicInfo.getReadTm());
+
+		if(basicInfo.getReadTm() == null) {
+			messengerService.updateMessengerReadProcess(messengerSeq);
+		}
+
 		modelAndView.addObject("basicInfo", basicInfo);
 		modelAndView.addObject("imgVOList", imgVOList);
 		modelAndView.addObject("attachVOList", attachVOList);
-
 
 		modelAndView.setViewName("messenger/resident/messengerDetail");
 		return modelAndView;

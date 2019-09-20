@@ -130,4 +130,12 @@ public class MessengerServiceImpl implements MessengerService {
 		return messengerDao.selectDownloadAttach(sqlSession, requestAttachVO.getAttchSeq());
 	}
 
+	/** 메신저 읽기 처리 */
+	@Override
+	public void updateMessengerReadProcess(String messengerSeq) {
+		// TODO Auto-generated method stub
+
+		messengerDao.updateMessengerReadProcess(sqlSession, messengerSeq);
+	}
+
 }
