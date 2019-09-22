@@ -98,6 +98,16 @@
 		<result property="status" column="STATUS"/>
 	</resultMap>
 
+	<resultMap type="GeneralVoteBdNm" id="GeneralVoteBdNmResultSet">
+		<id property="gnrVoteByBdNmSeq" column="GNR_VOTE_BY_BD_NM_SEQ"/>
+		<result property="bdNm" column="BD_NM"/>
+		<result property="gnrVoteSeq" column="GNR_VOTE_SEQ"/>
+	</resultMap>
+
+	<resultMap type="CandidatePercent" id="CandidatePercentResultSet">
+		<result property="candidatePercent" column="CANDIDATE_PERCENT"/>
+	</resultMap>
+
 	<insert id="insertGeneralVote" parameterType="GeneralVote">
 		INSERT INTO GNR_VOTE
 		VALUES (
@@ -461,6 +471,164 @@
 		          ) B
 		ON ( A.RESIDENT_SEQ = B.RESIDENT_SEQ)
 		WHERE SUBSTR(APT_DETAIL_INFO_SEQ, 3, 3) = #{status}
+	</select>
+
+	<select id="selectGenaralStatus" parameterType="_int" resultMap="ElectoralRegisterResultSet">
+		SELECT CASE GNR_VOTE_GRANT WHEN 1 THEN '세대주'
+                                   WHEN 2 THEN '동별' END AS STATUS
+		FROM GNR_VOTE
+		WHERE GNR_VOTE_SEQ =  #{electVoteSeq}
+	</select>
+
+	<select id="selectAllDongList" parameterType="_int" resultMap="GeneralVoteBdNmResultSet">
+		SELECT BD_NM
+		FROM GNR_VOTE_BY_BD_NM
+		WHERE GNR_VOTE_SEQ = #{electVoteSeq}
+	</select>
+
+	<select id="selectDongGeneralRegister" resultMap="ElectoralRegisterResultSet" parameterType="java.util.HashMap">
+		SELECT A.RESIDENT_SEQ,
+		       A.APT_DETAIL_INFO_SEQ,
+		       A.RESIDENT_NM,
+		       A.RESIDENT_PHONE,
+		       CASE WHEN QCSJ_C000000000800000 IS NULL THEN '미참여'
+		            WHEN QCSJ_C000000000800000 IS NOT NULL THEN '참여' END AS VOTE_STATUS
+		FROM (
+		        SELECT *
+		        FROM RESIDENT
+		        WHERE (APT_DETAIL_INFO_SEQ, HOUSEHOLD_AUTH_TYPE)
+		        IN (
+		            SELECT *
+		            FROM (
+		                    SELECT APT_DETAIL_INFO_SEQ, MAX(HOUSEHOLD_AUTH_TYPE) AS HOUSEHOLD_AUTH_TYPE
+		                    FROM RESIDENT
+		                    GROUP BY APT_DETAIL_INFO_SEQ
+		                 )
+		            WHERE HOUSEHOLD_AUTH_TYPE = 3
+		            OR HOUSEHOLD_AUTH_TYPE = 2
+		           )
+		        ) A
+		LEFT JOIN (
+		            SELECT *
+		            FROM VOTE_PRTCPT V
+		            LEFT JOIN GNR_VOTE E ON (V.GNR_VOTE_SEQ = E.GNR_VOTE_SEQ)
+		            WHERE V.GNR_VOTE_SEQ = #{electVoteSeq}
+		          ) B
+		ON ( A.RESIDENT_SEQ = B.RESIDENT_SEQ)
+		WHERE SUBSTR(APT_DETAIL_INFO_SEQ, 3, 3) IN
+										<foreach collection="dongList" item="item" index="index" open="(" separator="," close=")">
+											#{item, jdbcType=VARCHAR}
+										</foreach>
+	</select>
+
+	<select id="selectCountAllElectoralRegister" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM (
+		        SELECT *
+		        FROM RESIDENT
+		        WHERE (APT_DETAIL_INFO_SEQ, HOUSEHOLD_AUTH_TYPE)
+		        IN (
+		            SELECT *
+		            FROM (
+		                    SELECT APT_DETAIL_INFO_SEQ, MAX(HOUSEHOLD_AUTH_TYPE) AS HOUSEHOLD_AUTH_TYPE
+		                    FROM RESIDENT
+		                    GROUP BY APT_DETAIL_INFO_SEQ
+		                 )
+		            WHERE HOUSEHOLD_AUTH_TYPE = 3
+		            OR HOUSEHOLD_AUTH_TYPE = 2
+		           )
+		        ) A
+		LEFT JOIN (
+		            SELECT *
+		            FROM VOTE_PRTCPT
+		            WHERE ELECT_VOTE_SEQ = #{voteSeq}
+		          ) B
+		ON ( A.RESIDENT_SEQ = B.RESIDENT_SEQ )
+	</select>
+
+	<select id="selectCountDongElectoralRegister" parameterType="ElectoralRegister" resultType="_int">
+		SELECT COUNT(*)
+		FROM (
+		        SELECT *
+		        FROM RESIDENT
+		        WHERE (APT_DETAIL_INFO_SEQ, HOUSEHOLD_AUTH_TYPE)
+		        IN (
+		            SELECT *
+		            FROM (
+		                    SELECT APT_DETAIL_INFO_SEQ, MAX(HOUSEHOLD_AUTH_TYPE) AS HOUSEHOLD_AUTH_TYPE
+		                    FROM RESIDENT
+		                    GROUP BY APT_DETAIL_INFO_SEQ
+		                 )
+		            WHERE HOUSEHOLD_AUTH_TYPE = 3
+		            OR HOUSEHOLD_AUTH_TYPE = 2
+		           )
+		    )
+		WHERE SUBSTR(APT_DETAIL_INFO_SEQ, 3, 3) = #{status}
+	</select>
+
+	<select id="selectCountApplyElectoralRegister" resultType="_int">
+		SELECT COUNT(*)
+		FROM VOTE_PRTCPT
+		WHERE ELECT_VOTE_SEQ = #{voteSeq}
+	</select>
+
+	<select id="selectCountDongElectoralRegisterGenarl" resultType="_int" parameterType="java.util.HashMap">
+		SELECT COUNT(*)
+		FROM (
+		        SELECT *
+		        FROM RESIDENT
+		        WHERE (APT_DETAIL_INFO_SEQ, HOUSEHOLD_AUTH_TYPE)
+		        IN (
+		            SELECT *
+		            FROM (
+		                    SELECT APT_DETAIL_INFO_SEQ, MAX(HOUSEHOLD_AUTH_TYPE) AS HOUSEHOLD_AUTH_TYPE
+		                    FROM RESIDENT
+		                    GROUP BY APT_DETAIL_INFO_SEQ
+		                 )
+		            WHERE HOUSEHOLD_AUTH_TYPE = 3
+		            OR HOUSEHOLD_AUTH_TYPE = 2
+		           )
+		        )
+		WHERE SUBSTR(APT_DETAIL_INFO_SEQ, 3, 3) IN
+										<foreach collection="dongList" item="item" index="index" open="(" separator="," close=")">
+											#{item, jdbcType=VARCHAR}
+										</foreach>
+	</select>
+
+	<select id="selectCountApplyGeneralElctoral" resultType="_int">
+		SELECT COUNT(*)
+		FROM VOTE_PRTCPT
+		WHERE GNR_VOTE_SEQ = #{voteSeq}
+	</select>
+
+	<select id="selectCandidatePercentList" parameterType="ElectionVoteCandidate" resultMap="CandidatePercentResultSet">
+		SELECT TRUNC((
+		                SELECT COUNT(*)
+		                FROM VOTE_PRTCPT P
+		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
+		                WHERE ELECT_VOTE_SEQ = #{electVoteSeq}
+		                AND ELECT_VOTE_CNDT_SIGNUP_SEQ = #{electVoteCndtSignupSeq}
+		            ) / (
+		                SELECT COUNT(*)
+		                FROM VOTE_PRTCPT P
+		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
+		                WHERE ELECT_VOTE_SEQ = #{electVoteSeq}) * 100) AS CANDIDATE_PERCENT
+		FROM DUAL
+	</select>
+
+	<select id="selectCandidatePercentListGen" parameterType="GeneralVoteCandidate" resultMap="CandidatePercentResultSet">
+		SELECT TRUNC((
+		                SELECT COUNT(*)
+		                FROM VOTE_PRTCPT P
+		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
+		                WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}
+		                AND GNR_VOTE_CNDT_ENROLL_SEQ = #{gnrVoteCndtEnrollSeq}
+		            ) / (
+		                SELECT COUNT(*)
+		                FROM VOTE_PRTCPT P
+		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
+		                WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}) * 100) AS CANDIDATE_PERCENT
+		FROM DUAL
 	</select>
 
 </mapper>

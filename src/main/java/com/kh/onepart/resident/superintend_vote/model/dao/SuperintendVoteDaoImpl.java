@@ -1,12 +1,14 @@
 package com.kh.onepart.resident.superintend_vote.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
+import com.kh.onepart.resident.superintend_vote.model.vo.CandidatePercent;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectoralRegister;
@@ -281,6 +283,99 @@ public class SuperintendVoteDaoImpl implements SuperintendVoteDao{
 		return electoralList;
 
 	}
+	//해당 투표의 구분 (동별/모든세대주) 가져오는 메소드
+	@Override
+	public ElectoralRegister selectGenaralStatus(SqlSessionTemplate sqlSession, int electVoteSeq) {
+
+		ElectoralRegister status = sqlSession.selectOne("Superintend.selectGenaralStatus", electVoteSeq);
+
+		return status;
+
+	}
+	//투표권 부여할 동 리스트 가져오는 메소드
+	@Override
+	public ArrayList selectAllDongList(SqlSessionTemplate sqlSession, int electVoteSeq) {
+
+		ArrayList dongList = (ArrayList) sqlSession.selectList("Superintend.selectAllDongList", electVoteSeq);
+
+		return dongList;
+
+	}
+	//동별 세대주 명부 가져오는 메소드 (다중동 포함)
+	@Override
+	public ArrayList selectDongGeneralRegister(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+
+		ArrayList electoralList = (ArrayList) sqlSession.selectList("Superintend.selectDongGeneralRegister", map);
+
+		return electoralList;
+
+	}
+	//모든 세대주 명부 갯수 가져오는 메소드
+	@Override
+	public int selectCountAllElectoralRegister(SqlSessionTemplate sqlSession, int voteSeq) {
+
+		int num1 = sqlSession.selectOne("Superintend.selectCountAllElectoralRegister", voteSeq);
+
+		return num1;
+
+	}
+	//동별 세대주 명부 갯수 가져오는 메소드
+	@Override
+	public int selectCountDongElectoralRegister(SqlSessionTemplate sqlSession, ElectoralRegister er) {
+
+		int num1 = sqlSession.selectOne("Superintend.selectCountDongElectoralRegister", er);
+
+		return num1;
+
+	}
+	//모든 세대주 명부중 선거를 진행한 세대주 갯수 가져오는 메소드
+	@Override
+	public int selectCountApplyElectoralRegister(SqlSessionTemplate sqlSession, int voteSeq) {
+
+		int num1 = sqlSession.selectOne("Superintend.selectCountApplyElectoralRegister", voteSeq);
+
+		return num1;
+
+	}
+	//동별 세대주 명부 갯수 가져오는 메소드 (일반투표)
+	@Override
+	public int selectCountDongElectoralRegisterGenarl(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+
+		int num1 = sqlSession.selectOne("Superintend.selectCountDongElectoralRegisterGenarl", map);
+
+		return num1;
+
+	}
+	//해당투표를 진행한 명부인 갯수 가녀오는 메소드 (일반투표)
+	@Override
+	public int selectCountApplyGeneralElctoral(SqlSessionTemplate sqlSession, int voteSeq) {
+
+		int num1 = sqlSession.selectOne("Superintend.selectCountApplyGeneralElctoral", voteSeq);
+
+		return num1;
+
+	}
+	//각 후보별 투표수 담아오는 메소드
+	@Override
+	public CandidatePercent selectCandidatePercentList(SqlSessionTemplate sqlSession,
+			ElectionVoteCandidate electionVoteCandidate) {
+
+		CandidatePercent percent = sqlSession.selectOne("Superintend.selectCandidatePercentList", electionVoteCandidate);
+
+		return percent;
+	}
+	//각 후보별 투표수 담아오는 메소드
+	@Override
+	public CandidatePercent selectCandidatePercentListGen(SqlSessionTemplate sqlSession,
+			GeneralVoteCandidate generalVoteCandidate) {
+
+		CandidatePercent percent = sqlSession.selectOne("Superintend.selectCandidatePercentListGen", generalVoteCandidate);
+
+		return percent;
+
+	}
+
+
 
 
 }

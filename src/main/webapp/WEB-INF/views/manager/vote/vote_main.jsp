@@ -17,12 +17,13 @@
 		<tr>
 			<td>
 				<div class="form-group">
-                    <h4>현재 진행중인 투표</h4>
+				<br>
+                    <span class="label label-warning" style="font-size:1.5em;">진행중</span>
                 </div>
 			</td>
 			<td></td>
 			<td style="width:15%">
-				<a href="#modal-dialog_test" data-toggle="modal" class="btn btn-default" id="">선관위 선임 및 해임</a>
+				<a href="#modal-dialog_test" data-toggle="modal" class="btn btn-success" id="">선관위 선임 및 해임</a>
 			</td>
 		</tr>
 	</table>
@@ -63,7 +64,8 @@
 		<tr>
 			<td>
 				<div class="form-group">
-                    <h4>최근 완료된 투표</h4>
+                    <br>
+                    <span class="label label-info" style="font-size:1.5em; width: 75px;">종료</span>
                 </div>
 			</td>
 		</tr>
@@ -302,6 +304,8 @@
 					var $tbody = $("<tbody>");
 					for(var i = 0; i < result.superintendList.length; i++){
 						console.log(result.superintendList[i].aptAuthCd);
+						var residentSeq = result.superintendList[i].residentSeq;
+						var residentNm = result.superintendList[i].residentNm;
 						var $tr = $("<tr>");
 						var $tdresidentSeq = $("<td>");
 						var $tdaptAuthCd = $("<td>");
@@ -325,7 +329,7 @@
 						$tdresidentNm.append(result.superintendList[i].residentNm);
 						$tddongho.append(resultApart);
 						$tddeleteSuperientend.append($buttondeleteSuperientend).click(function(){
-
+							deleteSuperientend(residentSeq, residentNm);
 						});
 
 						$tr.append($tdresidentSeq);
@@ -435,6 +439,140 @@
 		});
 
 	});
+
+	/* 선관위 선임 function */
+	function registerSuperientend() {
+		var residentSeq = $("#candidateResidentSeq").val();
+		var choiceKind = $("#choiceKind").val();
+
+		console.log(residentSeq);
+		console.log(choiceKind);
+
+		/* 선임된 선관위 위원장이 1명이상 여부 파악 function */
+		if(choiceKind == '위원장'){
+			$.ajax({
+				url:"/onepart/manager/confirmSuperientendMember",
+				type:"get",
+				success:function(result){
+					if(result.resultNum > 0){
+						console.log(result);
+						alert("선관위 위원장은 한명만 선임하실 수 있습니다.");
+					}else{
+						$.ajax({
+							url:"/onepart/manager/insertSuperientend",
+							type:"get",
+							data:{
+									residentSeq:residentSeq,
+									choiceKind:choiceKind
+								},
+							success:function(result){
+								console.log(result);
+								$("#superintendTable tbody").remove();
+
+								var $tbody = $("<tbody>");
+								for(var i = 0; i < result.superintendList.length; i++){
+									var residentSeq = result.superintendList[i].residentSeq;
+									var residentNm = result.superintendList[i].residentNm;
+									console.log(result.superintendList[i].aptAuthCd);
+									var $tr = $("<tr>");
+									var $tdresidentSeq = $("<td>");
+									var $tdaptAuthCd = $("<td>");
+									var resulttdaptAuthCd;
+									if(result.superintendList[i].aptAuthCd == 5){
+										resulttdaptAuthCd = '위원장';
+									}else{
+										resulttdaptAuthCd = '위원';
+									}
+									var $tdresidentNm = $("<td>");
+									var $tddongho = $("<td>");
+									var $tddeleteSuperientend = $("<td>");
+									var apartArr = result.superintendList[i].aptDetailInfoSeq.split("_");
+									var dong = apartArr[1];
+									var ho = apartArr[2];
+									var resultApart = dong + "동 " + ho + "호"
+									var $buttondeleteSuperientend = $("<a class='btn btn-xs btn-icon btn-circle btn-danger' data-click='panel-remove'><i class='fa fa-times'></i></a>")
+
+									$tdresidentSeq.append(result.superintendList[i].residentSeq);
+									$tdaptAuthCd.append(resulttdaptAuthCd);
+									$tdresidentNm.append(result.superintendList[i].residentNm);
+									$tddongho.append(resultApart);
+									$tddeleteSuperientend.append($buttondeleteSuperientend).click(function(){
+										deleteSuperientend(residentSeq, residentNm);
+									});
+
+									$tr.append($tdresidentSeq);
+									$tr.append($tdaptAuthCd);
+									$tr.append($tdresidentNm);
+									$tr.append($tddongho);
+									$tr.append($tddeleteSuperientend);
+									$tbody.append($tr);
+								}
+
+								$("#superintendTable").append($tbody);
+
+							}
+						});
+					}
+				}
+			});
+		}else{
+			console.log("위원선임")
+			$.ajax({
+				url:"/onepart/manager/insertSuperientend",
+				type:"get",
+				data:{
+						residentSeq:residentSeq,
+						choiceKind:choiceKind
+					},
+				success:function(result){
+					console.log(result);
+					$("#superintendTable tbody").remove();
+
+					var $tbody = $("<tbody>");
+					for(var i = 0; i < result.superintendList.length; i++){
+						var residentSeq = result.superintendList[i].residentSeq;
+						var residentNm = result.superintendList[i].residentNm;
+						console.log(result.superintendList[i].aptAuthCd);
+						var $tr = $("<tr>");
+						var $tdresidentSeq = $("<td>");
+						var $tdaptAuthCd = $("<td>");
+						var resulttdaptAuthCd;
+						if(result.superintendList[i].aptAuthCd == 5){
+							resulttdaptAuthCd = '위원장';
+						}else{
+							resulttdaptAuthCd = '위원';
+						}
+						var $tdresidentNm = $("<td>");
+						var $tddongho = $("<td>");
+						var $tddeleteSuperientend = $("<td>");
+						var apartArr = result.superintendList[i].aptDetailInfoSeq.split("_");
+						var dong = apartArr[1];
+						var ho = apartArr[2];
+						var resultApart = dong + "동 " + ho + "호"
+						var $buttondeleteSuperientend = $("<a class='btn btn-xs btn-icon btn-circle btn-danger' data-click='panel-remove'><i class='fa fa-times'></i></a>")
+
+						$tdresidentSeq.append(result.superintendList[i].residentSeq);
+						$tdaptAuthCd.append(resulttdaptAuthCd);
+						$tdresidentNm.append(result.superintendList[i].residentNm);
+						$tddongho.append(resultApart);
+						$tddeleteSuperientend.append($buttondeleteSuperientend).click(function(){
+							deleteSuperientend(residentSeq, residentNm);
+						});
+
+						$tr.append($tdresidentSeq);
+						$tr.append($tdaptAuthCd);
+						$tr.append($tdresidentNm);
+						$tr.append($tddongho);
+						$tr.append($tddeleteSuperientend);
+						$tbody.append($tr);
+					}
+
+					$("#superintendTable").append($tbody);
+
+				}
+			});
+		}
+	}
 
 </script>
 </body>

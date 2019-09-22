@@ -45,12 +45,15 @@
 			<br>
 			<c:if test="${ voteUser.candidateSeq == null }">
 				<table style="width:95%">
-					<c:forEach var="candidateList" items="${ candidateList }">
+					<c:forEach var="candidateList" items="${ candidateList }" varStatus="status">
 						<tr>
-							<td style="width:40%; text-align:center;">
+							<td style="width:85%; text-align:center;">
 								<hr>
 								<h4>${ candidateList.cndtNm }</h4>
 								<hr>
+							</td>
+							<td>
+								<span class="badge badge-inverse" style="font-size:1.25em">총 투표중 ${ candidatePercentList[status.index].candidatePercent }%</span>
 							</td>
 						</tr>
 						<tr>

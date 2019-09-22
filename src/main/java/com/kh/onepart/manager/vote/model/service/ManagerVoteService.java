@@ -3,7 +3,10 @@ package com.kh.onepart.manager.vote.model.service;
 import java.util.ArrayList;
 
 import com.kh.onepart.manager.vote.model.vo.GeneralVote;
+import com.kh.onepart.manager.vote.model.vo.GeneralVoteCandidate;
+import com.kh.onepart.manager.vote.model.vo.CandidatePercent;
 import com.kh.onepart.manager.vote.model.vo.ElectionVote;
+import com.kh.onepart.manager.vote.model.vo.ElectionVoteCandidate;
 
 
 
@@ -24,5 +27,15 @@ public interface ManagerVoteService {
 	ArrayList selectAllSuperintendList();
 	//해당 입주민 선관위 해임처리 하는 메소드
 	int deleteSuperiented(int residentSeq);
+	//위원장 선임 메소드
+	int updateNewSuperientedFirst(int residentSeq);
+	//위원 선임 메소드
+	int updateNewSuperientedSecond(int residentSeq);
+	//선임된 위원장 count 메소드
+	int selectConfirmSuperientendMember();
+	//각 후보마다 투표수 리스트 가져오는 메소드
+	ArrayList<CandidatePercent> selectCandidatePercentList(ArrayList<ElectionVoteCandidate> candidateList);
+	//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
+	ArrayList<CandidatePercent> selectCandidatePercentListGen(ArrayList<GeneralVoteCandidate> candidateList);
 
 }

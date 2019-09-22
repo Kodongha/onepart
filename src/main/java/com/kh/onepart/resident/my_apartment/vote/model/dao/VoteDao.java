@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.onepart.resident.my_apartment.vote.model.vo.CandidatePercent;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.Career;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVoteCandidate;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.Image;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteList;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VotePrtcpt;
@@ -48,5 +50,15 @@ public interface VoteDao {
 	int insertElectionCandidateImg(SqlSessionTemplate sqlSession, Image img);
 	//해당 신청서에 경력 및 기간 insert메소드
 	int insertElectionCandidateCareer(SqlSessionTemplate sqlSession, Career career);
+	//해당 선거내역이 insert가 되고 그에 대한 currentval값 받아오는 메소드
+	int insertCurrentVotePrtcptSeqElection(SqlSessionTemplate sqlSession, VotePrtcpt vp);
+	//해당 선거내역에 선택된 후보내역 insert 하는 메소드
+	int insertElectionVote(SqlSessionTemplate sqlSession, VoteSelected vs);
+	//각 후보마다 투표수 리스트 가져오는 메소드
+	CandidatePercent selectCandidatePercentList(SqlSessionTemplate sqlSession,
+			ElectionVoteCandidate electionVoteCandidate);
+	//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
+	CandidatePercent selectCandidatePercentListGen(SqlSessionTemplate sqlSession,
+			GeneralVoteCandidate generalVoteCandidate);
 
 }

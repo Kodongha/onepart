@@ -1,6 +1,8 @@
 package com.kh.onepart.resident.superintend_vote.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.superintend_vote.model.dao.SuperintendVoteDao;
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
+import com.kh.onepart.resident.superintend_vote.model.vo.CandidatePercent;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectoralRegister;
@@ -278,5 +281,143 @@ public class SuperintendVoteServiceImpl implements SuperintendVoteService{
 
 
 		return electoralList;
+	}
+	//해당 투표에 투표권이 있는 선거인 명부 리스트 가져오는 메소드
+	@Override
+	public ArrayList selectAllGeneralElectoralList(int electVoteSeq) {
+
+		//해당 투표의 구분 (동별/모든세대주) 가져오는 메소드
+		ElectoralRegister status = svd.selectGenaralStatus(sqlSession, electVoteSeq);
+		System.out.println("service status.getStatus() : " + status.getStatus());
+		ArrayList electoralList = null;
+		if(status.getStatus().equals("세대주")) {
+			//모든 세대주 명부 가져오는 메소드
+			electoralList = svd.selectAllElectoralRegister(sqlSession, electVoteSeq);
+		}else {
+			//투표권 부여할 동 리스트 가져오는 메소드
+			ArrayList<GeneralVoteBdNm> dongList = svd.selectAllDongList(sqlSession, electVoteSeq);
+			System.out.println(dongList);
+			ArrayList realDongList = new ArrayList();
+			for(int i = 0; i < dongList.size(); i++) {
+				realDongList.add(dongList.get(i).getBdNm());
+			}
+
+			//동별 세대주 명부 가져오는 메소드 (다중동 포함)
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("electVoteSeq", electVoteSeq);
+			map.put("dongList", realDongList);
+			System.out.println("service map : " + map);
+			electoralList = svd.selectDongGeneralRegister(sqlSession, map);
+		}
+
+
+		return electoralList;
+
+	}
+	//해당선거 투표권 명부인 갯수 가져오는 메소드
+	@Override
+	public int selectCountAllElectionElectoral(int voteSeq) {
+
+		int electVoteSeq = voteSeq;
+
+		//해당 선거의 구분 (동별/모든세대주) 가져오는 메소드
+		ElectoralRegister status = svd.selectElectionStatus(sqlSession, electVoteSeq);
+		System.out.println("service status.getStatus() : " + status.getStatus());
+		int num1 = 0;
+		if(status.getStatus().equals("세대주")) {
+			//모든 세대주 명부 갯수 가져오는 메소드
+			num1 = svd.selectCountAllElectoralRegister(sqlSession, voteSeq);
+		}else {
+			//동별 세대주 명부 갯수 가져오는 메소드
+			ElectoralRegister er = new ElectoralRegister();
+			er.setElectVoteSeq(electVoteSeq);
+			er.setStatus(status.getStatus());
+			num1 = svd.selectCountDongElectoralRegister(sqlSession, er);
+		}
+
+
+		return num1;
+
+	}
+	//해당선거를 진행한 명부인 갯수 가녀오는 메소드
+	@Override
+	public int selectCountApplyElectionElctoral(int voteSeq) {
+
+		int	num1 = svd.selectCountApplyElectoralRegister(sqlSession, voteSeq);
+
+		return num1;
+
+	}
+	//해당투표 투표권 명부인 갯수 가져오는 메소드 (일반투표)
+	@Override
+	public int selectCountAllGeneralElectoral(int voteSeq) {
+
+		int electVoteSeq = voteSeq;
+
+		//해당 선거의 구분 (동별/모든세대주) 가져오는 메소드
+		ElectoralRegister status = svd.selectGenaralStatus(sqlSession, electVoteSeq);
+		System.out.println("service status.getStatus() : " + status.getStatus());
+		int num1 = 0;
+		if(status.getStatus().equals("세대주")) {
+			//모든 세대주 명부 갯수 가져오는 메소드
+			num1 = svd.selectCountAllElectoralRegister(sqlSession, voteSeq);
+		}else {
+			//투표권 부여할 동 리스트 가져오는 메소드
+			ArrayList<GeneralVoteBdNm> dongList = svd.selectAllDongList(sqlSession, electVoteSeq);
+			System.out.println(dongList);
+			ArrayList realDongList = new ArrayList();
+			for(int i = 0; i < dongList.size(); i++) {
+				realDongList.add(dongList.get(i).getBdNm());
+			}
+
+			//동별 세대주 명부 갯수 가져오는 메소드 (일반투표)
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("electVoteSeq", electVoteSeq);
+			map.put("dongList", realDongList);
+			System.out.println("service map : " + map);
+			num1 = svd.selectCountDongElectoralRegisterGenarl(sqlSession, map);
+		}
+
+
+		return num1;
+	}
+	//해당투표를 진행한 명부인 갯수 가녀오는 메소드 (일반투표)
+	@Override
+	public int selectCountApplyGeneralElctoral(int voteSeq) {
+
+		int	num1 = svd.selectCountApplyGeneralElctoral(sqlSession, voteSeq);
+
+		return num1;
+
+	}
+	//각 후보마다 투표수 리스트 가져오는 메소드
+	@Override
+	public ArrayList selectCandidatePercentList(ArrayList<ElectionVoteCandidate> candidateList) {
+
+		ArrayList<CandidatePercent> candidatePercentList = new ArrayList();
+
+		for(int i = 0; i < candidateList.size(); i++) {
+			//각 후보별 투표수 담아오는 메소드
+			CandidatePercent percent = svd.selectCandidatePercentList(sqlSession, candidateList.get(i));
+			candidatePercentList.add(percent);
+		}
+
+		return candidatePercentList;
+
+	}
+	//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
+	@Override
+	public ArrayList<CandidatePercent> selectCandidatePercentListGen(ArrayList<GeneralVoteCandidate> candidateListGen) {
+
+		ArrayList<CandidatePercent> candidatePercentList = new ArrayList();
+
+		for(int i = 0; i < candidateListGen.size(); i++) {
+			//각 후보별 투표수 담아오는 메소드
+			CandidatePercent percent = svd.selectCandidatePercentListGen(sqlSession, candidateListGen.get(i));
+			candidatePercentList.add(percent);
+		}
+
+		return candidatePercentList;
+
 	}
 }

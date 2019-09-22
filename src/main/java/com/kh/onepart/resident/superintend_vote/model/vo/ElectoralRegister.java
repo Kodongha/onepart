@@ -1,6 +1,6 @@
 package com.kh.onepart.resident.superintend_vote.model.vo;
 
-import java.sql.Date;
+import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

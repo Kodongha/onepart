@@ -164,13 +164,13 @@ $(document).ready(function() {
 </script>
 <!-- 타이틀 -->
 <div style="width:85%; margin:0 auto">
-	<h2>우리아파트 투표</h2>
+	<h2 style="font-weight:bold;">우리아파트 투표</h2>
 	<table style="width:100%">
 		<tr>
 			<td><h5>입주민 여러분들의 활발한 투표가 우리아파트를 더 성장 시킵니다.</h5></td>
+			<td><a class="btn btn-success" style="width: 100%" id="candidateApply">후보신청서 작성</a></td>
 		</tr>
 	</table>
-	<hr>
 	<br>
 </div>
 </body>

@@ -11,13 +11,14 @@
 <body>
 <jsp:include page="../vote/vote_include.jsp"></jsp:include>
 <!-- 전체 div -->
-<div style="width:85%; margin:0 auto">
+<div style="width:85%; margin:0 auto; background:white">
 	<!-- 현재 진행중인 투표 div -->
-	<table style="width:100%">
+	<table style="width:95%; margin:0 auto;">
 		<tr>
 			<td>
 				<div class="form-group">
-                    <h4>현재 진행중인 투표</h4>
+                <br><br>
+                    <span class="label label-warning" style="font-size:1.5em;">진행중</span>
                 </div>
 			</td>
 			<td></td>
@@ -53,70 +54,93 @@
 			</table>
 		</div>
 	</div>
+</div>
 	<br>
 	<br>
 	<!-- 참여하지 않은 투표 div -->
-	<div>
-	<h4>참여하지 않은 투표</h4>
+<div style="width:85%; margin:0 auto; background:white">
+	<table style="width:95%; margin:0 auto;">
+		<tr>
+			<td>
+				<div class="form-group">
+                <br><br>
+                    <span class="label label-danger" style="font-size:1.5em;">미참여</span>
+                </div>
+			</td>
+			<td></td>
+			<td style="width:15%">
+			</td>
+		</tr>
+	</table>
 	<div class="panel-body" style="background:white" align="center">
-			<table class="table table-hover" style="text-align: center; width:100%">
-				<thead>
-                       <tr>
-                           <th class="text-center">투표번호</th>
-                           <th class="text-center">투표종류</th>
-                           <th class="text-center">투표명</th>
-                           <th class="text-center">투표현황</th>
-                           <th class="text-center">내 현황</th>
-                           <th class="text-center">투표종료날짜</th>
-                       </tr>
-                   </thead>
-				<tbody>
-					<c:forEach var="noVoteList" items="${ noVoteList }">
-						<tr onclick="detailAllTypeVote(${noVoteList.voteSeq}, '${ noVoteList.voteKind }', '${ noVoteList.voteStatus }')" data-toggle="modal">
-							<td>${ noVoteList.voteSeq }</td>
-							<td>${ noVoteList.voteKind }</td>
-							<td>${ noVoteList.voteNm }</td>
-							<td>${ noVoteList.voteStatus }</td>
-							<td>${ noVoteList.userStatus }</td>
-							<td>${ noVoteList.endDt }</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
+		<table class="table table-hover" style="text-align: center; width:100%">
+			<thead>
+                      <tr>
+                          <th class="text-center">투표번호</th>
+                          <th class="text-center">투표종류</th>
+                          <th class="text-center">투표명</th>
+                          <th class="text-center">투표현황</th>
+                          <th class="text-center">내 현황</th>
+                          <th class="text-center">투표종료날짜</th>
+                      </tr>
+                  </thead>
+			<tbody>
+				<c:forEach var="noVoteList" items="${ noVoteList }">
+					<tr onclick="detailAllTypeVote(${noVoteList.voteSeq}, '${ noVoteList.voteKind }', '${ noVoteList.voteStatus }')" data-toggle="modal">
+						<td>${ noVoteList.voteSeq }</td>
+						<td>${ noVoteList.voteKind }</td>
+						<td>${ noVoteList.voteNm }</td>
+						<td>${ noVoteList.voteStatus }</td>
+						<td>${ noVoteList.userStatus }</td>
+						<td>${ noVoteList.endDt }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
-	<br>
-	<br>
+</div>
+<br>
+<br>
 	<!-- 최근 완료된 투표 div -->
-	<div>
-	<h4>최근 완료된 투표</h4>
-	<h5>일주일 이내에 완료된 투표 내역입니다.</h5>
+<div style="width:85%; margin:0 auto; background:white">
+	<table style="width:95%; margin:0 auto;">
+		<tr>
+			<td>
+				<div class="form-group">
+                <br><br>
+                    <span class="label label-info" style="font-size:1.5em;">종료</span>
+                </div>
+			</td>
+			<td></td>
+			<td style="width:15%">
+			</td>
+		</tr>
+	</table>
 	<div class="panel-body" style="background:white" align="center">
-			<table class="table table-hover" style="text-align: center; width:100%">
-				<thead>
-                       <tr>
-                           <th class="text-center">투표번호</th>
-                           <th class="text-center">투표종류</th>
-                           <th class="text-center">투표명</th>
-                           <th class="text-center">투표현황</th>
-                           <th class="text-center">내 현황</th>
-                           <th class="text-center">투표종료날짜</th>
-                       </tr>
-                   </thead>
-				<tbody>
-					<c:forEach var="endVoteList" items="${ endVoteList }">
-						<tr onclick="detailAllTypeVote(${endVoteList.voteSeq}, '${ endVoteList.voteKind }', '${ endVoteList.voteStatus }')">
-							<td>${ endVoteList.voteSeq }</td>
-							<td>${ endVoteList.voteKind }</td>
-							<td>${ endVoteList.voteNm }</td>
-							<td>${ endVoteList.voteStatus }</td>
-							<td>${ endVoteList.userStatus }</td>
-							<td>${fn:substring(endVoteList.realEndDt,0,10)}</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
+		<table class="table table-hover" style="text-align: center; width:100%">
+			<thead>
+                      <tr>
+                          <th class="text-center">투표번호</th>
+                          <th class="text-center">투표종류</th>
+                          <th class="text-center">투표명</th>
+                          <th class="text-center">투표현황</th>
+                          <th class="text-center">내 현황</th>
+                          <th class="text-center">투표종료날짜</th>
+                      </tr>
+                  </thead>
+			<tbody>
+				<c:forEach var="endVoteList" items="${ endVoteList }">
+					<tr onclick="detailAllTypeVote(${endVoteList.voteSeq}, '${ endVoteList.voteKind }', '${ endVoteList.voteStatus }')">
+						<td>${ endVoteList.voteSeq }</td>
+						<td>${ endVoteList.voteKind }</td>
+						<td>${ endVoteList.voteNm }</td>
+						<td>${ endVoteList.voteStatus }</td>
+						<td>${ endVoteList.userStatus }</td>
+						<td>${fn:substring(endVoteList.realEndDt,0,10)}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
 </div>
 <!-- 상세보기 불가 안내 modal -->

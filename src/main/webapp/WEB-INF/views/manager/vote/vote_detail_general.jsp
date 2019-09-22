@@ -29,38 +29,15 @@
 			<br>
 			<c:if test="${ voteUser.candidateSeq == null }">
 				<table style="width:95%">
-					<c:forEach var="candidateList" items="${ candidateList }">
+					<c:forEach var="candidateList" items="${ candidateList }" varStatus="status">
 						<tr>
-							<td style="width:40%; text-align:center;">
-								<hr>
-								<h4>${ candidateList.cndtNm }</h4>
-								<hr>
-							</td>
-						</tr>
-						<tr>
-							<td style="width:95%; text-align:center;" >
-								<h5>상세정보</h5>
-								<p>
-									${ candidateList.cndtDetail }
-								</p>
-							</td>
-						</tr>
-					</c:forEach>
-				</table>
-			</c:if>
-			<c:if test="${ voteUser.candidateSeq != null }">
-				<table style="width:95%">
-					<c:forEach var="candidateList" items="${ candidateList }">
-						<tr>
-							<td style="width:40%; text-align:center;">
+							<td style="width:85%; text-align:center;">
 								<hr>
 								<h4>${ candidateList.cndtNm }</h4>
 								<hr>
 							</td>
 							<td>
-								<c:if test="${ voteUser.candidateSeq == candidateList.gnrVoteCndtEnrollSeq }">
-									<span class="badge badge-success" style="height:28px; font-size:1.25em;">선택</span>
-								</c:if>
+								<span class="badge badge-inverse" style="font-size:1.25em">총 투표중 ${ candidatePercentList[status.index].candidatePercent }%</span>
 							</td>
 						</tr>
 						<tr>

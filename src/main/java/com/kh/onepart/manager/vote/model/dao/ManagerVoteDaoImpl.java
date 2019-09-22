@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.onepart.manager.vote.model.vo.CandidatePercent;
 import com.kh.onepart.manager.vote.model.vo.ElectionVote;
+import com.kh.onepart.manager.vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.manager.vote.model.vo.GeneralVote;
+import com.kh.onepart.manager.vote.model.vo.GeneralVoteCandidate;
 
 @Repository
 public class ManagerVoteDaoImpl implements ManagerVoteDao{
@@ -80,6 +83,53 @@ public class ManagerVoteDaoImpl implements ManagerVoteDao{
 		int result = sqlSession.update("manager_vote.deleteSuperiented", residentSeq);
 
 		return result;
+
+	}
+	//위원장 선임 메소드
+	@Override
+	public int updateNewSuperientedFirst(SqlSessionTemplate sqlSession, int residentSeq) {
+
+		int result = sqlSession.update("manager_vote.updateNewSuperientedFirst", residentSeq);
+
+		return result;
+
+	}
+	//위원 선임 메소드
+	@Override
+	public int updateNewSuperientedSecond(SqlSessionTemplate sqlSession, int residentSeq) {
+
+		int result = sqlSession.update("manager_vote.updateNewSuperientedSecond", residentSeq);
+
+		return result;
+
+	}
+	//선임된 위원장 count 메소드
+	@Override
+	public int selectConfirmSuperientendMember(SqlSessionTemplate sqlSession) {
+
+		int resultNum = sqlSession.selectOne("manager_vote.selectConfirmSuperientendMember");
+
+		return resultNum;
+
+	}
+	//각 후보마다 투표수 리스트 가져오는 메소드
+	@Override
+	public CandidatePercent selectCandidatePercentList(SqlSessionTemplate sqlSession,
+			ElectionVoteCandidate electionVoteCandidate) {
+
+		CandidatePercent percent = sqlSession.selectOne("manager_vote.selectCandidatePercentList", electionVoteCandidate);
+
+		return percent;
+
+	}
+	//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
+	@Override
+	public CandidatePercent selectCandidatePercentListGen(SqlSessionTemplate sqlSession,
+			GeneralVoteCandidate generalVoteCandidate) {
+
+		CandidatePercent percent = sqlSession.selectOne("manager_vote.selectCandidatePercentListGen", generalVoteCandidate);
+
+		return percent;
 
 	}
 

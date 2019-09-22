@@ -832,14 +832,22 @@
 
 		}else{
 			/* view 페이지 전환 (선거운동기간) */
+			$.ajax({
+				url:"/onepart/resident/superintend_vote_exercise_main",
+				type:"get",
+				data:{'voteSeq':voteSeq},
+				success:function(result){
+    				$("#content").html(result);
+    			}
+			});
 		}
 
 	}
 </script>
 <script>
-		$(document).ready(function() {
+		/* $(document).ready(function() {
 			FormSliderSwitcher.init();
-		});
+		}); */
 </script>
 <script src="${contextPath}/resources/plugins/switchery/switchery.min.js"></script>
 <script src="${contextPath}/resources/plugins/powerange/powerange.min.js"></script>

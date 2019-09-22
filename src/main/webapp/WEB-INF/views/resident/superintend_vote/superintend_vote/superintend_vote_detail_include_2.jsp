@@ -23,7 +23,7 @@
 					</td>
 					<td style="width:50%"></td>
 					<td style="width:15%">
-						 <a class="btn btn-success" style="width:100%" id="sendMessageResident">문자발송</a>
+						 <a class="btn btn-success" style="width:100%" onclick="sendMessageResident()">문자발송</a>
 					</td>
 					<td style="width:1%"></td>
 					<td style="width:15%">
@@ -61,7 +61,7 @@
 					<span class="badge badge-primary" style="font-size:1.25em">선거 기간</span>
 				</td>
 				<td style="height:25px;">
-					<span class="badge badge-inverse" style="font-size:1.25em">36%</span>
+					<span class="badge badge-inverse" style="font-size:1.25em">${votePercent}%</span>
 				</td>
 				<td style="width:5%"></td>
 			</tr>
@@ -97,7 +97,7 @@
 					</td>
 					<td style="width:50%"></td>
 					<td style="width:15%">
-						 <a class="btn btn-success" style="width:100%" id="sendMessageResident">문자발송</a>
+						 <a class="btn btn-success" style="width:100%" onclick="sendMessageResident()">문자발송</a>
 					</td>
 					<td style="width:1%"></td>
 					<td style="width:15%">
@@ -135,7 +135,7 @@
 					<span class="badge badge-primary" style="font-size:1.25em">선거 기간</span>
 				</td>
 				<td style="height:25px;">
-					<span class="badge badge-inverse" style="font-size:1.25em">36%</span>
+					<span class="badge badge-inverse" style="font-size:1.25em">${votePercent}%</span>
 				</td>
 				<td style="width:5%"></td>
 			</tr>
@@ -200,6 +200,27 @@
 			}
 		});
 	}
+
+	function sendMessageResident() {
+		var voteUrl = $(this).data("menu-url");
+		var electVoteSeq = $("#electVoteSeq").val();
+		var voteKind = $("#voteKind").val();
+		console.log("message");
+		console.log(electVoteSeq);
+		console.log(voteKind);
+		$.ajax({
+			url:"/onepart/resident/sendMessageResident",
+			dataType:"html",
+			data:{
+					electVoteSeq:electVoteSeq,
+					voteKind:voteKind
+				 },
+			success:function(result){
+				$("#content").html(result);
+			}
+		});
+	}
+
 </script>
 </body>
 </html>

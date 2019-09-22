@@ -30,13 +30,16 @@
 	<!-- 후보 상세정보 div -->
 		<div style="width:95%">
 			<ul class="media-list media-list-with-divider">
-				<c:forEach var="candidateList" items="${ candidateList }">
+				<c:forEach var="candidateList" items="${ candidateList }" varStatus="status">
 					<!-- 한후보 정보 div -->
 					<li style="margin-bottom:-10px;">
 						<table style="width:95%; margin:0 auto;">
 							<tr>
-								<td style="width:30%"><h4>후보${ candidateList.cndtNo }번 ${ candidateList.residentNm }
+								<td style="width:85%"><h4>후보${ candidateList.cndtNo }번 ${ candidateList.residentNm }
 								&nbsp;&nbsp;&nbsp; <small style="font-size:1em">${ candidateList.bdNm }동 ${ candidateList.rmNm }호 거주</small></h4></td>
+								<td>
+									<span class="badge badge-inverse" style="font-size:1.25em">총 투표중 ${ candidatePercentList[status.index].candidatePercent }%</span>
+								</td>
 							</tr>
 						</table>
 					</li>
@@ -90,13 +93,16 @@
 	<!-- 후보 상세정보 div -->
 		<div style="width:95%">
 			<ul class="media-list media-list-with-divider">
-				<c:forEach var="candidateListGen" items="${ candidateListGen }">
+				<c:forEach var="candidateListGen" items="${ candidateListGen }" varStatus="status">
 					<!-- 한후보 정보 div -->
 					<li style="margin-bottom:-10px;">
 						<table style="width:95%; margin:0 auto;">
 							<tr>
-								<td style="width:30%"><h4>${ candidateListGen.cndtNm }
+								<td style="width:85%"><h4>${ candidateListGen.cndtNm }
 								</h4></td>
+								<td>
+									<span class="badge badge-inverse" style="font-size:1.25em">총 투표중 ${ candidatePercentList[status.index].candidatePercent }%</span>
+								</td>
 							</tr>
 						</table>
 					</li>

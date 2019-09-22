@@ -29,7 +29,7 @@
 					<span class="badge badge-primary" style="height:28px; font-size:1.25em;">투표 진행중</span>
 				</td>
 				<td style="width:15%; text-align:right;">
-					<span class="badge badge-inverse" style="height:28px; font-size:1.25em;">34% 완료</span>
+					<span class="badge badge-inverse" style="height:28px; font-size:1.25em;">${ votePercent }%</span>
 					<input type="hidden" value="${ vote.gnrVoteSeq }" id="gnrVoteSeq">
 				</td>
 			</tr>
@@ -61,7 +61,7 @@
 					<span class="badge badge-primary" style="height:28px; font-size:1.25em;">투표 진행중</span>
 				</td>
 				<td style="width:15%; text-align:right;">
-					<span class="badge badge-inverse" style="height:28px; font-size:1.25em;">34% 완료</span>
+					<span class="badge badge-inverse" style="height:28px; font-size:1.25em;">${ votePercent }%</span>
 					<input type="hidden" value="${ vote2.electVoteSeq }" id="electVoteSeq">
 				</td>
 			</tr>
