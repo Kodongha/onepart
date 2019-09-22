@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.onepart.manager.vote.model.vo.GeneralVote;
+import com.kh.onepart.manager.vote.model.vo.GeneralVoteCandidate;
+import com.kh.onepart.manager.vote.model.vo.CandidatePercent;
 import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.manager.vote.model.vo.ElectionVote;
+import com.kh.onepart.manager.vote.model.vo.ElectionVoteCandidate;
 
 public interface ManagerVoteDao {
 	//현재 진행중인 선거 리스트 불러오는 메소드
@@ -25,9 +28,22 @@ public interface ManagerVoteDao {
 	ArrayList selectAllSuperintendList(SqlSessionTemplate sqlSession);
 	//해당 입주민 선관위 해임처리 하는 메소드
 	int deleteSuperiented(SqlSessionTemplate sqlSession, int residentSeq);
+	//위원장 선임 메소드
+	int updateNewSuperientedFirst(SqlSessionTemplate sqlSession, int residentSeq);
+	//위원 선임 메소드
+	int updateNewSuperientedSecond(SqlSessionTemplate sqlSession, int residentSeq);
+	//선임된 위원장 count 메소드
+	int selectConfirmSuperientendMember(SqlSessionTemplate sqlSession);
+	//각 후보마다 투표수 리스트 가져오는 메소드
+	CandidatePercent selectCandidatePercentList(SqlSessionTemplate sqlSession,
+			ElectionVoteCandidate electionVoteCandidate);
+	//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
+	CandidatePercent selectCandidatePercentListGen(SqlSessionTemplate sqlSession,
+			GeneralVoteCandidate generalVoteCandidate);
 	//현재 진행중인 선거 카운트 불러오는 메소드
 	int selectAllIngVoteCount(SqlSessionTemplate sqlSession);
 	//현재 진행중인 선거 리스트 불러오는 메소드 - 페이징 버전
 	ArrayList selectAllIngVoteListVerPaging(SqlSessionTemplate sqlSession, PageInfo pi);
+
 
 }

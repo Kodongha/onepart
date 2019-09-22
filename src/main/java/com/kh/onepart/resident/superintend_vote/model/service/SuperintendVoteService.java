@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
+import com.kh.onepart.resident.superintend_vote.model.vo.CandidatePercent;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.superintend_vote.model.vo.GeneralVote;
@@ -53,5 +54,19 @@ public interface SuperintendVoteService {
 	int insertRealVoteGeneral(VotePrtcpt vp, VoteSelected vs);
 	//해당 선거에 투표권이 있는 선거인 명부 리스트 가져오는 메소드
 	ArrayList selectAllElectionElectoralList(int electVoteSeq);
+	//해당 투표에 투표권이 있는 선거인 명부 리스트 가져오는 메소드
+	ArrayList selectAllGeneralElectoralList(int electVoteSeq);
+	//해당선거 투표권 명부인 갯수 가져오는 메소드
+	int selectCountAllElectionElectoral(int voteSeq);
+	//해당선거를 진행한 명부인 갯수 가녀오는 메소드
+	int selectCountApplyElectionElctoral(int voteSeq);
+	//해당투표 투표권 명부인 갯수 가져오는 메소드
+	int selectCountAllGeneralElectoral(int voteSeq);
+	//해당투표를 진행한 명부인 갯수 가녀오는 메소드 (일반투표)
+	int selectCountApplyGeneralElctoral(int voteSeq);
+	//각 후보마다 투표수 리스트 가져오는 메소드
+	ArrayList selectCandidatePercentList(ArrayList<ElectionVoteCandidate> candidateList);
+	//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
+	ArrayList<CandidatePercent> selectCandidatePercentListGen(ArrayList<GeneralVoteCandidate> candidateListGen);
 
 }

@@ -85,25 +85,32 @@
 		<result property="residentPhone" column="RESIDENT_PHONE"/>
 	</resultMap>
 
+	<resultMap type="vote_CandidatePercent" id="vote_CandidatePercentResultSet">
+		<result property="candidatePercent" column="CANDIDATE_PERCENT"/>
+	</resultMap>
+
 	<select id="selectAllIngVoteList" resultMap="vote_VoteListResultSet" parameterType="_int">
 		<![CDATA[
 			SELECT *
 		    FROM (
 		            SELECT E.ELECT_VOTE_SEQ as VOTE_SEQ,
-		                    '선거' as VOTE_KIND,
-		                    E.ELECT_NM as VOTE_NM,
-		                    CASE WHEN E.CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.CNDD_ENROLL_END_DT
-		                          WHEN E.CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.CAMPAIGN_END_DT
-		                          WHEN E.VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.VOTE_END_DT END AS END_DT,
-		                    CASE WHEN E.CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '후보등록기간'
-		                          WHEN E.CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '선거운동기간'
-		                          WHEN E.VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '투표기간' END AS VOTE_STATUS,
-		                          CASE WHEN V.RESIDENT_SEQ IS NULL THEN '미참여'
-		                               WHEN V.RESIDENT_SEQ IS NOT NULL THEN '참여' END AS USER_STATUS
-		            FROM ELECT_VOTE E
-		            LEFT JOIN VOTE_PRTCPT V ON (E.ELECT_VOTE_SEQ = V.ELECT_VOTE_SEQ)
-		            WHERE RESIDENT_SEQ = #{residentSeq}
-		            OR RESIDENT_SEQ IS NULL
+                            '선거' as VOTE_KIND,
+                            E.ELECT_NM as VOTE_NM,
+                            CASE WHEN E.CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.CNDD_ENROLL_END_DT
+                                  WHEN E.CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.CAMPAIGN_END_DT
+                                  WHEN E.VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.VOTE_END_DT END AS END_DT,
+                            CASE WHEN E.CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '후보등록기간'
+                                  WHEN E.CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '선거운동기간'
+                                  WHEN E.VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '투표기간' END AS VOTE_STATUS,
+                                  CASE WHEN V.ELECT_VOTE_SEQ IS NULL THEN '미참여'
+                                       WHEN V.ELECT_VOTE_SEQ IS NOT NULL THEN '참여' END AS USER_STATUS
+                    FROM ELECT_VOTE E
+                    LEFT JOIN (
+                                SELECT E.ELECT_VOTE_SEQ AS ELECT_VOTE_SEQ
+                                FROM ELECT_VOTE E
+                                LEFT JOIN VOTE_PRTCPT G ON (E.ELECT_VOTE_SEQ = G.ELECT_VOTE_SEQ)
+                                WHERE RESIDENT_SEQ = #{residentSeq}
+                            ) V ON (E.ELECT_VOTE_SEQ = V.ELECT_VOTE_SEQ)
 
 		            UNION ALL
 
@@ -132,20 +139,23 @@
 			SELECT *
 		    FROM (
 		            SELECT E.ELECT_VOTE_SEQ as VOTE_SEQ,
-		                    '선거' as VOTE_KIND,
-		                    E.ELECT_NM as VOTE_NM,
-		                    CASE WHEN E.CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.CNDD_ENROLL_END_DT
-		                          WHEN E.CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.CAMPAIGN_END_DT
-		                          WHEN E.VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.VOTE_END_DT END AS END_DT,
-		                    CASE WHEN E.CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '후보등록기간'
-		                          WHEN E.CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '선거운동기간'
-		                          WHEN E.VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '투표기간' END AS VOTE_STATUS,
-		                          CASE WHEN V.RESIDENT_SEQ IS NULL THEN '미참여'
-		                               WHEN V.RESIDENT_SEQ IS NOT NULL THEN '참여' END AS USER_STATUS
-		            FROM ELECT_VOTE E
-		            LEFT JOIN VOTE_PRTCPT V ON (E.ELECT_VOTE_SEQ = V.ELECT_VOTE_SEQ)
-		            WHERE RESIDENT_SEQ = #{residentSeq}
-		            OR RESIDENT_SEQ IS NULL
+                            '선거' as VOTE_KIND,
+                            E.ELECT_NM as VOTE_NM,
+                            CASE WHEN E.CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.CNDD_ENROLL_END_DT
+                                  WHEN E.CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.CAMPAIGN_END_DT
+                                  WHEN E.VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.VOTE_END_DT END AS END_DT,
+                            CASE WHEN E.CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '후보등록기간'
+                                  WHEN E.CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '선거운동기간'
+                                  WHEN E.VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '투표기간' END AS VOTE_STATUS,
+                                  CASE WHEN V.ELECT_VOTE_SEQ IS NULL THEN '미참여'
+                                       WHEN V.ELECT_VOTE_SEQ IS NOT NULL THEN '참여' END AS USER_STATUS
+                    FROM ELECT_VOTE E
+                    LEFT JOIN (
+                                SELECT E.ELECT_VOTE_SEQ AS ELECT_VOTE_SEQ
+                                FROM ELECT_VOTE E
+                                LEFT JOIN VOTE_PRTCPT G ON (E.ELECT_VOTE_SEQ = G.ELECT_VOTE_SEQ)
+                                WHERE RESIDENT_SEQ = #{residentSeq}
+                            ) V ON (E.ELECT_VOTE_SEQ = V.ELECT_VOTE_SEQ)
 
 		            UNION ALL
 
@@ -175,22 +185,24 @@
 			SELECT *
 		    FROM (
 		            SELECT E.ELECT_VOTE_SEQ as VOTE_SEQ,
-		                    '선거' as VOTE_KIND,
-		                    E.ELECT_NM as VOTE_NM,
-		                    CASE WHEN E.CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.CNDD_ENROLL_END_DT
-		                          WHEN E.CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.CAMPAIGN_END_DT
-		                          WHEN E.VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.VOTE_END_DT END AS END_DT,
-		                    CASE WHEN E.CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '후보등록기간'
-		                          WHEN E.CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '선거운동기간'
-		                          WHEN E.VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '투표기간'
-                                  ELSE '완료' END AS VOTE_STATUS,
-		                          CASE WHEN V.RESIDENT_SEQ IS NULL THEN '미참여'
-		                               WHEN V.RESIDENT_SEQ IS NOT NULL THEN '참여' END AS USER_STATUS,
+                            '선거' as VOTE_KIND,
+                            E.ELECT_NM as VOTE_NM,
+                            CASE WHEN E.CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.CNDD_ENROLL_END_DT
+                                  WHEN E.CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.CAMPAIGN_END_DT
+                                  WHEN E.VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN E.VOTE_END_DT END AS END_DT,
+                            CASE WHEN E.CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '후보등록기간'
+                                  WHEN E.CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '선거운동기간'
+                                  WHEN E.VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND E.VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '투표기간' END AS VOTE_STATUS,
+                                  CASE WHEN V.ELECT_VOTE_SEQ IS NULL THEN '미참여'
+                                       WHEN V.ELECT_VOTE_SEQ IS NOT NULL THEN '참여' END AS USER_STATUS,
                             E.VOTE_END_DT AS REAL_END_DT
-		            FROM ELECT_VOTE E
-		            LEFT JOIN VOTE_PRTCPT V ON (E.ELECT_VOTE_SEQ = V.ELECT_VOTE_SEQ)
-		            WHERE RESIDENT_SEQ = #{residentSeq}
-		            OR RESIDENT_SEQ IS NULL
+                    FROM ELECT_VOTE E
+                    LEFT JOIN (
+                                SELECT E.ELECT_VOTE_SEQ AS ELECT_VOTE_SEQ
+                                FROM ELECT_VOTE E
+                                LEFT JOIN VOTE_PRTCPT G ON (E.ELECT_VOTE_SEQ = G.ELECT_VOTE_SEQ)
+                                WHERE RESIDENT_SEQ = #{residentSeq}
+                            ) V ON (E.ELECT_VOTE_SEQ = V.ELECT_VOTE_SEQ)
 
 		            UNION ALL
 
@@ -210,7 +222,7 @@
                                 WHERE RESIDENT_SEQ = #{residentSeq}
                             ) C ON (A.GNR_VOTE_SEQ = C.GNR_VOTE_SEQ)
 		        )
-			WHERE REAL_END_DT BETWEEN TO_DATE(TO_CHAR(SYSDATE - 8, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD')
+			WHERE REAL_END_DT BETWEEN TO_DATE(TO_CHAR(SYSDATE - 8, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') - 1
 			ORDER BY REAL_END_DT
 		]]>
 	</select>
@@ -367,6 +379,7 @@
 					NULL,
 					NULL,
 					#{electVoteCndtSignupSeq},
+					NULL,
 					NULL
 				)
 	</insert>
@@ -382,5 +395,61 @@
 				)
 		</if>
 	</insert>
+
+	<insert id="insertCurrentVotePrtcptSeqElection" parameterType="vote_VotePrtcpt">
+		INSERT INTO VOTE_PRTCPT
+		VALUES (
+					VOTE_PRTCPT_SEQ.NEXTVAL,
+					2,
+					NULL,
+					#{electVoteSeq},
+					#{residentSeq}
+				)
+		<selectKey keyProperty="votePrtcptSeq" resultType="Integer" order="AFTER">
+			SELECT VOTE_PRTCPT_SEQ.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<insert id="insertElectionVote" parameterType="vote_VoteSelected">
+		INSERT INTO VOTE_SELECTED
+		VALUES (
+					VOTE_SELECTED_SEQ.NEXTVAL,
+					#{votePrtcptSeq},
+					2,
+					NULL,
+					#{electVoteCndtSignupSeq},
+					#{electVoteCndtSignupSeq}
+				)
+	</insert>
+
+	<select id="selectCandidatePercentList" parameterType="vote_ElectionVoteCandidate" resultMap="vote_CandidatePercentResultSet">
+		SELECT TRUNC((
+		                SELECT COUNT(*)
+		                FROM VOTE_PRTCPT P
+		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
+		                WHERE ELECT_VOTE_SEQ = #{electVoteSeq}
+		                AND ELECT_VOTE_CNDT_SIGNUP_SEQ = #{electVoteCndtSignupSeq}
+		            ) / (
+		                SELECT COUNT(*)
+		                FROM VOTE_PRTCPT P
+		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
+		                WHERE ELECT_VOTE_SEQ = #{electVoteSeq}) * 100) AS CANDIDATE_PERCENT
+		FROM DUAL
+	</select>
+
+	<select id="selectCandidatePercentListGen" parameterType="vote_GeneralVoteCandidate" resultMap="vote_CandidatePercentResultSet">
+		SELECT TRUNC((
+		                SELECT COUNT(*)
+		                FROM VOTE_PRTCPT P
+		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
+		                WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}
+		                AND GNR_VOTE_CNDT_ENROLL_SEQ = #{gnrVoteCndtEnrollSeq}
+		            ) / (
+		                SELECT COUNT(*)
+		                FROM VOTE_PRTCPT P
+		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
+		                WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}) * 100) AS CANDIDATE_PERCENT
+		FROM DUAL
+	</select>
 
 </mapper>

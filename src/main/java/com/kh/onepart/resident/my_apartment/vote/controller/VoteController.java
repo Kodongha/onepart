@@ -17,18 +17,23 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.common.CommonUtils;
 import com.kh.onepart.resident.my_apartment.vote.model.service.VoteService;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.CandidatePercent;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.Career;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVoteCandidate;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.Image;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteList;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VotePrtcpt;
+import com.kh.onepart.resident.superintend_vote.model.service.SuperintendVoteService;
 
 @Controller
 public class VoteController {
 	@Autowired
 	private VoteService vs;
+	@Autowired
+	private SuperintendVoteService svs;
 
 	@RequestMapping("/resident/menuVote")
 	public ModelAndView moveVote(ModelAndView mv, HttpServletRequest request) {
@@ -67,7 +72,7 @@ public class VoteController {
 
 		return mv;
 	}
-	///////////////////////////////////////////////
+
 	@RequestMapping("/resident/applyCandidate")
 	public ModelAndView moveVote_applyCandidate(ModelAndView mv, HttpServletRequest request, MultipartHttpServletRequest req) {
 		System.out.println("/moveVote_applyCandidate");
@@ -193,11 +198,23 @@ public class VoteController {
 		VoteList voteUser = vs.selectOneElectionVoteUserInfo(info);
 		System.out.println("controller voteUser : " + voteUser);
 
-		//선택한 선거의 총 선거율을 불러오는 메소드
-
 		//선택한 선거의 후보 리스트를 불러오는 메소드 (선거)
-		ArrayList candidateList = vs.selectAllElectionCandidateList(voteSeq);
+		ArrayList<ElectionVoteCandidate> candidateList = vs.selectAllElectionCandidateList(voteSeq);
 
+		//해당선거 투표권 명부인 갯수 가져오는 메소드
+		int num1 = svs.selectCountAllElectionElectoral(voteSeq);
+
+		//해당선거를 진행한 명부인 갯수 가녀오는 메소드
+		int num2 = svs.selectCountApplyElectionElctoral(voteSeq);
+
+		//각 후보마다 투표수 리스트 가져오는 메소드
+		ArrayList<CandidatePercent> candidatePercentList = vs.selectCandidatePercentList(candidateList);
+
+		int votePercent = (int)((double)num2 / (double)num1 * 100);
+		System.out.println("result : " + votePercent);
+
+		mv.addObject("votePercent", votePercent);
+		mv.addObject("candidatePercentList", candidatePercentList);
 		mv.addObject("vote2", vote);
 		mv.addObject("voteUser", voteUser);
 		mv.addObject("candidateList", candidateList);
@@ -224,12 +241,25 @@ public class VoteController {
 		VoteList voteUser = vs.selectOneGeneralVoteUserInfo(info);
 		System.out.println("controller voteUser : " + voteUser);
 
-		//선택한 선거의 총 선거율을 불러오는 메소드
-
 		//선택한 선거의 후보 리스트를 불러오는 메소드
-		ArrayList candidateList = vs.selectAllCandidateList(voteSeq);
+		ArrayList<GeneralVoteCandidate> candidateList = vs.selectAllCandidateList(voteSeq);
 		System.out.println("controller candidateList : " + candidateList);
 
+		//해당투표 투표권 명부인 갯수 가져오는 메소드 (일반투표)
+		int num1 = svs.selectCountAllGeneralElectoral(voteSeq);
+
+		//해당투표를 진행한 명부인 갯수 가녀오는 메소드 (일반투표)
+		int num2 = svs.selectCountApplyGeneralElctoral(voteSeq);
+
+		//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
+		ArrayList<CandidatePercent> candidatePercentList = vs.selectCandidatePercentListGen(candidateList);
+
+		//투표율 로직처리
+		int votePercent = (int)((double)num2 / (double)num1 * 100);
+		System.out.println("result : " + votePercent);
+
+		mv.addObject("votePercent", votePercent);
+		mv.addObject("candidatePercentList", candidatePercentList);
 		mv.addObject("vote", vote);
 		mv.addObject("candidateList", candidateList);
 		mv.addObject("voteUser", voteUser);
@@ -242,6 +272,7 @@ public class VoteController {
 	public ModelAndView moveVote_modifyGeneral(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("/modifyGeneral");
 		int gnrVoteSeq = Integer.parseInt(request.getParameter("gnrVoteSeq"));
+		int voteSeq = gnrVoteSeq;
 		System.out.println("modify gnrVoteSeq : " + gnrVoteSeq);
 		int residentSeq = ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentSeq();
 
@@ -256,12 +287,21 @@ public class VoteController {
 		VoteList voteUser = vs.selectOneGeneralVoteUserInfo(info);
 		System.out.println("modify voteUser : " + voteUser);
 
-		//선택한 선거의 총 선거율을 불러오는 메소드
-
 		//선택한 선거의 후보 리스트를 불러오는 메소드
 		ArrayList candidateList = vs.selectAllCandidateList(gnrVoteSeq);
 		System.out.println("modify candidateList : " + candidateList);
 
+		//해당투표 투표권 명부인 갯수 가져오는 메소드 (일반투표)
+		int num1 = svs.selectCountAllGeneralElectoral(voteSeq);
+
+		//해당투표를 진행한 명부인 갯수 가녀오는 메소드 (일반투표)
+		int num2 = svs.selectCountApplyGeneralElctoral(voteSeq);
+
+		//투표율 로직처리
+		int votePercent = (int)((double)num2 / (double)num1 * 100);
+		System.out.println("result : " + votePercent);
+
+		mv.addObject("votePercent", votePercent);
 		mv.addObject("vote", vote);
 		mv.addObject("candidateList", candidateList);
 		mv.addObject("voteUser", voteUser);
@@ -282,23 +322,12 @@ public class VoteController {
 		return "/resident/my_apartment/vote/vote_general_end";
 	}
 
-	@RequestMapping("/resident/candidateDetail")
-	public String moveVote_candidateDetail() {
-		System.out.println("/menuVote");
-		return "/resident/my_apartment/vote/vote_election_candidate";
-	}
-
-	@RequestMapping("/resident/realVote")
-	public String moveVote_realVote() {
-		System.out.println("/menuVote");
-		return "/resident/my_apartment/vote/vote_election_realvote";
-	}
-
 	@RequestMapping("/resident/realVoteGeneral")
 	public ModelAndView moveVote_realVoteGeneral(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("/realVoteGeneral");
 		int gnrVoteSeq = Integer.parseInt(request.getParameter("gnrVoteSeq"));
 		System.out.println("modify gnrVoteSeq : " + gnrVoteSeq);
+		int voteSeq = gnrVoteSeq;
 		int residentSeq = ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentSeq();
 
 		//선택한 선거의 상세정보를 불러오는 메소드
@@ -312,16 +341,65 @@ public class VoteController {
 		VoteList voteUser = vs.selectOneGeneralVoteUserInfo(info);
 		System.out.println("modify voteUser : " + voteUser);
 
-		//선택한 선거의 총 선거율을 불러오는 메소드
-
 		//선택한 선거의 후보 리스트를 불러오는 메소드
 		ArrayList candidateList = vs.selectAllCandidateList(gnrVoteSeq);
 		System.out.println("modify candidateList : " + candidateList);
 
+		//해당투표 투표권 명부인 갯수 가져오는 메소드 (일반투표)
+		int num1 = svs.selectCountAllGeneralElectoral(voteSeq);
+
+		//해당투표를 진행한 명부인 갯수 가녀오는 메소드 (일반투표)
+		int num2 = svs.selectCountApplyGeneralElctoral(voteSeq);
+
+		//투표율 로직처리
+		int votePercent = (int)((double)num2 / (double)num1 * 100);
+		System.out.println("result : " + votePercent);
+
+		mv.addObject("votePercent", votePercent);
 		mv.addObject("vote", vote);
 		mv.addObject("candidateList", candidateList);
 		mv.addObject("voteUser", voteUser);
 		mv.setViewName("/resident/my_apartment/vote/vote_general_realvote");
+
+		return mv;
+	}
+
+	@RequestMapping("/resident/realVoteElection")
+	public ModelAndView moveVote_realVoteElection(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/realVoteElection");
+		int electVoteSeq = Integer.parseInt(request.getParameter("electVoteSeq"));
+		int voteSeq = electVoteSeq;
+		System.out.println("modify gnrVoteSeq : " + electVoteSeq);
+		int residentSeq = ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentSeq();
+
+		//선택한 선거의 상세정보를 불러오는 메소드 (선거)
+		VoteList info = new VoteList();
+		info.setVoteSeq(electVoteSeq);
+		info.setResidentSeq(residentSeq);
+		ElectionVote vote = vs.selectOneElectionVoteInfo(electVoteSeq);
+		System.out.println("controller vote : " + vote);
+
+		//로그인유저의 현황을 불러오는 메소드 (선거)
+		VoteList voteUser = vs.selectOneElectionVoteUserInfo(info);
+		System.out.println("controller voteUser : " + voteUser);
+
+		//선택한 선거의 후보 리스트를 불러오는 메소드 (선거)
+		ArrayList candidateList = vs.selectAllElectionCandidateList(electVoteSeq);
+
+		//해당선거 투표권 명부인 갯수 가져오는 메소드
+		int num1 = svs.selectCountAllElectionElectoral(voteSeq);
+
+		//해당선거를 진행한 명부인 갯수 가녀오는 메소드
+		int num2 = svs.selectCountApplyElectionElctoral(voteSeq);
+
+		int votePercent = (int)((double)num2 / (double)num1 * 100);
+		System.out.println("result : " + votePercent);
+
+		mv.addObject("votePercent", votePercent);
+		mv.addObject("vote2", vote);
+		mv.addObject("candidateList", candidateList);
+		mv.addObject("voteUser", voteUser);
+		mv.setViewName("/resident/my_apartment/vote/vote_election_realvote");
 
 		return mv;
 	}
@@ -352,6 +430,7 @@ public class VoteController {
 	public ModelAndView insertGeneralVote(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("/updateGeneralVote");
 
+
 		int residentSeq = ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentSeq();
 		int gnrVoteSeq = Integer.parseInt(request.getParameter("gnrVoteSeq"));
 		int gnrVoteCndtEnrollSeq = Integer.parseInt(request.getParameter("gnrVoteCndtEnrollSeq"));
@@ -363,6 +442,29 @@ public class VoteController {
 		vp.setGnrVoteSeq(gnrVoteSeq);
 		vp.setResidentSeq(residentSeq);
 		int result = vs.insertGeneralVote(vp, gnrVoteCndtEnrollSeq);
+
+		mv.setViewName("jsonView");
+
+		return mv;
+
+	}
+
+	@RequestMapping("/resident/insertElectionVote")
+	public ModelAndView insertElectionVote(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/insertElectionVote");
+
+
+		int residentSeq = ((ResidentVO) request.getSession().getAttribute("loginUser")).getResidentSeq();
+		int electVoteSeq = Integer.parseInt(request.getParameter("electVoteSeq"));
+		int electVoteCndtSignupSeq = Integer.parseInt(request.getParameter("electVoteCndtSignupSeq"));
+		System.out.println("update gnrVoteSeq : " + electVoteSeq);
+		System.out.println("update gnrVoteCndtEnrollSeq : " + electVoteCndtSignupSeq);
+
+		//해당 투표의 수정내역 insert하는 메소드
+		VotePrtcpt vp = new VotePrtcpt();
+		vp.setElectVoteSeq(electVoteSeq);
+		vp.setResidentSeq(residentSeq);
+		int result = vs.insertElectionVote(vp, electVoteCndtSignupSeq);
 
 		mv.setViewName("jsonView");
 

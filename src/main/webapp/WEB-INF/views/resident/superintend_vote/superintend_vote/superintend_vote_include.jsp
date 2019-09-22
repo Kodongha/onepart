@@ -24,7 +24,7 @@ $(document).ready(function() {
 	/* 투표기간 메인페이지 */
 	$("#votingRealvote").data("menu-url", "/onepart/resident/votingRealvote");
 	/* 선거명부인 메세지 전송 */
-	$("#sendMessageResident").data("menu-url", "/onepart/resident/sendMessageResident");
+	//$("#sendMessageResident").data("menu-url", "/onepart/resident/sendMessageResident");
 	/* 오프라인 투표모드 전환 */
 	$("#changeOffline").data("menu-url", "/onepart/resident/changeOffline");
 	/* 선거결과 상세보기 */
@@ -109,6 +109,7 @@ $(document).ready(function() {
 		var voteUrl = $(this).data("menu-url");
 		var electVoteSeq = $("#electVoteSeq").val();
 		var voteKind = $("#voteKind").val();
+		console.log("message");
 		$.ajax({
 			url:voteUrl,
 			dataType:"html",

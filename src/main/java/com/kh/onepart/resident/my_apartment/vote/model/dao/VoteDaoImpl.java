@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.onepart.resident.my_apartment.vote.model.vo.CandidatePercent;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.Career;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVoteCandidate;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.Image;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteList;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VotePrtcpt;
@@ -167,6 +169,45 @@ public class VoteDaoImpl implements VoteDao{
 		int result2 = sqlSession.insert("vote.insertElectionCandidateCareer", career);
 
 		return result2;
+
+	}
+	//해당 선거내역이 insert가 되고 그에 대한 currentval값 받아오는 메소드
+	@Override
+	public int insertCurrentVotePrtcptSeqElection(SqlSessionTemplate sqlSession, VotePrtcpt vp) {
+
+		sqlSession.insert("vote.insertCurrentVotePrtcptSeqElection", vp);
+		int votePrtcptSeq = vp.getVotePrtcptSeq();
+
+		return votePrtcptSeq;
+
+	}
+	//해당 선거내역에 선택된 후보내역 insert 하는 메소드
+	@Override
+	public int insertElectionVote(SqlSessionTemplate sqlSession, VoteSelected vs) {
+
+		int result = sqlSession.update("vote.insertElectionVote", vs);
+
+		return  result;
+
+	}
+	//각 후보마다 투표수 리스트 가져오는 메소드
+	@Override
+	public CandidatePercent selectCandidatePercentList(SqlSessionTemplate sqlSession,
+			ElectionVoteCandidate electionVoteCandidate) {
+
+		CandidatePercent percent = sqlSession.selectOne("vote.selectCandidatePercentList", electionVoteCandidate);
+
+		return percent;
+
+	}
+	//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
+	@Override
+	public CandidatePercent selectCandidatePercentListGen(SqlSessionTemplate sqlSession,
+			GeneralVoteCandidate generalVoteCandidate) {
+
+		CandidatePercent percent = sqlSession.selectOne("vote.selectCandidatePercentListGen", generalVoteCandidate);
+
+		return percent;
 
 	}
 

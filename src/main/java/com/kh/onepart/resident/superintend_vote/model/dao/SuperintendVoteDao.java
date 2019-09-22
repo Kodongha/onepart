@@ -1,11 +1,13 @@
 package com.kh.onepart.resident.superintend_vote.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.resident.superintend_vote.model.vo.ApartDetailInfo;
+import com.kh.onepart.resident.superintend_vote.model.vo.CandidatePercent;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.superintend_vote.model.vo.ElectoralRegister;
@@ -74,5 +76,28 @@ public interface SuperintendVoteDao {
 	ArrayList selectAllElectoralRegister(SqlSessionTemplate sqlSession, int electVoteSeq);
 	//동별 세대주 명부 가져오는 메소드
 	ArrayList selectDongElectoralRegister(SqlSessionTemplate sqlSession, ElectoralRegister er);
+	//해당 투표의 구분 (동별/모든세대주) 가져오는 메소드
+	ElectoralRegister selectGenaralStatus(SqlSessionTemplate sqlSession, int electVoteSeq);
+	//투표권 부여할 동 리스트 가져오는 메소드
+	ArrayList selectAllDongList(SqlSessionTemplate sqlSession, int electVoteSeq);
+	//동별 세대주 명부 가져오는 메소드 (다중동 포함)
+	ArrayList selectDongGeneralRegister(SqlSessionTemplate sqlSession, Map<String, Object> map);
+	//모든 세대주 명부 갯수 가져오는 메소드
+	int selectCountAllElectoralRegister(SqlSessionTemplate sqlSession, int voteSeq);
+	//동별 세대주 명부 갯수 가져오는 메소드
+	int selectCountDongElectoralRegister(SqlSessionTemplate sqlSession, ElectoralRegister er);
+	//모든 세대주 명부중 선거를 진행한 세대주 갯수 가져오는 메소드
+	int selectCountApplyElectoralRegister(SqlSessionTemplate sqlSession, int voteSeq);
+	//동별 세대주 명부 갯수 가져오는 메소드 (일반투표)
+	int selectCountDongElectoralRegisterGenarl(SqlSessionTemplate sqlSession, Map<String, Object> map);
+	//해당투표를 진행한 명부인 갯수 가녀오는 메소드 (일반투표)
+	int selectCountApplyGeneralElctoral(SqlSessionTemplate sqlSession, int voteSeq);
+	//각 후보별 투표수 담아오는 메소드
+	CandidatePercent selectCandidatePercentList(SqlSessionTemplate sqlSession,
+			ElectionVoteCandidate electionVoteCandidate);
+	//각 후보별 투표수 담아오는 메소드
+	CandidatePercent selectCandidatePercentListGen(SqlSessionTemplate sqlSession,
+			GeneralVoteCandidate generalVoteCandidate);
+
 
 }

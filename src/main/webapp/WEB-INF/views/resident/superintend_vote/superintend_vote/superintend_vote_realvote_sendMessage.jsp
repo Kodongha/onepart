@@ -313,54 +313,50 @@ input[type=checkbox] {
 
   <script>
 
-      //처음 페이지 시작
-      $(function() {
-         TableManageColVis.init();
-         $("th").parent().children().eq(0).removeAttr("class");
-         $(".dataTables_info").remove();
-         $("#data-table_previous").text("이전");
-         $("#data-table_next").text("다음");
-         $(".ColVis_MasterButton span").text("컬럼 보이기/숨기기")
+//처음 페이지 시작
+	$(function() {
+		displayInit();
+		TableManageColVis.init();
+		$("th").parent().children().eq(0).removeAttr("class");
+		$(".dataTables_info").remove();
+		$("#data-table_previous").text("이전");
+		$("#data-table_next").text("다음");
+		$(".ColVis_MasterButton span").text("컬럼 보이기/숨기기")
 
-        /*  $(document).on('click', '.ColVis_MasterButton', function() {
-            $("ul.ColVis_collection > li:first-child").remove();
-         }); */
-         $(document).on('click', 'th', function() {
-            $("th").parent().children().eq(0).removeAttr("class");
-         });
+		$(document).on('click', '.ColVis_MasterButton', function() {
+			$("ul.ColVis_collection > li:first-child").remove();
+		});
+		$(document).on('click', 'th', function() {
+			$("th").parent().children().eq(0).removeAttr("class");
+		});
 
-      });
+	});
 
-      function displayInit() {
-         $('.custom-modal').addClass('modal-hide');
-         $(document).on('click', '.modal-hide-btn', function() {
-            $('.custom-modal').addClass('modal-hide');
-         });
-         $(document).on('click', '.modal-show', function() {
-            const modalId = $(this).data('modal-id');
-            $('#' + modalId).removeClass('modal-hide');
-            $('#carNum').val("");
-            $('#bdNm').val("");
-            $('#rmNm').val("");
-            $('#residentNm').val("");
-            $('#carType').val("");
-            $('#carNm').val("");
-            $('#enrollPurpose').val("");
-         });
-      };
+	function displayInit() {
+		$('.custom-modal').addClass('modal-hide');
+		$(document).on('click', '.modal-hide-btn', function() {
+			$('.custom-modal').addClass('modal-hide');
+		});
+		$(document).on('click', '.modal-show', function() {
+			const modalId = $(this).data('modal-id');
+			$('#' + modalId).removeClass('modal-hide');
+			$('#managerNm').val("")
+			$('#deptCd').val("2")
+			$('#managerId').val("")
+			$('#managerPhone').val("")
+			$('#managerEmail').val("")
+		});
+	};
    </script>
    <script>
-		$(document).ready(function() {
-			App.init();
+		/* $(document).ready(function() {
 			EmailCompose.init();
-		});
+		}); */
 	</script>
 	<script src="${contextPath}/resources/js/email-compose.demo.min.js"></script>
 	<script src="${contextPath}/resources/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.js"></script>
 	<script src="${contextPath}/resources/plugins/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.js"></script>
 	<script src="${contextPath}/resources/plugins/jquery-tag-it/js/tag-it.min.js"></script>
 	<script src="${contextPath}/resources/js/apps.min.js"></script>
-
 </body>
-
 </html>

@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.manager.vote.model.dao.ManagerVoteDao;
 import com.kh.onepart.manager.vote.model.vo.GeneralVote;
+import com.kh.onepart.manager.vote.model.vo.GeneralVoteCandidate;
+import com.kh.onepart.manager.vote.model.vo.CandidatePercent;
 import com.kh.onepart.manager.vote.model.vo.ElectionVote;
+import com.kh.onepart.manager.vote.model.vo.ElectionVoteCandidate;
 
 
 @Service
@@ -89,6 +92,63 @@ public class ManagerVoteServiceImpl implements ManagerVoteService{
 		int result = vd.deleteSuperiented(sqlSession, residentSeq);
 
 		return result;
+
+	}
+	//위원장 선임 메소드
+	@Override
+	public int updateNewSuperientedFirst(int residentSeq) {
+
+		int result = vd.updateNewSuperientedFirst(sqlSession, residentSeq);
+
+		return result;
+
+	}
+	//위원 선임 메소드
+	@Override
+	public int updateNewSuperientedSecond(int residentSeq) {
+
+		int result = vd.updateNewSuperientedSecond(sqlSession, residentSeq);
+
+		return result;
+
+	}
+	//선임된 위원장 count 메소드
+	@Override
+	public int selectConfirmSuperientendMember() {
+
+		int resultNum = vd.selectConfirmSuperientendMember(sqlSession);
+
+		return resultNum;
+
+	}
+	//각 후보마다 투표수 리스트 가져오는 메소드
+	@Override
+	public ArrayList<CandidatePercent> selectCandidatePercentList(ArrayList<ElectionVoteCandidate> candidateList) {
+
+		ArrayList<CandidatePercent> candidatePercentList = new ArrayList();
+
+		for(int i = 0; i < candidateList.size(); i++) {
+			//각 후보별 투표수 담아오는 메소드
+			CandidatePercent percent = vd.selectCandidatePercentList(sqlSession, candidateList.get(i));
+			candidatePercentList.add(percent);
+		}
+
+		return candidatePercentList;
+
+	}
+	//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
+	@Override
+	public ArrayList<CandidatePercent> selectCandidatePercentListGen(ArrayList<GeneralVoteCandidate> candidateList) {
+
+		ArrayList<CandidatePercent> candidatePercentList = new ArrayList();
+
+		for(int i = 0; i < candidateList.size(); i++) {
+			//각 후보별 투표수 담아오는 메소드
+			CandidatePercent percent = vd.selectCandidatePercentListGen(sqlSession, candidateList.get(i));
+			candidatePercentList.add(percent);
+		}
+
+		return candidatePercentList;
 
 	}
 

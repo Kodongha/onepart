@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
-
+import com.kh.onepart.manager.vote.model.vo.CandidatePercent;
 import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.manager.vote.model.vo.ElectionVote;
+import com.kh.onepart.manager.vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.manager.vote.model.vo.GeneralVote;
+import com.kh.onepart.manager.vote.model.vo.GeneralVoteCandidate;
 
 @Repository
 public class ManagerVoteDaoImpl implements ManagerVoteDao{
@@ -84,6 +86,55 @@ public class ManagerVoteDaoImpl implements ManagerVoteDao{
 		return result;
 
 	}
+
+	//위원장 선임 메소드
+	@Override
+	public int updateNewSuperientedFirst(SqlSessionTemplate sqlSession, int residentSeq) {
+
+		int result = sqlSession.update("manager_vote.updateNewSuperientedFirst", residentSeq);
+
+		return result;
+
+	}
+	//위원 선임 메소드
+	@Override
+	public int updateNewSuperientedSecond(SqlSessionTemplate sqlSession, int residentSeq) {
+
+		int result = sqlSession.update("manager_vote.updateNewSuperientedSecond", residentSeq);
+
+		return result;
+
+	}
+	//선임된 위원장 count 메소드
+	@Override
+	public int selectConfirmSuperientendMember(SqlSessionTemplate sqlSession) {
+
+		int resultNum = sqlSession.selectOne("manager_vote.selectConfirmSuperientendMember");
+
+		return resultNum;
+
+	}
+	//각 후보마다 투표수 리스트 가져오는 메소드
+	@Override
+	public CandidatePercent selectCandidatePercentList(SqlSessionTemplate sqlSession,
+			ElectionVoteCandidate electionVoteCandidate) {
+
+		CandidatePercent percent = sqlSession.selectOne("manager_vote.selectCandidatePercentList", electionVoteCandidate);
+
+		return percent;
+
+	}
+	//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
+	@Override
+	public CandidatePercent selectCandidatePercentListGen(SqlSessionTemplate sqlSession,
+			GeneralVoteCandidate generalVoteCandidate) {
+
+		CandidatePercent percent = sqlSession.selectOne("manager_vote.selectCandidatePercentListGen", generalVoteCandidate);
+
+		return percent;
+
+  }
+  
 	//현재 진행중인 선거 카운트 불러오는 메소드
 	@Override
 	public int selectAllIngVoteCount(SqlSessionTemplate sqlSession) {
@@ -101,6 +152,7 @@ public class ManagerVoteDaoImpl implements ManagerVoteDao{
 		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
 
 		return (ArrayList) sqlSession.selectList("manager_vote.selectAllIngVoteListVerPaging", null, rowBounds);
+
 	}
 
 }

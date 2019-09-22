@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.onepart.resident.my_apartment.vote.model.dao.VoteDao;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.CandidatePercent;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.Career;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVoteCandidate;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.Image;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteList;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VotePrtcpt;
@@ -164,6 +166,54 @@ public class VoteServiceImple implements VoteService{
 		return result2;
 
 	}
+	//해당 투표의 수정내역 insert하는 메소드
+	@Override
+	public int insertElectionVote(VotePrtcpt vp, int electVoteCndtSignupSeq) {
+
+		//해당 선거내역이 insert가 되고 그에 대한 currentval값 받아오는 메소드
+		int votePrtcptSeq = vd.insertCurrentVotePrtcptSeqElection(sqlSession, vp);
+
+		//해당 선거내역에 선택된 후보내역 insert 하는 메소드
+		VoteSelected vs = new VoteSelected();
+		vs.setVotePrtcptSeq(votePrtcptSeq);
+		vs.setElectVoteCndtSignupSeq(electVoteCndtSignupSeq);
+		int result  = vd.insertElectionVote(sqlSession, vs);
+
+		return result;
+
+	}
+	//각 후보마다 투표수 리스트 가져오는 메소드
+	@Override
+	public ArrayList<CandidatePercent> selectCandidatePercentList(ArrayList<ElectionVoteCandidate> candidateList) {
+
+		ArrayList<CandidatePercent> candidatePercentList = new ArrayList();
+
+		for(int i = 0; i < candidateList.size(); i++) {
+			//각 후보별 투표수 담아오는 메소드
+			CandidatePercent percent = vd.selectCandidatePercentList(sqlSession, candidateList.get(i));
+			candidatePercentList.add(percent);
+		}
+
+		return candidatePercentList;
+
+
+	}
+	//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
+	@Override
+	public ArrayList<CandidatePercent> selectCandidatePercentListGen(ArrayList<GeneralVoteCandidate> candidateList) {
+
+		ArrayList<CandidatePercent> candidatePercentList = new ArrayList();
+
+		for(int i = 0; i < candidateList.size(); i++) {
+			//각 후보별 투표수 담아오는 메소드
+			CandidatePercent percent = vd.selectCandidatePercentListGen(sqlSession, candidateList.get(i));
+			candidatePercentList.add(percent);
+		}
+
+		return candidatePercentList;
+
+	}
+
 
 
 

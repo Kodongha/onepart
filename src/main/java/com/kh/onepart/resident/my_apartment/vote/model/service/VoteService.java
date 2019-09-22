@@ -2,10 +2,12 @@ package com.kh.onepart.resident.my_apartment.vote.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.onepart.resident.my_apartment.vote.model.vo.CandidatePercent;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.Career;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVote;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVote;
+import com.kh.onepart.resident.my_apartment.vote.model.vo.GeneralVoteCandidate;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.Image;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VoteList;
 import com.kh.onepart.resident.my_apartment.vote.model.vo.VotePrtcpt;
@@ -37,6 +39,12 @@ public interface VoteService {
 	ArrayList selectAllElectionCandidateList(int voteSeq);
 	//신청서 insert 메소드
 	int insertElectionCandidateApply(Image img, ElectionVoteCandidate evc, ArrayList<Career> careerArr);
+	//해당 투표의 수정내역 insert하는 메소드
+	int insertElectionVote(VotePrtcpt vp, int electVoteCndtSignupSeq);
+	//각 후보마다 투표수 리스트 가져오는 메소드
+	ArrayList<CandidatePercent> selectCandidatePercentList(ArrayList<ElectionVoteCandidate> candidateList);
+	//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
+	ArrayList<CandidatePercent> selectCandidatePercentListGen(ArrayList<GeneralVoteCandidate> candidateList);
 
 
 }
