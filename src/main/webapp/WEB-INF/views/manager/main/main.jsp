@@ -35,8 +35,11 @@
 					}
 				});
 			},
-			survey : function(){
+			survey : function() {
 				getIngSurveyList();
+			},
+			vote : function() {
+				getIngVoteList();
 			}
 		}
 	}();
@@ -44,6 +47,7 @@
 	$(document).ready(function() {
 		residentStatistics.residentStatistics();
 		residentStatistics.survey();
+		residentStatistics.vote();
 	});
 
 
@@ -99,7 +103,7 @@
 				}
 
 				/* 페이징 버튼 값 입력 */
-				var ingSurveyListPagination = $('#ingSurveyListPagination')
+				var ingSurveyListPagination = $('#ingSurveyListPagination');
 				ingSurveyListPagination.children().remove();
 
 				var $firstLi;
@@ -153,6 +157,95 @@
 			}
 		});
 	}
+
+	function getIngVoteList(currentPage) {
+		$.ajax({
+			url : 'main/ingVoteInfo',
+			type : 'post',
+			data : {currentPage:currentPage},
+			async: false,
+			success : function(result){
+				console.log('ingVoteInfo succ');
+
+				var ingVoteList = result.ingVoteList;
+				//
+
+				// table
+				var tableTbody = $('#ingVoteList tbody');
+				tableTbody.children().remove();
+				for(var i in ingVoteList){
+					var $tr = $('<tr/>');
+					var $voteSeqTd = $('<td/>', {text:ingVoteList[i].voteSeq});
+					var $voteKindTd = $('<td/>', {text:ingVoteList[i].voteKind});
+					var $voteNmTd = $('<td/>', {text:ingVoteList[i].voteNm});
+					var $voteStatusTd = $('<td/>', {text:ingVoteList[i].voteStatus});
+					var $endDtTd = $('<td/>', {text:ingVoteList[i].endDt});
+
+					$tr.append($voteSeqTd);
+					$tr.append($voteKindTd);
+					$tr.append($voteNmTd);
+					$tr.append($voteStatusTd);
+					$tr.append($endDtTd);
+
+					tableTbody.append($tr);
+				} // end for
+
+				// paging
+				var pi = result.pi;
+				var ingVoteListPagination = $('#ingVoteListPagination');
+				ingVoteListPagination.children().remove();
+
+				var $firstLi;
+				var $firstA;
+				if(pi.currentPage <= 1){
+					$firstLi = $('<li>', {class:'disabled'});
+					$firstA = $('<a>', {html:'<<'});
+					$firstLi.append($firstA);
+				} else {
+					$firstLi = $('<li>');
+					$firstA = $('<a>', {html:'<<', href:'javascript:getIngVoteList(1);'});
+					$firstLi.append($firstA);
+				}
+
+				ingVoteListPagination.append($firstLi);
+				//getIngSurveyList
+				for(var p=pi.startPage; p<=pi.endPage; p++){
+
+					var $repeatLi;
+					var $repeatA;
+
+					if(p == pi.currentPage) {
+						$repeatLi = $('<li>', {class:"active"});
+						$repeatA = $('<a>', {html:p});
+						$repeatLi.append($repeatA);
+					}
+					if(p != pi.currentPage) {
+						$repeatLi = $('<li>');
+						$repeatA = $('<a>', {html:p, href:'javascript:getIngVoteList('+p+');'});
+						$repeatLi.append($repeatA);
+					}
+					ingVoteListPagination.append($repeatLi);
+
+				} // end for
+
+				var $listLi;
+				var $listA;
+				if(pi.currentPage < pi.maxPage){
+					$listLi = $('<li>');
+					$listA = $('<a>', {html:'>>', href:'javascript:getIngVoteList('+pi.maxPage+');'});
+					$listLi.append($listA);
+				} else {
+					$listLi = $('<li>', {class:'disabled'});
+					$listA = $('<a>', {html:'>>'});
+					$listLi.append($listA);
+				}
+				ingVoteListPagination.append($listLi);
+
+			}
+
+		});
+	}
+
 </script>
 </head>
 <body>
@@ -234,6 +327,29 @@
 	<div class="bg-white b-t-15" id="voteArea">
     	<h3>진행 중인 투표</h3>
     	<hr>
+
+    	<div id="voteTableArea">
+		<span class="badge badge-inverse m-t-15 m-l-15" id="voteStatus">진행 중</span>
+			<div class="panel-body">
+				<table class="table surveyTable" id="ingVoteList">
+					<thead>
+						<tr>
+							<th>투표번호</th>
+							<th>투표종류</th>
+							<th>투표명</th>
+							<th>투표현황</th>
+							<th>투표종료날짜</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<div class="pageingBtnArea" style="text-align: right;">
+					<ul class="pagination m-t-0 m-b-10" id="ingVoteListPagination"></ul>
+				</div>
+			</div>
+		</div>
+
 	</div>
 
 </body>

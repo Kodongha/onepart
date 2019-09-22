@@ -2,10 +2,11 @@ package com.kh.onepart.manager.vote.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
-
 import com.kh.onepart.manager.vote.model.vo.CandidatePercent;
+import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.manager.vote.model.vo.ElectionVote;
 import com.kh.onepart.manager.vote.model.vo.ElectionVoteCandidate;
 import com.kh.onepart.manager.vote.model.vo.GeneralVote;
@@ -85,6 +86,7 @@ public class ManagerVoteDaoImpl implements ManagerVoteDao{
 		return result;
 
 	}
+
 	//위원장 선임 메소드
 	@Override
 	public int updateNewSuperientedFirst(SqlSessionTemplate sqlSession, int residentSeq) {
@@ -130,6 +132,26 @@ public class ManagerVoteDaoImpl implements ManagerVoteDao{
 		CandidatePercent percent = sqlSession.selectOne("manager_vote.selectCandidatePercentListGen", generalVoteCandidate);
 
 		return percent;
+
+  }
+  
+	//현재 진행중인 선거 카운트 불러오는 메소드
+	@Override
+	public int selectAllIngVoteCount(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("manager_vote.selectAllIngVoteCount");
+	}
+
+	//현재 진행중인 선거 리스트 불러오는 메소드 - 페이징 버전W
+	@Override
+	public ArrayList selectAllIngVoteListVerPaging(SqlSessionTemplate sqlSession, PageInfo pi) {
+		// TODO Auto-generated method stub
+
+		int offset = (pi.getCurrentPage() - 1) * pi.getLimit();
+
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+
+		return (ArrayList) sqlSession.selectList("manager_vote.selectAllIngVoteListVerPaging", null, rowBounds);
 
 	}
 

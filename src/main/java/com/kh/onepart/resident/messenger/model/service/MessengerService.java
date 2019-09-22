@@ -70,4 +70,11 @@ public interface MessengerService {
 	 */
 	RequestAttachVO selectDownloadAttach(RequestAttachVO requestAttachVO);
 
+
+	/**
+	 * 메신저 읽기 처리
+	 * @param messengerSeq
+	 */
+	void updateMessengerReadProcess(String messengerSeq);
+
 }

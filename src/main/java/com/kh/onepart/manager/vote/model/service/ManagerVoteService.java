@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.onepart.manager.vote.model.vo.GeneralVote;
 import com.kh.onepart.manager.vote.model.vo.GeneralVoteCandidate;
 import com.kh.onepart.manager.vote.model.vo.CandidatePercent;
+import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.manager.vote.model.vo.ElectionVote;
 import com.kh.onepart.manager.vote.model.vo.ElectionVoteCandidate;
 
@@ -37,5 +38,10 @@ public interface ManagerVoteService {
 	ArrayList<CandidatePercent> selectCandidatePercentList(ArrayList<ElectionVoteCandidate> candidateList);
 	//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
 	ArrayList<CandidatePercent> selectCandidatePercentListGen(ArrayList<GeneralVoteCandidate> candidateList);
+	//현재 진행중인 선거 카운트 불러오는 메소드
+	int selectAllIngVoteCount();
+	//현재 진행중인 선거 리스트 불러오는 메소드 - 페이징 버전
+	ArrayList selectAllIngVoteListVerPaging(PageInfo pi);
+
 
 }

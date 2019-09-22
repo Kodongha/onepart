@@ -241,6 +241,65 @@
 		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
 		                WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}) * 100) AS CANDIDATE_PERCENT
 		FROM DUAL
+    
+	<!-- 현재 진행중인 선거 카운트 불러오는 메소드 -->
+	<select id="selectAllIngVoteCount" resultType="_int">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM (
+			        SELECT ELECT_VOTE_SEQ as VOTE_SEQ,
+			                '선거' as VOTE_KIND,
+			                ELECT_NM as VOTE_NM,
+			                CASE WHEN CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN CNDD_ENROLL_END_DT
+			                      WHEN CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN CAMPAIGN_END_DT
+			                      WHEN VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN VOTE_END_DT END AS END_DT,
+			                CASE WHEN CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '후보등록기간'
+			                      WHEN CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '선거운동기간'
+			                      WHEN VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '투표기간' END AS VOTE_STATUS
+			        FROM ELECT_VOTE
+
+			        UNION ALL
+
+			        SELECT GNR_VOTE_SEQ as VOTE_SEQ,
+			                '일반투표' as VOTE_KIND,
+			                GNR_VOTE_NAME as VOTE_NM,
+			                GNR_VOTE_END_DT as END_DT,
+			                '투표기간' as VOTE_STATUS
+			        FROM GNR_VOTE
+			    )
+			WHERE END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD')
+			ORDER BY END_DT
+		]]>
+	</select>
+
+	<!-- 현재 진행중인 선거 리스트 불러오는 메소드 - 페이징 버전 -->
+	<select id="selectAllIngVoteListVerPaging" resultMap="manager_voteListResultSet">
+		<![CDATA[
+			SELECT *
+			FROM (
+			        SELECT ELECT_VOTE_SEQ as VOTE_SEQ,
+			                '선거' as VOTE_KIND,
+			                ELECT_NM as VOTE_NM,
+			                CASE WHEN CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN CNDD_ENROLL_END_DT
+			                      WHEN CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN CAMPAIGN_END_DT
+			                      WHEN VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN VOTE_END_DT END AS END_DT,
+			                CASE WHEN CNDD_ENROLL_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CNDD_ENROLL_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '후보등록기간'
+			                      WHEN CAMPAIGN_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND CAMPAIGN_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '선거운동기간'
+			                      WHEN VOTE_START_DT <= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') AND VOTE_END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD') THEN '투표기간' END AS VOTE_STATUS
+			        FROM ELECT_VOTE
+
+			        UNION ALL
+
+			        SELECT GNR_VOTE_SEQ as VOTE_SEQ,
+			                '일반투표' as VOTE_KIND,
+			                GNR_VOTE_NAME as VOTE_NM,
+			                GNR_VOTE_END_DT as END_DT,
+			                '투표기간' as VOTE_STATUS
+			        FROM GNR_VOTE
+			    )
+			WHERE END_DT >= TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD'), 'YYYY/MM/DD')
+			ORDER BY END_DT
+		]]>
 	</select>
 
 </mapper>

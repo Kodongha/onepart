@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.manager.vote.model.dao.ManagerVoteDao;
 import com.kh.onepart.manager.vote.model.vo.GeneralVote;
 import com.kh.onepart.manager.vote.model.vo.GeneralVoteCandidate;
@@ -149,6 +150,18 @@ public class ManagerVoteServiceImpl implements ManagerVoteService{
 
 		return candidatePercentList;
 
+	}
+
+	//현재 진행중인 선거 카운트 불러오는 메소드
+	@Override
+	public int selectAllIngVoteCount() {
+		return vd.selectAllIngVoteCount(sqlSession);
+	}
+
+	//현재 진행중인 선거 리스트 불러오는 메소드 - 페이징 버전
+	@Override
+	public ArrayList selectAllIngVoteListVerPaging(PageInfo pi) {
+		return vd.selectAllIngVoteListVerPaging(sqlSession, pi);
 	}
 
 }

@@ -134,7 +134,16 @@
 				var $data_tableTable =  $('<table>', {id:tableId, class:"table table-striped table-bordered"});
 
 				$table_responsiveDiv.append($data_tableTable);
-				surveyInfoBody.append($table_responsiveDiv);
+
+				if(!surveyArr){
+					var $noneDataI = $('<i>', {class:'fa fa-times', style:'color:red;'})
+					var $h3 = $('<h4>', {text:' 데이터가 존재하지 않습니다.'});
+					$h3.prepend($noneDataI);
+					surveyInfoBody.append($h3);
+				} else {
+					surveyInfoBody.append($table_responsiveDiv);
+				}
+
 
 				var dataSet = [];
 
@@ -268,32 +277,24 @@
 
 						<h2 id="titleH1">${ surveyVO.surveyTitle }</h2>
 
+						<!-- 진행 여부 -->
 						<c:if test="${ surveyVO.surveyStatus == 1}">
-							<span class="badge badge-inverse" id="surveyStatus">
-								진행 예정
-							</span>
+							<span class="badge badge-inverse" id="surveyStatus">진행 예정</span>
 						</c:if>
 						<c:if test="${ surveyVO.surveyStatus == 2}">
-							<span class="badge badge-Primary" id="surveyStatus">
-								진행 중
-							</span>
+							<span class="badge badge-Primary" id="surveyStatus">진행 중</span>
 						</c:if>
 						<c:if test="${ surveyVO.surveyStatus == 3}">
-							<span class="badge badge-Danger" id="surveyStatus">
-								종료
-							</span>
+							<span class="badge badge-Danger" id="surveyStatus">종료</span>
 						</c:if>
 
+						<!-- 참여 여부 -->
 						<c:if test="${ surveyVO.residentSeq == 0}">
-							<span class="label label-danger" id="surveyStatus">
-								미참여
-							</span>
+							<span class="label label-danger" id="surveyStatus">미참여</span>
 						</c:if>
 
 						<c:if test="${ surveyVO.residentSeq != 0}">
-							<span class="label label-primary" id="surveyStatus">
-								참여 완료
-							</span>
+							<span class="label label-primary" id="surveyStatus">참여 완료</span>
 						</c:if>
 
 						<table class="table" id="TbsurveyInfo">
@@ -334,7 +335,6 @@
 						<c:if test="${ surveyVO.surveyType == 2 && sessionScope.loginUser.householdAuthType != 2 }">
 							<a class="btn btn-danger btn-block" data-toggle="modal" id="endSurvey">[ 본 설문은 세대주만 참여 가능합니다. ]</a>
 						</c:if>
-
 					</div>
 				</div>
 			</div>
@@ -342,9 +342,7 @@
 			<div class="tab-content">
 				<div class="tab-pane fade active in" id="default-tab-1">
 					<div id="surveyInfoBody">
-	                    <div class="table-responsive">
-
-	                    </div>
+	                    <div class="table-responsive"></div>
 					</div>
 				</div>
 			</div>
