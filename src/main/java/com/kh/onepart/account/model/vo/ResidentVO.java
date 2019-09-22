@@ -27,6 +27,8 @@ public class ResidentVO {
 	private String confirmTf;
 	private String residentGender;
 	private String residentNm2;
+	private String managerSeq;
+
 	//private String aptNm; // APT_INFO_SEQ 이 있어야 하는거
 
 
