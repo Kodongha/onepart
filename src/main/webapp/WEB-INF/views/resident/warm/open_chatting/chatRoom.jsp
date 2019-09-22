@@ -331,7 +331,7 @@ $(document).on('click', '.downback', function () {
 			notice()
 			chatPerson()
 
-		}, 200000);
+		}, 2000);
 
 	});
 
