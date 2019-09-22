@@ -396,6 +396,8 @@
 									if(pass == data.OpenChatVO.openChatPwd){
 										let url = "${contextPath}/resident/menuOpenChatRoom/"+openChatSeq;
 										window.open(url, "채팅방"+openChatSeq, "width=450px; height=600px;");
+									}else if(pass == null){
+
 									}else{
 										alert("비밀번호가 틀렸습니다.");
 									}
