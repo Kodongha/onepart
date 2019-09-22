@@ -154,7 +154,7 @@
 
 						messengerList.append($tr);
 
-						// tr event
+						// tr event 
 						$tr.click(function(){
 							var messengerSeq = $(this).children().eq(1).text();
 							location.href = 'moveMessengerDetail?messengerSeq=' + messengerSeq;
@@ -281,11 +281,6 @@
 	</div>
 	<!-- end row -->
 	</div>
-	<script type="text/javascript">
-		$(document).ready(function() {
-
-		});
-	</script>
 
 </body>
 </html>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.onepart.manager.vote.model.vo.GeneralVote;
+import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.manager.vote.model.vo.ElectionVote;
 
 public interface ManagerVoteDao {
@@ -24,5 +25,9 @@ public interface ManagerVoteDao {
 	ArrayList selectAllSuperintendList(SqlSessionTemplate sqlSession);
 	//해당 입주민 선관위 해임처리 하는 메소드
 	int deleteSuperiented(SqlSessionTemplate sqlSession, int residentSeq);
+	//현재 진행중인 선거 카운트 불러오는 메소드
+	int selectAllIngVoteCount(SqlSessionTemplate sqlSession);
+	//현재 진행중인 선거 리스트 불러오는 메소드 - 페이징 버전
+	ArrayList selectAllIngVoteListVerPaging(SqlSessionTemplate sqlSession, PageInfo pi);
 
 }

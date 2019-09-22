@@ -115,4 +115,10 @@ public class MessengerDaoImpl implements MessengerDao {
 		return sqlSession.selectOne("Messenger.selectDownloadAttach", attchSeq);
 	}
 
+	/** 메신저 읽기 처리 */
+	@Override
+	public void updateMessengerReadProcess(SqlSessionTemplate sqlSession, String messengerSeq) {
+		// TODO Auto-generated method stub
+		sqlSession.update("Messenger.updateMessengerReadProcess", messengerSeq);
+	}
 }
