@@ -165,7 +165,7 @@ public class AccountController {
 
 		return "redirect:resident/main";
 	}
-	//매니저 로그아웃
+	//관리자 로그아웃
 	@RequestMapping("/mLogout")
 	public String mLogout(SessionStatus status) {
 		System.out.println("in resident");

@@ -49,18 +49,19 @@
                 </div> -->
                 <div>
                 	<c:set var="name1" value="${sessionScope.loginUser.residentSeq}"/>
+                	<c:set var="name2" value="${sessionScope.loginUser.managerSeq}"/>
                 	<c:choose>
-	                	<c:when test="${empty  name1}" >
-	                    <a href="javascript:history.back()" class="btn btn-success">이전 페이지로 이동</a> &nbsp;&nbsp;
-	                    <a href="/onepart/moveAccount" class="btn btn-success">로그인 페이지로 이동</a>
+	                	<c:when test="${!empty  name1}" >
+	   	                	<a href="javascript:history.back()" class="btn btn-success">이전 페이지로 이동</a> &nbsp;&nbsp;
+		                    <a href="/onepart/resident/main" class="btn btn-success">메인 페이지로 이동</a>
 	                	</c:when>
-	                	<c:when test="${fn:contains(name1 ,'E')}" >
-	                	<a href="javascript:history.back()" class="btn btn-success">이전 페이지로 이동</a> &nbsp;&nbsp;
-	                    <a href="/onepart/manager/main" class="btn btn-success">메인 페이지로 이동</a>
+	                	<c:when test="${empty  name1 && !empty name2}" >
+	   	                	<a href="javascript:history.back()" class="btn btn-success">이전 페이지로 이동</a> &nbsp;&nbsp;
+		                    <a href="/onepart/manager/main" class="btn btn-success">메인 페이지로 이동</a>
 	                	</c:when>
 	                	<c:otherwise>
-	                	<a href="javascript:history.back()" class="btn btn-success">이전 페이지로 이동</a> &nbsp;&nbsp;
-	                    <a href="/onepart/resident/main" class="btn btn-success">메인 페이지로 이동</a>
+		                    <a href="javascript:history.back()" class="btn btn-success">이전 페이지로 이동</a> &nbsp;&nbsp;
+		                    <a href="/onepart/moveAccount" class="btn btn-success">로그인 페이지로 이동</a>
 	                	</c:otherwise>
                 	</c:choose>
                 </div>
