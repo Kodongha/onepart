@@ -88,7 +88,7 @@ $(function(){
 
 		var $divClassColMd1 = $('<div>', {class:'col-md-1'});
 		var $h4 = $('<h4>');
-		var $iCircle = $('<i>', {class:'fa fa-check-circle-o'});
+		var $iCircle = $('<i>', {class:'fa fa-check-square-o'});
 		var $divClassColMd11 = $('<div>', {class:'col-md-11'});
 		var $inputCheckboxOption = $('<input>', {type:'text', class:'form-control', placeholder:'옵션을 입력해주세요.', name:'option'});
 		var $brClearAll = $('<br>', {clear:'all'});
@@ -103,9 +103,5 @@ $(function(){
 		$(this).parents('.col-md-11').prev().before($divClassColMd11);
 		$(this).parents('.col-md-11').prev().before($brClearAll);
 	});
-
-
-
-
 
 });
