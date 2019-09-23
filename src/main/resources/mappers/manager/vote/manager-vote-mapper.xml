@@ -241,7 +241,8 @@
 		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
 		                WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}) * 100) AS CANDIDATE_PERCENT
 		FROM DUAL
-    
+    </select>
+
 	<!-- 현재 진행중인 선거 카운트 불러오는 메소드 -->
 	<select id="selectAllIngVoteCount" resultType="_int">
 		<![CDATA[

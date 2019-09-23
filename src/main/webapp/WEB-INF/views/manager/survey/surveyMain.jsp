@@ -23,7 +23,7 @@
 		background:white;
 	}
 
-	tbody > tr:hover{
+	#surveyList > tbody > tr:hover{
 		background:#00acac;
 	}
 
