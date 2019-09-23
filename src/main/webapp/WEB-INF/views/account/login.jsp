@@ -47,7 +47,7 @@
             <!-- begin brand -->
             <div class="login-header">
                 <div class="brand">
-                    <img style=" width: 200px; position: absolute; left: 120px;" src="${contextPath}/resources/images/onpart (2).png" alt="" />
+                    <img style=" width: 100%; height: 100%; position: absolute; left: 120px;" src="${contextPath}/resources/images/onpart (2).png" alt="" />
                     <small style=" position: absolute; top: -30px; left: 10px;">아파트 스마트 홈라이프의 시작</small>
                 </div>
 

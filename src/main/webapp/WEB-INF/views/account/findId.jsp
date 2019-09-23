@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	String checkNo = Integer.toString((int)(Math.random()*999999) + 1);
+%>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
@@ -74,7 +77,7 @@
 										</div>
 										<div id="collapseOne" class="panel-collapse collapse in" aria-expanded="true" style="height: 234px;">
 											<div class="panel-body">
-												<label class="control-label">이름</label>
+												<!-- <label class="control-label">이름</label>
 												<div class="row m-b-15">
 													<div class="col-md-12">
 														<input name="residentNm" id="residentNm" type="text" class="form-control" placeholder="실명 입력" style="width: 77%;" />
@@ -90,7 +93,59 @@
 														<input name="verifiedNum" type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
 														<button type="button" class="btn btn-default m-r-5 m-b-5">확인</button>
 													</div>
-												</div>
+												</div> -->
+
+												<table>
+																	<tr>
+																		<td>
+																			<label>사용자 이름</label>
+																		</td>
+																		<td></td>
+																	</tr>
+																	<tr>
+																		<td>
+																			<input type="text" name="residentNm" id="residentNm" placeholder="실명 입력" class="form-control" data-parsley-group="wizard-step-2"  style="width: 300px;" required />
+																			<br>
+																		</td>
+																		<td></td>
+																	</tr>
+																	<tr>
+																		<td>
+																			<label>휴대전화번호 인증</label>
+																		</td>
+																		<td></td>
+																	</tr>
+																	<tr>
+																		<td>
+																		<input name="residentPhone" id="residentPhone" type="tel" placeholder="' - ' 없이 숫자만 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" style="width: 300px;" required/></td>
+																		<br>
+																		<td>&nbsp;&nbsp;&nbsp;<button id="checkPhone" type="button" class="btn btn-default m-r-5 m-b-5" style="display: inline-block; align-self: flex-start;">인증번호</button></td>
+																	</tr>
+																	<tr>
+																		<td>
+																				<label>인증번호</label>
+																		</td>
+																		<td></td>
+																	</tr>
+																	<tr>
+																	<td>
+																	<input type="hidden" name="action" value="go"> <!-- 발송타입 -->
+															        <input type="hidden" name="msg" value="<%=checkNo%>">
+																	<input type="hidden" name="rphone">
+																	<input type="hidden" name="sphone1" value="010">
+															        <input type="hidden" name="sphone2" value="2603">
+															        <input type="hidden" name="sphone3" value="9932">
+																	<input name="checkNo" id="checkNo" required type="text" class="form-control" placeholder="인증번호 입력"
+																		style="width: 100%; display: inline-block;" data-parsley-group="wizard-step-2" data-parsley-type="number"/>&nbsp;
+
+																			</td>
+																			<td>
+																	<!-- <input type="text" name="vNumber" placeholder="인증번호 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" style="width: 50%;" required /> -->
+																		<button id="checkNumber" type="button" class="btn btn-default m-r-5 m-b-5" style="margin-left: 10px;">확인</button>
+																			</td>
+																		</tr>
+																</table>
+
 											</div>
 										</div>
 									</div>
@@ -128,7 +183,7 @@
 								<button type="reset" class="btn btn-white m-r-5">취소</button> &nbsp; &nbsp;
 								<!-- <button type="submit" class="btn btn-primary">찾기</button> -->
 					 			<!-- 시작 모달로 결과 보내기 버튼 -->
-								<a href="#modal-dialog" class="btn btn-primary" data-toggle="modal" onclick="showId(); return false;">찾기</a>
+								<a href="#modal-dialog" class="btn btn-primary" data-toggle="modal" onclick="showId();">찾기</a>
 								<!-- 끝= 모달로 결과 보내기 버튼 -->
 							</p>
 								<!-- 시작 아이디찾기 결과 모달 -->
@@ -191,6 +246,7 @@
 	<!-- ================== END PAGE LEVEL JS ================== -->
 
 	<script>
+		var verifiedNo = 0;
 		$(document).ready(function () {
 			App.init();
 
@@ -213,13 +269,17 @@
 		//아이디 찾기 결과 보여주는 함수
 		function showId() {
 			var findIdForm =$("#findIdForm").serialize();
-
+			if (verifiedNo == 0) {
+				alert('휴대전화번호 본인 인증을 해주세요.');
+				return false;
+			}else{
   		$.ajax({
   			url:"findId",
   			type:"post",
   			data:findIdForm,
   			success:function(data){
 				/* var jsonObj = JSON.parse(data); */
+				alert("hi");
 				console.log("data : " + data);
 				$("#showResultId").empty();
 
@@ -237,6 +297,64 @@
   		});
 
 		}
+		}
+
+
+		//휴대폰 인증번호 메소드
+		$("#checkPhone").click(function () {
+			//next버튼 없애기
+			$('.next').children().eq(0).css("display", "none")
+			var rphone = $("#residentPhone").val();
+			var sphone1 = $("input[name='sphone1']").val();
+			var sphone2 = $("input[name='sphone2']").val();
+			var sphone3 = $("input[name='sphone3']").val();
+			var msg = $("input[name='msg']").val();
+			console.log("msg :::: " + msg);
+			var action = $("input[name='action']").val();
+
+			// 인증번호 입력창
+			$.ajax({
+				url:"moveSmssend",
+				data:{rphone:rphone, sphone1:sphone1, sphone2:sphone2, sphone3:sphone3, msg:msg, action:action},
+				type:"post",
+				success:function(data){
+					alert("인증번호가 발송되었습니다.");
+					console.log(data);
+					console.log("data : " + data.msgRnd);
+
+					var checkPhone = data.msgRnd;
+					console.log(data.msgRnd);
+					console.log("checkPhone : ::" + checkPhone);
+					console.log(msg);
+
+
+					$("#checkPhone").hide();
+
+
+					$("#checkNumber").on("click", function(){
+
+						var checkNo = $("input[name='checkNo']").val();
+
+						console.log("checkNo :::: " + checkNo);
+						console.log("checkPhone ::::" + checkPhone);
+
+						if(checkNo == checkPhone){
+							$("#checkNo").attr({"readonly":"true"});
+							$("#checkNumber").hide();
+							alert("인증이 완료되었습니다.");
+							verifiedNo = 1;
+						}else{
+							alert("인증번호가 틀렸습니다. 다시 입력하세요.");
+							$("#checkPhone").show();
+						}
+
+					});
+				},
+				error:function(request,status,error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			    }
+			});
+		});
 	</script>
 
 </body>
