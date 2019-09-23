@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+	.sidebar{ font-size: 1.3em; }
    a:hover {
       cursor:pointer;
    }
