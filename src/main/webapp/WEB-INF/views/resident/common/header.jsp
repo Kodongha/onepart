@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="${contextPath}/resources/plugins/jquery/jquery-1.9.1.min.js"></script>
+<script src="${contextPath}/resources/js/SockJs.min.js"></script>
 <script type="text/javascript">
 
 	$(function(){
@@ -16,7 +17,25 @@
 			window.open(url, "Messenger", "width=1200px; height=680px;");
 		});
 	});
+	$(function(){
 
+		console.log("loginUser : " + sessionStorage.getItem("loginUser"));
+
+		webSocket = new SockJS('/onepart/messenger');
+		webSocket.onerror = function(event) {
+			alert(event.data);
+		};
+
+		// 연결 성공 시
+		webSocket.onopen = function(event) {
+			console.log('websocket connection success...');
+			// 방에 참여
+		};
+
+		webSocket.onmessage = function(event) {
+
+		}
+	});
 </script>
 </head>
 <body>

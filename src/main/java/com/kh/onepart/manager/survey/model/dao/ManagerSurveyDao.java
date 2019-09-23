@@ -26,9 +26,10 @@ public interface ManagerSurveyDao {
 	 * 설문조사 검색
 	 * @param sqlSession
 	 * @param requestSurveyVO
+	 * @param pi
 	 * @return
 	 */
-	ArrayList<SurveyVO> selectSearchSurveyList(SqlSessionTemplate sqlSession, SurveyVO requestSurveyVO);
+	ArrayList<SurveyVO> selectSearchSurveyList(SqlSessionTemplate sqlSession, SurveyVO requestSurveyVO, PageInfo pi);
 
 	/**
 	 * 설문조사 등록 - INSERT SURVEY

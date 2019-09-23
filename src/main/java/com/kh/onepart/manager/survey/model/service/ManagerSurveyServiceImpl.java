@@ -51,7 +51,7 @@ public class ManagerSurveyServiceImpl implements ManagerSurveyService{
 	public ArrayList<SurveyVO> getSearchSurvey(PageInfo pi, SurveyVO requestSurveyVO){
 		// TODO Auto-generated method stub
 
-		ArrayList<SurveyVO> surveyVOList = managerSurveyDao.selectSearchSurveyList(sqlSession, requestSurveyVO);
+		ArrayList<SurveyVO> surveyVOList = managerSurveyDao.selectSearchSurveyList(sqlSession, requestSurveyVO, pi);
 
 		return surveyVOList;
 

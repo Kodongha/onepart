@@ -32,6 +32,7 @@
 			clone.addClass("questionArea");
 
 			$(this).before(clone);
+			$(document).scrollTop($(document).height());
 		});
 
 		// - 버튼 클릭 시 질문 삭제
@@ -144,7 +145,7 @@
 				el.append($divClassColMd11_2);
 			}
 
-
+			$(document).scrollTop($(document).height());
 
 		});
 
@@ -262,9 +263,13 @@
 					</div>
 
 					<script type="text/javascript">
+					var tomorrow = new Date();
+					tomorrow.setDate(tomorrow.getDate() + 1);
+
 					$('#surveyPeriod').dateRangePicker({
 
-						startDate: new Date(),
+
+						startDate: tomorrow,
 						container: '#calenderDiv'
 
 					});

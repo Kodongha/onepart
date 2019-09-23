@@ -46,10 +46,13 @@ public class ManagerSurveyDaoImple implements ManagerSurveyDao{
 
 	/** 설문조사 검색 */
 	@Override
-	public ArrayList<SurveyVO> selectSearchSurveyList(SqlSessionTemplate sqlSession, SurveyVO requestSurveyVO) {
+	public ArrayList<SurveyVO> selectSearchSurveyList(SqlSessionTemplate sqlSession, SurveyVO requestSurveyVO, PageInfo pi) {
 		// TODO Auto-generated method stub
 
-		ArrayList<SurveyVO> surveyVOList = (ArrayList) sqlSession.selectList("ManagerSurvey.selectSearchSurveyList", requestSurveyVO);
+		int offset = (pi.getCurrentPage() - 1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+
+		ArrayList<SurveyVO> surveyVOList = (ArrayList) sqlSession.selectList("ManagerSurvey.selectSearchSurveyList", requestSurveyVO, rowBounds);
 
 		return surveyVOList;
 	}
