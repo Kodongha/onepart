@@ -240,7 +240,7 @@
 			<form id="sendMessageForm" name="send_message_form" data-id="message-form">
 				<div class="input-group">
 					<input id="inputMsg" type="text" class="form-control input-sm" name="message"
-						placeholder="보낼 메세지를 작성하시오.">
+						placeholder="보낼 메세지를 작성하시오." autocomplete="off">
 					<span class="input-group-btn">
 						<button id="sendMessageBtn" class="btn btn-primary btn-sm" type="button">보내기</button>
 					</span>
