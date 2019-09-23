@@ -346,7 +346,7 @@ public class AccountController {
 
 	       System.out.println("msg :::" + msg2);
 
-	       if(action.equals("go1")) {
+	       if(action.equals("go")) {
 
 
 	           String sms_url = "https://sslsms.cafe24.com/sms_sender.php"; // SMS 전송요청 URL
