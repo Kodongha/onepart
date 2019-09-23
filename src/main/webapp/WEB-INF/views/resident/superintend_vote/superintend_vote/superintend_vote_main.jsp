@@ -816,7 +816,7 @@
     			}
 			});
 
-		}else if(voteStatus == '투표기간' || voteStatus == '투표종료'){
+		}else if(voteStatus == '투표기간'){
 			/* view 페이지 전환 (투표기간) */
 			$.ajax({
 				url:"/onepart/resident/votingRealvote",
@@ -831,7 +831,21 @@
     			}
 			});
 
+		}else if(voteStatus == '투표종료'){
+			$.ajax({
+				url:"/onepart/resident/votingRealvote",
+				type:"get",
+				data:{
+						'voteSeq':voteSeq,
+						'voteKind':voteKind,
+						'voteStatus':voteStatus
+					 },
+				success:function(result){
+    				$("#content").html(result);
+    			}
+			});
 		}else{
+		}
 			/* view 페이지 전환 (선거운동기간) */
 			$.ajax({
 				url:"/onepart/resident/superintend_vote_exercise_main",
