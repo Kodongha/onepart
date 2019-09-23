@@ -7,6 +7,13 @@
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/common.js"></script>
 
+<style type="text/css">
+	#residentStatisticsArea {
+		height: 260px;
+	}
+
+</style>
+
 <script type="text/javascript">
 
 	var residentStatistics = function(){

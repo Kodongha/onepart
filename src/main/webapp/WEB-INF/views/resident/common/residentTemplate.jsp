@@ -50,13 +50,6 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
 
-<script type="text/javascript">
-	const Messenger = (function() {
-
-	});
-
-
-</script>
 </head>
 <body>
 	<!-- begin #page-loader -->
@@ -219,7 +212,7 @@
 
 			/* 따뜻함 */
 			$("#menuOpenChatting").data("menu-url", "/onepart/resident/menuOpenChatting");	// 오픈채팅
-			
+
 			/* 편의 */
 			$("#menuReservateFacility").data("menu-url", "/onepart/resident/menuReservateFacility")	// 시설물 예약
 			$("#menuOpserveMeeting").data("menu-url", "/onepart/resident/menuOpserveMeeting");		// 회의 참관
@@ -243,7 +236,6 @@
 
 				PageHtmlLoader.drawHtml(menuId);
 			});
-
 
 		});
 

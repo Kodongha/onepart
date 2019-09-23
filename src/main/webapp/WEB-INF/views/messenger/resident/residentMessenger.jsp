@@ -154,9 +154,9 @@
 
 						messengerList.append($tr);
 
-						// tr event 
-						$tr.click(function(){
-							var messengerSeq = $(this).children().eq(1).text();
+						// tr event
+						$contentTd.click(function(){
+							var messengerSeq = $tr.children().eq(1).text();
 							location.href = 'moveMessengerDetail?messengerSeq=' + messengerSeq;
 						});
 					}
@@ -247,7 +247,7 @@
 	    <div class="col-md-10">
 			<div class="email-btn-row hidden-xs">
 			    <a href="writeMessengerForm" class="btn btn-sm btn-inverse"><i class="fa fa-plus m-r-5"></i> 쪽지 보내기</a>
-			    <a href="1234" class="btn btn-sm btn-inverse"><i class="fa fa-star-o m-r-5"></i> 보관함으로</a>
+			    <a href="keepMessenger" class="btn btn-sm btn-inverse"><i class="fa fa-star-o m-r-5"></i> 보관함으로</a>
 			    <a href="5678" class="btn btn-sm btn-inverse"><i class="fa fa-times-circle m-r-5"></i> 선택 삭제</a>
 			</div>
 	        <div class="email-content">

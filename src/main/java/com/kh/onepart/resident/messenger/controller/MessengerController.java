@@ -332,7 +332,12 @@ public class MessengerController {
 
 		downOut.close();
 		buf.close();
+	}
+
+	@RequestMapping("keepMessenger")
+	public void keepMessenger(int [] messengerSeq ) {
 
 	}
+
 
 }
