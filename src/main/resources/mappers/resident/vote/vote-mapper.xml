@@ -317,7 +317,7 @@
 	</select>
 
 	<select id="selectOneElectionVoteUserInfo" parameterType="vote_VoteList" resultMap="vote_VoteListResultSet">
-		SELECT ELECT_VOTE_CNDT_SIGNUP_SEQ
+		SELECT ELECT_VOTE_CNDT_SIGNUP_SEQ AS GNR_VOTE_CNDT_ENROLL_SEQ
 		FROM RESIDENT T1
 		LEFT JOIN (
 		            SELECT *
@@ -429,11 +429,16 @@
 		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
 		                WHERE ELECT_VOTE_SEQ = #{electVoteSeq}
 		                AND ELECT_VOTE_CNDT_SIGNUP_SEQ = #{electVoteCndtSignupSeq}
-		            ) / (
+		            ) / DECODE((
 		                SELECT COUNT(*)
 		                FROM VOTE_PRTCPT P
 		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
-		                WHERE ELECT_VOTE_SEQ = #{electVoteSeq}) * 100) AS CANDIDATE_PERCENT
+		                WHERE ELECT_VOTE_SEQ = #{electVoteSeq}), 0, NULL, (
+                                                                SELECT COUNT(*)
+                                                                FROM VOTE_PRTCPT P
+                                                                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
+                                                                WHERE ELECT_VOTE_SEQ = #{electVoteSeq}
+                                                            )) * 100) AS CANDIDATE_PERCENT
 		FROM DUAL
 	</select>
 
@@ -444,11 +449,16 @@
 		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
 		                WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}
 		                AND GNR_VOTE_CNDT_ENROLL_SEQ = #{gnrVoteCndtEnrollSeq}
-		            ) / (
+		            ) / DECODE((
 		                SELECT COUNT(*)
 		                FROM VOTE_PRTCPT P
 		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
-		                WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}) * 100) AS CANDIDATE_PERCENT
+		                WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}), 0, NULL, (
+                                                            SELECT COUNT(*)
+                                                            FROM VOTE_PRTCPT P
+                                                            JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
+                                                            WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}
+                                                            )) * 100) AS CANDIDATE_PERCENT
 		FROM DUAL
 	</select>
 

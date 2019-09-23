@@ -80,6 +80,9 @@
 				<table style="width:100%; margin:0 auto;">
                        		<tr>
                        			<td>
+                       				<input type="hidden" value="${ maxCndtNo }" id="maxCndtNo">
+                       			</td>
+                       			<td>
                        				 <label for="exampleInputEmail1" style="font-weight:bold;">후보명</label>
                        			</td>
                        			<td style="width:65%">
@@ -262,11 +265,15 @@
 		var simpleInfo = $("#simpleInfo").val();
 		var detailInfo = $("#detailInfo").val();
 		var etcInfo = $("#etcInfo").val();
-		var electVoteSeq = $("#electVoteSeq").val()
+		var electVoteSeq = $("#electVoteSeq").val();
+		var maxCndtNo = $("#maxCndtNo").val();
+		var realCndtNo = parseInt( maxCndtNo, 10 );
+		var cndtNo = realCndtNo + 1;
 		console.log(residentSeq);
 		console.log(simpleInfo);
 		console.log(detailInfo);
 		console.log(etcInfo);
+		console.log("cndtNo : " + cndtNo);
 
 		$.ajax({
 			url:"/onepart/resident/insertElectionVoteCandidate",
@@ -276,7 +283,8 @@
 					simpleInfo:simpleInfo,
 					detailInfo:detailInfo,
 					etcInfo:etcInfo,
-					electVoteSeq:electVoteSeq
+					electVoteSeq:electVoteSeq,
+					cndtNo:cndtNo
 				},
 			success:function(){
 				console.log("success");

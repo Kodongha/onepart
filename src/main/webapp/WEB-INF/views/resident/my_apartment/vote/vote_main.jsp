@@ -130,11 +130,11 @@
                   </thead>
 			<tbody>
 				<c:forEach var="endVoteList" items="${ endVoteList }">
-					<tr onclick="detailAllTypeVote(${endVoteList.voteSeq}, '${ endVoteList.voteKind }', '${ endVoteList.voteStatus }')">
+					<tr onclick="endAllTypeVote(${endVoteList.voteSeq}, '${ endVoteList.voteKind }', '${ endVoteList.voteStatus }')">
 						<td>${ endVoteList.voteSeq }</td>
 						<td>${ endVoteList.voteKind }</td>
 						<td>${ endVoteList.voteNm }</td>
-						<td>${ endVoteList.voteStatus }</td>
+						<td>종료</td>
 						<td>${ endVoteList.userStatus }</td>
 						<td>${fn:substring(endVoteList.realEndDt,0,10)}</td>
 					</tr>
@@ -169,6 +169,7 @@
 	/* 선거 및 투표 상세보기 (투표기간) function */
 	function detailAllTypeVote(voteSeq, voteKind, voteStatus) {
 		var voteSeq = voteSeq;
+		console.log(voteStatus);
 		if(voteKind == '일반투표' && voteStatus == '투표기간'){
 			$.ajax({
 				url:"/onepart/resident/general",
@@ -204,6 +205,43 @@
 			console.log("d");
 		}else{
 			alert("현재 선택하신 선거는 상세보기가 불가능합니다. \n투표가 진행중인 선거만 상세보기를 하실 수 있습니다.")
+		}
+	}
+
+	/* 선거 및 투표 상세보기 (종료) function */
+	function endAllTypeVote(voteSeq, voteKind, voteStatus) {
+		var voteSeq = voteSeq;
+		var voteStatus = voteStatus;
+		console.log(voteStatus);
+		if(voteKind == '일반투표'){
+			$.ajax({
+				url:"/onepart/resident/endGeneral",
+				type:"get",
+				dataType:"html",
+				data:{
+						voteSeq:voteSeq,
+						voteKind:voteKind,
+						voteStatus:voteStatus
+					},
+				success:function(result){
+					$("#content").html(result);
+				}
+			});
+			console.log("a");
+		}else if(voteKind == '선거'){
+			$.ajax({
+				url:"/onepart/resident/endElection",
+				type:"get",
+				dataType:"html",
+				data:{
+						voteSeq:voteSeq,
+						voteKind:voteKind,
+						voteStatus:voteStatus
+					},
+				success:function(result){
+					$("#content").html(result);
+				}
+			});
 		}
 	}
 </script>

@@ -102,12 +102,12 @@
 						</thead>
 						<tbody>
 							<c:forEach var="endVoteList" items="${ endVoteList }">
-								<tr>
+								<tr onclick="detailAllTypeVote(${endVoteList.voteSeq}, '${ endVoteList.voteKind }', '${ endVoteList.voteStatus }')">
 									<td>${ endVoteList.voteSeq }</td>
 									<td>${ endVoteList.voteKind }</td>
 									<td>${ endVoteList.voteNm }</td>
-									<td>${ endVoteList.endDt }</td>
 									<td>${ endVoteList.voteStatus }</td>
+									<td>${ endVoteList.endDt }</td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -816,14 +816,15 @@
     			}
 			});
 
-		}else if(voteStatus == '투표기간'){
+		}else if(voteStatus == '투표기간' || voteStatus == '투표종료'){
 			/* view 페이지 전환 (투표기간) */
 			$.ajax({
 				url:"/onepart/resident/votingRealvote",
 				type:"get",
 				data:{
 						'voteSeq':voteSeq,
-						'voteKind':voteKind
+						'voteKind':voteKind,
+						'voteStatus':voteStatus
 					 },
 				success:function(result){
     				$("#content").html(result);

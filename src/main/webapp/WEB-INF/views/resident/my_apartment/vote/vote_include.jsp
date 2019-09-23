@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -168,7 +170,7 @@ $(document).ready(function() {
 	<table style="width:100%">
 		<tr>
 			<td><h5>입주민 여러분들의 활발한 투표가 우리아파트를 더 성장 시킵니다.</h5></td>
-			<td><a class="btn btn-success" style="width: 100%" id="candidateApply">후보신청서 작성</a></td>
+				<td><a class="btn btn-success" style="width: 100%" id="candidateApply">후보신청서 작성</a></td>
 		</tr>
 	</table>
 	<br>

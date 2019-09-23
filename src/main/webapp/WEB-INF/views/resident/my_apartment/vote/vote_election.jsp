@@ -43,8 +43,14 @@
 					<li style="margin-bottom:-10px;">
 						<table style="width:95%; margin:0 auto;">
 							<tr>
-								<td style="width:85%"><h4>후보${ candidateList.cndtNo }번 ${ candidateList.residentNm }
+								<td style="width:75%"><h4>후보${ candidateList.cndtNo }번 ${ candidateList.residentNm }
 								&nbsp;&nbsp;&nbsp; <small style="font-size:1em">${ candidateList.bdNm }동 ${ candidateList.rmNm }호 거주</small></h4></td>
+								<td style="width:2%"></td>
+								<td>
+									<c:if test="${ voteUser.candidateSeq == candidateList.electVoteCndtSignupSeq }">
+										<span class="badge badge-success" style="height:28px; font-size:1.25em;">선택</span>
+									</c:if>
+								</td>
 								<td>
 									<span class="badge badge-inverse" style="font-size:1.25em">총 투표중 ${ candidatePercentList[status.index].candidatePercent }%</span>
 								</td>

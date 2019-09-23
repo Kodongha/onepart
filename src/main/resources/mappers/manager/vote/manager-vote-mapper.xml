@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
@@ -220,11 +221,16 @@
 		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
 		                WHERE ELECT_VOTE_SEQ = #{electVoteSeq}
 		                AND ELECT_VOTE_CNDT_SIGNUP_SEQ = #{electVoteCndtSignupSeq}
-		            ) / (
+		            ) / DECODE((
 		                SELECT COUNT(*)
 		                FROM VOTE_PRTCPT P
 		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
-		                WHERE ELECT_VOTE_SEQ = #{electVoteSeq}) * 100) AS CANDIDATE_PERCENT
+		                WHERE ELECT_VOTE_SEQ = #{electVoteSeq}), 0, NULL, (
+                                                                SELECT COUNT(*)
+                                                                FROM VOTE_PRTCPT P
+                                                                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
+                                                                WHERE ELECT_VOTE_SEQ = #{electVoteSeq}
+                                                            )) * 100) AS CANDIDATE_PERCENT
 		FROM DUAL
 	</select>
 
@@ -235,13 +241,18 @@
 		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
 		                WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}
 		                AND GNR_VOTE_CNDT_ENROLL_SEQ = #{gnrVoteCndtEnrollSeq}
-		            ) / (
+		            ) / DECODE((
 		                SELECT COUNT(*)
 		                FROM VOTE_PRTCPT P
 		                JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
-		                WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}) * 100) AS CANDIDATE_PERCENT
+		                WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}), 0, NULL, (
+                                                            SELECT COUNT(*)
+                                                            FROM VOTE_PRTCPT P
+                                                            JOIN VOTE_SELECTED S ON (P.VOTE_PRTCPT_SEQ = S.VOTE_PRTCPT_SEQ)
+                                                            WHERE GNR_VOTE_SEQ = #{gnrVoteSeq}
+                                                            )) * 100) AS CANDIDATE_PERCENT
 		FROM DUAL
-    </select>
+	</select>
 
 	<!-- 현재 진행중인 선거 카운트 불러오는 메소드 -->
 	<select id="selectAllIngVoteCount" resultType="_int">
