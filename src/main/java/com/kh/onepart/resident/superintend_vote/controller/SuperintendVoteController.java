@@ -130,10 +130,20 @@ public class SuperintendVoteController {
 		System.out.println("controller ev : " + ev);
 
 		//해당 선거에 등록된 후보 담아오는 메소드
-		ArrayList candidateList = svs.selectAllElectionVoteCandidate(electVoteSeq);
+		ArrayList<ElectionVoteCandidate> candidateList = svs.selectAllElectionVoteCandidate(electVoteSeq);
+
+		int maxCndtNo = 0;
+		if(candidateList.size() == 0) {
+			maxCndtNo = 0;
+		}else {
+			for(int i = 0; i < candidateList.size(); i++) {
+				maxCndtNo = candidateList.get(i).getCndtNo();
+			}
+		}
 
 		mv.addObject("candidateList", candidateList);
 		mv.addObject("ev", ev);
+		mv.addObject("maxCndtNo", maxCndtNo);
 		mv.setViewName("/resident/superintend_vote/superintend_vote/superintend_vote_registration_candidateSupervise");
 
 		return mv;
@@ -144,6 +154,8 @@ public class SuperintendVoteController {
 		System.out.println("/menuSuperintendVote");
 		int voteSeq = Integer.parseInt(request.getParameter("voteSeq"));
 		String voteKind = request.getParameter("voteKind");
+		String voteStatus = request.getParameter("voteStatus");
+		System.out.println("controller voteStatus : " + voteStatus);
 
 		if(voteKind.equals("선거")) {
 			//해당 선거 정보 담아오는 메소드
@@ -169,6 +181,7 @@ public class SuperintendVoteController {
 			mv.addObject("candidateList", candidateList);
 			mv.addObject("ev", ev);
 			mv.addObject("voteKind", voteKind);
+			mv.addObject("voteStatus", voteStatus);
 
 		}else {
 			//해당 투표 정보 담아오는 메소드
@@ -195,6 +208,7 @@ public class SuperintendVoteController {
 			mv.addObject("candidateListGen", candidateListGen);
 			mv.addObject("gv", gv);
 			mv.addObject("voteKind", voteKind);
+			mv.addObject("voteStatus", voteStatus);
 
 		}
 
@@ -489,6 +503,7 @@ public class SuperintendVoteController {
 		String detailInfo = request.getParameter("detailInfo");
 		String etcInfo = request.getParameter("etcInfo");
 		int electVoteSeq = Integer.parseInt(request.getParameter("electVoteSeq"));
+		int cndtNo = Integer.parseInt(request.getParameter("cndtNo"));
 		System.out.println("insert residentSeq : " + residentSeq);
 		System.out.println("insert simpleInfo : " + simpleInfo);
 		System.out.println("insert detailInfo : " + detailInfo);
@@ -502,6 +517,7 @@ public class SuperintendVoteController {
 		evc.setDetailInfo(detailInfo);
 		evc.setEtcInfo(etcInfo);
 		evc.setElectVoteSeq(electVoteSeq);
+		evc.setCndtNo(cndtNo);
 		int result = svs.updateElectionVoteCandidate(evc);
 
 		mv.setViewName("jsonView");

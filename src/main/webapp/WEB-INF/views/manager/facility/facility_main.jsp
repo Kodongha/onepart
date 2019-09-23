@@ -157,6 +157,9 @@
         			dataType:"html",
         			success:function(result){
         				$("#content").html(result);
+        				$('#modal-dialog').modal("hide");
+						$('.modal-backdrop').remove();
+						$('.modal-open').css("overflow", "visible");
         			}
         		});
 			}

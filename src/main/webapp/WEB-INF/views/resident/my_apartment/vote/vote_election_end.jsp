@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,97 +11,80 @@
 <body>
 <jsp:include page="../vote/vote_include.jsp"></jsp:include>
 <jsp:include page="../vote/vote_detail_include.jsp"></jsp:include>
-<div>
-					<table style="width:100%">
-						<tr>
-							<td style="width:80%"></td>
-							<td style="width:10%"><h5>완료</h5></td>
-							<td style="width:10%"></td>
-						</tr>
-					</table>
-				</div>		
-			</div>
-			<hr>
-			<br>
-		</div>
-		<!-- 후보 상세정보 div -->
-			<div style="width:95%; margin:0 auto">
-				<h4>투표결과</h4>
-					<div>
-						<table style="width:90%">
+<div style="width:85%; margin:0 auto">
+	<table style="width:100%">
+		<tr>
+			<td>
+				<div class="form-group">
+                    <h4>후보정보</h4>
+                </div>
+			</td>
+			<td style="width:15%" align="center">
+				<c:if test="${ voteUser.voteSeq == null }">
+					<span class="badge badge-danger" style="height:28px; font-size:1.25em;">미완료</span>
+				</c:if>
+				<c:if test="${ voteUser.voteSeq != null }">
+					<span class="badge badge-success" style="height:28px; font-size:1.25em;">완료</span>
+				</c:if>
+			</td>
+			<td style="width:15%" align="center">
+				<c:if test="${ voteUser.voteSeq == null }">
+					<a class="btn btn-success" style="width:100%" id="insertElectionVote">투표진행</a>
+				</c:if>
+			</td>
+		</tr>
+	</table>
+	<!-- 후보 개개인 정보 div -->
+	<div class="panel-body" style="background:white" align="center">
+		<div style="width:95%">
+			<ul class="media-list media-list-with-divider">
+				<c:forEach var="candidateList" items="${ candidateList }" varStatus="status">
+					<!-- 한후보 정보 div -->
+					<li style="margin-bottom:-10px;">
+						<table style="width:95%; margin:0 auto;">
 							<tr>
-								<td style="width:50%">
-									<!-- 짝수번 후보 정보 -->
-									<div>
-										<table style="width:100%">
-											<tr>
-												<td style="width:40%"><h3>기호1번 김은혜</h3></td>
-												<td>당선</td>
-												<td style="width:50%"></td>
-											</tr>
-											<tr>
-												<td colspan="3"><div style="background:skyblue; height:20px; width:87%"></div></td>
-											</tr>
-											<tr>
-												<td><p>58%</p></td>
-												<td></td>
-												<td></td>
-											</tr>
-											<tr style="height:20px;">
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>선거 총 참여율 : 68.3%</td>
-												<td></td>
-												<td></td>
-											</tr>
-										</table>
-									</div>
-								</td>
-								<td style="width:5%"></td>
+								<td style="width:75%"><h4>후보${ candidateList.cndtNo }번 ${ candidateList.residentNm }
+								&nbsp;&nbsp;&nbsp; <small style="font-size:1em">${ candidateList.bdNm }동 ${ candidateList.rmNm }호 거주</small></h4></td>
+								<td style="width:2%"></td>
 								<td>
-									<!-- 홀수번 후보 정보 -->
-									<div>
-										<table style="width:100%; text-align:right;">
-											<tr>
-												<td></td>
-												<td style=""><h3>기호2번 고동하</h3></td>
-												<td></td>
-											</tr>
-											<tr align="right">
-												<td colspan="3"><div style="background:skyblue; height:20px; width:60%"></div></td>
-											</tr>
-											<tr>
-												<td></td>
-												<td><p>40%</p></td>
-												<td></td>
-											</tr>
-											<tr style="height:20px;">
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td></td>
-												<td>무효표 : 2%</td>
-												<td></td>
-											</tr>
-										</table>
+									<c:if test="${ voteUser.candidateSeq == candidateList.electVoteCndtSignupSeq }">
+										<span class="badge badge-success" style="height:28px; font-size:1.25em;">선택</span>
+									</c:if>
+								</td>
+								<td>
+									<span class="badge badge-inverse" style="font-size:1.25em">총 투표중 ${ candidatePercentList[status.index].candidatePercent }%</span>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li class="media media-lg" style="padding:15px; margin-top:10px">
+						<table style="width:95%; margin:0 auto;">
+							<tr>
+								<td>
+									<a href="javascript:;" class="pull-left">
+										<img class="media-object" src="${ contextPath }/resources/uploadFiles/reservation/${ candidateList.changeNm }" alt="" style="height:250px; width:auto;">
+									</a>
+								</td>
+								<td style="width:10%"></td>
+								<td>
+									<div class="media-body" style="padding-top:1%">
+										<h4 class="media-heading">후보자 간단정보</h4>
+										${ candidateList.simpleInfo }
+										<br><br><br>
+										<h4 class="media-heading">후보자 상세정보</h4>
+										${ candidateList.detailInfo }
+										<br><br><br>
+										<h4 class="media-heading">기타사항</h4>
+										${ candidateList.etcInfo }
 									</div>
 								</td>
 							</tr>
 						</table>
-					</div>
-				<br><br><br><br>
-				<p>
-					공동주택 선거관리위원회가 주최한 제 28회 입대의 선거 결과를 바탕으로 총 68.3% 입주민 분들이 참여하여 주셨으며, <br>기호1번 김은혜 후보가 총 득표율 58%로 당선되었음을 공고합니다 . 입주민 분들의 참여 감사 드립니다.
-					<br><br>
-					선거관리위원장 김영준 
-				</p>
-				<br><br>
-			</div>
-		<!-- end #content -->
+					</li>
+		        </c:forEach>
+			</ul>
+		</div>
+	</div>
+</div>
 </body>
 </html>
