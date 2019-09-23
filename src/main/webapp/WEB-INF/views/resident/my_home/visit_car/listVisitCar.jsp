@@ -196,7 +196,6 @@
 		}
 
 		function deleteRegisterVisitCar(){
-			alert('hi');
 			var resultCheckArr = $("#resultCheckArr").val();
 
 			$.ajax({
