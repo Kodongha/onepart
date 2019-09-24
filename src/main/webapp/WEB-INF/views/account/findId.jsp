@@ -183,7 +183,7 @@
 								<button type="reset" class="btn btn-white m-r-5">취소</button> &nbsp; &nbsp;
 								<!-- <button type="submit" class="btn btn-primary">찾기</button> -->
 					 			<!-- 시작 모달로 결과 보내기 버튼 -->
-								<a href="#modal-dialog" class="btn btn-primary" data-toggle="modal" onclick="showId();">찾기</a>
+								<a href="" id="showIdBtn" class="btn btn-primary" data-toggle="modal" onclick="showId();">찾기</a>
 								<!-- 끝= 모달로 결과 보내기 버튼 -->
 							</p>
 								<!-- 시작 아이디찾기 결과 모달 -->
@@ -279,7 +279,6 @@
   			data:findIdForm,
   			success:function(data){
 				/* var jsonObj = JSON.parse(data); */
-				alert("hi");
 				console.log("data : " + data);
 				$("#showResultId").empty();
 
@@ -343,6 +342,7 @@
 							$("#checkNumber").hide();
 							alert("인증이 완료되었습니다.");
 							verifiedNo = 1;
+							$("#showIdBtn").attr("href","#modal-dialog" )
 						}else{
 							alert("인증번호가 틀렸습니다. 다시 입력하세요.");
 							$("#checkPhone").show();
