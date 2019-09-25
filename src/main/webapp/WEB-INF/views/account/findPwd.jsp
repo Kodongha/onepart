@@ -204,7 +204,7 @@
 															<a href="#modal-dialog" class="btn btn-sm btn-success" data-toggle="modal" id="submitBtn" style="float:right;">비밀번호 재설정 하기</a>
 															<!-- 끝= 모달로 결과 보내기 버튼 -->
 
-			                                            </div>
+		                                            	</div>
 			                                            <!-- end row -->
 													</fieldset>
 												</div>
@@ -227,61 +227,61 @@
 											</div>
 										</form>
 
-										<!-- 시작 아이디찾기 결과 모달 -->
-															<div class="modal fade" id="modal-dialog" aria-hidden="true" style="display: none;">
-																<div class="modal-dialog">
-																	<div class="modal-content">
-																		<div class="modal-header">
-																			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-																			<h4 class="modal-title">비밀 번호 재설정 하기</h4>
-																		</div>
-																 		<form method="POST" data-parsley-validate="true"  id="setNewPwdForm">
-																		<!-- <form action=""> -->
-																		<div class="modal-body">
-																			<!-- begin wizard step-3 -->
-																			<span id="showResultPwd"></span>
-																			<div id="setNewPassword">
-																				<fieldset>
-																					<!-- <legend class="pull-left width-full">비밀번호 재설정</legend> -->
-										                                            <!-- begin row -->
-										                                            <div class="row">
-										                                                <!-- begin col-4 -->
-										                                                <div class="col-md-4">
-										                                                    <div class="form-group">
-										                                                        <label>새 비밀번호</label>
-										                                                        <div class="controls">
-										                                                        	<input type="hidden" name= residentId id="residentIdResult">
-										                                                            <input type="password" name="residentPwd" id="residentPwd" placeholder="새로운 비밀번호 입력" class="form-control" data-parsley-group="wizard-step-3" required />
-										                                                            <p style="color: graytext; margin-bottom: 0%;">&nbsp;비밀번호는 최소 8자 이상, 영문과 숫자 혼합하여 설정</p>
-										                                                        </div>
-										                                                    </div>
-										                                                </div>
-										                                                <!-- end col-4 -->
-										                                                <!-- begin col-4 -->
-										                                                <div class="col-md-4">
-										                                                    <div class="form-group">
-										                                                        <label>새 비밀번호 확인</label>
-										                                                        <div class="controls">
-										                                                            <input type="password" name="residentPwd2" id="residentPwd2" placeholder="새로운 비밀번호 확인" class="form-control" />
-										                                                        </div>
-										                                                    </div>
-										                                                </div>
-										                                                <!-- end col-6 -->
-										                                            </div>
-										                                            <!-- end row -->
-										                                        </fieldset>
-																			</div>
-																			<!-- end wizard step-3 -->
-																		</div>
-																		<div class="modal-footer">
-																			<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-																			<a href="moveFindPwd" id="changeNewPasswordBtn"class="btn btn-sm btn-success" data-dismiss="modal" onclick="setNewPwd()">비밀번호 재설정</a>
-																		</div>
-															 </form>
-																	</div>
-																</div>
-															</div>
-															<!-- 끝 비밀번호 찾기 결과 모달 -->
+										<!-- 시작 비밀번호 결과 모달 -->
+										<div class="modal fade" id="modal-dialog" aria-hidden="true" style="display: none;">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+														<h4 class="modal-title">비밀 번호 재설정 하기</h4>
+													</div>
+											 		<form method="POST" data-parsley-validate="true"  id="setNewPwdForm">
+													<!-- <form action=""> -->
+													<div class="modal-body">
+														<!-- begin wizard step-3 -->
+														<span id="showResultPwd"></span>
+														<div id="setNewPassword">
+															<fieldset>
+																<!-- <legend class="pull-left width-full">비밀번호 재설정</legend> -->
+					                                            <!-- begin row -->
+					                                            <div class="row">
+					                                                <!-- begin col-4 -->
+					                                                <div class="col-md-4">
+					                                                    <div class="form-group">
+					                                                        <label>새 비밀번호</label>
+					                                                        <div class="controls">
+					                                                        	<input type="hidden" name= residentId id="residentIdResult">
+					                                                            <input type="password" name="residentPwd" id="residentPwd" placeholder="새로운 비밀번호 입력" class="form-control" data-parsley-group="wizard-step-3" required />
+					                                                            <p style="color: graytext; margin-bottom: 0%;">&nbsp;비밀번호는 최소 8자 이상, 영문과 숫자 혼합하여 설정</p>
+					                                                        </div>
+					                                                    </div>
+					                                                </div>
+					                                                <!-- end col-4 -->
+					                                                <!-- begin col-4 -->
+					                                                <div class="col-md-4">
+					                                                    <div class="form-group">
+					                                                        <label>새 비밀번호 확인</label>
+					                                                        <div class="controls">
+					                                                            <input type="password" name="residentPwd2" id="residentPwd2" placeholder="새로운 비밀번호 확인" class="form-control" />
+					                                                        </div>
+					                                                    </div>
+					                                                </div>
+					                                                <!-- end col-6 -->
+					                                            </div>
+					                                            <!-- end row -->
+					                                        </fieldset>
+														</div>
+														<!-- end wizard step-3 -->
+													</div>
+													<div class="modal-footer">
+														<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+														<a href="moveFindPwd" id="changeNewPasswordBtn"class="btn btn-sm btn-success" data-dismiss="modal" onclick="setNewPwd()">비밀번호 재설정</a>
+													</div>
+												 </form>
+												</div>
+											</div>
+										</div>
+										<!-- 끝 비밀번호 찾기 결과 모달 -->
 			                        </div>
 			                    </div>
 			                    <!-- end panel -->
@@ -355,8 +355,6 @@
 
 	//비밀번호 찾기 결과 보여주는 함수
 	/* function showPwd() { */
-
-
 	$('#submitBtn').click(function () {
 		if (verifiedNo == 0) {
 			alert('휴대전화번호 본인 인증을 해주세요.');

@@ -96,56 +96,55 @@
 												</div> -->
 
 												<table>
-																	<tr>
-																		<td>
-																			<label>사용자 이름</label>
-																		</td>
-																		<td></td>
-																	</tr>
-																	<tr>
-																		<td>
-																			<input type="text" name="residentNm" id="residentNm" placeholder="실명 입력" class="form-control" data-parsley-group="wizard-step-2"  style="width: 300px;" required />
-																			<br>
-																		</td>
-																		<td></td>
-																	</tr>
-																	<tr>
-																		<td>
-																			<label>휴대전화번호 인증</label>
-																		</td>
-																		<td></td>
-																	</tr>
-																	<tr>
-																		<td>
-																		<input name="residentPhone" id="residentPhone" type="tel" placeholder="' - ' 없이 숫자만 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" style="width: 300px;" required/></td>
-																		<br>
-																		<td>&nbsp;&nbsp;&nbsp;<button id="checkPhone" type="button" class="btn btn-default m-r-5 m-b-5" style="display: inline-block; align-self: flex-start;">인증번호</button></td>
-																	</tr>
-																	<tr>
-																		<td>
-																				<label>인증번호</label>
-																		</td>
-																		<td></td>
-																	</tr>
-																	<tr>
-																	<td>
-																	<input type="hidden" name="action" value="go"> <!-- 발송타입 -->
-															        <input type="hidden" name="msg" value="<%=checkNo%>">
-																	<input type="hidden" name="rphone">
-																	<input type="hidden" name="sphone1" value="010">
-															        <input type="hidden" name="sphone2" value="2603">
-															        <input type="hidden" name="sphone3" value="9932">
-																	<input name="checkNo" id="checkNo" required type="text" class="form-control" placeholder="인증번호 입력"
-																		style="width: 100%; display: inline-block;" data-parsley-group="wizard-step-2" data-parsley-type="number"/>&nbsp;
+													<tr>
+														<td>
+															<label>사용자 이름</label>
+														</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>
+															<input type="text" name="residentNm" id="residentNm" placeholder="실명 입력" class="form-control" data-parsley-group="wizard-step-2"  style="width: 300px;" required />
+															<br>
+														</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>
+															<label>휴대전화번호 인증</label>
+														</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>
+														<input name="residentPhone" id="residentPhone" type="tel" placeholder="' - ' 없이 숫자만 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" style="width: 300px;" required/></td>
+														<br>
+														<td>&nbsp;&nbsp;&nbsp;<button id="checkPhone" type="button" class="btn btn-default m-r-5 m-b-5" style="display: inline-block; align-self: flex-start;">인증번호</button></td>
+													</tr>
+													<tr>
+														<td>
+																<label>인증번호</label>
+														</td>
+														<td></td>
+													</tr>
+													<tr>
+													<td>
+													<input type="hidden" name="action" value="go"> <!-- 발송타입 -->
+											        <input type="hidden" name="msg" value="<%=checkNo%>">
+													<input type="hidden" name="rphone">
+													<input type="hidden" name="sphone1" value="010">
+											        <input type="hidden" name="sphone2" value="2603">
+											        <input type="hidden" name="sphone3" value="9932">
+													<input name="checkNo" id="checkNo" required type="text" class="form-control" placeholder="인증번호 입력"
+														style="width: 100%; display: inline-block;" data-parsley-group="wizard-step-2" data-parsley-type="number"/>&nbsp;
 
-																			</td>
-																			<td>
-																	<!-- <input type="text" name="vNumber" placeholder="인증번호 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" style="width: 50%;" required /> -->
-																		<button id="checkNumber" type="button" class="btn btn-default m-r-5 m-b-5" style="margin-left: 10px;">확인</button>
-																			</td>
-																		</tr>
-																</table>
-
+															</td>
+															<td>
+													<!-- <input type="text" name="vNumber" placeholder="인증번호 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" style="width: 50%;" required /> -->
+														<button id="checkNumber" type="button" class="btn btn-default m-r-5 m-b-5" style="margin-left: 10px;">확인</button>
+															</td>
+														</tr>
+												</table>
 											</div>
 										</div>
 									</div>
@@ -183,7 +182,7 @@
 								<button type="reset" class="btn btn-white m-r-5">취소</button> &nbsp; &nbsp;
 								<!-- <button type="submit" class="btn btn-primary">찾기</button> -->
 					 			<!-- 시작 모달로 결과 보내기 버튼 -->
-								<a href="#modal-dialog" class="btn btn-primary" data-toggle="modal" onclick="showId();">찾기</a>
+								<a href="" id="showIdBtn" class="btn btn-primary" data-toggle="modal" onclick="showId();">찾기</a>
 								<!-- 끝= 모달로 결과 보내기 버튼 -->
 							</p>
 								<!-- 시작 아이디찾기 결과 모달 -->
@@ -279,7 +278,6 @@
   			data:findIdForm,
   			success:function(data){
 				/* var jsonObj = JSON.parse(data); */
-				alert("hi");
 				console.log("data : " + data);
 				$("#showResultId").empty();
 
@@ -343,6 +341,7 @@
 							$("#checkNumber").hide();
 							alert("인증이 완료되었습니다.");
 							verifiedNo = 1;
+							$("#showIdBtn").attr("href","#modal-dialog" )
 						}else{
 							alert("인증번호가 틀렸습니다. 다시 입력하세요.");
 							$("#checkPhone").show();
