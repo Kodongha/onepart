@@ -111,53 +111,83 @@ $(document).ready(function() {
 });
 </script>
 <!-- 타이틀 -->
-			<div style="width:95%; margin:0 auto">
-			<!-- 전체 div -->
-			<div>
-			<div style="width:85%; margin:0 auto">
-			<br>
-			<h2>우리집 관리비</h2>
-			<hr>
-			<br>
-				<!-- 타이틀 div -->
-				<div>
-					<table style="width:100%; height:100%; margin:-1% auto;">
-						<tr>
-							<td><h3 style="margin:auto 0">101동 1203호 2019년 8월분</h3></td>
-							<td><a id="payment" class="btn btn-white" style="width:100%">납부하기</a></td>
-						</tr>
-					</table>
+<div style="width:85%; margin:0 auto">
+	<br>
+	<table style="width:100%; margin-bottom:-10px;">
+		<tr>
+			<td><h3 style="font-weight:bold;">우리집 관리비</h3></td>
+			<td><a id="payment" class="btn btn-success" style="width:100%">납부하기</a></td>
+		</tr>
+	</table>
+	<br>
+</div>
+<!-- 타이틀 div -->
+<div style="width:85%; margin:0 auto">
+	<div class="panel-body" style="background:white" align="center">
+		<table style="width:100%">
+			<tr>
+				<td><h3 style="margin:auto 0">101동 1203호 2019년 8월분</h3></td>
+			</tr>
+		</table>
+		<br><br>
+		<!-- 기본내역 div -->
+		<div>
+			<div class="col-md-12 p-0">
+				<div class="col-md-6" style="height:250px; border-right:1px solid lightgray;">
+					<div style="height:100px; width:80%; margin:auto auto; margin-top:20%;">
+					  	<h3 style="font-weight:bold;">당월 납부액</h3>
+					  	<h2>96,120원</h2>
+					</div>
 				</div>
-				<br><br>
-				<div>
-					<!-- 기본내역 div -->
-					<div>
-						불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의 동산에는 사랑의 풀이 돋고 이상의 꽃이 피고 희망의 놀이 뜨고 열락의 새가 운다사랑의 풀이 없으면 인간은 사막이다 오아이스도 없는 사막이다 보이는 끝까지 불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의 동산에는 사랑의 풀이 돋고 이상의 꽃이 피고 희망의 놀이 뜨고 열락의 새가 운다사랑의 풀이 없으면 인간은 사막이다 오아이스도 없는 사막이다 보이는 끝까지 불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의 동산에는 사랑의 풀이 돋고 이상의 꽃이 피고 희망의 놀이 뜨고 열락의 새가 운다사랑의 풀이 없으면 인간은 사막이다 오아이스도 없는 사막이다 보이는 끝까지 불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의 동산에는 사랑의 풀이 돋고 이상의 꽃이 피고 희망의 놀이 뜨고 열락의 새가 운다사랑의 풀이 없으면 인간은 사막이다 오아이스도 없는 사막이다 보이는 끝까지 불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의 동산에는 사랑의 풀이 돋고 이상의 꽃이 피고 희망의 놀이 뜨고 열락의 새가 운다사랑의 풀이 없으면 인간은 사막이다 오아이스도 없는 사막이다 보이는 끝까지 불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의 동산에는 사랑의 풀이 돋고 이상의 꽃이 피고 희망의 놀이 뜨고 열락의 새가 운다사랑의 풀이 없으면 인간은 사막이다 오아이스도 없는 사막이다 보이는 끝까지 불어 보내는 것은 청춘의 끓는 피다 청춘의 피가 뜨거운지라 인간의 동산에는 사랑의 풀이 돋고 이상의 꽃이 피고 희망의 놀이 뜨고 열락의 새가 운다사랑의 풀이 없으면 인간은 사막이다 오아이스도 없는 사막이다 보이는 끝까지
+				<div class="col-md-6" style="height:250px">
+					<div style="height:250px; width:80%; margin:auto auto; margin-top:7%;">
+					  	<table style="width: 90%; margin-top:17%">
+					  		<tr>
+					  			<td style="font-weight:bold; font-size:1.8em;">전월 미납 금액</td>
+					  			<td style="font-size:1.8em;">0원</td>
+					  		</tr>
+					  		<tr>
+					  			<td style="height:15px"></td>
+					  		</tr>
+					  		<tr>
+					  			<td style="font-weight:bold; font-size:1.8em;">미납 연체료</td>
+					  			<td style="font-size:1.8em;">0원</td>
+					  		</tr>
+					  		<tr>
+					  			<td style="height:15px"></td>
+					  		</tr>
+					  		<tr>
+					  			<td style="font-weight:bold; font-size:1.8em;">납부 마감일</td>
+					  			<td style="font-size:1.8em;">0원</td>
+					  		</tr>
+					  	</table>
 					</div>
-					<hr>
-					<!-- 선택버튼 div -->
-					<div>
-						<table style="width: 100%; height: 100%; margin: -2% auto;">
-							<tr>
-								<td><br></td>
-							</tr>
-							<tr>
-								<td><a id="maintenancecompare" class="btn btn-white"
-									style="width: 100%">우리집 관리비 비교</a></td>
-								<td><a id="maintenancedetail" class="btn btn-white"
-									style="width: 100%">관리비 상세보기</a></td>
-								<td><a id="maintenanceuseDetail" class="btn btn-white"
-									style="width: 100%">관리비 사용내역 보기</a></td>
-							</tr>
-							<tr>
-								<td><br></td>
-							</tr>
-						</table>
-					</div>
-					<hr style="width: 100%">
 				</div>
 			</div>
 		</div>
-		</div>
+	  	<br>
+	</div>
+	<hr>
+	<!-- 선택버튼 div -->
+	<div>
+		<table style="width: 100%; height: 100%; margin: -2% auto;">
+			<tr>
+				<td><br></td>
+			</tr>
+			<tr>
+				<td><a id="maintenancecompare" class="btn btn-white"
+					style="width: 100%">우리집 관리비 비교</a></td>
+				<td><a id="maintenancedetail" class="btn btn-white"
+					style="width: 100%">관리비 상세보기</a></td>
+				<td><a id="maintenanceuseDetail" class="btn btn-white"
+					style="width: 100%">관리비 사용내역 보기</a></td>
+			</tr>
+			<tr>
+				<td><br></td>
+			</tr>
+		</table>
+	</div>
+	<hr style="width: 100%">
+</div>
 </body>
 </html>
