@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -33,6 +34,10 @@ import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseResidentVO;
 
+/**
+ * @author ko
+ *
+ */
 @Controller
 public class MessengerController {
 
@@ -64,14 +69,11 @@ public class MessengerController {
 		System.out.println("type :: " + type);
 		System.out.println("currentPage :: " + currentPage);
 
-
-
 		// 받는 사람 구하기(로그인 유저)
 		String loginUser = "";
 		// 입주민일 경우, int > String 으로 형변환
 		if(session.getAttribute("loginUser") instanceof ResidentVO) {
 			loginUser = String.valueOf(((ResidentVO) session.getAttribute("loginUser")).getResidentSeq());
-
 
 		// 관리자일 경우
 		} else if(session.getAttribute("loginUser") instanceof ManagerVO) {
@@ -334,10 +336,47 @@ public class MessengerController {
 		buf.close();
 	}
 
-	@RequestMapping("keepMessenger")
-	public void keepMessenger(int [] messengerSeq ) {
+	/**
+	 * 보관함으로
+	 * @param messengerSeq
+	 */
+	@RequestMapping("/messenger/keepMessenger")
+	public ModelAndView keepMessenger(int [] messengerSeq, ModelAndView modelAndview) {
 
+		System.out.println("messengerSeq :: " + messengerSeq);
+
+		messengerService.keepMessenger(messengerSeq);
+
+		modelAndview.setViewName("jsonView");
+		return modelAndview;
 	}
 
+	/**
+	 * @param requestMessengerVO
+	 * @param tags
+	 * @param req
+	 * @param request
+	 * @param modelAndView
+	 * @return
+	 */
+	public ModelAndView insertMessengerForVisitCar(RequestMessengerVO requestMessengerVO, int residentSeq, HttpServletRequest req, HttpSession session, HttpServletRequest request, ModelAndView modelAndView) {
+
+		System.out.println("messenger/insertMessengerForVisitCar in!");
+		System.out.println("requestMessengerVO:::" + requestMessengerVO);
+		System.out.println("messengerContent : " + req.getParameter("messengerContent"));
+
+		String messengerSender = "";
+		messengerSender = String.valueOf(((ManagerVO) session.getAttribute("loginUser")).getManagerSeq());
+
+		requestMessengerVO.setMessengerSender(messengerSender);
+		requestMessengerVO.setMessengerReceiver(String.valueOf(residentSeq));
+
+		// 메신저 보내기 DB 저장
+		messengerService.insertMessengerForVisitCar(requestMessengerVO);
+
+		modelAndView.setViewName("jsonView");
+
+		return modelAndView;
+	}
 
 }

@@ -77,4 +77,16 @@ public interface MessengerService {
 	 */
 	void updateMessengerReadProcess(String messengerSeq);
 
+	/**
+	 * 메신저 보관함으로
+	 * @param messengerSeq
+	 */
+	void keepMessenger(int[] messengerSeq);
+
+	/**
+	 * 방문 차량용 쪽지 보내기
+	 * @param requestMessengerVO
+	 */
+	void insertMessengerForVisitCar(RequestMessengerVO requestMessengerVO);
+
 }
