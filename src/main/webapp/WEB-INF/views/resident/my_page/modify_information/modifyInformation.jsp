@@ -54,6 +54,7 @@
 						<div class="col-md-12">
 							<input name="residentBirth" id="residentBirth" type="text" name="birthDay"
 							 size="6" maxlength="6" style="width: 20%; text-align: center; background: #e5e9ed;" readonly="readonly" class="form" value="${loginUser.residentBirth}"/>&nbsp;&nbsp;-&nbsp;&nbsp;*******
+
 						</div>
 					</div>
 
@@ -76,6 +77,7 @@
 							<br>**인증번호 클릭 시 아래 창 생김 or 새창<br> <input type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
 							<button type="button" class="btn btn-default m-r-5 m-b-5">확인</button> -->
 						</div>
+            
 					</div>
 					<br>
 					<h3>
@@ -95,6 +97,7 @@
 									</td>
 								</tr>
 							</table>
+
 						</div>
 					</div>
 					<br> <br>
