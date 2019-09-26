@@ -30,6 +30,10 @@ public interface AccountService {
 	//아이디 중복 체크
 	int idcheck(String residentId);
 
+	//회원정보 수정에서 비밀번호 재설정용 메소드
+	int setNewPwd2(String oldResidentPwd, ResidentVO requestResidentVO);
+
+
 
 
 }

@@ -354,7 +354,6 @@
 
 
 	//비밀번호 찾기 결과 보여주는 함수
-	/* function showPwd() { */
 	$('#submitBtn').click(function () {
 		if (verifiedNo == 0) {
 			alert('휴대전화번호 본인 인증을 해주세요.');

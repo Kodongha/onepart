@@ -41,4 +41,7 @@ public interface AccountDao {
 	//아이디 중복 체크
 	int idcheck(SqlSessionTemplate sqlSession, String residentId);
 
+	//회원정보 수정에서 현재 비밀번호 조회용 메소드
+	String selectEncPassword(SqlSessionTemplate sqlSession, String residentId);
+
 }

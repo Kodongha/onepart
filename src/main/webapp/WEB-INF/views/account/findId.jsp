@@ -140,7 +140,6 @@
 
 															</td>
 															<td>
-													<!-- <input type="text" name="vNumber" placeholder="인증번호 입력" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" style="width: 50%;" required /> -->
 														<button id="checkNumber" type="button" class="btn btn-default m-r-5 m-b-5" style="margin-left: 10px;">확인</button>
 															</td>
 														</tr>
@@ -178,7 +177,6 @@
 									</div>
 								</div>
 							<p class="text-center m-b-0">
-								<!-- <a href="javascript:;" class="btn btn-white m-r-5">취소</a> <a href="javascript:;" class="btn btn-primary">찾기</a> -->
 								<button type="reset" class="btn btn-white m-r-5">취소</button> &nbsp; &nbsp;
 								<!-- <button type="submit" class="btn btn-primary">찾기</button> -->
 					 			<!-- 시작 모달로 결과 보내기 버튼 -->

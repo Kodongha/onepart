@@ -135,6 +135,25 @@ public class AccountServiceImpl implements AccountService{
 		return accountDao.idcheck(sqlSession, residentId);
 	}
 
+	//회원정보 수정에서 비밀번호 재설정용 메소드
+	@Override
+	public int setNewPwd2(String oldResidentPwd, ResidentVO requestResidentVO) {
+
+		String currentEncPassword = accountDao.selectEncPassword(sqlSession, requestResidentVO.getResidentId());
+		System.out.println("currentEncPassword ::S:: " + currentEncPassword );
+		System.out.println("oldEncPassword ::S:: " + oldResidentPwd );
+
+
+		if(passwordEncoder.matches(oldResidentPwd, currentEncPassword)) {
+			System.out.println("비밀번호 조회하고 지금 입력한 것과 맞으면 dao로 이동");
+			return accountDao.setNewPwd(sqlSession, requestResidentVO);
+		}else {
+			System.out.println("비밀번호 조회하고 지금 입력한 것과 안 맞아서 return 0");
+			return 0;
+		}
+
+	}
+
 
 
 

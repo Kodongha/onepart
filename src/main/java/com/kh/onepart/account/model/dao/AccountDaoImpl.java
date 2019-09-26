@@ -114,5 +114,14 @@ public class AccountDaoImpl implements AccountDao {
 		return sqlSession.selectOne("Account.idcheck",residentId);
 	}
 
+	//회원정보 수정에서 비밀번호 재설정용 메소드
+
+
+	//회원정보 수정에서 현재 비밀번호 조회용 메소드
+	@Override
+	public String selectEncPassword(SqlSessionTemplate sqlSession, String residentId) {
+		return sqlSession.selectOne("Account.selectPwd", residentId);
+	}
+
 
 }

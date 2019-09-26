@@ -26,7 +26,7 @@
 						<div class="row m-b-15" style="margin-bottom: 0%;">
 							<!-- 						<div class="row row-space-10"> -->
 							<div class="col-md-12" id="divInputId">
-								<input type="text" class="form-control" style="width: 77%; display: inline-block;"
+								<input name="residentId" id="residentId" type="text" class="form-control" style="width: 77%; display: inline-block;"
 								 readonly="readonly" value="${loginUser.residentId}" />&nbsp;
 							</div>
 						</div>
@@ -36,7 +36,7 @@
 						<div class="col-md-12">
 							<input type="password" class="form-control" placeholder="****" readonly="readonly" style="width: 77%; margin-bottom: 1%; display: inline-block;" />
 							<!-- <button id="changePwd" type="button" class="btn btn-info m-r-5 m-b-5">비밀번호 변경</button> -->
-							<a href="#modal-dialog" class="btn btn-info m-r-5 m-b-5" data-toggle="modal" id="changePwd" style="float:right;">변경하기</a>
+							<a href="#modal-dialog" class="btn btn-info m-r-5 m-b-5" data-toggle="modal" id="changePwd" style="float:right;">비밀번호 변경</a>
 							<p style="color: graytext; margin-bottom: 0%;">&nbsp;비밀번호는 최소 8자 ~ 최대 20자리, 영문과 숫자 혼합하여 설정</p>
 							<br>
 						</div>
@@ -60,10 +60,19 @@
 					<label class="control-label">휴대전화번호 인증</label>
 					<div class="row m-b-15">
 						<div class="col-md-12">
-							<input type="tel" class="form-control" style="width: 77%; display: inline-block;" readonly="readonly" value="${loginUser.residentPhone}" />&nbsp;
-							<a href="#modal-dialog2" class="btn btn-info m-r-5 m-b-5" data-toggle="modal" id="changeHP" style="float:right;">변경하기</a>
+							<input name="residentPhone" id="residentPhone" type="tel" class="form-control" style="width: 77%; display: inline-block;" readonly="readonly" value="${loginUser.residentPhone}" />&nbsp;
+							<button id="checkPhone" type="button" class="btn btn-info m-r-5 m-b-5">변경하기</button>
 							<br>
+							<!-- **인증번호 클릭 시 아래 창 생김 or 새창 -->
+							<br> <input name="checkNo" id="checkNo" required type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
+								<input type="hidden" name="action" value="go"> <!-- 발송타입 -->
+						        <input type="hidden" name="msg" value="<%=checkNo%>">
+								<input type="hidden" name="rphone">
+								<input type="hidden" name="sphone1" value="010">
+						        <input type="hidden" name="sphone2" value="2603">
+						        <input type="hidden" name="sphone3" value="9932">
 
+							<button id="checkNumber" type="button" class="btn btn-default m-r-5 m-b-5">확인</button>
 						</div>
 					</div>
 
@@ -153,7 +162,34 @@
 				<div id="setNewPassword">
 					<fieldset>
 						<!-- <legend class="pull-left width-full">비밀번호 재설정</legend> -->
-	                     <table style="margin: 0 auto;">
+	                     <!-- begin row -->
+	                     <div class="row">
+	                         <!-- begin col-4 -->
+	                         <div class="col-md-4">
+	                             <div class="form-group">
+	                                 <label>새 비밀번호</label>
+	                                 <div class="controls">
+	                                 	 <input type="hidden" name= residentId id="residentIdResult" value="${loginUser.residentId}" />
+	                                     <input type="password" name="residentPwd" id="residentPwd" placeholder="새로운 비밀번호 입력" class="form-control" data-parsley-group="wizard-step-3" required />
+	                                     <p style="color: graytext; margin-bottom: 0%;">&nbsp;비밀번호는 최소 8자 이상, 영문과 숫자 혼합하여 설정</p>
+	                                 </div>
+	                             </div>
+	                         </div>
+	                         <!-- end col-4 -->
+	                         <!-- begin col-4 -->
+	                         <div class="col-md-4">
+	                             <div class="form-group">
+	                                 <label>새 비밀번호 확인</label>
+	                                 <div class="controls">
+	                                     <input type="password" name="residentPwd2" id="residentPwd2" placeholder="새로운 비밀번호 확인" class="form-control" />
+	                                 </div>
+	                             </div>
+	                         </div>
+	                         <!-- end col-6 -->
+	                     </div>
+	                     <!-- end row -->
+
+	                     <table>
 	                     	<tr>
 	                     		<td>
 	                     			<label>기존 비밀번호</label>
@@ -161,9 +197,8 @@
 	                     	</tr>
 	                     	<tr>
 	                     		<td>
-	                     			<input type="hidden" name= "residentId" id="residentId" value="${loginUser.residentId}" />
-	                     			<input type="hidden" name= "currentResidentPwd" id="currentResidentPwd" value="${loginUser.residentPwd}" />
-                                     <input type="password" name="oldResidentPwd" id="oldResidentPwd" placeholder="기존 비밀번호 입력" class="form-control" required />
+	                     			<input type="hidden" name= residentId id="residentIdResult" value="${loginUser.residentId}" />
+                                     <input type="password" name="OldResidentPwd" id="OldResidentPwd" placeholder="기존 비밀번호 입력" class="form-control" data-parsley-group="wizard-step-3" required />
                                      <br>
 	                     		</td>
 	                     	</tr>
@@ -174,7 +209,7 @@
 	                     	</tr>
 	                     	<tr>
 	                     		<td>
-	                     			<input type="password" name="residentPwd" id="residentPwd" placeholder="새로운 비밀번호 입력" class="form-control" required />
+	                     			<input type="password" name="residentPwd" id="residentPwd" placeholder="새로운 비밀번호 입력" class="form-control" data-parsley-group="wizard-step-3" required />
                                      <p style="color: graytext; margin-bottom: 0%;">&nbsp;비밀번호는 최소 8자 이상, 영문과 숫자 혼합하여 설정</p>
                                      <br>
 	                     		</td>
@@ -196,7 +231,7 @@
 			</div>
 			<div class="modal-footer">
 				<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-				<a href="moveFindPwd" id="changeNewPasswordBtn"class="btn btn-sm btn-success" data-dismiss="modal" onclick="return setNewPwd(this)">비밀번호 재설정</a>
+				<a href="moveFindPwd" id="changeNewPasswordBtn"class="btn btn-sm btn-success" data-dismiss="modal" onclick="setNewPwd()">비밀번호 재설정</a>
 			</div>
 		 </form>
 		</div>
@@ -205,121 +240,32 @@
 <!-- 끝 비밀번호 찾기 결과 모달 -->
 
 
-
-<!-- 시작 휴대전화번호 변경 결과 모달 -->
-<div class="modal fade" id="modal-dialog2" aria-hidden="true" style="display: none;">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title">휴대전화번호 변경하기</h4>
-			</div>
-			<!-- <form action=""> -->
-			<div class="modal-body">
-				<!-- begin wizard step-3 -->
-				<div id="setNewHP">
-					<div class="col-md-12">
-						<input name="residentPhone" id="residentPhone" type="tel" class="form-control" style="width: 77%; display: inline-block;" placeholder="변경할 휴대전화 번호를 입력하세요." />&nbsp;
-						<button id="checkPhone" type="button" class="btn btn-info m-r-5 m-b-5">인증번호</button>
-						<br>
-						<!-- **인증번호 클릭 시 아래 창 생김 or 새창 -->
-						<br> <input name="checkNo" id="checkNo" required type="text" class="form-control" placeholder="인증번호 입력" style="width: 50%; display: inline-block;" />&nbsp;
-							<input type="hidden" name="action" value="go"> <!-- 발송타입 -->
-							<input type="hidden" name="msg" value="<%=checkNo%>">
-							<input type="hidden" name="rphone">
-							<input type="hidden" name="sphone1" value="010">
-							<input type="hidden" name="sphone2" value="2603">
-							<input type="hidden" name="sphone3" value="9932">
-
-						<button id="checkNumber" type="button" class="btn btn-default m-r-5 m-b-5">확인</button>
-					</div>
-				</div>
-				<!-- end wizard step-3 -->
-			</div>
-			<div class="modal-footer">
-				<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-				<a href="moveFindPwd" id="changeNewHPBtn"class="btn btn-sm btn-success" data-dismiss="modal" onclick="return setNewHP()">휴대전화번호 재설정</a>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- 끝 휴대전화번호 변경 결과 모달 -->
-
-
 <script>
-	$(document).ready(function () {
-		console.log("$('#residentPwd').val() ::: " +$("#residentPwd").val());
-		var currentResidentPwd = $("#currentResidentPwd").val();
-		console.log("currentResidentPwd ::" + currentResidentPwd);
-		//비밀번호 설정 최소 조건
-		$('#residentPwd').blur(function(){
-			if(!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/.test($('#residentPwd').val())){
-				if($('#residentPwd').val() != ''){
-				   alert('비밀번호는 숫자와 영문자 조합으로 8~20자리를 사용해야 합니다.');
-				   $('#residentPwd').val('');
-				   $('#residentPwd2').val('');
-				   $('#residentPwd').focus();;
-			       return false;
-				}
-		   }
+		$(document).ready(function () {
+
+			$('#residentPwd').blur(function(){
+				if(!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/.test($('#residentPwd').val())){
+					if($('#residentPwd').val() != ''){
+					   alert('비밀번호는 숫자와 영문자 조합으로 8~20자리를 사용해야 합니다.');
+					   $('#residentPwd').val('');
+					   $('#residentPwd2').val('');
+					   $('#residentPwd').focus();;
+				       return false;
+					}
+				   }
+			});
+
+			$('#residentPwd2').blur(function(){
+			   if($('#residentPwd').val() != $('#residentPwd2').val()){
+			    	if($('#residentPwd2').val()!=''){
+				    alert("비밀번호가 일치하지 않습니다.");
+			    	    $('#residentPwd2').val('');
+			          $('#residentPwd2').focus();
+			       }
+			    }
+			});
+
 		});
-		$('#residentPwd2').blur(function(){
-		   if($('#residentPwd').val() != $('#residentPwd2').val()){
-		    	if($('#residentPwd2').val()!=''){
-			    alert("비밀번호가 일치하지 않습니다.");
-		    	    $('#residentPwd2').val('');
-		          $('#residentPwd2').focus();
-		       }
-		    }
-		});
-	});
-
-	//회원정보 수정에서 비밀번호 재설정용 메소드
-	function setNewPwd() {
-		var residentId = $("#residentId").val();
-		var oldResidentPwd = $("#oldResidentPwd").val();
-		var residentPwd = $("#residentPwd").val();
-		var residentPwd2 = $("#residentPwd2").val();
-
-		$("#oldResidentPwd").text('');
-		$("#residentPwd").text('');
-		$("#residentPwd2").text('');
-
-
-		if(oldResidentPwd =='' || residentPwd =='' || residentPwd2==''){
-			alert('비밀번호는 숫자와 영문자 조합으로 8~20자리를 사용해야 합니다.');
-			/* $("#modal-dialog").attr("aria_hidden","false").attr("style","display: block; padding-right: 15px;");
- */
-			/* modal(
-				{
-					escapeClose: false,
-					clickClose: false,
-					showClose: false
-				 }
-			); */
-			// $("body").addClass("modal-open");
-			return false;
-		}else{
-		$.ajax({
- 			url:"setNewPwd2",
- 			type:"post",
- 			data:{residentId:residentId, oldResidentPwd:oldResidentPwd, residentPwd:residentPwd, residentPwd2:residentPwd2},
- 			success:function(data){
- 				console.log("data.result ::J::" + data.result);
-
- 				if(data.result > 0){
-					alert("비밀번호가 변경되었습니다.")
- 				}else{
- 					alert("비밀번호 재설정 오류!!")
- 				}
-			},
-			error:function(xhr, status){
-			alert(xhr + " : " + status);
- 			}
- 		});
-		}
-
-	}
 </script>
 
 <script type="text/javascript">
@@ -335,7 +281,7 @@
 
 		// 인증번호 입력창
 		$.ajax({
-			url:"/onepart/moveSmssend",
+			url:"moveSmssend",
 			data:{rphone:rphone, sphone1:sphone1, sphone2:sphone2, sphone3:sphone3, msg:msg, action:action},
 			type:"post",
 			success:function(data){
@@ -376,7 +322,28 @@
 		    }
 		});
 	});
+
+
+	//새로운 비밀번호 설정 함수
+	function setNewPwd() {
+
+		var setNewPwdForm =$("#setNewPwdForm").serialize();
+
+		$.ajax({
+ 			url:"/onepart/setNewPwd",
+ 			type:"post",
+ 			data:setNewPwdForm,
+ 			success:function(){
+				alert("비밀번호가 변경되었습니다.")
+			},
+			error:function(xhr, status){
+			alert(xhr + " : " + status);
+ 			}
+ 		});
+	}
+
 </script>
+
 
 </body>
 </html>
