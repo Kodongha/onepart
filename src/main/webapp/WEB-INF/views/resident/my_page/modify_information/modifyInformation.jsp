@@ -57,16 +57,14 @@
 							</div>
 						</div>
 
-						<label class="control-label">주민등록번호</label>
+						<label class="control-label">주민등록번호 <small style="font-size: 11px; color: graytext;">&nbsp;해당 정보수정은 관리소에 문의해주십시오.</small></label>
 						<div class="row m-b-15">
 							<div class="col-md-12">
-								<input name="residentBirth" id="residentBirth" type="text" class="form-control" placeholder="" name="birthDay"
-								 size="6" maxlength="6" style="width: 20%; text-align: center;" readonly="readonly" value="${loginUser.residentBirth}"/>&nbsp;&nbsp;-&nbsp;&nbsp;
-								<input name="residentGender" id="residentGender" type="text" class="form-control" name="gender" readonly="readonly" value="${loginUser.residentGender}"
+								<input name="residentBirth" id="residentBirth" type="text" name="birthDay"
+								 size="6" maxlength="6" style="width: 20%; text-align: center; background: #e5e9ed;" readonly="readonly" class="form" value="${loginUser.residentBirth}"/>&nbsp;&nbsp;-&nbsp;&nbsp;*******
+								<%-- <input name="residentGender" id="residentGender" type="text" class="form-control" name="gender" readonly="readonly" value="${loginUser.residentGender}"
 								 size="1" maxlength="1" style="width: 5%; text-align: center; display: inline-block; padding: 6px 1px;"
-								 required />&nbsp;******&nbsp;
-								<p style="color: graytext; margin-bottom: 0%;">&nbsp;전자투표에
-									필요한 정보입니다.</p>
+								 required /> --%><!-- &nbsp;*******&nbsp; -->
 							</div>
 						</div>
 
@@ -104,32 +102,20 @@
 						</div>
 						<br>
 						<h3>
-							<label class="control-label">아파트 정보</label>
+							<label class="control-label">아파트 정보 <small style="font-size: 11px;">&nbsp;해당 정보수정은 관리소에 문의해주십시오.</small></label>
 						</h3>
 						<div class="row row-space-10">
 							<div class="col-md-12">
 								<input name="aptNm" id="aptNm" type="text" class="form-control" placeholder="성현동아 아파트" style="width: 77%; display: inline-block;"
 								 readonly="readonly" />&nbsp;
-								<!-- <button type="button" class="btn btn-default m-r-5 m-b-5" style="background-color: black;">검색</button> -->
-								<!-- <p style="color: blue; margin-bottom: 0%;">예) 서울시 송파구 신천동 잠실5단지의 경우 '신천동'이라고 입력하세요.</p> -->
 								<br> <br>
-
-								<!-- <input name="aptDetailInfoSeq" id="aptDetailInfoSeq" type="hidden">
-								<input name="dong" id="dong" type="text" class="form-control" placeholder="동 입력" style="width: 30%; display: inline-block;" />&nbsp;동&nbsp;&nbsp;
-								<input name="ho" id="ho" type="text" class="form-control" placeholder="호수 입력" style="width: 30%; display: inline-block;" />&nbsp;호&nbsp; -->
 								<table style="width: 100%; height: 30px; margin: 0 auto;">
 									<tr>
-										<td><select class="form-control input-sm" id="candidateInfoDong" required="required">
-												<option value="">원하는 동 선택</option>
-												<c:forEach var="dong" begin="101" end="105">
-													<option value='${ dong }'>${ dong }동</option>
-												</c:forEach>
-											</select></td>
-										<td style="width: 3%"></td>
-										<td><select class="form-control input-sm" id="candidateInfoHo" required="required">
-												<option value="">원하는 호 선택</option>
-											</select></td>
-										<td style="width: 3%"></td>
+										<td>
+										 <input name="aptDetailInfoSeq" id="aptDetailInfoSeq" type="hidden">
+											<input name="dong" id="dong" type="text" class="form-control" style="width: 30%; display: inline-block;" readonly="readonly" value="${fn:split(loginUser.aptDetailInfoSeq,'_')[1]}"/>&nbsp;동&nbsp;&nbsp;
+											<input name="ho" id="ho" type="text" class="form-control" style="width: 30%; display: inline-block;" readonly="readonly" value="${fn:split(loginUser.aptDetailInfoSeq,'_')[2]}" />&nbsp;호&nbsp;
+										</td>
 
 									</tr>
 
