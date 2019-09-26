@@ -138,4 +138,18 @@ public class MessengerServiceImpl implements MessengerService {
 		messengerDao.updateMessengerReadProcess(sqlSession, messengerSeq);
 	}
 
+	/** 메신저 보관함으로 */
+	@Override
+	public void keepMessenger(int[] messengerSeq) {
+		// TODO Auto-generated method stub
+		messengerDao.keepMessenger(sqlSession, messengerSeq);
+	}
+
+	/** 방문 차량용 쪽지 보내기 */
+	@Override
+	public void insertMessengerForVisitCar(RequestMessengerVO requestMessengerVO) {
+		// TODO Auto-generated method stub
+		messengerDao.insertMessengerForVisitCar(sqlSession, requestMessengerVO);
+	}
+
 }

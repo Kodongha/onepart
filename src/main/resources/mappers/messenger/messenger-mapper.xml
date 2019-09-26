@@ -311,4 +311,18 @@
 		WHERE	MESSENGER_SEQ = #{_parameter}
 	</update>
 
+	<!-- 방문 차량용 쪽지 보내기 -->
+	<insert id="insertMessengerForVisitCar" parameterType="requestMessengerVO">
+		INSERT INTO MESSENGER
+	    VALUES (
+	        MESSENGER_SEQ.NEXTVAL,
+	        #{messengerSender},
+	        #{messengerReceiver},
+	        #{messengerContent},
+	        NULL,
+	        SYSDATE,
+	        'N',
+	        'N'
+	    )
+	</insert>
 </mapper>

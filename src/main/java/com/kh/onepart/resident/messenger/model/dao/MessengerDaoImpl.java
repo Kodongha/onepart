@@ -121,4 +121,18 @@ public class MessengerDaoImpl implements MessengerDao {
 		// TODO Auto-generated method stub
 		sqlSession.update("Messenger.updateMessengerReadProcess", messengerSeq);
 	}
+
+	/** 메신저 보관함으로 */
+	@Override
+	public void keepMessenger(SqlSessionTemplate sqlSession, int[] messengerSeq) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/** 방문 차량용 쪽지 보내기 */
+	@Override
+	public void insertMessengerForVisitCar(SqlSessionTemplate sqlSession, RequestMessengerVO requestMessengerVO) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("Messenger.insertMessengerForVisitCar", requestMessengerVO);
+	}
 }

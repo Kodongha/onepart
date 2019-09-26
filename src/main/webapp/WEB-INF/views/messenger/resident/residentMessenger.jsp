@@ -74,9 +74,33 @@
 				}
 
 				// 페이지 호출
-
 				loadMessenger(type, 1);
 			});
+
+			$('#keepBtn').click(function(){
+
+				var active = $('#messengerList > tbody').children('tr.active');
+				var seqArray = [];
+				active.each(function(){
+					var seq = $(this).children('td').eq(1).text();
+					seqArray.push(seq);
+				});
+
+				console.log(seqArray);
+
+				$.ajax({
+					url : 'keepMessenger',
+					type : 'post',
+					data : {messengerSeq : seqArray},
+					success : function(data){
+						console.log("succ");
+						console.log(data);
+					}
+
+				});
+
+			});
+
 		});
 
 		// 쪽지 리스트 가져오기
@@ -242,12 +266,11 @@
                       </ul>
                   </div>
               </div>
-	    <!-- end col-2 -->
-	    <!-- begin col-10 -->
+
 	    <div class="col-md-10">
 			<div class="email-btn-row hidden-xs">
 			    <a href="writeMessengerForm" class="btn btn-sm btn-inverse"><i class="fa fa-plus m-r-5"></i> 쪽지 보내기</a>
-			    <a href="keepMessenger" class="btn btn-sm btn-inverse"><i class="fa fa-star-o m-r-5"></i> 보관함으로</a>
+			    <a class="btn btn-sm btn-inverse" id="keepBtn"><i class="fa fa-star-o m-r-5"></i> 보관함으로</a>
 			    <a href="5678" class="btn btn-sm btn-inverse"><i class="fa fa-times-circle m-r-5"></i> 선택 삭제</a>
 			</div>
 	        <div class="email-content">
