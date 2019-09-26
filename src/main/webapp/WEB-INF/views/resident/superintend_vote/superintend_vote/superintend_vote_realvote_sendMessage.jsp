@@ -252,7 +252,7 @@ input[type=checkbox] {
 								varStatus="status">
 								<tr class="odd gradeX">
 									<td>
-										<input type="checkbox" value="${ electoralList.residentNm }">
+										<input type="checkbox" value="${ electoralList.residentPhone }" id="checkSendMseeage">
 									</td>
 									<td>${ electoralList.aptDetailInfoSeq }</td>
 									<td>${ electoralList.aptDetailInfoSeq }</td>
@@ -276,32 +276,18 @@ input[type=checkbox] {
 				<td style="text-align:center;"><h5>수신인</h5></td>
 				<td style="width:2%"></td>
 				<td style="width:78%">
-					<ul id="email-to" class="inverse tagit ui-widget ui-widget-content ui-corner-all">
-                         <li class="tagit-choice ui-widget-content ui-state-default ui-corner-all tagit-choice-editable"><span class="tagit-label">bootstrap@gmail.com</span>
-	                          <a class="tagit-close">
-								<span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span>
-							  </a>
-							  <input type="hidden" value="bootstrap@gmail.com" name="tags" class="tagit-hidden-field">
-						 </li>
-						 <li class="tagit-choice ui-widget-content ui-state-default ui-corner-all tagit-choice-editable"><span class="tagit-label">google@gmail.com</span>
-						 	<a class="tagit-close">
-						 		<span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span>
-						 	</a>
-						 	<input type="hidden" value="google@gmail.com" name="tags" class="tagit-hidden-field"></li>
-						 <li class="tagit-new"><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-						 	<input type="text" class="ui-widget-content ui-autocomplete-input" autocomplete="off">
-						 </li>
-					</ul>
+					<input type="text" readonly="readonly" id="sendMessagePeoples" class="form-control pull-right">
+					<input type="text" readonly="readonly" id="sendMessagePhones" class="form-control pull-right">
 				</td>
 				<td style="width:2%"></td>
-				<td><button class="btn btn-danger">전송하기</button></td>
+				<td><button class="btn btn-danger" id="sendMessageReal">전송하기</button></td>
 			</tr>
 			<tr>
 				<td style="text-align:center;"><h5>내용</h5></td>
 			</tr>
 			<tr>
 				<td colspan="5">
-					<textarea style="margin: 0px 1px 0px 0px; width:100%; height: 141px; resize:none;" rows="10"  class="form-control"></textarea>
+					<textarea style="margin: 0px 1px 0px 0px; width:100%; height: 141px; resize:none;" rows="10"  class="form-control" id="sendMessage"></textarea>
 				</td>
 			</tr>
 		</table>
@@ -311,7 +297,7 @@ input[type=checkbox] {
    <!-- end col-10 -->
 </div>
 
-  <script>
+<script>
 
 //처음 페이지 시작
 	$(function() {
@@ -347,16 +333,68 @@ input[type=checkbox] {
 			$('#managerEmail').val("")
 		});
 	};
-   </script>
-   <script>
-		/* $(document).ready(function() {
-			EmailCompose.init();
-		}); */
-	</script>
-	<script src="${contextPath}/resources/js/email-compose.demo.min.js"></script>
-	<script src="${contextPath}/resources/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.js"></script>
-	<script src="${contextPath}/resources/plugins/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.js"></script>
-	<script src="${contextPath}/resources/plugins/jquery-tag-it/js/tag-it.min.js"></script>
-	<script src="${contextPath}/resources/js/apps.min.js"></script>
+
+	/* check box 선택함에 따라 css변경 function */
+	var nameArr = new Array();
+	var phoneArr = new Array();
+	$(document).on("change", "#checkSendMseeage", function(){
+		var $sendMessagePeoples = $("#sendMessagePeoples");
+		var $sendMessagePhones = $("#sendMessagePhones");
+		console.log("click");
+		console.log($(this).val());
+		console.log($(this).parent().parent().children().eq(3).text());
+		if($(this).is(":checked")){
+			nameArr.push($(this).parent().parent().children().eq(3).text());
+			phoneArr.push($(this).val());
+		}else{
+			nameArr.splice(nameArr.indexOf($(this).val()), 1);
+			phoneArr.splice(phoneArr.indexOf($(this).val()), 1);
+		}
+
+		$sendMessagePeoples.val(nameArr);
+		$sendMessagePhones.val(phoneArr);
+
+	});
+
+	/* 문자전송 function */
+	$(function(){
+		$("#sendMessageReal").click(function(){
+			var sendMessagePeoples = $("#sendMessagePeoples").val();
+			var sendMessagePhones = $("#sendMessagePhones").val();
+			var sendMessage = $("#sendMessage").val();
+
+			console.log(sendMessagePeoples);
+			console.log(sendMessagePhones);
+			console.log(sendMessage);
+
+			$.ajax({
+				url:"/onepart/resident/sendMessage",
+				type:"post",
+				data:{
+					sendMessagePeoples:sendMessagePeoples,
+					sendMessagePhones:sendMessagePhones,
+					sendMessage:sendMessage
+				},
+				success:function(){
+					console.log("success");
+				},error:function(request,status,error){
+			        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			       }
+			});
+
+		});
+	});
+
+</script>
+<script>
+	/* $(document).ready(function() {
+		EmailCompose.init();
+	}); */
+</script>
+<script src="${contextPath}/resources/js/email-compose.demo.min.js"></script>
+<script src="${contextPath}/resources/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.js"></script>
+<script src="${contextPath}/resources/plugins/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.js"></script>
+<script src="${contextPath}/resources/plugins/jquery-tag-it/js/tag-it.min.js"></script>
+<script src="${contextPath}/resources/js/apps.min.js"></script>
 </body>
 </html>
