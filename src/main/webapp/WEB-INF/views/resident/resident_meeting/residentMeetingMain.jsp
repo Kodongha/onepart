@@ -27,8 +27,6 @@
 	.pageingBtnArea {
 		text-align: center;
 	}
-
-
 </style>
 <link href="${contextPath}/resources/plugins/jquery-tag-it/css/jquery.tagit.css" rel="stylesheet">
 <link href="${contextPath}/resources/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.css" rel="stylesheet">
@@ -74,13 +72,12 @@
 		<div class="panel panel-inverse">
 			<div class="panel-body">
 				<div class="table-responsive">
-					<table id="data-table-2" class="table table-striped table-bordered">
+					<table id="data-table-2" class="table table-bordered">
 						<thead>
 							<tr>
 								<th>선택</th>
 								<th>번호</th>
 								<th>회의 명</th>
-								<th>주제</th>
 								<th>회의 장소</th>
 								<th>회의 일시</th>
 								<th>상태</th>
@@ -88,11 +85,10 @@
 						</thead>
 						<tbody id="tbodyDiv">
 							<c:forEach var="residentMeetingVO" items="${ residentMeetingVOList }" varStatus="status">
-								<tr class="odd gradeX">
+								<tr>
 									<td><input type="checkbox" value="${ residentMeetingVO.residentsMeetingSeq }"></td>
 									<td>${ residentMeetingVO.residentsMeetingSeq }</td>
 									<td>${ residentMeetingVO.meetingNm }</td>
-									<td>${ residentMeetingVO.meetingTopic }</td>
 									<td>${ residentMeetingVO.meetingPlace }</td>
 									<td>${ residentMeetingVO.meetingDt }</td>
 									<td>
@@ -130,8 +126,8 @@
 			$('#residentMeetingRegisterBtn').click(function(){
 
 				$.ajax({
-					url : 'residentMeetingRegister',
-					type : 'method',
+					url : 'moveResidentMeetingRegister',
+					type : 'post',
 					success : function(data){
 						console.log("succ");
 						$('#content').html(data);

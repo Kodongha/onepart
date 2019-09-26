@@ -19,4 +19,10 @@ public interface ResidentMeetingService {
 	 */
 	ArrayList<ResidentAllInfo> selectResidentVOList();
 
+	/**
+	 * 입주자 대표 회의 등록
+	 * @param residentMeetingVO
+	 */
+	void residentMeetingRegister(ResidentMeetingVO residentMeetingVO);
+
 }

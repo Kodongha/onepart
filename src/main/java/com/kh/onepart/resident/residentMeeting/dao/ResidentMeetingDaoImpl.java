@@ -25,4 +25,11 @@ public class ResidentMeetingDaoImpl implements ResidentMeetingDao {
 		return (ArrayList) sqlSession.selectList("ResidentMeeting.selectResidentVOList");
 	}
 
+	/** 입주자 대표 회의 등록 */
+	@Override
+	public void insertMeetingRegister(SqlSessionTemplate sqlSession, ResidentMeetingVO residentMeetingVO) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("ResidentMeeting.insertMeetingRegister", residentMeetingVO);
+	}
+
 }

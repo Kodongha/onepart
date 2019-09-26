@@ -23,4 +23,11 @@ public interface ResidentMeetingDao {
 	 */
 	ArrayList<ResidentAllInfo> selectResidentVOList(SqlSessionTemplate sqlSession);
 
+	/**
+	 * 입주자 대표 회의 등록
+	 * @param sqlSession
+	 * @param residentMeetingVO
+	 */
+	void insertMeetingRegister(SqlSessionTemplate sqlSession, ResidentMeetingVO residentMeetingVO);
+
 }

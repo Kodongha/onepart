@@ -17,6 +17,7 @@
 		<result property="cancleDt" column="CANCLE_DT"/>
 		<result property="mettingType" column="METTING_TYPE"/>
 		<result property="deleteTf" column="DELETE_TF"/>
+		<result property="meetingTm" column="MEETING_TM"/>
 	</resultMap>
 
 	<resultMap type="com.kh.onepart.resident.residentMeeting.vo.ResidentAllInfo" id="residentAllInfo">
@@ -62,5 +63,27 @@
 	    AND     t1.CONFIRM_TF = 'Y'
 	    ORDER BY t1.APT_AUTH_CD
 	</select>
+
+	<insert id="insertMeetingRegister" parameterType="residentMeetingVO">
+		INSERT INTO RESIDENTS_MEETING
+		VALUES (
+			RESIDENTS_MEETING_SEQ.NEXTVAL,
+			#{residentSeq},
+			#{meetingNm},
+			#{meetingTopic},
+			#{meetingIntro},
+			#{meetingPlace},
+			#{meetingDt},
+			#{meetingStatus},
+			NULL,
+			SYSDATE,
+			NULL,
+			NULL,
+			#{mettingType},
+			'N',
+			#{meetingTm}
+
+		)
+	</insert>
 
 </mapper>
