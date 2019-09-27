@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.onepart.manager.visit_car.model.vo.ManagerVisitCarVo;
+
 @Repository
 public class ManagerVisitCarDaoImpl implements ManagerVisitCarDao{
 
@@ -27,6 +29,13 @@ public class ManagerVisitCarDaoImpl implements ManagerVisitCarDao{
 	public int updateNoVisitCar(SqlSessionTemplate sqlSession, int visitCarSeq) {
 		System.out.println("visitCarSeq ::D:: " + visitCarSeq);
 		return sqlSession.update("ManagerVisitCar.updateNoVisitCar", visitCarSeq);
+	}
+
+	//방문차량 상태 거절 사유 업데이트용 메소드
+	@Override
+	public int updateRejectReason(SqlSessionTemplate sqlSession, ManagerVisitCarVo requestManagerVisitCarVo) {
+		System.out.println("requestManagerVisitCarVo ::D:: " + requestManagerVisitCarVo);
+		return sqlSession.update("ManagerVisitCar.updateRejectReason", requestManagerVisitCarVo);
 	}
 
 }

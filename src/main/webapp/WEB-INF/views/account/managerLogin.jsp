@@ -53,7 +53,6 @@
             </div>
             <!-- end brand -->
             <div class="login-content">
-                <form action="${ contextPath }/managerLoginCheck" method="POST" class="margin-bottom-0">
                     <div class="form-group m-b-20">
                         <input type="text" class="form-control input-lg" placeholder="아이디를 입력하세요." name="managerId" id="managerId" />
                     </div>
@@ -61,22 +60,21 @@
                         <input type="password" class="form-control input-lg" placeholder="비밀번호를 입력하세요."  name="managerPwd" id="managerPwd" />
                     </div>
                     <div class="checkbox m-b-20">
-                        <label>
-                            <input type="checkbox" /> 자동 로그인
+                        <label id="warnMessage" style="color: red;">
+                            <!-- <input type="checkbox" /> 자동 로그인 -->
                         </label>
                     </div>
                     <div class="login-buttons">
-                        <button type="submit" class="btn btn-success btn-block btn-lg">로그인</button>
+                        <button class="btn btn-success btn-block btn-lg" onclick="login()">로그인</button>
                     </div>
                     <div class="m-t-20" style="">
-                        회원가입을 하시려면 <a href="${contextPath }/moveRegister">여기</a>를 클릭하세요.
+                       <%--  회원가입을 하시려면 <a href="${contextPath }/moveRegister">여기</a>를 클릭하세요. --%>
                     </div>
                     <div class="m-t-20" style="margin-top: 1%!important">
                         <a href="${contextPath }/moveFindId">아이디</a>,<a href="${contextPath }/moveFindPwd">비밀번호</a>를 잃어버리셨습니까?<br>
                         <a href="${contextPath }/moveAccount" style="color: grey;">입주자 로그인</a>
                     </div>
 
-                </form>
             </div>
         </div>
         <!-- end login -->
@@ -117,6 +115,37 @@
 			App.init();
 			LoginV2.init();
 		});
+
+
+		function login() {
+			var managerId = $("#managerId").val();
+			var managerPwd = $("#managerPwd").val();
+
+			$.ajax({
+	 			url: "managerLoginCheck",
+	 			type: "post",
+	 			data: {
+	 				managerId : managerId,
+	 				managerPwd : managerPwd
+	 			},
+	 			success:function(data){
+					console.log("data : " + data);
+					if(data.msg != null){
+						/* alert("로그인 실패 메시지 출력") */
+						$("#warnMessage").append(data.msg);
+					}else{
+						/* alert("로그인 성공! 메인 페이지 이동") */
+						window.location.href = "manager/main";
+						/* $("body").html(data); */
+					}
+
+	 			},
+				error:function(xhr, status){
+					alert(xhr + " : " + status);
+				}
+			});
+	}
+
 	</script>
 </body>
 </html>

@@ -270,6 +270,14 @@
 			<version>3.2.5</version>
 		</dependency>
 
+		<!-- 인증용 메일 보내기 위한 라이브러 -->
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.7</version>
+		</dependency>
+
 
 
 

@@ -44,4 +44,10 @@ public interface AccountDao {
 	//회원정보 수정에서 현재 비밀번호 조회용 메소드
 	String selectEncPassword(SqlSessionTemplate sqlSession, String residentId);
 
+	//회원정보수정에서 휴대전화번호 업데이트 메소드
+	int setNewHP(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO);
+
+	//회원정보수정에서 이메일주소 업데이트 메소드
+	int setNewEmail(SqlSessionTemplate sqlSession, ResidentVO requestResidentVO);
+
 }

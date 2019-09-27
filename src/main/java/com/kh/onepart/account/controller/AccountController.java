@@ -6,16 +6,27 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Random;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,22 +151,46 @@ public class AccountController {
 		return "account/managerLogin";
 	}
 
+//	//로그인용 메소드
+//	@RequestMapping(value="/loginCheck", method=RequestMethod.POST)
+//	public String loginCheck(ResidentVO requestResidentVO, Model model) {
+//		System.out.println("/loginCheck");
+//		System.out.println("requestResidentVO ::C:: " + requestResidentVO);
+//
+//		try {
+//			ResidentVO loginUser = accountService.loginCheck(requestResidentVO);
+//			model.addAttribute("loginUser", loginUser);
+//			System.out.println("loginUser ::C:: " + loginUser);
+//			return "redirect:resident/main";
+//		} catch (LoginException e) {
+//			model.addAttribute("msg", e.getMessage());
+//			return "common/errorPage";
+//		}
+//	}
+
+
 	//로그인용 메소드
 	@RequestMapping(value="/loginCheck", method=RequestMethod.POST)
-	public String loginCheck(ResidentVO requestResidentVO, Model model) {
+	public ModelAndView loginCheck(ResidentVO requestResidentVO, ModelAndView mv, HttpSession session, String residentId, String residentPwd) {
 		System.out.println("/loginCheck");
+		requestResidentVO.setResidentId(residentId);
+		requestResidentVO.setResidentPwd(residentPwd);
 		System.out.println("requestResidentVO ::C:: " + requestResidentVO);
 
 		try {
 			ResidentVO loginUser = accountService.loginCheck(requestResidentVO);
-			model.addAttribute("loginUser", loginUser);
 			System.out.println("loginUser ::C:: " + loginUser);
-				return "redirect:resident/main";
+			mv.addObject("loginUser", loginUser);
+			mv.setViewName("redirect:resident/main");
 		} catch (LoginException e) {
-			model.addAttribute("msg", e.getMessage());
-			return "common/errorPage";
+			System.out.println("아이디나 비밀번호가 맞지 않습니다. 다시 시도해주세요");
+			mv.addObject("msg", "아이디나 비밀번호가 맞지 않습니다. 다시 시도해주세요.");
+			mv.setViewName("jsonView");
 		}
+		return mv;
 	}
+
+
 	//로그아웃
 	@RequestMapping("/logout")
 	public String logout(SessionStatus status) {
@@ -165,6 +200,57 @@ public class AccountController {
 
 		return "redirect:resident/main";
 	}
+
+//	//관리자 로그인용 메소드
+//	@RequestMapping(value="/managerLoginCheck", method=RequestMethod.POST)
+//	public String managerLoginCheck(ManagerVO requestManagerVO, Model model) {
+//		System.out.println("/managerLoginCheck");
+//		System.out.println("requestManagerVO ::C:: " + requestManagerVO);
+//
+//		try {
+//			ManagerVO managerLoginUser = accountService.managerLoginCheck(requestManagerVO);
+//			model.addAttribute("loginUser", managerLoginUser);
+//			System.out.println("loginUser ::C:: " + managerLoginUser);
+//			return "redirect:manager/main";
+//		} catch (ManagerLoginException e) {
+//			model.addAttribute("msg", e.getMessage());
+//			return "common/errorPage";
+//		}
+//	}
+
+	//관리자 로그인용 메소드
+	@RequestMapping(value="/managerLoginCheck", method=RequestMethod.POST)
+	public ModelAndView managerLoginCheck(ManagerVO requestManagerVO, ModelAndView mv, HttpSession session, String managerId, String managerPwd) {
+
+		System.out.println("/managerLoginCheck");
+		requestManagerVO.setManagerId(managerId);
+		requestManagerVO.setManagerPwd(managerPwd);
+		System.out.println("requestManagerVO ::C:: " + requestManagerVO);
+
+		try {
+			ManagerVO loginUser = accountService.managerLoginCheck(requestManagerVO);
+			System.out.println("loginUser ::C:: " + loginUser);
+			mv.addObject("loginUser", loginUser);
+			mv.setViewName("redirect:manager/main");
+		} catch (ManagerLoginException e) {
+			System.out.println("아이디나 비밀번호가 맞지 않습니다. 다시 시도해주세요");
+			mv.addObject("msg", "아이디나 비밀번호가 맞지 않습니다. 다시 시도해주세요.");
+			mv.setViewName("jsonView");
+		}
+		return mv;
+	}
+
+
+//	//관리자 로그아웃
+//	@RequestMapping("/managerLogout")
+//	public String managerLogout(SessionStatus status) {
+//		System.out.println("in managerLogout");
+//		//System.out.println("before : " + request.getSession().getAttribute("loginUser"));
+//		status.setComplete();
+//
+//		return "redirect:manager/main";
+//	}
+
 	//관리자 로그아웃
 	@RequestMapping("/mLogout")
 	public String mLogout(SessionStatus status) {
@@ -274,32 +360,6 @@ public class AccountController {
 		return mv;
 	}
 
-	//관리자 로그인용 메소드
-	@RequestMapping(value="/managerLoginCheck", method=RequestMethod.POST)
-	public String managerLoginCheck(ManagerVO requestManagerVO, Model model) {
-		System.out.println("/managerLoginCheck");
-		System.out.println("requestManagerVO ::C:: " + requestManagerVO);
-
-		try {
-			ManagerVO managerLoginUser = accountService.managerLoginCheck(requestManagerVO);
-			model.addAttribute("loginUser", managerLoginUser);
-			System.out.println("loginUser ::C:: " + managerLoginUser);
-			return "redirect:manager/main";
-		} catch (ManagerLoginException e) {
-			model.addAttribute("msg", e.getMessage());
-			return "common/errorPage";
-		}
-	}
-
-	//관리자 로그아웃
-	@RequestMapping("/managerLogout")
-	public String managerLogout(SessionStatus status) {
-		System.out.println("in managerLogout");
-		//System.out.println("before : " + request.getSession().getAttribute("loginUser"));
-		status.setComplete();
-
-		return "redirect:manager/main";
-	}
 
 	//아파트 동에 따른 호수 셀렉트형으로 불러오는 메소드
 	@RequestMapping("/resident/changeBdNm2")
@@ -499,12 +559,90 @@ public class AccountController {
 
 	       }
 
-
 	      mv.addObject("msgRnd" , msgRnd);
 	      mv.setViewName("jsonView");
 
 	      System.out.println("넘어가기전 mv 값 : " + mv);
 	      return mv;
 	   }
+
+
+
+	//이메일 인증
+	@RequestMapping("/emailSend")
+	public ModelAndView emailAuth(HttpServletResponse response, HttpServletRequest request) throws Exception{
+		String email = request.getParameter("rEmail");
+		String authNum = "";
+
+		authNum = RandomNum();
+
+		sendEmail(email.toString(), authNum);
+
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("email", email);
+		mv.addObject("authNum", authNum);
+		mv.setViewName("jsonView");
+
+		return mv;
+
+	}
+	//네이버에서 인증메일 보내기
+		public static void sendEmail(String rEmail, String authNum) {
+		String host = "smtp.naver.com"; // 네이버일 경우 네이버 계정, gmail경우 gmail 계정
+		String subject = "원파트 인증번호 전달";
+		String fromName = "원파트 관리자";	//보내는 사람 이름
+		String from = "onepart@naver.com"; // 패스워드
+		String to1 = rEmail; //받는 사람 메일 주소
+
+		String password = "ghkdwlswn";      // SMTP 서버 정보를 설정한다.
+
+		String content = "인증번호 [" + authNum + "]"; //보내는 내용
+
+
+		try {
+			Properties props = new Properties();
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.transport.protocol", "smtp");
+			props.put("mail.smtp.host", host);
+			props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.port", 587);
+			props.put("mail.smtp.user", from);
+			props.put("mail.smtp.auth", "true");
+
+
+			Session mailSession = Session.getDefaultInstance(props,
+					new javax.mail.Authenticator() {
+						protected PasswordAuthentication getPasswordAuthentication() {
+							return new PasswordAuthentication(from, password);
+					}
+				});
+			MimeMessage msg = new MimeMessage(mailSession);
+			msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "UTF-8", "B"))); //보내는 사람 설정
+//			msg.addRecipient(Message.RecipientType.TO, new InternetAddress("ktko@ktko.com"));
+			InternetAddress[] address1 = { new InternetAddress(to1)};
+			msg.setRecipients(Message.RecipientType.TO, address1); //받는사람 설정1
+			msg.setSubject(subject); // 메일 제목
+			msg.setSentDate(new java.util.Date()); //보내는 날짜 설정
+			msg.setContent(content, "text/html;charset=euc-kr"); //내용 설정(HTML 형식)
+//			msg.setText("인증번호는 " );
+
+			// send the message
+			Transport.send(msg);
+			System.out.println("Success Message Send");
+
+		} catch (MessagingException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+			}
+		}
+
+		//난수 발생시키는 메소드
+		public String RandomNum() {
+			StringBuffer buffer = new StringBuffer();
+			for(int i = 0; i <= 5; i++) {
+				int n = (int) (Math.random() * 10);
+				buffer.append(n);
+			}
+			return buffer.toString();
+		}
 
 }

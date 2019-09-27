@@ -154,6 +154,18 @@ public class AccountServiceImpl implements AccountService{
 
 	}
 
+	//회원정보수정에서 휴대전화번호 업데이트 메소드
+	@Override
+	public int setNewHP(ResidentVO requestResidentVO) {
+		return accountDao.setNewHP(sqlSession, requestResidentVO);
+	}
+
+	//회원정보수정에서 이메일주소 업데이트 메소드
+	@Override
+	public int setNewEmail(ResidentVO requestResidentVO) {
+		return accountDao.setNewEmail(sqlSession, requestResidentVO);
+	}
+
 
 
 
