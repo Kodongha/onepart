@@ -64,6 +64,7 @@
 	    ORDER BY t1.APT_AUTH_CD
 	</select>
 
+	<!-- 회의 등록 -->
 	<insert id="insertMeetingRegister" parameterType="residentMeetingVO">
 		INSERT INTO RESIDENTS_MEETING
 		VALUES (
@@ -85,5 +86,19 @@
 
 		)
 	</insert>
+
+	<!-- 회의 상세보기 -->
+	<select id="selectResidentMeetingMainDetail" resultMap="residentMeetingVO" parameterType="residentMeetingVO">
+		SELECT	*
+        FROM	RESIDENTS_MEETING
+		WHERE	RESIDENTS_MEETING_SEQ = #{residentsMeetingSeq}
+	</select>
+
+	<!-- 입주자 대표 회의 삭제 -->
+	<delete id="deleteResidentMeeting" parameterType="_int">
+		DELETE FROM RESIDENTS_MEETING
+		WHERE	RESIDENTS_MEETING_SEQ = #{_parameter}
+	</delete>
+
 
 </mapper>

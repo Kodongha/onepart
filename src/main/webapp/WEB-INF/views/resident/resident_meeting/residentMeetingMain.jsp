@@ -28,11 +28,31 @@
 		text-align: center;
 	}
 </style>
+
+<script type="text/javascript">
+	$(function(){
+		$('.residentMeetingDiv tr').click(function(){
+			var residentsMeetingSeq = $(this).children('td').eq(1).text();
+			console.log(residentsMeetingSeq);
+
+			$.ajax({
+				url : 'moveResidentMeetingMainDetail',
+				type : 'post',
+				data : {residentsMeetingSeq : residentsMeetingSeq},
+				success : function(data){
+					console.log('succ');
+					$('#content').html(data);
+				}
+			});
+		});
+	});
+</script>
+
 <link href="${contextPath}/resources/plugins/jquery-tag-it/css/jquery.tagit.css" rel="stylesheet">
 <link href="${contextPath}/resources/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.css" rel="stylesheet">
 </head>
 <body>
-	<div id="tableArea">
+	<div class="residentListDiv" id="tableArea">
 		<h3>입주민 대표회의</h3>
 		<hr>
 		<span class="badge badge-inverse m-t-15 m-l-15" id="surveyStatus">입주민 대표 회의 명단</span>
@@ -67,7 +87,7 @@
 		<!-- end panel -->
 	</div>
 
-	<div id="tableArea">
+	<div class="residentMeetingDiv" id="tableArea">
 		<span class="badge badge-inverse m-t-15 m-l-15" id="surveyStatus">회의 일정</span>
 		<div class="panel panel-inverse">
 			<div class="panel-body">
@@ -132,8 +152,7 @@
 						console.log("succ");
 						$('#content').html(data);
 					}
-				})
-
+				});
 			});
 
 		});

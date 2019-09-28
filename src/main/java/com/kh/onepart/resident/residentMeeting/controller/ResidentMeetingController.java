@@ -76,5 +76,33 @@ public class ResidentMeetingController {
 		return modelAndView;
 	}
 
+	/**
+	 * 입주자 대표 회의 상세보기
+	 * @param modelAndView
+	 * @param residentMeetingVO
+	 * @return
+	 */
+	@RequestMapping("/resident/moveResidentMeetingMainDetail")
+	public ModelAndView moveResidentMeetingMainDetail(ModelAndView modelAndView, ResidentMeetingVO residentMeetingVO) {
+		System.out.println("moveResidentMeetingMainDetail in");
+
+		ResidentMeetingVO responseResidentMeetingVO = residentMeetingService.selectResidentMeetingMainDetail(residentMeetingVO);
+		System.out.println("responseResidentMeetingVO::" + responseResidentMeetingVO);
+
+		modelAndView.addObject("responseResidentMeetingVO", responseResidentMeetingVO);
+		modelAndView.setViewName("resident/resident_meeting/residentMeetingMainDetail");
+
+		return modelAndView;
+	}
+
+	@RequestMapping("/resident/removeResidentMeeting")
+	public ModelAndView removeResidentMeeting(ModelAndView modelAndView, ResidentMeetingVO residentMeetingVO) {
+		System.out.println("removeResidentMeeting in");
+		
+		residentMeetingService.deleteResidentMeeting(residentMeetingVO.getResidentsMeetingSeq());
+		
+		modelAndView.setViewName("redirect:menuMeetingInfo");
+		return modelAndView;
+	}
 
 }

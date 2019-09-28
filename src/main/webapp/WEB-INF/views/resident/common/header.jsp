@@ -100,7 +100,7 @@
 			</li>
 			<c:if test="${sessionScope.loginUser == null }">
 				<span style="height: 100%;">
-					<button type="button" onclick="location.href='${contextPath}/moveAccount'" class="btn btn-success " style="margin-top: 3%; width: 15%; ">Log In</button>
+					<button type="button" onclick="location.href='${contextPath}/moveAccount'" class="btn btn-success " style="margin-top: 3%; width: 17%; ">Log In</button>
 					<button type="button" onclick="location.href='${contextPath}/moveRegister'" class="btn btn-success " style="margin-top: 3%; width: 17%; padding-left: 1px; padding-right: 1px;">회원가입</button>
 				</span>
 			</c:if>

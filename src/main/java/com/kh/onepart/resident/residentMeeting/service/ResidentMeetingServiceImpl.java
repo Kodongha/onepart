@@ -41,4 +41,21 @@ public class ResidentMeetingServiceImpl implements ResidentMeetingService {
 		residentMeetingDao.insertMeetingRegister(sqlSession, residentMeetingVO);
 	}
 
+
+	/** 입주자 대표 회의 상세보기 */
+	@Override
+	public ResidentMeetingVO selectResidentMeetingMainDetail(ResidentMeetingVO residentMeetingVO) {
+		// TODO Auto-generated method stub
+		return residentMeetingDao.selectResidentMeetingMainDetail(sqlSession, residentMeetingVO);
+	}
+
+	/** 입주자 대표 회의 삭제 */
+	@Override
+	public void deleteResidentMeeting(int residentsMeetingSeq) {
+		// TODO Auto-generated method stub
+		residentMeetingDao.deleteResidentMeeting(sqlSession, residentsMeetingSeq);
+	}
+
+
+
 }

@@ -25,4 +25,17 @@ public interface ResidentMeetingService {
 	 */
 	void residentMeetingRegister(ResidentMeetingVO residentMeetingVO);
 
+	/**
+	 * 입주자 대표 회의 상세보기
+	 * @param residentMeetingVO
+	 * @return
+	 */
+	ResidentMeetingVO selectResidentMeetingMainDetail(ResidentMeetingVO residentMeetingVO);
+
+	/**
+	 * 입주자 대표 회의 삭제
+	 * @param residentsMeetingSeq
+	 */
+	void deleteResidentMeeting(int residentsMeetingSeq);
+
 }
