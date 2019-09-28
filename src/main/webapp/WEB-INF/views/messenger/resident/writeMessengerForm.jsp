@@ -219,6 +219,7 @@
 
 	<script src="${contextPath}/resources/js/form-multiple-upload.demo.min.js"></script>
 	<script src="${contextPath}/resources/js/apps.min.js"></script>
+	<script src="${contextPath}/resources/js/SockJs.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -262,7 +263,24 @@
 	           contentType: false,
 	           processData: false,
 	           success : function(data) {
-	        	   console.log("잉?");
+
+	        	   	webSocket = new SockJS('/onepart/messenger');
+		   			webSocket.onerror = function(event) {
+		   				alert(event.data);
+		   			};
+
+		   			// 연결 성공 시 실행
+		   			webSocket.onopen = function(event) {
+		   				alert("abc");
+		   				console.log('websocket connection success...');
+		   				// 연결 성공 시 Map에 seq, session 담기
+		   				var message = {};
+		   				message.type = 'refreshCount';
+		   				message.target = tags;
+		   				webSocket.send(JSON.stringify(message));
+		   				webSocket.close();
+		   			};
+
 	        	   location.href = 'moveMessenger';
 	           }
 	        });
@@ -286,6 +304,8 @@
 				}
 			}
 		});
+
+
 
 	</script>
 	<jsp:include page="writeMessengerFormModal.jsp"/>

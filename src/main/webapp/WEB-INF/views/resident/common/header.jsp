@@ -11,31 +11,48 @@
 <script type="text/javascript">
 
 	$(function(){
+		var test = function() {
+			return {
+				t : function(){
+					alert("asdfasdf");
+				}
+			}
+		}();
 		$('#messengerBtn').click(function(){
-			console.log('in!~!');
 			url = '${contextPath}/messenger/moveMessenger';
 			window.open(url, "Messenger", "width=1200px; height=680px;");
 		});
 	});
+
 	$(function(){
 
-		console.log("loginUser : " + sessionStorage.getItem("loginUser"));
+		var user = '${ sessionScope.loginUser }';
+		console.log(user);
+		if(user){
+			// 웹소켓 연결
+			webSocket = new SockJS('/onepart/messenger');
+			webSocket.onerror = function(event) {
+				alert(event.data);
+			};
 
-		webSocket = new SockJS('/onepart/messenger');
-		webSocket.onerror = function(event) {
-			alert(event.data);
-		};
+			// 연결 성공 시 실행
+			webSocket.onopen = function(event) {
+				console.log('websocket connection success...');
+				// 연결 성공 시 Map에 seq, session 담기
+				var message = {};
+				message.type = 'init';
+				message.residentSeq = '${ sessionScope.loginUser.residentSeq }';
+				console.log(message);
+				webSocket.send(JSON.stringify(message));
+			};
 
-		// 연결 성공 시
-		webSocket.onopen = function(event) {
-			console.log('websocket connection success...');
-			// 방에 참여
-		};
+			// 메시지 전송 시 실행
+			webSocket.onmessage = function(event) {
 
-		webSocket.onmessage = function(event) {
-
+			}
 		}
 	});
+
 </script>
 <style type="text/css">
 #header{
