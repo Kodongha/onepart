@@ -26,7 +26,7 @@
 	}
 </style>
 <script src="${contextPath}/resources/plugins/DataTables/js/jquery.dataTables.js"></script>
-<script src="${contextPath}/resources/js/table-manage-default.demo.min.js"></script>\
+<script src="${contextPath}/resources/js/table-manage-default.demo.min.js"></script>
 <script src="${contextPath}/resources/js/apps.min.js"></script>
 <link href="${contextPath}/resources/plugins/DataTables/css/data-table.css" rel="stylesheet" />
 <script type="text/javascript">
@@ -188,7 +188,7 @@
 
 					var canvasId = surveyQstnNum + "_char";
 
-					var $canvas = $("<canvas>", {id:canvasId, height:"50%"});
+					var $canvas = $("<canvas>", {id:canvasId, height:"50%", width:"50%"});
 					surveyInfoBody.append($canvas);
 
 					var optionInfoListLength  = optionInfoList.length;
@@ -340,8 +340,8 @@
 			</div>
 			<br>
 			<div class="tab-content">
-				<div class="tab-pane fade active in" id="default-tab-1">
-					<div id="surveyInfoBody">
+				<div class="tab-pane fade active in" id="default-tab-1" align="center">
+					<div id="surveyInfoBody" style="width: 80%;">
 	                    <div class="table-responsive"></div>
 					</div>
 				</div>

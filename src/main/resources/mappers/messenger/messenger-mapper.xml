@@ -172,6 +172,7 @@
 				WHERE 	MESSENGER_RECEIVER = #{loginUser}
 				AND     READ_TM IS NULL
 				AND		DELETE_TF = 'N'
+				AND		KEEP_TF = 'N'
 			</when>
 			<when test="type == 2">
 				WHERE	MESSENGER_RECEIVER = #{loginUser}
@@ -203,6 +204,8 @@
 			<when test="type == 1">
 				WHERE 	MESSENGER_RECEIVER = #{loginUser}
 				AND     READ_TM IS NULL
+				AND		DELETE_TF = 'N'
+				AND		KEEP_TF = 'N'
 			</when>
 			<when test="type == 2">
 				WHERE	MESSENGER_RECEIVER = #{loginUser}
@@ -325,4 +328,24 @@
 	        'N'
 	    )
 	</insert>
+
+	<update id="keepMessenger">
+		UPDATE  MESSENGER
+        SET     KEEP_TF = 'Y'
+        WHERE   MESSENGER_SEQ IN (
+        	<foreach item="item" collection="list" separator=",">
+        		#{item}
+        	</foreach>
+        )
+	</update>
+
+	<update id="deleteMessenger">
+		UPDATE  MESSENGER
+        SET     DELETE_TF = 'Y'
+        WHERE   MESSENGER_SEQ IN (
+        	<foreach item="item" collection="list" separator=",">
+        		#{item}
+        	</foreach>
+        )
+	</update>
 </mapper>

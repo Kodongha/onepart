@@ -124,9 +124,9 @@ public class MessengerDaoImpl implements MessengerDao {
 
 	/** 메신저 보관함으로 */
 	@Override
-	public void keepMessenger(SqlSessionTemplate sqlSession, int[] messengerSeq) {
+	public void keepMessenger(SqlSessionTemplate sqlSession, ArrayList<String> list) {
 		// TODO Auto-generated method stub
-
+		sqlSession.update("Messenger.keepMessenger", list);
 	}
 
 	/** 방문 차량용 쪽지 보내기 */
@@ -134,5 +134,12 @@ public class MessengerDaoImpl implements MessengerDao {
 	public void insertMessengerForVisitCar(SqlSessionTemplate sqlSession, RequestMessengerVO requestMessengerVO) {
 		// TODO Auto-generated method stub
 		sqlSession.insert("Messenger.insertMessengerForVisitCar", requestMessengerVO);
+	}
+
+	/** 선택 쪽지 삭제 */
+	@Override
+	public void deleteMessenger(SqlSessionTemplate sqlSession, ArrayList<String> list) {
+		// TODO Auto-generated method stub
+		sqlSession.update("Messenger.deleteMessenger", list);
 	}
 }

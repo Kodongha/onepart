@@ -25,4 +25,40 @@ public class ResidentMeetingDaoImpl implements ResidentMeetingDao {
 		return (ArrayList) sqlSession.selectList("ResidentMeeting.selectResidentVOList");
 	}
 
+	/** 입주자 대표 회의 등록 */
+	@Override
+	public void insertMeetingRegister(SqlSessionTemplate sqlSession, ResidentMeetingVO residentMeetingVO) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("ResidentMeeting.insertMeetingRegister", residentMeetingVO);
+	}
+
+	/** 입주자 대표 회의 상세보기 */
+	@Override
+	public ResidentMeetingVO selectResidentMeetingMainDetail(SqlSessionTemplate sqlSession,
+			ResidentMeetingVO residentMeetingVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("ResidentMeeting.selectResidentMeetingMainDetail", residentMeetingVO);
+	}
+
+	/** 입주자 대표 회의 삭제 */
+	@Override
+	public void deleteResidentMeeting(SqlSessionTemplate sqlSession, int residentsMeetingSeq) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("ResidentMeeting.deleteResidentMeeting", residentsMeetingSeq);
+	}
+
+	/** 입주자 대표 회의 수정 */
+	@Override
+	public void residentMeetingMainModify(SqlSessionTemplate sqlSession, ResidentMeetingVO residentMeetingVO) {
+		// TODO Auto-generated method stub
+		sqlSession.update("ResidentMeeting.residentMeetingMainModify", residentMeetingVO);
+	}
+
+	/** 입주자 대표 회의 회의록 저장 */
+	@Override
+	public void saveMeetingMinutes(SqlSessionTemplate sqlSession, ResidentMeetingVO residentMeetingVO) {
+		// TODO Auto-generated method stub
+		sqlSession.update("ResidentMeeting.saveMeetingMinutes", residentMeetingVO);
+	}
+
 }

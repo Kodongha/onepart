@@ -158,18 +158,20 @@ public class AccountController {
 	}
 	//로그아웃
 	@RequestMapping("/logout")
-	public String logout(SessionStatus status) {
+	public String logout(SessionStatus status, HttpSession session) {
 		System.out.println("in resident");
 		//System.out.println("before : " + request.getSession().getAttribute("loginUser"));
+		session.invalidate();
 		status.setComplete();
 
 		return "redirect:resident/main";
 	}
 	//관리자 로그아웃
 	@RequestMapping("/mLogout")
-	public String mLogout(SessionStatus status) {
+	public String mLogout(SessionStatus status, HttpSession session) {
 		System.out.println("in resident");
 		//System.out.println("before : " + request.getSession().getAttribute("loginUser"));
+		session.invalidate();
 		status.setComplete();
 
 		return "redirect:manager/main";
