@@ -63,7 +63,7 @@
 		<typeAlias type="com.kh.onepart.resident.warm.open_chatting.model.vo.OpenChatNoticeVO" alias="OpenChatNoticeVO"/>
 
 		<typeAlias type="com.kh.onepart.resident.residentMeeting.vo.ResidentMeetingVO" alias="residentMeetingVO"/>
-
+		<typeAlias type="com.kh.onepart.resident.my_home.maintenance_cost.model.vo.CostHistory" alias="CostHistory"/>
 
 		<!-- Manager -->
 		<typeAlias type="com.kh.onepart.manager.survey.model.vo.SurveyVO" alias="SurveyVO"/>
@@ -112,6 +112,7 @@
 		<mapper resource="mappers/resident/vote/vote-mapper.xml" />
 		<mapper resource="mappers/resident/residentMeeting/residentMeeting-mapper.xml" />
 		<mapper resource="mappers/resident/main/main-mapper.xml" />
+		<mapper resource="mappers/resident/maintenanceCost/maintenanceCost-mapper.xml" />
 
 
 		<!-- Manager -->
