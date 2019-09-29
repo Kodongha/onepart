@@ -80,21 +80,77 @@
 			$('#keepBtn').click(function(){
 
 				var active = $('#messengerList > tbody').children('tr.active');
-				var seqArray = [];
+				var messengerSeq = "";
 				active.each(function(){
 					var seq = $(this).children('td').eq(1).text();
-					seqArray.push(seq);
+					messengerSeq += seq + ",";
 				});
 
-				console.log(seqArray);
+				console.log(messengerSeq);
 
 				$.ajax({
 					url : 'keepMessenger',
 					type : 'post',
-					data : {messengerSeq : seqArray},
+					dataType : "JSON",
+					data : {
+						messengerSeq : messengerSeq,
+					},
 					success : function(data){
 						console.log("succ");
-						console.log(data);
+						location.href = 'moveMessenger';
+					}
+
+				});
+
+			});
+
+			$('#keepBtn').click(function(){
+
+				var active = $('#messengerList > tbody').children('tr.active');
+				var messengerSeq = "";
+				active.each(function(){
+					var seq = $(this).children('td').eq(1).text();
+					messengerSeq += seq + ",";
+				});
+
+				console.log(messengerSeq);
+
+				$.ajax({
+					url : 'keepMessenger',
+					type : 'post',
+					dataType : "JSON",
+					data : {
+						messengerSeq : messengerSeq,
+					},
+					success : function(data){
+						console.log("succ");
+						location.href = 'moveMessenger';
+					}
+
+				});
+
+			});
+
+			$('#deleteBtn').click(function(){
+				var active = $('#messengerList > tbody').children('tr.active');
+				var messengerSeq = "";
+				active.each(function(){
+					var seq = $(this).children('td').eq(1).text();
+					messengerSeq += seq + ",";
+				});
+
+				console.log(messengerSeq);
+
+				$.ajax({
+					url : 'deleteMessenger',
+					type : 'post',
+					dataType : "JSON",
+					data : {
+						messengerSeq : messengerSeq,
+					},
+					success : function(data){
+						console.log("succ");
+						location.href = 'moveMessenger';
 					}
 
 				});
@@ -271,7 +327,7 @@
 			<div class="email-btn-row hidden-xs">
 			    <a href="writeMessengerForm" class="btn btn-sm btn-inverse"><i class="fa fa-plus m-r-5"></i> 쪽지 보내기</a>
 			    <a class="btn btn-sm btn-inverse" id="keepBtn"><i class="fa fa-star-o m-r-5"></i> 보관함으로</a>
-			    <a href="5678" class="btn btn-sm btn-inverse"><i class="fa fa-times-circle m-r-5"></i> 선택 삭제</a>
+			    <a class="btn btn-sm btn-inverse" id="deleteBtn"><i class="fa fa-times-circle m-r-5"></i> 선택 삭제</a>
 			</div>
 	        <div class="email-content">
 				<table class="table table-email" id="messengerList">

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,79 +12,30 @@
 <body>
 <jsp:include page="../maintenance_cost/maintenance_include.jsp"></jsp:include>
 <!-- begin #content -->
-	<div id="content" class="content" style="margin:0 auto;">
+<div style="width:90%; margin:0 auto">
+	<div class="panel-body" style="background:white">
 					<!-- 관리비 상세보기 div -->
 					<h4>관리비 상세보기</h4>
 					<br>
 					<div>
-						<!-- 공용관리비 div -->
 						<fieldset>
-							<legend>
-								<h5>공용관리비</h5>
-							</legend>
+						<legend>
+							<h5>공용관리비</h5>
+						</legend>
 							<div class="panel-body">
 								<table class="table table-hover" style="text-align: center;">
 									<tbody>
-										<tr>
-											<td style="width:50%">인건비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>제사무비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>제세공과금</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>피복비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>교육훈련비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>차량유지비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>그밖의 부대비용</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>청소비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>경비비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>소독비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>승강기 유지비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>수선비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>시설 유지비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>안전점검비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>재해예방비</td>
-											<td></td>
-										</tr>
+									<!-- 공용관리비 div -->
+									<c:forEach var="costList" items="${ costList }">
+										<c:if test="${ costList.divisionOne == '공용관리비' }">
+											<tr>
+												<td style="width:50%">${ costList.divisionThree }</td>
+												<td>
+													<fmt:formatNumber value="${ costList.paymentAmount }" pattern="#,###" />원
+												</td>
+											</tr>
+										</c:if>
+									</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -95,46 +49,16 @@
 							<div class="panel-body">
 								<table class="table table-hover" style="text-align: center;">
 									<tbody>
-										<tr>
-											<td style="width:50%">난방비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>급탕비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>가스사용료</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>전기료</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>수도료</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>정화조오물 수수료</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>생활폐기물 수수료</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>입대의 운영비</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>건물보험료</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>선관위 운영비</td>
-											<td></td>
-										</tr>										
+										<c:forEach var="costList" items="${ costList }">
+										<c:if test="${ costList.divisionOne == '개별사용료' }">
+											<tr>
+												<td style="width:50%">${ costList.divisionThree }</td>
+												<td>
+													<fmt:formatNumber value="${ costList.paymentAmount }" pattern="#,###" />원
+												</td>
+											</tr>
+										</c:if>
+									</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -148,18 +72,16 @@
 							<div class="panel-body">
 								<table class="table table-hover" style="text-align: center;">
 									<tbody>
-										<tr>
-											<td style="width:50%">월 사용액</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>충당금 잔액</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>적립요율</td>
-											<td></td>
-										</tr>
+										<c:forEach var="costList" items="${ costList }">
+										<c:if test="${ costList.divisionOne == '장기수선충당금 월부과액' }">
+											<tr>
+												<td style="width:50%">${ costList.divisionThree }</td>
+												<td>
+													<fmt:formatNumber value="${ costList.paymentAmount }" pattern="#,###" />원
+												</td>
+											</tr>
+										</c:if>
+									</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -173,10 +95,16 @@
 							<div class="panel-body">
 								<table class="table table-hover" style="text-align: center;">
 									<tbody>
-										<tr>
-											<td style="width:50%">잡수입 금액</td>
-											<td></td>
-										</tr>
+										<c:forEach var="costList" items="${ costList }">
+										<c:if test="${ costList.divisionOne == '잡수입' }">
+											<tr>
+												<td style="width:50%">${ costList.divisionThree }</td>
+												<td>
+													<fmt:formatNumber value="${ costList.paymentAmount }" pattern="#,###" />원
+												</td>
+											</tr>
+										</c:if>
+									</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -186,5 +114,6 @@
 					</div>
 				</div>
 		<!-- end #content -->
+	</div>
 </body>
 </html>

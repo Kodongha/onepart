@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +12,8 @@
 <body>
 <jsp:include page="../maintenance_cost/maintenance_include.jsp"></jsp:include>
 <!-- begin #content -->
-	<div id="content" class="content" style="margin:0 auto;">
+<div style="width:90%; margin:0 auto">
+	<div class="panel-body" style="background:white">
 					<!-- 우리집 관리비 비교 div -->
 					<div align="center">
 						<form action="">
@@ -26,7 +30,7 @@
 								</tr>
 							</table>
 						</form>
-						<br><br>				
+						<br><br>
 					</div>
 					<!-- 동일평수 사용내역 비교 div -->
 					<div class="panel-body">
@@ -40,74 +44,34 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   <tr>
-                                   		<td>난방비</td>
-                                   		<td></td>
-                                   		<td></td>
-                                   		<td></td>
-                                   </tr>
-                                    <tr>
-                                   		<td>급탕비</td>
-                                   		<td></td>
-                                   		<td></td>
-                                   		<td></td>
-                                   </tr>
-                                    <tr>
-                                   		<td>가스 사용료</td>
-                                   		<td></td>
-                                   		<td></td>
-                                   		<td></td>
-                                   </tr>
-                                    <tr>
-                                   		<td>전기료</td>
-                                   		<td></td>
-                                   		<td></td>
-                                   		<td></td>
-                                   </tr>
-                                    <tr>
-                                   		<td>수도료</td>
-                                   		<td></td>
-                                   		<td></td>
-                                   		<td></td>
-                                   </tr>
-                                    <tr>
-                                   		<td>정화조오물 수수료</td>
-                                   		<td></td>
-                                   		<td></td>
-                                   		<td></td>
-                                   </tr>
-                                    <tr>
-                                   		<td>생활폐기물 수수료</td>
-                                   		<td></td>
-                                   		<td></td>
-                                   		<td></td>
-                                   </tr>
-                                    <tr>
-                                   		<td>입대의 운영비</td>
-                                   		<td></td>
-                                   		<td></td>
-                                   		<td></td>
-                                   </tr>
-                                    <tr>
-                                   		<td>건물 보험료</td>
-                                   		<td></td>
-                                   		<td></td>
-                                   		<td></td>
-                                   </tr>
-                                    <tr>
-                                   		<td>선관위 운영비</td>
-                                   		<td></td>
-                                   		<td></td>
-                                   		<td></td>
-                                   </tr>
+                                	<c:forEach var="costList2" items="${ costList2 }" varStatus="status">
+                                	<tr>
+										<td>${ costList2.divisionThree }</td>
+										<td>
+											<fmt:formatNumber value="${ costList2.paymentAmount }" pattern="#,###" />원
+										</td>
+										<td>
+											<fmt:formatNumber value="${ compareCostList[status.index].avgMaintenanceCost }" pattern="#,###" />원
+										</td>
+										<c:if test="${ costList2.paymentAmount - compareCostList[status.index].avgMaintenanceCost  > 0 }">
+										<td style="color:red;">
+												<fmt:formatNumber value="${ costList2.paymentAmount - compareCostList[status.index].avgMaintenanceCost }" pattern="#,###" />원
+										</td>
+										</c:if>
+										<c:if test="${ costList2.paymentAmount - compareCostList[status.index].avgMaintenanceCost  <= 0 }">
+										<td style="color:blue;">
+												<fmt:formatNumber value="${ costList2.paymentAmount - compareCostList[status.index].avgMaintenanceCost }" pattern="#,###" />원
+										</td>
+										</c:if>
+                                	</tr>
+                                	</c:forEach>
                                 </tbody>
                             </table>
                         </div>
                      	<!-- 그래프 비교 div -->
-                     				
+
 				</div>
 			</div>
-		</div>
 		<!-- end #content -->
 </body>
 </html>

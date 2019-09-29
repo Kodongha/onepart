@@ -140,9 +140,9 @@ public class MessengerServiceImpl implements MessengerService {
 
 	/** 메신저 보관함으로 */
 	@Override
-	public void keepMessenger(int[] messengerSeq) {
+	public void keepMessenger(ArrayList<String> list) {
 		// TODO Auto-generated method stub
-		messengerDao.keepMessenger(sqlSession, messengerSeq);
+		messengerDao.keepMessenger(sqlSession, list);
 	}
 
 	/** 방문 차량용 쪽지 보내기 */
@@ -150,6 +150,13 @@ public class MessengerServiceImpl implements MessengerService {
 	public void insertMessengerForVisitCar(RequestMessengerVO requestMessengerVO) {
 		// TODO Auto-generated method stub
 		messengerDao.insertMessengerForVisitCar(sqlSession, requestMessengerVO);
+	}
+
+	/** 선택쪽지 삭제 */
+	@Override
+	public void deleteMessenger(ArrayList<String> list) {
+		// TODO Auto-generated method stub
+		messengerDao.deleteMessenger(sqlSession, list);
 	}
 
 }

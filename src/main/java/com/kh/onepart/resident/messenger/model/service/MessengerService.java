@@ -79,14 +79,20 @@ public interface MessengerService {
 
 	/**
 	 * 메신저 보관함으로
-	 * @param messengerSeq
+	 * @param list
 	 */
-	void keepMessenger(int[] messengerSeq);
+	void keepMessenger(ArrayList<String> list);
 
 	/**
 	 * 방문 차량용 쪽지 보내기
 	 * @param requestMessengerVO
 	 */
 	void insertMessengerForVisitCar(RequestMessengerVO requestMessengerVO);
+
+	/**
+	 * 선택 쪽지 삭제
+	 * @param list
+	 */
+	void deleteMessenger(ArrayList<String> list);
 
 }

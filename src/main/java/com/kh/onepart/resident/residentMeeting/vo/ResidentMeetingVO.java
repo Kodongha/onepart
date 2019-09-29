@@ -23,5 +23,6 @@ public class ResidentMeetingVO {
 	private String cancleDt;
 	private int mettingType;
 	private String deleteTf;
+	private String meetingTm;
 
 }

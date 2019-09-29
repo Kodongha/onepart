@@ -96,7 +96,7 @@
                                     <thead>
                                     <tr>
                                     	<th></th>
-                                    	<th>사번</th>
+                                    	<th>번호</th>
                                         <th>이름</th>
                                         <th>부서</th>
                                     </tr>
@@ -109,6 +109,15 @@
 												<td>${ManagerAndDeptVO.managerSeq }</td>
 												<td>${ManagerAndDeptVO.managerNm }</td>
 												<td>${ManagerAndDeptVO.deptNm }</td>
+											</tr>
+										</c:forEach>
+										<c:forEach var="ResponseResidentVO" items="${residentVOList}">
+											<tr>
+												<td> <i class="fa fa-2x fa-square-o"></i> </td>
+												<!-- <i class="fa fa-2x fa-check-square"></i> -->
+												<td>${ResponseResidentVO.residentSeq }</td>
+												<td>${ResponseResidentVO.residentNm }</td>
+												<td>${ResponseResidentVO.bdNm }동 ${ResponseResidentVO.rmNm }</td>
 											</tr>
 										</c:forEach>
 									</tbody>

@@ -120,12 +120,19 @@ public interface MessengerDao {
 	 * @param sqlSession
 	 * @param messengerSeq
 	 */
-	void keepMessenger(SqlSessionTemplate sqlSession, int[] messengerSeq);
+	void keepMessenger(SqlSessionTemplate sqlSession, ArrayList<String> list);
 
 	/**
 	 * 방문 차량용 쪽지 보내기
 	 * @param requestMessengerVO
 	 */
 	void insertMessengerForVisitCar(SqlSessionTemplate sqlSession, RequestMessengerVO requestMessengerVO);
+
+	/**
+	 * 선택 쪽지 삭제
+	 * @param sqlSession
+	 * @param list
+	 */
+	void deleteMessenger(SqlSessionTemplate sqlSession, ArrayList<String> list);
 
 }

@@ -7,14 +7,45 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="${contextPath}/resources/plugins/jquery/jquery-1.9.1.min.js"></script>
+<script src="${contextPath}/resources/js/SockJs.min.js"></script>
 <script type="text/javascript">
 
 	$(function(){
 		$('#messengerBtn').click(function(){
 			console.log('in!~!');
 			url = '${contextPath}/messenger/moveMessenger';
-			window.open(url, "Messenger", "width=980; height=500px;");
+			window.open(url, "Messenger", "width=1200px; height=680px;");
 		});
+	});
+
+	$(function(){
+
+		var user = '${ sessionScope.loginUser }';
+		console.log(user);
+		if(user){
+			// 웹소켓 연결
+			webSocket = new SockJS('/onepart/messenger');
+			webSocket.onerror = function(event) {
+				alert(event.data);
+			};
+
+			// 연결 성공 시 실행
+			webSocket.onopen = function(event) {
+				console.log('websocket connection success...');
+				// 연결 성공 시 Map에 seq, session 담기
+				var message = {};
+				message.type = 'init';
+				message.residentSeq = '${ sessionScope.loginUser.managerSeq }';
+				console.log(message);
+				webSocket.send(JSON.stringify(message));
+			};
+
+			// 메시지 전송 시 실행
+			webSocket.onmessage = function(event) {
+				console.log(event.data);
+				$('#messengerCount').text(event.data);
+			}
+		}
 	});
 
 </script>
@@ -48,8 +79,10 @@
 			<c:if test="${sessionScope.loginUser != null }">
 			<li class="dropdown">
 				<a data-toggle="dropdown" class="dropdown-toggle f-s-14" id="messengerBtn">
-					<i class="fa fa-bell-o"></i>
-					<span class="label">5</span>
+					<i class="fa fa-envelope"></i>
+					<c:if test="${ count != 0 }">
+						<span class="label" id="messengerCount">${ count }</span>
+					</c:if>
 				</a>
 			</li>
 			</c:if>

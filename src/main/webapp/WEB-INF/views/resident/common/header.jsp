@@ -12,30 +12,43 @@
 
 	$(function(){
 		$('#messengerBtn').click(function(){
-			console.log('in!~!');
 			url = '${contextPath}/messenger/moveMessenger';
 			window.open(url, "Messenger", "width=1200px; height=680px;");
 		});
 	});
+
 	$(function(){
 
-		console.log("loginUser : " + sessionStorage.getItem("loginUser"));
+		var user = '${ sessionScope.loginUser }';
+		console.log(user);
+		if(user){
+			// 웹소켓 연결
+			webSocket = new SockJS('/onepart/messenger');
+			webSocket.onerror = function(event) {
+				alert(event.data);
+			};
 
-		webSocket = new SockJS('/onepart/messenger');
-		webSocket.onerror = function(event) {
-			alert(event.data);
-		};
+			// 연결 성공 시 실행
+			webSocket.onopen = function(event) {
+				console.log('websocket connection success...');
+				// 연결 성공 시 Map에 seq, session 담기
+				var message = {};
+				message.type = 'init';
+				if('${ sessionScope.loginUser.residentSeq }' != null){
+					message.residentSeq = '${ sessionScope.loginUser.residentSeq }';
+				}
+				console.log(message);
+				webSocket.send(JSON.stringify(message));
+			};
 
-		// 연결 성공 시
-		webSocket.onopen = function(event) {
-			console.log('websocket connection success...');
-			// 방에 참여
-		};
-
-		webSocket.onmessage = function(event) {
-
+			// 메시지 전송 시 실행
+			webSocket.onmessage = function(event) {
+				console.log(event.data);
+				$('#messengerCount').text(event.data);
+			}
 		}
 	});
+
 </script>
 <style type="text/css">
 #header{
@@ -72,8 +85,10 @@
 			<c:if test="${sessionScope.loginUser != null }">
 			<li class="dropdown">
 				<a data-toggle="dropdown" class="dropdown-toggle f-s-14" id="messengerBtn">
-					<i class="fa fa-bell-o"></i>
-					<span class="label">5</span>
+					<i class="fa fa-envelope-o"></i>
+					<c:if test="${ count != 0 }">
+						<span class="label" id="messengerCount">${ count }</span>
+					</c:if>
 				</a>
 			</li>
 			</c:if>
@@ -100,7 +115,7 @@
 			</li>
 			<c:if test="${sessionScope.loginUser == null }">
 				<span style="height: 100%;">
-					<button type="button" onclick="location.href='${contextPath}/moveAccount'" class="btn btn-success " style="margin-top: 3%; width: 15%; ">Log In</button>
+					<button type="button" onclick="location.href='${contextPath}/moveAccount'" class="btn btn-success " style="margin-top: 3%; width: 17%; ">Log In</button>
 					<button type="button" onclick="location.href='${contextPath}/moveRegister'" class="btn btn-success " style="margin-top: 3%; width: 17%; padding-left: 1px; padding-right: 1px;">회원가입</button>
 				</span>
 			</c:if>
