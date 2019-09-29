@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -25,6 +24,8 @@ import com.kh.onepart.account.model.vo.ManagerVO;
 import com.kh.onepart.account.model.vo.ResidentVO;
 import com.kh.onepart.common.PageInfo;
 import com.kh.onepart.common.Pagination;
+import com.kh.onepart.manager.visit_car.model.service.ManagerVisitCarService;
+import com.kh.onepart.manager.visit_car.model.vo.ManagerVisitCarVo;
 import com.kh.onepart.resident.messenger.model.service.MessengerService;
 import com.kh.onepart.resident.messenger.model.vo.ManagerAndDeptVO;
 import com.kh.onepart.resident.messenger.model.vo.MessengerBasicAllData;
@@ -34,15 +35,14 @@ import com.kh.onepart.resident.messenger.model.vo.RequestMessengerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseMessengerAndResidentAndManagerVO;
 import com.kh.onepart.resident.messenger.model.vo.ResponseResidentVO;
 
-/**
- * @author ko
- *
- */
 @Controller
 public class MessengerController {
 
 	@Autowired
 	MessengerService messengerService;
+
+	@Autowired
+	ManagerVisitCarService mVisitCarService;
 
 	/**
 	 * 쪽지 메인페이지로 이동
