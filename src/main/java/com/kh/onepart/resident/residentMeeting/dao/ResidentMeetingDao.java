@@ -45,4 +45,18 @@ public interface ResidentMeetingDao {
 	 */
 	void deleteResidentMeeting(SqlSessionTemplate sqlSession, int residentsMeetingSeq);
 
+	/**
+	 * 입주자 대표 회의 수정
+	 * @param sqlSession
+	 * @param residentMeetingVO
+	 */
+	void residentMeetingMainModify(SqlSessionTemplate sqlSession, ResidentMeetingVO residentMeetingVO);
+
+	/**
+	 * 입주자 대표 회의 회의록 저장
+	 * @param sqlSession
+	 * @param residentMeetingVO
+	 */
+	void saveMeetingMinutes(SqlSessionTemplate sqlSession, ResidentMeetingVO residentMeetingVO);
+
 }

@@ -11,13 +11,6 @@
 <script type="text/javascript">
 
 	$(function(){
-		var test = function() {
-			return {
-				t : function(){
-					alert("asdfasdf");
-				}
-			}
-		}();
 		$('#messengerBtn').click(function(){
 			url = '${contextPath}/messenger/moveMessenger';
 			window.open(url, "Messenger", "width=1200px; height=680px;");
@@ -41,14 +34,17 @@
 				// 연결 성공 시 Map에 seq, session 담기
 				var message = {};
 				message.type = 'init';
-				message.residentSeq = '${ sessionScope.loginUser.residentSeq }';
+				if('${ sessionScope.loginUser.residentSeq }' != null){
+					message.residentSeq = '${ sessionScope.loginUser.residentSeq }';
+				}
 				console.log(message);
 				webSocket.send(JSON.stringify(message));
 			};
 
 			// 메시지 전송 시 실행
 			webSocket.onmessage = function(event) {
-
+				console.log(event.data);
+				$('#messengerCount').text(event.data);
 			}
 		}
 	});
@@ -89,8 +85,10 @@
 			<c:if test="${sessionScope.loginUser != null }">
 			<li class="dropdown">
 				<a data-toggle="dropdown" class="dropdown-toggle f-s-14" id="messengerBtn">
-					<i class="fa fa-bell-o"></i>
-					<span class="label">5</span>
+					<i class="fa fa-envelope-o"></i>
+					<c:if test="${ count != 0 }">
+						<span class="label" id="messengerCount">${ count }</span>
+					</c:if>
 				</a>
 			</li>
 			</c:if>

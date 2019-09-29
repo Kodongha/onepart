@@ -95,13 +95,70 @@ public class ResidentMeetingController {
 		return modelAndView;
 	}
 
+	/**
+	 * 입주자 대표 회의 상세보기
+	 * @param modelAndView
+	 * @param residentMeetingVO
+	 * @return
+	 */
+	@RequestMapping("/resident/moveResidentMeetingMainModify")
+	public ModelAndView moveResidentMeetingMainModify(ModelAndView modelAndView, ResidentMeetingVO residentMeetingVO) {
+		System.out.println("moveResidentMeetingMainDetail in");
+
+		ResidentMeetingVO responseResidentMeetingVO = residentMeetingService.selectResidentMeetingMainDetail(residentMeetingVO);
+		System.out.println("responseResidentMeetingVO::" + responseResidentMeetingVO);
+
+		modelAndView.addObject("responseResidentMeetingVO", responseResidentMeetingVO);
+		modelAndView.setViewName("resident/resident_meeting/residentMeetingMainModify");
+
+		return modelAndView;
+	}
+
 	@RequestMapping("/resident/removeResidentMeeting")
 	public ModelAndView removeResidentMeeting(ModelAndView modelAndView, ResidentMeetingVO residentMeetingVO) {
 		System.out.println("removeResidentMeeting in");
-		
+
 		residentMeetingService.deleteResidentMeeting(residentMeetingVO.getResidentsMeetingSeq());
-		
+
 		modelAndView.setViewName("redirect:menuMeetingInfo");
+		return modelAndView;
+	}
+
+	/**
+	 * 입주자 대표 회의 수정
+	 * @param modelAndView
+	 * @param residentMeetingVO
+	 * @return
+	 */
+	@RequestMapping("resident/residentMeetingMainModify")
+	public ModelAndView residentMeetingMainModify(ModelAndView modelAndView, ResidentMeetingVO residentMeetingVO, HttpSession session) {
+		System.out.println("residentMeetingMainModify in");
+		System.out.println("residentMeetingVO : " + residentMeetingVO);
+
+		if(session.getAttribute("loginUser") != null) {
+			int residentSeq = ((ResidentVO) session.getAttribute("loginUser")).getResidentSeq();
+			residentMeetingVO.setResidentSeq(residentSeq);
+		}
+
+		residentMeetingService.residentMeetingMainModify(residentMeetingVO);
+		modelAndView.setViewName("jsonView");
+
+		return modelAndView;
+	}
+	/**
+	 * 입주자 대표 회의 회의록 저장
+	 * @param modelAndView
+	 * @param residentMeetingVO
+	 * @return
+	 */
+	@RequestMapping("resident/saveMeetingMinutes")
+	public ModelAndView saveMeetingMinutes(ModelAndView modelAndView, ResidentMeetingVO residentMeetingVO, HttpSession session) {
+		System.out.println("saveMeetingMinutes in");
+		System.out.println("residentMeetingVO : " + residentMeetingVO);
+
+		residentMeetingService.saveMeetingMinutes(residentMeetingVO);
+		modelAndView.setViewName("jsonView");
+
 		return modelAndView;
 	}
 

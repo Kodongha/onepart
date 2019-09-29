@@ -111,6 +111,7 @@
 		<mapper resource="mappers/resident/visitCar/resident-visitCar-mapper.xml" />
 		<mapper resource="mappers/resident/vote/vote-mapper.xml" />
 		<mapper resource="mappers/resident/residentMeeting/residentMeeting-mapper.xml" />
+		<mapper resource="mappers/resident/main/main-mapper.xml" />
 
 
 		<!-- Manager -->

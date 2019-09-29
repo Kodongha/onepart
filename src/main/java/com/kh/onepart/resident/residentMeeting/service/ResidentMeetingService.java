@@ -38,4 +38,16 @@ public interface ResidentMeetingService {
 	 */
 	void deleteResidentMeeting(int residentsMeetingSeq);
 
+	/**
+	 * 입주자 대표 회의 수정
+	 * @param residentMeetingVO
+	 */
+	void residentMeetingMainModify(ResidentMeetingVO residentMeetingVO);
+
+	/**
+	 * 입주자 대표 회의 회의록 저장
+	 * @param residentMeetingVO
+	 */
+	void saveMeetingMinutes(ResidentMeetingVO residentMeetingVO);
+
 }

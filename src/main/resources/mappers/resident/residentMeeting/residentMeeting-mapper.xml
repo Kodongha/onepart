@@ -100,5 +100,22 @@
 		WHERE	RESIDENTS_MEETING_SEQ = #{_parameter}
 	</delete>
 
+	<update id="residentMeetingMainModify" parameterType="residentMeetingVO">
+		UPDATE 	RESIDENTS_MEETING
+		SET		MEETING_NM = #{meetingNm},
+				MEETING_TOPIC = #{meetingTopic},
+				MEETING_INTRO = #{meetingIntro},
+				MEETING_PLACE = #{meetingPlace},
+				MEETING_DT = #{meetingDt},
+				MEETING_MINUTES = #{meetingMinutes},
+				MEETING_TM = #{meetingTm}
+		WHERE	RESIDENTS_MEETING_SEQ = #{residentsMeetingSeq}
+	</update>
+
+	<update id="saveMeetingMinutes" parameterType="residentMeetingVO">
+		UPDATE 	RESIDENTS_MEETING
+		SET		MEETING_MINUTES = #{meetingMinutes}
+		WHERE	RESIDENTS_MEETING_SEQ = #{residentsMeetingSeq}
+	</update>
 
 </mapper>

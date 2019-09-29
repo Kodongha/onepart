@@ -262,26 +262,26 @@
 	           cache: false,
 	           contentType: false,
 	           processData: false,
+	           async : true,
 	           success : function(data) {
-
 	        	   	webSocket = new SockJS('/onepart/messenger');
 		   			webSocket.onerror = function(event) {
 		   				alert(event.data);
 		   			};
-
 		   			// 연결 성공 시 실행
 		   			webSocket.onopen = function(event) {
-		   				alert("abc");
 		   				console.log('websocket connection success...');
 		   				// 연결 성공 시 Map에 seq, session 담기
 		   				var message = {};
 		   				message.type = 'refreshCount';
 		   				message.target = tags;
 		   				webSocket.send(JSON.stringify(message));
-		   				webSocket.close();
 		   			};
 
-	        	   location.href = 'moveMessenger';
+		   			setTimeout(function() {
+		        	    location.href = 'moveMessenger';
+					}, 2000);
+
 	           }
 	        });
 	     });

@@ -13,6 +13,15 @@
 			enrollBtnClick();
 		});
 
+		$("#cancleBtn").click(function(){
+			$.ajax({
+				url : 'menuMeetingInfo',
+				method : 'post',
+				success : function(data){
+					$("#content").html(data);
+				}
+			});
+		});
 	});
 
 	/* 등록 버튼 클릭 */
@@ -51,7 +60,7 @@
 </head>
 <body>
 
-	<div class="col-md-12 bg-white">
+	<div class="col-md-12 bg-white" style="height: 680px; ">
 		<h3>입주민 대표회의</h3>
 		<hr>
 		<div class="col-md-12 p-l-20 p-r-20">
@@ -87,6 +96,7 @@
 		            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 		        </div>
 			</div>
+			<!-- 시간 -->
 			<div class="col-md-6">
 				<div class="col-md-12 p-0">
 					<div class="col-md-5 p-r-0" >
@@ -101,7 +111,6 @@
 				</div>
 			</div>
 
-			<!-- 시간 -->
 			<div class="col-md-12 m-t-15 p-0">
 				<div class="col-md-6 p-0 p-r-15">
 					<a class="btn btn-danger btn-block" id="cancleBtn">취소</a>
@@ -138,12 +147,10 @@
 		$(document).ready(function() {
 			FormPlugins.init();
 			$('#startTm').timepicker({
-				'scrollDefault': 'now',
 				'timeFormat': 'H:i',
 				'step': 30
 			});
 			$('#endTm').timepicker({
-				'scrollDefault': 'now',
 				'timeFormat': 'H:i',
 				'step': 30
 			});

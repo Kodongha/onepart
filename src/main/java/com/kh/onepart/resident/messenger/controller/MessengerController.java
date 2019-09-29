@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -341,11 +341,36 @@ public class MessengerController {
 	 * @param messengerSeq
 	 */
 	@RequestMapping("/messenger/keepMessenger")
-	public ModelAndView keepMessenger(int [] messengerSeq, ModelAndView modelAndview) {
+	public ModelAndView keepMessenger(String messengerSeq, HttpServletRequest request, ModelAndView modelAndview) {
 
-		System.out.println("messengerSeq :: " + messengerSeq);
+		String[] temp = messengerSeq.split(",");
+		ArrayList<String> list = new ArrayList<String>();
 
-		messengerService.keepMessenger(messengerSeq);
+		for(int i=0; i<temp.length; i++) {
+			list.add(temp[i]);
+		}
+
+		messengerService.keepMessenger(list);
+
+		modelAndview.setViewName("jsonView");
+		return modelAndview;
+	}
+
+	/**
+	 * 선택 삭제
+	 * @param messengerSeq
+	 */
+	@RequestMapping("/messenger/deleteMessenger")
+	public ModelAndView deleteMessenger(String messengerSeq, HttpServletRequest request, ModelAndView modelAndview) {
+
+		String[] temp = messengerSeq.split(",");
+		ArrayList<String> list = new ArrayList<String>();
+
+		for(int i=0; i<temp.length; i++) {
+			list.add(temp[i]);
+		}
+
+		messengerService.deleteMessenger(list);
 
 		modelAndview.setViewName("jsonView");
 		return modelAndview;

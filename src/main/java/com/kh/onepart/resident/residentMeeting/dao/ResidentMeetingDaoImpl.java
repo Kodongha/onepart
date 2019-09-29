@@ -47,4 +47,18 @@ public class ResidentMeetingDaoImpl implements ResidentMeetingDao {
 		sqlSession.delete("ResidentMeeting.deleteResidentMeeting", residentsMeetingSeq);
 	}
 
+	/** 입주자 대표 회의 수정 */
+	@Override
+	public void residentMeetingMainModify(SqlSessionTemplate sqlSession, ResidentMeetingVO residentMeetingVO) {
+		// TODO Auto-generated method stub
+		sqlSession.update("ResidentMeeting.residentMeetingMainModify", residentMeetingVO);
+	}
+
+	/** 입주자 대표 회의 회의록 저장 */
+	@Override
+	public void saveMeetingMinutes(SqlSessionTemplate sqlSession, ResidentMeetingVO residentMeetingVO) {
+		// TODO Auto-generated method stub
+		sqlSession.update("ResidentMeeting.saveMeetingMinutes", residentMeetingVO);
+	}
+
 }
