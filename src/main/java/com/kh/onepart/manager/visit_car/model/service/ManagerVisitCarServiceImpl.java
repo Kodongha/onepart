@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.onepart.manager.visit_car.model.dao.ManagerVisitCarDao;
+import com.kh.onepart.manager.visit_car.model.vo.ManagerVisitCarVo;
 
 @Service
 public class ManagerVisitCarServiceImpl implements ManagerVisitCarService{
@@ -34,6 +35,13 @@ public class ManagerVisitCarServiceImpl implements ManagerVisitCarService{
 	public int updateNoVisitCar(int visitCarSeq) {
 		System.out.println("visitCarSeq ::S:: " + visitCarSeq);
 		return mVisitCarDao.updateNoVisitCar(sqlSession,visitCarSeq);
+	}
+
+	//방문차량 상태 거절 사유 업데이트용 메소드
+	@Override
+	public int updateRejectReason(ManagerVisitCarVo requestManagerVisitCarVo) {
+		return mVisitCarDao.updateRejectReason(sqlSession, requestManagerVisitCarVo);
+
 	}
 
 }

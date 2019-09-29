@@ -33,6 +33,12 @@ public interface AccountService {
 	//회원정보 수정에서 비밀번호 재설정용 메소드
 	int setNewPwd2(String oldResidentPwd, ResidentVO requestResidentVO);
 
+	//회원정보수정에서 휴대전화번호 업데이트 메소드
+	int setNewHP(ResidentVO requestResidentVO);
+
+	//회원정보수정에서 이메일주소 업데이트 메소드
+	int setNewEmail(ResidentVO requestResidentVO);
+
 
 
 

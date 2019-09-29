@@ -63,9 +63,9 @@
 							<!-- <input type="text" class="form-control" placeholder="방문일자" required="required"/> -->
 							<input name="visitDt" id="visitDt" type="text"
 								placeholder="방문일자 입력을 위해 클릭하세요" name="test"
-								class="form-control pull-right"> <span
+								class="form-control pull-right" autocomplete="off"> <span
 								class="input-group-addon" id="testDatepickerBtn"><i
-								class="fa fa-calendar"></i></span>
+								class="fa fa-calendar" ></i></span>
 						</div>
 
 					</td>

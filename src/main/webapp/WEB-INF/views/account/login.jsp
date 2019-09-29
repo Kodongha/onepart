@@ -54,7 +54,7 @@
             </div>
             <!-- end brand -->
             <div class="login-content">
-                <form action="${ contextPath }/loginCheck" method="POST" class="margin-bottom-0">
+               <!--  <form action="" method="POST" class="margin-bottom-0" id="loginForm"> -->
                     <div class="form-group m-b-20">
                         <input type="text" class="form-control input-lg" placeholder="아이디를 입력하세요." name="residentId" id="residentId" />
                     </div>
@@ -62,12 +62,12 @@
                         <input type="password" class="form-control input-lg" placeholder="비밀번호를 입력하세요."  name="residentPwd" id="residentPwd" />
                     </div>
                     <div class="checkbox m-b-20">
-                        <label>
-                            <input type="checkbox" /> 자동 로그인
+                        <label id="warnMessage" style="color: red;">
+                            <!-- <input type="checkbox" /> 자동 로그인 -->
                         </label>
                     </div>
                     <div class="login-buttons">
-                        <button type="submit" class="btn btn-success btn-block btn-lg">로그인</button>
+                        <button class="btn btn-success btn-block btn-lg" onclick="login()">로그인</button>
                     </div>
                     <div class="m-t-20" style="">
                         회원가입을 하시려면 <a href="${contextPath }/moveRegister">여기</a>를 클릭하세요.
@@ -77,7 +77,7 @@
                         <a href="${contextPath }/moveManagerAccount" style="color: grey;">관리자 로그인</a>
                     </div>
 
-                </form>
+                <!-- </form> -->
             </div>
         </div>
         <!-- end login -->
@@ -117,6 +117,39 @@
 			App.init();
 			LoginV2.init();
 		});
+
+		function login() {
+		/* var loginForm = $("#loginForm").serialize(); */
+
+		var residentId = $("#residentId").val();
+		var residentPwd = $("#residentPwd").val();
+
+		$.ajax({
+ 			url: "loginCheck",
+ 			type: "post",
+ 			data: {
+ 				residentId : residentId,
+ 				residentPwd : residentPwd
+ 			},
+ 			success:function(data){
+				console.log("data : " + data);
+				if(data.msg != null){
+					/* alert("로그인 실패 메시지 출력") */
+					$("#warnMessage").append(data.msg);
+				}else{
+					/* alert("로그인 성공! 메인 페이지 이동") */
+					window.location.href = "resident/main";
+					/* $("body").html(data); */
+				}
+
+ 			},
+			error:function(xhr, status){
+				alert(xhr + " : " + status);
+			}
+		});
+}
+
+
 	</script>
 </body>
 </html>

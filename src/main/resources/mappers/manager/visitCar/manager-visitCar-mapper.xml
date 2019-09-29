@@ -35,6 +35,12 @@
 		WHERE VISIT_CAR_SEQ = #{visitCarSeq}
 	</update>
 
+	<!-- 방문차량 상태 거절 사유 업데이트용 메소드 -->
+	<update id="updateRejectReason" parameterType="manager_VisitCarVo">
+		UPDATE VISIT_CAR
+		SET REJECT_REASON = (#{rejectReason})
+		WHERE VISIT_CAR_SEQ = #{visitCarSeq}
+	</update>
 
 
 </mapper>

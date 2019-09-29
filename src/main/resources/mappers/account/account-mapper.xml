@@ -152,4 +152,19 @@
 	</select>
 
 
+	<!-- 회원정보수정에서 휴대전화번호 업데이트 메소드 -->
+   <update id="updatePhone" parameterType="ResidentVO">
+      UPDATE RESIDENT
+      SET RESIDENT_PHONE = #{residentPhone}
+      WHERE RESIDENT_ID = #{residentId}
+   </update>
+
+   	<!-- 회원정보수정에서 이메일주소 업데이트 메소드 -->
+   <update id="updateEmail" parameterType="ResidentVO">
+      UPDATE RESIDENT
+      SET RESIDENT_EMAIL = #{residentEmail}
+      WHERE RESIDENT_ID = #{residentId}
+   </update>
+
+
 </mapper>

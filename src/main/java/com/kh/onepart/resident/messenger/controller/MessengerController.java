@@ -384,7 +384,17 @@ public class MessengerController {
 	 * @param modelAndView
 	 * @return
 	 */
-	public ModelAndView insertMessengerForVisitCar(RequestMessengerVO requestMessengerVO, int residentSeq, HttpServletRequest req, HttpSession session, HttpServletRequest request, ModelAndView modelAndView) {
+	@RequestMapping("/messenger/sendMessageForVisitCar")
+	public ModelAndView insertMessengerForVisitCar(RequestMessengerVO requestMessengerVO, int visitCarSeq, int residentSeq, int type, String cancelReason, HttpServletRequest req, HttpSession session, HttpServletRequest request, ModelAndView modelAndView) {
+
+		/*
+		 * data : {
+		 * 		residentSeq : residentSeq,
+		 * 		type : 1 or 2 (1 = 승인, 2 = 거절),
+		 * 		cancelReason : cancelReason
+		 * }
+		 *
+		 */
 
 		System.out.println("messenger/insertMessengerForVisitCar in!");
 		System.out.println("requestMessengerVO:::" + requestMessengerVO);
@@ -395,6 +405,21 @@ public class MessengerController {
 
 		requestMessengerVO.setMessengerSender(messengerSender);
 		requestMessengerVO.setMessengerReceiver(String.valueOf(residentSeq));
+
+		String messengerContent;
+		if(type == 1) {
+			messengerContent = "방문차량 등록이 승인되었습니다.";
+		} else {
+			messengerContent = "방문차량 등록이 거절되었습니다.\n" + cancelReason;
+			// 작성부분
+			ManagerVisitCarVo requestManagerVisitCarVo = new ManagerVisitCarVo();
+			requestManagerVisitCarVo.setVisitCarSeq(visitCarSeq);
+			requestManagerVisitCarVo.setRejectReason(messengerContent);
+
+			int result = mVisitCarService.updateRejectReason(requestManagerVisitCarVo);
+			modelAndView.addObject("result", result);
+		}
+		requestMessengerVO.setMessengerContent(messengerContent);
 
 		// 메신저 보내기 DB 저장
 		messengerService.insertMessengerForVisitCar(requestMessengerVO);
