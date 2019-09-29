@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,22 +114,22 @@ $(document).ready(function() {
 });
 </script>
 <!-- 타이틀 -->
-<div style="width:85%; margin:0 auto">
+<div style="width:90%; margin:0 auto">
 	<br>
 	<table style="width:100%; margin-bottom:-10px;">
 		<tr>
 			<td><h3 style="font-weight:bold;">우리집 관리비</h3></td>
-			<td><a id="payment" class="btn btn-success" style="width:100%">납부하기</a></td>
+			<td align="right"><a id="payment" class="btn btn-success" style="width:50%">납부하기</a></td>
 		</tr>
 	</table>
 	<br>
 </div>
 <!-- 타이틀 div -->
-<div style="width:85%; margin:0 auto">
+<div style="width:90%; margin:0 auto">
 	<div class="panel-body" style="background:white" align="center">
 		<table style="width:100%">
 			<tr>
-				<td><h3 style="margin:auto 0">101동 1203호 2019년 8월분</h3></td>
+				<td><h3 style="margin:auto 0">${fn:substring(loginUser.aptDetailInfoSeq,2,5)}동 ${fn:substring(loginUser.aptDetailInfoSeq,6,9)}호  ${ costList[0].divisionYear } ${ costList[0].divisionMonth }분</h3></td>
 			</tr>
 		</table>
 		<br><br>
@@ -136,7 +139,9 @@ $(document).ready(function() {
 				<div class="col-md-6" style="height:250px; border-right:1px solid lightgray;">
 					<div style="height:100px; width:80%; margin:auto auto; margin-top:20%;">
 					  	<h3 style="font-weight:bold;">당월 납부액</h3>
-					  	<h2>96,120원</h2>
+					  	<h2>
+					  		<fmt:formatNumber value="${ costList[0].sumMaintenanceCost }" pattern="#,###" />원
+					  	 </h2>
 					</div>
 				</div>
 				<div class="col-md-6" style="height:250px">
@@ -158,7 +163,9 @@ $(document).ready(function() {
 					  		</tr>
 					  		<tr>
 					  			<td style="font-weight:bold; font-size:1.8em;">납부 마감일</td>
-					  			<td style="font-size:1.8em;">0원</td>
+					  			<td style="font-size:1.8em;">
+					  				${fn:substring(costList[0].paymentEndDt,0,10)}
+					  			</td>
 					  		</tr>
 					  	</table>
 					</div>
@@ -175,12 +182,11 @@ $(document).ready(function() {
 				<td><br></td>
 			</tr>
 			<tr>
-				<td><a id="maintenancecompare" class="btn btn-white"
+				<td><a id="maintenancecompare" class="btn btn-danger"
 					style="width: 100%">우리집 관리비 비교</a></td>
-				<td><a id="maintenancedetail" class="btn btn-white"
+				<td style="width: 5%"></td>
+				<td><a id="maintenancedetail" class="btn btn-danger"
 					style="width: 100%">관리비 상세보기</a></td>
-				<td><a id="maintenanceuseDetail" class="btn btn-white"
-					style="width: 100%">관리비 사용내역 보기</a></td>
 			</tr>
 			<tr>
 				<td><br></td>
