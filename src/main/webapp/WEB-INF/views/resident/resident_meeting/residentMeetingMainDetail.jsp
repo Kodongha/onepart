@@ -71,10 +71,11 @@
 				data : {
 					meetingMinutes : meetingMinutes,
 					residentsMeetingSeq : residentsMeetingSeq
-				}
+				},
 				success : function(data){
 					console.log("succ");
-					$('#content').html(data);
+					$('#saveBtn').style("border", "border: 1px solid green;");
+
 				}
 			});
 		});

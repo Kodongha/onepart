@@ -161,8 +161,11 @@ public class ResidentSurveyServiceImpl implements ResidentSurveyService {
 				String selectedAnswer = surveyStatisticsVO.getSelectedAnswer();
 				selectedAnswer = selectedAnswer.replace("[", "");
 				selectedAnswer = selectedAnswer.replace("]", "");
+				System.out.println("selectedAnswer::" + selectedAnswer);
 				String tmp[] = selectedAnswer.split(", ");
 				for(int i=0; i<tmp.length; i++) {
+					System.out.println("=====!=====================");
+					System.out.println(surveyQstnOption.getSurveyQstnOptionContent() + "::::::::::::::::::::::::::::" + tmp[i]);
 					if(surveyQstnOption.getSurveyQstnOptionContent().equals(tmp[i])) {
 						count ++;
 					}

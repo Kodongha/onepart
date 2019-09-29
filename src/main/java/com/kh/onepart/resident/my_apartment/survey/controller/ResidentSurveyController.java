@@ -68,10 +68,12 @@ public class ResidentSurveyController {
 
 
         // residentSeq 추가
-        ResidentVO residentVO = (ResidentVO) session.getAttribute("loginUser");
         int residentSeq = 0;
-        if(residentVO != null) {
-            residentSeq = residentVO.getResidentSeq();
+        if(session.getAttribute("loginUser") instanceof ResidentVO) {
+        	ResidentVO residentVO = (ResidentVO) session.getAttribute("loginUser");
+        	if(residentVO != null) {
+        		residentSeq = residentVO.getResidentSeq();
+        	}
         }
         RequestSurveyMainVO requestSurveyMainVO = new RequestSurveyMainVO();
         // 진행 중 구분
@@ -213,10 +215,12 @@ public class ResidentSurveyController {
         System.out.println("request surveySeq :::" + surveySeq);
 
         // residentSeq 추가
-        ResidentVO residentVO = (ResidentVO) session.getAttribute("loginUser");
         int residentSeq = 0;
-        if(residentVO != null) {
-            residentSeq = residentVO.getResidentSeq();
+        if(session.getAttribute("loginUser") instanceof ResidentVO) {
+        	ResidentVO residentVO = (ResidentVO) session.getAttribute("loginUser");
+        	if(residentVO != null) {
+        		residentSeq = residentVO.getResidentSeq();
+        	}
         }
 
         SurveyVO requestSurveyVO = new SurveyVO();

@@ -89,16 +89,14 @@
 
 			$.ajax({
 				url:'searchSurvey',
-				type:'get',
+				type:'post',
 				data:{
 					'surveyTitle':surveyTitleValue,
 					'surveyStatus':surveyStatusValue
 					},
-				success:function(data){
+				success : function(data){
 					console.log("succ");
-				},
-				error:function(){
-					console.log("fail");
+					console.log(data);
 				}
 			});
 
@@ -113,8 +111,9 @@
 		});
  */
 		/* 상세보기 */
- 		$('#surveyList > tbody > tr').click(function(){
- 			var surveySeq = $(this).children().eq(0).text();
+ 		/*
+		$('#surveyTitleTd').click(function(){
+ 			var surveySeq = $(this).parent('tr').children().eq(1).text();
 
  			$.ajax({
  				url:'surveyDetail',
@@ -130,6 +129,22 @@
 
  			});
  		});
+ */
+ 		$('.surveyTitleTd').click(function(){
+ 			var surveySeq = $(this).parent('tr').children().eq(1).text();
+
+ 			$.ajax({
+ 				url:'/onepart/resident/surveyDetail',
+ 				type:'post',
+ 				data:{surveySeq:surveySeq},
+ 				success:function(result){
+ 					console.log('succ');
+ 					$("#content").html(result);
+ 				}
+ 			});
+ 		});
+
+
 
 	});
 
@@ -202,20 +217,20 @@
 			<table class="table" id="surveyList">
 				<thead>
 					<tr>
+						<th>선택</th>
 						<th>번호</th>
 						<th>제목</th>
 						<th>상태</th>
 						<th>설문 타입</th>
-						<th>참여율</th>
 						<th>종료 날짜</th>
-						<th>비고</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="surveyVO" items="${surveyList }">
 					<tr>
+						<td><input type="checkbox" value="${ surveyVO.surveySeq }"></td>
 						<td>${surveyVO.surveySeq }</td>
-						<td>${surveyVO.surveyTitle }</td>
+						<td class="surveyTitleTd">${surveyVO.surveyTitle }</td>
 
 						<!-- 상태 -->
 						<c:if test="${surveyVO.surveyStatus == 1 }">
@@ -234,9 +249,7 @@
 						<c:if test="${surveyVO.surveyType == 2 }">
 							<td>세대별 설문</td>
 						</c:if>
-						<td></td>
 						<td>${surveyVO.surveyPeriod }</td>
-						<td></td>
 					</tr>
 					</c:forEach>
 				</tbody>
@@ -267,13 +280,10 @@
 					</c:if>
 				</ul>
 			</div>
-			<div>
-				<span></span>
-			</div>
 
 			<div id="etcBtnArea">
 				<a href="#modal-message" class="btn btn-info btn-block" data-toggle="modal">설문조사 만들기</a>
-				<a href="javascript:;" class="btn btn-danger btn-block">선택 삭제</a>
+				<a class="btn btn-danger btn-block" id="deleteSurveyBtn">선택 삭제</a>
 			</div>
 		</div>
 	</div>
@@ -282,7 +292,34 @@
 	<!-- modal include -->
 	<jsp:include page="surveyMainModal.jsp"/>
 
+	<script type="text/javascript">
+		$(function(){
+			$('#deleteSurveyBtn').click(function(){
 
+				var checkedSeq = "";
+				$('#surveyList > tbody > tr').find('input[type=checkbox]').each(function(){
+					if($(this).is(":checked")) {
+						checkedSeq += $(this).parents('tr').children().eq(1).text() + ',';
+					}
+				});
+
+				alert(checkedSeq);
+
+				$.ajax({
+					url : 'deleteSurvey',
+					type : 'post',
+					data : {checkedSeq : checkedSeq},
+					success : function(data){
+						console.log('succ');
+
+					}
+
+				});
+
+			});
+		});
+
+	</script>
 
 </body>
 </html>
