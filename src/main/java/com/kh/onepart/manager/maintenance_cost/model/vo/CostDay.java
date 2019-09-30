@@ -12,5 +12,6 @@ public class CostDay {
 	private String excelYear;
 	private String excelMonth;
 	private String fileType;
+	private String insertDay;
 
 }

@@ -38,4 +38,9 @@
 		ORDER BY B.DIVISION_MONTH
 	</select>
 
+	<insert id="insertExcelMaintenanceCost" parameterType="manager_CostExcel">
+			INSERT INTO MAINTENANCE_COST_HISTORY
+			VALUES (MAINTENANCE_COST_HISTORY_SEQ.NEXTVAL,	#{category},	#{excelYear},	TO_DATE(#{insertDay},  'YYYY/MM/DD'),	'1_101_501',	#{excelMonth},	#{money})
+	</insert>
+
 </mapper>

@@ -11,5 +11,9 @@ public class CostExcel {
 
 	private int category;
 	private int money;
+	private String excelYear;
+	private String excelMonth;
+	private String fileType;
+	private String insertDay;
 
 }

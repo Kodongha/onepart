@@ -230,6 +230,74 @@ public class SuperintendVoteController {
 		return mv;
 	}
 
+	@RequestMapping("/resident/endRealvote")
+	public ModelAndView endRealvote(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/endRealvote");
+		int voteSeq = Integer.parseInt(request.getParameter("voteSeq"));
+		String voteKind = request.getParameter("voteKind");
+		String voteStatus = request.getParameter("voteStatus");
+		System.out.println("controller voteStatus : " + voteStatus);
+
+		if(voteKind.equals("선거")) {
+			//해당 선거 정보 담아오는 메소드
+			ElectionVote ev = svs.selectOneElectionVote(voteSeq);
+
+			//해당 선거에 등록된 후보 담아오는 메소드
+			ArrayList<ElectionVoteCandidate> candidateList = svs.selectAllElectionVoteCandidate(voteSeq);
+
+			//해당선거 투표권 명부인 갯수 가져오는 메소드
+			int num1 = svs.selectCountAllElectionElectoral(voteSeq);
+
+			//해당선거를 진행한 명부인 갯수 가녀오는 메소드
+			int num2 = svs.selectCountApplyElectionElctoral(voteSeq);
+
+			//각 후보마다 투표수 리스트 가져오는 메소드
+			ArrayList<CandidatePercent> candidatePercentList = svs.selectCandidatePercentList(candidateList);
+
+			int votePercent = (int)((double)num2 / (double)num1 * 100);
+			System.out.println("result : " + votePercent);
+
+			mv.addObject("votePercent", votePercent);
+			mv.addObject("candidatePercentList", candidatePercentList);
+			mv.addObject("candidateList", candidateList);
+			mv.addObject("ev", ev);
+			mv.addObject("voteKind", voteKind);
+			mv.addObject("voteStatus", voteStatus);
+
+		}else {
+			//해당 투표 정보 담아오는 메소드
+			GeneralVote gv = svs.selectOneGeneralVote(voteSeq);
+
+			//해당 투표에 등록된 후보 담아오는 메소드
+			ArrayList<GeneralVoteCandidate> candidateListGen = svs.selectAllGeneralVoteCandidate(voteSeq);
+
+			//해당투표 투표권 명부인 갯수 가져오는 메소드 (일반투표)
+			int num1 = svs.selectCountAllGeneralElectoral(voteSeq);
+
+			//해당투표를 진행한 명부인 갯수 가녀오는 메소드 (일반투표)
+			int num2 = svs.selectCountApplyGeneralElctoral(voteSeq);
+
+			//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
+			ArrayList<CandidatePercent> candidatePercentList = svs.selectCandidatePercentListGen(candidateListGen);
+
+			//투표율 로직처리
+			int votePercent = (int)((double)num2 / (double)num1 * 100);
+			System.out.println("result : " + votePercent);
+
+			mv.addObject("votePercent", votePercent);
+			mv.addObject("candidatePercentList", candidatePercentList);
+			mv.addObject("candidateListGen", candidateListGen);
+			mv.addObject("gv", gv);
+			mv.addObject("voteKind", voteKind);
+			mv.addObject("voteStatus", voteStatus);
+
+		}
+
+		mv.setViewName("/resident/superintend_vote/superintend_vote/superintend_vote_endvote_main");
+
+		return mv;
+	}
+
 	@RequestMapping("/resident/sendMessageResident")
 	public ModelAndView sendMessageResident(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("/sendMessageResident");

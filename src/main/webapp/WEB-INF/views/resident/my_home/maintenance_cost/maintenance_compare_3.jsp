@@ -23,7 +23,6 @@
 									<td style="width:30%">
 										<select class="form-control input-sm" id="compareSelect">
 	                                            <option value="month">전월 관리비와 비교</option>
-	                                            <option value="year">전년도 동월 관리비와 비교</option>
 	                                            <option value="m2" selected>동일 평수 관리비와 비교</option>
 	                                    </select>
 									</td>

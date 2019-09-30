@@ -12,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.onepart.account.model.vo.ResidentVO;
@@ -230,7 +232,7 @@ public class ReservateFacilityController {
 
 	@RequestMapping("/resident/voiceForKaKao")
 	@ResponseBody
-	public File voiceForKaKao(ModelAndView mv, HttpServletRequest request) {
+	public File voiceForKaKao(MultipartFile file, ModelAndView mv, HttpServletRequest request) {
 
 		String resultData = request.getParameter("resultData");
 		System.out.println(resultData);
@@ -267,11 +269,16 @@ public class ReservateFacilityController {
                 is.close();
                 System.out.println(f);
 
-                FileWriter output = new FileWriter(f);
-                output.write("C:\\Users\\eunhye\\git\\onepart\\src\\main\\webapp\\resources\\uploadFiles\\audioFile");
 
+                String root = request.getSession().getServletContext().getRealPath("resources");
+        		String filePath = root + "\\uploadFiles\\reservation";
+
+        		System.out.println(" f.getName() :: " +  f.getName());
+
+        		File saveFile = new File(filePath + "\\" + f.getName());
 			    System.out.println(con.getResponseCode());
-			    mv.addObject("outputStream", f);
+			    file.transferTo(f);
+			    mv.addObject("outputStream", f.getName());
 			} else {
 			    System.out.println(con.getResponseCode());
 			}

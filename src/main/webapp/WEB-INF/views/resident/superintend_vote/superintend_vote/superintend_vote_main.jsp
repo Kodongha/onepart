@@ -833,7 +833,7 @@
 
 		}else if(voteStatus == '투표종료'){
 			$.ajax({
-				url:"/onepart/resident/votingRealvote",
+				url:"/onepart/resident/endRealvote",
 				type:"get",
 				data:{
 						'voteSeq':voteSeq,
