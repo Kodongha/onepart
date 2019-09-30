@@ -48,19 +48,30 @@ public class ManagerMaintenanceCost {
 	public ModelAndView insert_newMainentance(ModelAndView mv, HttpServletRequest request, MultipartHttpServletRequest req, CostDay day) {
 
 		System.out.println("controller year :: " + day);
+		int insertMonth = Integer.parseInt(day.getExcelMonth()) + 1;
+		String insertDay = day.getExcelYear() + insertMonth + "30";
+		String month = day.getExcelMonth() + "월";
+		String year = day.getExcelYear() + "년";
+
+		day.setExcelMonth(month);
+		day.setExcelYear(year);
+		day.setInsertDay(insertDay);
+
+		System.out.println("수정 day :: " + day);
 
 		List<CostExcel> list = new ArrayList<>();
 
 		if(day.getFileType().equals("xlsx")){
 			//xlsxExcelReader insert 메소드
-			list = mmcs.xlsxExcelReader(req);
+			list = mmcs.xlsxExcelReader(req, day);
 
 		}else if(day.getFileType().equals("xls")){
 			//xlsExcelReader insert 메소드
-			list = mmcs.xlsExcelReader(req);
+			list = mmcs.xlsExcelReader(req, day);
 
 		}
 
+		mv.setViewName("jsonView");
 		return mv;
 	}
 

@@ -252,9 +252,21 @@
 					$("#content").html(result);
 				}
 			});
-			console.log("a");
-		}else if(voteKind == '일반투표' && voteStatus == '완료'){
-
+		}else if(voteKind == '일반투표' && voteStatus == '투표종료'){
+			console.log("end");
+			$.ajax({
+				url:"/onepart/manager/detailvote_general_end",
+				type:"get",
+				dataType:"html",
+				data:{
+						voteSeq:voteSeq,
+						voteKind:voteKind,
+						voteStatus:voteStatus
+					},
+				success:function(result){
+					$("#content").html(result);
+				}
+			});
 		}else if(voteKind == '선거' && voteStatus == '투표기간'){
 			$.ajax({
 				url:"/onepart/manager/detailvote_candidate",
@@ -269,8 +281,21 @@
 					$("#content").html(result);
 				}
 			});
-		}else if(voteKind == '선거' && voteStatus == '완료'){
-			console.log("d");
+		}else if(voteKind == '선거' && voteStatus == '투표종료'){
+			console.log("end");
+			$.ajax({
+				url:"/onepart/manager/detailvote_candidate_end",
+				type:"get",
+				dataType:"html",
+				data:{
+						voteSeq:voteSeq,
+						voteKind:voteKind,
+						voteStatus:voteStatus
+					},
+				success:function(result){
+					$("#content").html(result);
+				}
+			});
 		}else{
 			alert("현재 선택하신 선거는 상세보기가 불가능합니다. \n투표가 진행중인 선거만 상세보기를 하실 수 있습니다.")
 		}

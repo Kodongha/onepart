@@ -1,9 +1,12 @@
 package com.kh.onepart.manager.maintenance_cost.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.kh.onepart.manager.maintenance_cost.model.vo.CostExcel;
 
 @Repository
 public class ManagerMaintenanceCostDaoImpl implements ManagerMaintenanceCostDao{
@@ -23,6 +26,15 @@ public class ManagerMaintenanceCostDaoImpl implements ManagerMaintenanceCostDao{
 		ArrayList sumCostList = (ArrayList) sqlSession.selectList("Managermaintenance.selectAllSumCostList");
 
 		return sumCostList;
+
+	}
+	//excel insert
+	@Override
+	public int insertExcelMaintenanceCost(SqlSessionTemplate sqlSession, CostExcel costExcel) {
+
+		int result = sqlSession.insert("Managermaintenance.insertExcelMaintenanceCost", costExcel);
+
+		return result;
 
 	}
 

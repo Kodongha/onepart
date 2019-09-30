@@ -87,6 +87,7 @@
 		<typeAlias type="com.kh.onepart.manager.vote.model.vo.Superintend" alias="manager_Superintend" />
 		<typeAlias type="com.kh.onepart.manager.vote.model.vo.CandidatePercent" alias="manager_CandidatePercent" />
 		<typeAlias type="com.kh.onepart.manager.maintenance_cost.model.vo.CostHistory" alias="manager_CostHistory" />
+		<typeAlias type="com.kh.onepart.manager.maintenance_cost.model.vo.CostExcel" alias="manager_CostExcel" />
 
 
 	</typeAliases>

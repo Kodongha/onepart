@@ -10,7 +10,7 @@
 </head>
 <body>
 <jsp:include page="../vote/vote_include.jsp"></jsp:include>
-<jsp:include page="../vote/vote_detail_include.jsp"></jsp:include>
+<jsp:include page="../vote/vote_detail_include_end.jsp"></jsp:include>
 <div style="width:85%; margin:0 auto">
 	<table style="width:100%">
 		<tr>

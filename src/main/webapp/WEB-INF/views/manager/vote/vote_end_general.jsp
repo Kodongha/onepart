@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,56 +10,50 @@
 </head>
 <body>
 <jsp:include page="../vote/vote_include.jsp"></jsp:include>
-<jsp:include page="../vote/vote_detail_include.jsp"></jsp:include>
+<jsp:include page="../vote/vote_detail_include_end.jsp"></jsp:include>
 <!-- 선거결과 div -->
-<div style="width:95%; margin:0 auto">
-	<!-- title div -->
-	<!-- 결과그래프 div -->
-	<div style="width:95%">
-	<hr>
-	<h4>투표결과</h4>
-					<br>
-					<div>
-						<table style="width:100%">
-							<tr>
-								<td colspan="2"><h3>후보1. 지용이네 페인트</h3></td>
-							</tr>
-							<tr>
-								<td style="width:37.5%"><div style="background:skyblue; height:20px; width:100%"></div></td>
-								<td>&nbsp;&nbsp;&nbsp;25%</td>
-							</tr>
-							<tr>
-								<td style="height:20px" colspan="2"></td>
-							</tr>
-						</table>
-						<table style="width:100%">
-							<tr>
-								<td colspan="2"><h3>후보2. Vi-fi 페인트공장</h3></td>
-							</tr>
-							<tr>
-								<td style="width:67.5%"><div style="background:skyblue; height:20px; width:100%"></div></td>
-								<td>&nbsp;&nbsp;&nbsp;45%</td>
-							</tr>
-							<tr>
-								<td style="height:20px" colspan="2"></td>
-							</tr>
-						</table>
-						<table style="width:100%">
-							<tr>
-								<td colspan="2"><h3>후보3. KH 페인트</h3></td>
-							</tr>
-							<tr>
-								<td style="width:45%"><div style="background:skyblue; height:20px; width:100%"></div></td>
-								<td>&nbsp;&nbsp;&nbsp;30%</td>
-							</tr>
-							<tr>
-								<td style="height:20px" colspan="2"></td>
-							</tr>
-						</table>
-					</div>
-
-					<br>
-					<br>
+<div style="width:85%; margin:0 auto">
+	<table style="width:100%">
+		<tr>
+			<td>
+				<div class="form-group">
+                    <h4>후보정보</h4>
+                </div>
+			</td>
+		</tr>
+	</table>
+	<!-- 후보정보 div -->
+	<div class="panel-body" style="background:white" align="center">
+		<!-- 각 후보정보 div -->
+		<div>
+			<br>
+			<c:if test="${ voteUser.candidateSeq == null }">
+				<table style="width:95%">
+					<c:forEach var="candidateList" items="${ candidateList }" varStatus="status">
+						<tr>
+							<td style="width:85%; text-align:center;">
+								<hr>
+								<h4>${ candidateList.cndtNm }</h4>
+								<hr>
+							</td>
+							<td>
+								<span class="badge badge-inverse" style="font-size:1.25em">총 투표중 ${ candidatePercentList[status.index].candidatePercent }%</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:95%; text-align:center;" >
+								<h5>상세정보</h5>
+								<p>
+									${ candidateList.cndtDetail }
+								</p>
+							</td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:if>
+		</div>
+		<br>
+		<br>
 	</div>
 </div>
 </body>

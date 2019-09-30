@@ -78,6 +78,38 @@ public class ManagerVoteController {
 
 		return mv;
 	}
+	@RequestMapping("/manager/detailvote_candidate_end")
+	public ModelAndView detailvote_candidate_end(HttpServletRequest request, ModelAndView mv) {
+		System.out.println("/menuVote");
+		int voteSeq = Integer.parseInt(request.getParameter("voteSeq"));
+
+		//선택한 선거의 상세정보를 불러오는 메소드 (선거)
+		ElectionVote vote = vs.selectOneElectionVoteInfo(voteSeq);
+
+		//선택한 선거의 후보 리스트를 불러오는 메소드 (선거)
+		ArrayList<ElectionVoteCandidate> candidateList = vs.selectAllElectionCandidateList(voteSeq);
+
+		//해당선거 투표권 명부인 갯수 가져오는 메소드
+		int num1 = svs.selectCountAllElectionElectoral(voteSeq);
+
+		//해당선거를 진행한 명부인 갯수 가녀오는 메소드
+		int num2 = svs.selectCountApplyElectionElctoral(voteSeq);
+
+		//각 후보마다 투표수 리스트 가져오는 메소드
+		ArrayList<CandidatePercent> candidatePercentList = vs.selectCandidatePercentList(candidateList);
+
+		int votePercent = (int)((double)num2 / (double)num1 * 100);
+		System.out.println("result : " + votePercent);
+
+		mv.addObject("votePercent", votePercent);
+		mv.addObject("candidatePercentList", candidatePercentList);
+		mv.addObject("vote2", vote);
+		mv.addObject("candidateList", candidateList);
+		mv.setViewName("/manager/vote/vote_end_candidate");
+
+
+		return mv;
+	}
 	/////////////////////
 	@RequestMapping("/manager/detailvote_general")
 	public ModelAndView detailvote_general(HttpServletRequest request, ModelAndView mv) {
@@ -108,6 +140,39 @@ public class ManagerVoteController {
 		mv.addObject("vote", vote);
 		mv.addObject("candidateList", candidateList);
 		mv.setViewName("/manager/vote/vote_detail_general");
+
+		return mv;
+	}
+
+	@RequestMapping("/manager/detailvote_general_end")
+	public ModelAndView detailvote_general_end(HttpServletRequest request, ModelAndView mv) {
+		System.out.println("/menuVote");
+		int voteSeq = Integer.parseInt(request.getParameter("voteSeq"));
+
+		//선택한 선거의 상세정보를 불러오는 메소드
+		GeneralVote vote = vs.selectOneGeneralVoteInfo(voteSeq);
+
+		//선택한 선거의 후보 리스트를 불러오는 메소드
+		ArrayList<GeneralVoteCandidate> candidateList = vs.selectAllCandidateList(voteSeq);
+
+		//해당투표 투표권 명부인 갯수 가져오는 메소드 (일반투표)
+		int num1 = svs.selectCountAllGeneralElectoral(voteSeq);
+
+		//해당투표를 진행한 명부인 갯수 가녀오는 메소드 (일반투표)
+		int num2 = svs.selectCountApplyGeneralElctoral(voteSeq);
+
+		//각 후보마다 투표수 리스트 가져오는 메소드 (일반투표)
+		ArrayList<CandidatePercent> candidatePercentList = vs.selectCandidatePercentListGen(candidateList);
+
+		//투표율 로직처리
+		int votePercent = (int)((double)num2 / (double)num1 * 100);
+		System.out.println("result : " + votePercent);
+
+		mv.addObject("votePercent", votePercent);
+		mv.addObject("candidatePercentList", candidatePercentList);
+		mv.addObject("vote", vote);
+		mv.addObject("candidateList", candidateList);
+		mv.setViewName("/manager/vote/vote_end_general");
 
 		return mv;
 	}
