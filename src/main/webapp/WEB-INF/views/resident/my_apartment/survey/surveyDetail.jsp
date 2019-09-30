@@ -309,7 +309,7 @@
 								<td>참여율</td>
 								<td>
 									<div class="progress progress-striped active">
-                                        <div class="progress-bar" style="width: ${ prtcptPercentStr }%">${ prtcptPercentStr } %</div>
+                                        <div class="progress-bar" style="width: ${ prtcptPercentStr }%">${ prtcptPercentStr }%</div>
                                     </div>
 								</td>
 							</tr>
@@ -319,22 +319,28 @@
 						<c:if test="${surveyVO.residentSeq == 0 }">
 
 							<!-- 설문 타입이 세대주, 로그인 유저가 세대주일 때 -->
-							<c:if test="${ surveyVO.surveyType == 2 && sessionScope.loginUser.householdAuthType == 2 }">
+							<c:if test="${ surveyVO.surveyType == 2 && sessionScope.loginUser.householdAuthType == 2 && surveyVO.surveyStatus == 2 }">
 								<a href="#modal-dialog" class="btn btn-info btn-block" data-toggle="modal">[ 설문조사 참여하기 ]</a>
 							</c:if>
 							<!-- 설문 타입이 일반, 모두 -->
-							<c:if test="${ surveyVO.surveyType == 1 }">
+							<c:if test="${ surveyVO.surveyType == 1 && surveyVO.surveyStatus == 2 }">
 								<a href="#modal-dialog" class="btn btn-info btn-block" data-toggle="modal">[ 설문조사 참여하기 ]</a>
 							</c:if>
 						</c:if>
 
 						<!-- 설문에 참여할 수 없는 경우 -->
 						<!-- 설문을 완료했을 때, -->
-						<c:if test="${surveyVO.residentSeq != 0 }">
+						<c:if test="${surveyVO.residentSeq != 0 && surveyVO.surveyStatus == 2 }">
 							<a class="btn btn-danger btn-block" data-toggle="modal" id="endSurvey">[ 설문조사에 참여하셨습니다. ]</a>
 						</c:if>
-						<c:if test="${ surveyVO.surveyType == 2 && sessionScope.loginUser.householdAuthType != 2 }">
+						<c:if test="${ surveyVO.surveyType == 2 && sessionScope.loginUser.householdAuthType != 2 && surveyVO.surveyStatus == 2 }">
 							<a class="btn btn-danger btn-block" data-toggle="modal" id="endSurvey">[ 본 설문은 세대주만 참여 가능합니다. ]</a>
+						</c:if>
+						<c:if test="${surveyVO.surveyStatus == 1 }">
+							<a class="btn btn-danger btn-block" data-toggle="modal" id="endSurvey">[ 설문조사 기간이 아닙니다. ]</a>
+						</c:if>
+						<c:if test="${surveyVO.surveyStatus == 3 }">
+							<a class="btn btn-danger btn-block" data-toggle="modal" id="endSurvey">[ 설문조사가 종료되었습니다. ]</a>
 						</c:if>
 					</div>
 				</div>

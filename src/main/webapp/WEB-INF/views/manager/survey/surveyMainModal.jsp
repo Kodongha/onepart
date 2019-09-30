@@ -51,11 +51,11 @@
 
 			// 단답형
 			if(optionValue == 1){
-				el.prepend('<input type="text" class="form-control" placeholder="단답형의 질문입니다.">');
+				el.prepend('<input type="text" class="form-control" placeholder="다음과 같은 창으로 설문이 진행됩니다.">');
 
 			// 장문형
 			} else if(optionValue == 2){
-				el.prepend('<textarea class="form-control" placeholder="장문형의 질문입니다." rows="5"></textarea>');
+				el.prepend('<textarea class="form-control" placeholder="다음과 같은 창으로 설문이 진행됩니다." rows="5"></textarea>');
 
 			// 객관식
 			} else if(optionValue == 3){
@@ -313,14 +313,14 @@
 						<br clear="all"><br>
 
 						<div class="col-md-9 questionDetailArea">
-							<input type="text" class="form-control" placeholder="질문 내용을 입력해주세요." id="surveyPeriod" name="surveyPeriod">
+							<input type="text" class="form-control" placeholder="다음과 같은 창으로 설문이 진행됩니다." id="surveyPeriod" name="surveyPeriod">
 
 
 
 						</div>
 						<div class="col-md-3">
 							<div class="panel-body">
-							<input type="checkbox" data-render="switchery" data-theme="default" checked name="surveyQstnNece" id="surveyQstnNece"/>
+							<input type="checkbox" data-render="switchery" data-theme="default" checked name="surveyQstnNece" id="surveyQstnNece" style="display: none;"/>
 							</div>
 						</div>
 						<br clear="all"><br>

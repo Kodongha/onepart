@@ -43,8 +43,12 @@
 
 			// 메시지 전송 시 실행
 			webSocket.onmessage = function(event) {
-				console.log(event.data);
-				$('#messengerCount').text(event.data);
+				var count = '${ count }';
+				if(count != 0){
+					$('#messengerCount').text(event.data);
+				} else {
+					$('.fa-envelope').after('<span class="label" id="messengerCount">'+ event.data +'</span>');
+				}
 			}
 		}
 	});
@@ -115,8 +119,8 @@
 			</li>
 			<c:if test="${sessionScope.loginUser == null }">
 				<span style="height: 100%;">
-					<button type="button" onclick="location.href='${contextPath}/moveAccount'" class="btn btn-success " style="margin-top: 3%; width: 17%; ">Log In</button>
-					<button type="button" onclick="location.href='${contextPath}/moveRegister'" class="btn btn-success " style="margin-top: 3%; width: 17%; padding-left: 1px; padding-right: 1px;">회원가입</button>
+					<button type="button" onclick="location.href='${contextPath}/moveAccount'" class="btn btn-success " style="margin-top: 3%; width: 15%;">Log In</button>
+					<button type="button" onclick="location.href='${contextPath}/moveRegister'" class="btn btn-success " style="margin-top: 3%; width: 15%; padding-left: 1px; padding-right: 1px;">회원가입</button>
 				</span>
 			</c:if>
 		</ul>
