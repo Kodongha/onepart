@@ -30,7 +30,6 @@
 				    </a>
 					<ul class="sub-menu">
 					    <li class="active"><a id="menuMain">메인페이지</a></li>
-					    <li><a id="menuNotice">공지사항</a></li>
 					    <li><a id="menuVote">투표</a></li>
 					    <li><a id="menuSurvey">설문조사</a></li>
 					</ul>
@@ -65,7 +64,6 @@
 					</a>
 					<ul class="sub-menu">
 						<li><a id="menuReservateFacility">시설물 예약</a></li>
-						<li><a id="menuOpserveMeeting">회의 참관</a></li>
 						<li><a id="menuComplaint">민원접수</a></li>
 					</ul>
 				</li>
@@ -77,7 +75,6 @@
 					</a>
 					<ul class="sub-menu">
 						<li><a id="menuModifyInformation">개인정보 수정</a></li>
-						<li><a id="menuMyHistory">나의 활동</a></li>
 					</ul>
 				</li>
 				<li class="has-sub">
@@ -87,8 +84,7 @@
 						<span>입주자 대표 회의</span>
 					</a>
 					<ul class="sub-menu">
-					    <li><a id="menuMeetingInfo">실시간 회의 </a></li>
-					    <li><a id="menuAuthorization">권한 부여</a></li>
+					    <li><a id="menuMeetingInfo">실시간 회의 참관 </a></li>
 					</ul>
 				</li>
 				<%-- <c:if test="${ loginUser != null && (loginUser.aptAuthCd == 5 || loginUser.aptAuthCd == 6) }"> --%>

@@ -49,10 +49,13 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js" integrity="sha256-arMsf+3JJK2LoTGqxfnuJPFTU4hAK57MtIPdFpiHXOU=" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
-
+	<link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
 <style type="text/css">
 	#content *:not(h1):not(h2):not(h3):not(h4):not(h5) {
 		font-size: 1.025em;
+	}
+	*{
+		font-family: 'Do Hyeon', sans-serif;
 	}
 </style>
 
@@ -74,7 +77,7 @@
 
 		<!-- begin #content -->
 		<div id="content" class="content">
-
+			<jsp:include page="../main/main.jsp"/>
 		</div>
 		<!-- end #content -->
 

@@ -37,7 +37,6 @@
 					    <li><a id="menuSurvey">설문조사</a></li>
 					    <li><a id="menuFacility">시설물 관리</a></li>
 					    <li><a id="menuComplaint">민원접수</a></li>
-					    <li><a id="menuResidentManage">입주민 관리</a></li>
 					    <li><a id="menuEmployeeManage">직원 관리</a></li>
 					    <li><a id="menuMaintenanceCost">관리비</a></li>
 					    <li><a id="menuVisitCar">방문차량 관리</a></li>
