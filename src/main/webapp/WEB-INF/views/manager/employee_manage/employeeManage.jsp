@@ -15,11 +15,11 @@
 .buttonTable {
 	width: 100%;
 }
-#deleteManager{
+#updateManager{
   background: #ff5b57 !important;
     border-color: #ff5b57 !important;
 }
-#deleteManager:hover {
+#updateManager:hover {
     background: #cc4946 !important;
     border-color: #cc4946 !important;
 }
@@ -173,15 +173,11 @@ input[type=checkbox] {
 					<table id="data-table" class="table table-striped table-bordered">
 						<thead>
 							<tr>
-								<td
-									style="border-top: 1px solid white; border-right: 1px solid white; border-left: 1px solid white"><button
-										type="button"
-										class="btn btn-sm btn-warning modal-show" id="deleteManager">삭제</button></td>
 								<td colspan="4"
 									style="border-top: 1px solid white; border-right: 1px solid white; border-left: 1px solid white"><button
 										type="button"
 										class="btn btn-sm btn-warning modal-show" id="updateManager">퇴사처리</button></td>
-								<td colspan="5"
+								<td colspan="6"
 									style="text-align: right; border-top: 1px solid white; border-right: 1px solid white; border-left: 1px solid white"><button
 										id="add-with-callbacks"
 										class="btn btn-sm btn-warning modal-show"
