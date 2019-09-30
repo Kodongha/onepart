@@ -93,7 +93,6 @@
 					<table id="data-table-2" class="table table-bordered">
 						<thead>
 							<tr>
-								<th>선택</th>
 								<th>번호</th>
 								<th>회의 명</th>
 								<th>회의 장소</th>
@@ -104,7 +103,6 @@
 						<tbody id="tbodyDiv">
 							<c:forEach var="residentMeetingVO" items="${ residentMeetingVOList }" varStatus="status">
 								<tr>
-									<td><input type="checkbox" value="${ residentMeetingVO.residentsMeetingSeq }"></td>
 									<td>${ residentMeetingVO.residentsMeetingSeq }</td>
 									<td>${ residentMeetingVO.meetingNm }</td>
 									<td>${ residentMeetingVO.meetingPlace }</td>
