@@ -58,8 +58,14 @@ public class MaintenanceCostController {
 	    //로그인 유저의 최근 5달관리비 내역 리스트 가져오는 메소드
 	    ArrayList compareMonthCostList = mcs.selectAllUserCompareMonthCostList(aptDetailInfoSeq);
 
+	    //월별 카테고리별 금액 합계 리스트 가져오는 메소드
+	    ArrayList sumMonthCostList = mcs.selectAllSumMonthCostList(aptDetailInfoSeq);
+
 		mv.addObject("costList", costList);
 		mv.addObject("compareMonthCostList", compareMonthCostList);
+		mv.addObject("month", month);
+		mv.addObject("sumMonthCostList", sumMonthCostList);
+
 		mv.setViewName("/resident/my_home/maintenance_cost/maintenance_compare_1");
 
 		return mv;

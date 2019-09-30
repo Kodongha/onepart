@@ -15,5 +15,7 @@ public interface MaintenanceCostDao {
 	ArrayList selectCompareUserMaintenanceCostList(SqlSessionTemplate sqlSession, String aptDetailInfoSeq);
 	//로그인 유저의 최근 5달관리비 내역 리스트 가져오는 메소드
 	ArrayList selectAllUserCompareMonthCostList(SqlSessionTemplate sqlSession, String aptDetailInfoSeq);
+	//월별 카테고리별 금액 합계 리스트 가져오는 메소드
+	ArrayList selectAllSumMonthCostList(SqlSessionTemplate sqlSession, String aptDetailInfoSeq);
 
 }

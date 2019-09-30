@@ -54,6 +54,15 @@ public class MaintenanceCostServiceImpl implements MaintenanceCostService{
 		return compareMonthCostList;
 
 	}
+	//월별 카테고리별 금액 합계 리스트 가져오는 메소드
+	@Override
+	public ArrayList selectAllSumMonthCostList(String aptDetailInfoSeq) {
+
+		ArrayList sumMonthCostList = mcd.selectAllSumMonthCostList(sqlSession, aptDetailInfoSeq);
+
+		return sumMonthCostList;
+
+	}
 
 
 }
