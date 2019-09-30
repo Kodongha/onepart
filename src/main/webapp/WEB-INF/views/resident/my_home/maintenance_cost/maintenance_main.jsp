@@ -8,6 +8,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	#fontTest *:not(h1):not(h2):not(h3):not(h4):not(h5), .table-hover * {
+		font-size: 14px;
+	}
+
+</style>
 </head>
 <jsp:include page="../maintenance_cost/maintenance_include.jsp"></jsp:include>
 <body>
@@ -71,7 +77,7 @@
 	    </table>
 	</div>
 	<br><br>
-	<div class="panel-body" style="background:white">
+	<div class="panel-body" style="background:white" id="fontTest">
 		<!-- 납입관리 div -->
                     <h4>납입 관리</h4>
                     <div align="center">

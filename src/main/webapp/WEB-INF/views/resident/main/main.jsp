@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+</style>
 </head>
 <body>
 <c:if test="${ sessionScope.loginUser == null }">
@@ -52,7 +54,7 @@
 	<br><br>
 	<table style="width:95%; margin:0 auto;">
 		<tr>
-			<td><h5 style="font-weight:bold;">현재 진행중인 투표</h5></td>
+			<td><h4 style="font-weight:bold;">현재 진행중인 투표</h4></td>
 		</tr>
 		<tr>
 			<td>
@@ -101,7 +103,7 @@
 	<br><br>
 	<table style="width:95%; margin:0 auto;">
 		<tr>
-			<td><h5 style="font-weight:bold;">현재 진행중인 설문조사</h5></td>
+			<td><h4 style="font-weight:bold;">현재 진행중인 설문조사</h4></td>
 		</tr>
 		<tr>
 			<td>

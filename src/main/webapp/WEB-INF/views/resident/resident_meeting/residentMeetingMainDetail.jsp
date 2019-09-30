@@ -121,7 +121,7 @@
 </script>
 </head>
 <body>
-	<div class="col-md-12 bg-white" style="height: 550px; ">
+	<div class="col-md-12 bg-white" style="height: 590px; ">
 		<h3>입주민 대표회의</h3>
 		<hr>
 		<div class="col-md-12 p-l-20 p-r-20">
@@ -161,7 +161,7 @@
 					<tr>
 						<td><b>회의록</b></td>
 						<td>
-							<textarea class="form-control" cols="60" rows="5" id="meetingMinutes" name="meetingMinutes">${ responseResidentMeetingVO.meetingMinutes }</textarea>
+							<textarea class="form-control" cols="45" rows="5" id="meetingMinutes" name="meetingMinutes">${ responseResidentMeetingVO.meetingMinutes }</textarea>
 							<a class="btn btn-block btn-primary" id="saveBtn">회의록 저장</a>
 						</td>
 					</tr>
@@ -173,7 +173,7 @@
 			</div>
 
 			<div class="col-md-6">
-				<video id="remoteVideo" autoplay style="height: 300px; width: 100%;" ></video>
+				<video id="remoteVideo" autoplay style="height: 350px; width: 100%; border: 1px solid black" ></video>
 				<button class="btn btn-block btn-success">회의 촬영 시작하기</button>
 			</div>
 		</div>

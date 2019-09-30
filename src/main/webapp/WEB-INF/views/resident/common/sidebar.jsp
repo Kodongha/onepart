@@ -87,7 +87,7 @@
 						<span>입주자 대표 회의</span>
 					</a>
 					<ul class="sub-menu">
-					    <li><a id="menuMeetingInfo">회의 정보</a></li>
+					    <li><a id="menuMeetingInfo">실시간 회의 </a></li>
 					    <li><a id="menuAuthorization">권한 부여</a></li>
 					</ul>
 				</li>

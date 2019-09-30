@@ -52,7 +52,7 @@
 </script>
 <style type="text/css">
 #header{
-	font-size:1.5em;
+	font-size:1.2em;
 }
 </style>
 </head>
@@ -85,7 +85,7 @@
 			<c:if test="${sessionScope.loginUser != null }">
 			<li class="dropdown">
 				<a data-toggle="dropdown" class="dropdown-toggle f-s-14" id="messengerBtn">
-					<i class="fa fa-envelope-o"></i>
+					<i class="fa fa-envelope"></i>
 					<c:if test="${ count != 0 }">
 						<span class="label" id="messengerCount">${ count }</span>
 					</c:if>

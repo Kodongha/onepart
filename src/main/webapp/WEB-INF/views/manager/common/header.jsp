@@ -49,6 +49,11 @@
 	});
 
 </script>
+<style type="text/css">
+#header{
+	font-size:1.2em;
+}
+</style>
 </head>
 <body>
 <div id="header" class="header navbar navbar-default navbar-fixed-top">

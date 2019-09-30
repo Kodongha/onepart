@@ -109,6 +109,11 @@
 		};
 	})();
 	</script>
+<style type="text/css">
+	#content *:not(h1):not(h2):not(h3):not(h4):not(h5) {
+		font-size: 1.025em;
+	}
+</style>
 </head>
 <body>
 	<!-- begin #page-loader -->
