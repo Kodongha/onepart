@@ -1,4 +1,4 @@
-package com.kh.onepart.resident.my_home.maintenance_cost.model.vo;
+package com.kh.onepart.manager.maintenance_cost.model.vo;
 
 
 import lombok.AllArgsConstructor;

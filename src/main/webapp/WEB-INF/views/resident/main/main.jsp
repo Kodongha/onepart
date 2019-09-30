@@ -35,7 +35,123 @@
 	</div>
 </c:if>
 <c:if test="${ sessionScope.loginUser != null }">
-
+<div style="width:85%; margin:0 auto">
+	<br>
+	<table style="width:100%; margin-bottom:-10px;">
+		<tr>
+			<td><h3 style="font-weight:bold;">${ sessionScope.loginUser.residentNm }님 환영합니다! &nbsp;&nbsp;&nbsp; ${fn:substring(loginUser.aptDetailInfoSeq,2,5)}동 ${fn:substring(loginUser.aptDetailInfoSeq,6,9)}호</h3>
+			</td>
+			<td style="width:5px"></td>
+			<td></td>
+		</tr>
+	</table>
+	<br>
+</div>
+<div style="width:85%; margin:0 auto; background:white">
+	<!-- 현재 진행중인 투표 div -->
+	<br><br>
+	<table style="width:95%; margin:0 auto;">
+		<tr>
+			<td><h5 style="font-weight:bold;">현재 진행중인 투표</h5></td>
+		</tr>
+		<tr>
+			<td>
+				<div class="form-group">
+                <br><br>
+                    <span class="label label-warning" style="font-size:1.5em;">진행중</span>
+                </div>
+			</td>
+			<td></td>
+			<td style="width:15%">
+			</td>
+		</tr>
+	</table>
+	<div>
+		<div class="panel-body" style="background:white" align="center">
+			<table class="table table-hover" style="text-align: center; width:100%">
+				<thead>
+	                      <tr>
+	                          <th class="text-center">투표번호</th>
+	                          <th class="text-center">투표종류</th>
+	                          <th class="text-center">투표명</th>
+	                          <th class="text-center">투표현황</th>
+	                          <th class="text-center">내 현황</th>
+	                          <th class="text-center">투표종료날짜</th>
+	                      </tr>
+	                  </thead>
+				<tbody>
+					<c:forEach var="ingVoteList" items="${ ingVoteList }">
+						<tr onclick="detailAllTypeVote(${ingVoteList.voteSeq}, '${ ingVoteList.voteKind }', '${ ingVoteList.voteStatus }')" data-toggle="modal">
+							<td>${ ingVoteList.voteSeq }</td>
+							<td>${ ingVoteList.voteKind }</td>
+							<td>${ ingVoteList.voteNm }</td>
+							<td>${ ingVoteList.voteStatus }</td>
+							<td>${ ingVoteList.userStatus }</td>
+							<td>${ ingVoteList.endDt }</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<br>
+<div style="width:85%; margin:0 auto; background:white">
+	<!-- 현재 진행중인 투표 div -->
+	<br><br>
+	<table style="width:95%; margin:0 auto;">
+		<tr>
+			<td><h5 style="font-weight:bold;">현재 진행중인 설문조사</h5></td>
+		</tr>
+		<tr>
+			<td>
+				<div class="form-group">
+                <br><br>
+                    <span class="label label-warning" style="font-size:1.5em;">진행중</span>
+                </div>
+			</td>
+			<td></td>
+			<td style="width:15%">
+			</td>
+		</tr>
+	</table>
+	<div>
+		<div id="tableArea">
+			<div class="panel-body">
+				<table class="table surveyTable" style="text-align: center; width:100%">
+					<thead>
+						<tr>
+							<th class="text-center">번호</th>
+							<th class="text-center">제목</th>
+							<th class="text-center">상태</th>
+							<th class="text-center">설문 타입</th>
+							<th class="text-center">진행 날짜</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="ingSurveyVOList" items="${ ingSurveyVOList }">
+						<tr>
+							<td>${ ingSurveyVOList.surveySeq }</td>
+							<td>${ ingSurveyVOList.surveyTitle }</td>
+							<td>진행중</td>
+							<td>
+								<c:if test="${ ingSurveyVOList.surveyType == 1 }">
+									일반 설문
+								</c:if>
+								<c:if test="${ ingSurveyVOList.surveyType == 2 }">
+									세대별 섧문
+								</c:if>
+							</td>
+							<%-- <td>${ ingSurveyVOList.userStatus }</td> --%>
+							<td>${ ingSurveyVOList.surveyPeriod }</td>
+						</tr>
+					</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
 </c:if>
 </body>
 </html>

@@ -52,5 +52,14 @@ public class MaintenanceCostDaoImpl implements MaintenanceCostDao{
 		return compareMonthCostList;
 
 	}
+	//월별 카테고리별 금액 합계 리스트 가져오는 메소드
+	@Override
+	public ArrayList selectAllSumMonthCostList(SqlSessionTemplate sqlSession, String aptDetailInfoSeq) {
+
+		ArrayList sumMonthCostList = (ArrayList) sqlSession.selectList("maintenance.selectAllSumMonthCostList", aptDetailInfoSeq);
+
+		return sumMonthCostList;
+
+	}
 
 }

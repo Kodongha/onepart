@@ -41,6 +41,7 @@
 
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="${contextPath}/resources/plugins/pace/pace.min.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<!-- ================== END BASE JS ================== -->
 	<script type="text/javascript">
 	const PageHtmlLoader = (function () {

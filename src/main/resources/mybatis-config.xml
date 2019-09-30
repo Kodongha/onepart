@@ -86,6 +86,7 @@
 		<typeAlias type="com.kh.onepart.manager.vote.model.vo.ElectionVoteCandidate" alias="manager_ElectionVoteCandidate" />
 		<typeAlias type="com.kh.onepart.manager.vote.model.vo.Superintend" alias="manager_Superintend" />
 		<typeAlias type="com.kh.onepart.manager.vote.model.vo.CandidatePercent" alias="manager_CandidatePercent" />
+		<typeAlias type="com.kh.onepart.manager.maintenance_cost.model.vo.CostHistory" alias="manager_CostHistory" />
 
 
 	</typeAliases>
@@ -126,6 +127,7 @@
 		<mapper resource="mappers/manager/EmployeeManage/EmployeeManage-mapper.xml" />
 		<mapper resource="mappers/manager/visitCar/manager-visitCar-mapper.xml" />
 		<mapper resource="mappers/manager/vote/manager-vote-mapper.xml" />
+		<mapper resource="mappers/manager/maintenanceCost/manager-maintenanceCost-mapper.xml" />
 
 
 		<!-- Batch -->
