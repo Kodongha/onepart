@@ -14,11 +14,26 @@ public class BatchController {
 
 
 	/** delete the messenger 7 days ago */
-	@Scheduled(cron="0 1 0 * * *")
+	@Scheduled(cron="0 0 0 * * *")
 	public void deleteMessenger(){
 		// 쪽지 - 7일 이전 메신저 삭제
 		batchService.deleteMessenger();
 	}
+
+	/** 입주자 대표 회의 - 30분 주기로 입주자 대표 회의 상태 변경 */
+	@Scheduled(cron="0 0,30 * * * *")
+	public void updateResidentMeetingStatus(){
+		// 쪽지 - 7일 이전 메신저 삭제
+		batchService.updateResidentMeetingStatus();
+	}
+
+	/** 설문조사 - 상태변경 */
+	@Scheduled(cron="0 0 0 * * *")
+	public void updateSurveyStatus(){
+		// 쪽지 - 7일 이전 메신저 삭제
+		batchService.updateSurveyStatus();
+	}
+
 
 
 

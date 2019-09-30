@@ -28,11 +28,9 @@
 	}
 
 	.table {
-		text-align: center;
 	}
 
 	thead th {
-		text-align: center;
 	}
 
 	.badge {
@@ -411,7 +409,7 @@
 						<th>상태</th>
 						<th>설문 타입</th>
 						<th>참여 여부</th>
-						<th>종료 날짜</th>
+						<th>설문 기간</th>
 					</tr>
 				</thead>
 				<tbody></tbody>
@@ -435,7 +433,7 @@
 						<th>상태</th>
 						<th>설문 타입</th>
 						<th>참여 여부</th>
-						<th>종료 날짜</th>
+						<th>설문 기간</th>
 					</tr>
 				</thead>
 				<tbody></tbody>
@@ -459,7 +457,7 @@
 						<th>상태</th>
 						<th>설문 타입</th>
 						<th>참여 여부</th>
-						<th>종료 날짜</th>
+						<th>설문 기간</th>
 					</tr>
 				</thead>
 				<tbody></tbody>

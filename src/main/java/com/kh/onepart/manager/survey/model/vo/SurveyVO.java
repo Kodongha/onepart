@@ -17,6 +17,6 @@ public class SurveyVO {
 	private int surveyType;
 	private String surveySimpleIntro;
 	private String surveyPeriod;
-	private Date surveyEnrollDt;
+	private String surveyEnrollDt;
 	private String surveyDelTf;
 }

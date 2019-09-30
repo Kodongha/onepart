@@ -52,7 +52,7 @@
 		AND     t2.RESIDENT_SEQ = #{residentSeq}
 		WHERE   t1.SURVEY_STATUS = #{surveyType}
 		AND     t1.SURVEY_DEL_TF = 'N'
-		ORDER BY t1.SURVEY_ENROLL_DT DESC
+		ORDER BY TO_DATE(SUBSTR(t1.SURVEY_PERIOD, 15),'RRRR/MM/DD') DESC
 	</select>
 
 	<!-- 설문조사 진행 중 리스트 - 설문조사 메인 -->
@@ -64,7 +64,7 @@
 		AND     t2.RESIDENT_SEQ = #{residentSeq}
 		WHERE   t1.SURVEY_STATUS = #{surveyType}
 		AND     t1.SURVEY_DEL_TF = 'N'
-		ORDER BY t1.SURVEY_ENROLL_DT DESC
+		ORDER BY TO_DATE(SUBSTR(t1.SURVEY_PERIOD, 15),'RRRR/MM/DD') DESC
 	</select>
 
 

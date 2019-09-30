@@ -87,7 +87,9 @@ public class ManagerSurveyController {
 
 		modelAndView.addObject("surveyList", surveyList);
 		modelAndView.addObject("pi", pi);
-		modelAndView.setViewName("manager/survey/surveyMain");
+		modelAndView.setViewName("jsonView");
+
+		System.out.println("send!!");
 
 		return modelAndView;
 	}
@@ -218,6 +220,30 @@ public class ManagerSurveyController {
 		return modelAndView;
 	}
 
-	
-	
+	/**
+	 * 설문조사 삭제
+	 * @param surveySeq
+	 * @param modelAndView
+	 * @return
+	 */
+	@RequestMapping("/manager/deleteSurvey")
+	public ModelAndView deleteSurvey(int surveySeq, ModelAndView modelAndView) {
+		System.out.println("/manager/surveyDetail in");
+		System.out.println("request surveySeq :::" + surveySeq);
+		modelAndView.setViewName("manager/survey/surveyDetail");
+
+		ArrayList<Object> surveyDetailList = surveyService.selectSurveyDetail(surveySeq);
+		SurveyVO surveyVO = (SurveyVO) surveyDetailList.get(0);
+		ArrayList<SurveyQstn> surveyQstnList = (ArrayList<SurveyQstn>) surveyDetailList.get(1);
+		ArrayList<SurveyQstnOption> surveyQstnOptionList = (ArrayList<SurveyQstnOption>) surveyDetailList.get(2);
+
+		modelAndView.addObject("surveyVO", surveyVO);
+		modelAndView.addObject("surveyQstnList", surveyQstnList);
+		modelAndView.addObject("surveyQstnOptionList", surveyQstnOptionList);
+
+		return modelAndView;
+	}
+
+
+
 }

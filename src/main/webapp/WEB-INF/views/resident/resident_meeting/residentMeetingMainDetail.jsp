@@ -71,10 +71,11 @@
 				data : {
 					meetingMinutes : meetingMinutes,
 					residentsMeetingSeq : residentsMeetingSeq
-				}
+				},
 				success : function(data){
 					console.log("succ");
-					$('#content').html(data);
+					$('#saveBtn').style("border", "border: 1px solid green;");
+
 				}
 			});
 		});
@@ -172,7 +173,7 @@
 			</div>
 
 			<div class="col-md-6">
-				<video id="remoteVideo" autoplay style="height: 250px; width: 100%; background: black;" ></video>
+				<video id="remoteVideo" autoplay style="height: 300px; width: 100%;" ></video>
 				<button class="btn btn-block btn-success">회의 촬영 시작하기</button>
 			</div>
 		</div>

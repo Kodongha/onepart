@@ -22,4 +22,35 @@ public class BatchServiceImpl implements BatchService {
 		batchDao.deleteMessenger(sqlSession);
 	}
 
+	/** 입주자 대표 회의 - 30분 주기로 입주자 대표 회의 상태 변경 */
+	@Override
+	public void updateResidentMeetingStatus() {
+		// TODO Auto-generated method stub
+
+		// 예정
+		batchDao.updateResidentMeetingStatusScheduled(sqlSession);
+
+		// 진행
+		batchDao.updateResidentMeetingStatusIng(sqlSession);
+
+		// 완료
+		batchDao.updateResidentMeetingStatusFinish(sqlSession);
+	}
+
+	/** 설문조사 - 상태변경 */
+	@Override
+	public void updateSurveyStatus() {
+		// TODO Auto-generated method stub
+
+		// 예정
+		batchDao.updateSurveyStatusScheduled(sqlSession);
+
+		// 진행
+		batchDao.updateSurveyStatusIng(sqlSession);
+
+		// 완료
+		batchDao.updateSurveyStatusFinish(sqlSession);
+
+	}
+
 }

@@ -64,7 +64,7 @@
 		var surveySeq = '${surveyVO.surveySeq}';
 
 		$.ajax({
-			url : 'getSelectedInfo',
+			url : '/onepart/resident/getSelectedInfo',
 			type : 'post',
 			/* contentType : "application/json", */
 			async: false,
@@ -91,8 +91,8 @@
 						surveyQstnTypeStr = "체크박스";
 					}
 
-					var title = '[' + surveyQstnNum + '] ' + surveyQstnTitle + '(' + surveyQstnTypeStr + ')';
-					var $h3 = $('<h3>', {text:surveyQstnNum + title});
+					var title = surveyQstnTitle + '(' + surveyQstnTypeStr + ')';
+					var $h3 = $('<h3>', {text:title});
 					surveyInfoBody.append($h3);
 
 					var $hr = $('<hr>');
@@ -118,7 +118,7 @@
 	// 단답형 && 장문형
 	function getSelectedStatisticsType1(surveySeq, surveyQstnType, surveyInfoBody, surveyQstnNum) {
 		$.ajax({
-			url : 'getSelectedStatisticsType1',
+			url : '/onepart/resident/getSelectedStatisticsType1',
 			type : 'post',
 			async: false,
 			data : {
@@ -171,7 +171,7 @@
 	// 체크박스
 	function getSelectedStatisticsType4(surveySeq, surveyQstnType, surveyInfoBody, surveyQstnNum) {
 		$.ajax({
-			url : 'getSelectedStatisticsType4',
+			url : '/onepart/resident/getSelectedStatisticsType4',
 			type : 'post',
 			async: false,
 			data : {
@@ -299,7 +299,7 @@
 
 						<table class="table" id="TbsurveyInfo">
 							<tr>
-								<td><h4>${ surveyVO.surveySimpleIntro }</h4></td>
+								<td colspan="2"><h4>${ surveyVO.surveySimpleIntro }</h4></td>
 							</tr>
 							<tr>
 								<td>설문 기간</td>
@@ -314,6 +314,7 @@
 								</td>
 							</tr>
 						</table>
+
 						<!-- 설문에 참여를 안했을 때, -->
 						<c:if test="${surveyVO.residentSeq == 0 }">
 
@@ -338,7 +339,9 @@
 					</div>
 				</div>
 			</div>
+
 			<br>
+
 			<div class="tab-content">
 				<div class="tab-pane fade active in" id="default-tab-1" align="center">
 					<div id="surveyInfoBody" style="width: 80%;">

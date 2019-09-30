@@ -32,7 +32,7 @@
 <script type="text/javascript">
 	$(function(){
 		$('.residentMeetingDiv tr').click(function(){
-			var residentsMeetingSeq = $(this).children('td').eq(1).text();
+			var residentsMeetingSeq = $(this).children('td').eq(0).text();
 			console.log(residentsMeetingSeq);
 
 			$.ajax({
@@ -62,7 +62,6 @@
 					<table id="data-table" class="table table-striped table-bordered">
 						<thead>
 							<tr>
-								<th>선택</th>
 								<th>이름</th>
 								<th>직위</th>
 								<th>주소</th>
@@ -72,7 +71,6 @@
 						<tbody id="tbodyDiv">
 							<c:forEach var="residentVO" items="${ residentVOList }" varStatus="status">
 								<tr class="odd gradeX">
-									<td><input type="checkbox" value="${ residentVO.residentSeq }"></td>
 									<td>${ residentVO.residentNm }</td>
 									<td>${ residentVO.aptAuthNm }</td>
 									<td>${ residentVO.bdNm }동 ${ residentVO.rmNm }호</td>
@@ -95,7 +93,6 @@
 					<table id="data-table-2" class="table table-bordered">
 						<thead>
 							<tr>
-								<th>선택</th>
 								<th>번호</th>
 								<th>회의 명</th>
 								<th>회의 장소</th>
@@ -106,7 +103,6 @@
 						<tbody id="tbodyDiv">
 							<c:forEach var="residentMeetingVO" items="${ residentMeetingVOList }" varStatus="status">
 								<tr>
-									<td><input type="checkbox" value="${ residentMeetingVO.residentsMeetingSeq }"></td>
 									<td>${ residentMeetingVO.residentsMeetingSeq }</td>
 									<td>${ residentMeetingVO.meetingNm }</td>
 									<td>${ residentMeetingVO.meetingPlace }</td>
