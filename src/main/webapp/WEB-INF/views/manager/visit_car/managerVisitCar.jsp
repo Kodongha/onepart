@@ -150,14 +150,13 @@
 						data : {
 							residentSeq : residentSeq,
 							type : 1,
+							visitCarSeq : visitCarSeq,
 							cancelReason : null
 						},
 						success : function(){
 							console.log("succ");
 						}
 					})
-
-
 					$("#content").html(data);
 				},
 				error : function(err) {

@@ -47,7 +47,7 @@
             <!-- begin brand -->
             <div class="login-header">
                 <div class="brand">
-                    <img style=" width: 100%; height: 100%; position: absolute; left: 120px;" src="${contextPath}/resources/images/onpart (2).png" alt="" />
+                    <img style=" width: 200px; position: absolute; left: 120px;" src="${contextPath}/resources/images/onpart (2).png" alt="" />
                     <small style=" position: absolute; top: -30px; left: 10px;">아파트 스마트 홈라이프의 시작</small>
                 </div>
 
@@ -62,12 +62,16 @@
                         <input type="password" class="form-control input-lg" placeholder="비밀번호를 입력하세요."  name="residentPwd" id="residentPwd" />
                     </div>
                     <div class="checkbox m-b-20">
-                        <label id="warnMessage" style="color: red;">
-                            <!-- <input type="checkbox" /> 자동 로그인 -->
+                        <label>
+                            <input type="checkbox" /> 자동 로그인
+                        </label>
+
+                        <label id="warnMessage" style="color:red;position: absolute; top: 19px; left: -17px;">
+
                         </label>
                     </div>
                     <div class="login-buttons">
-                        <button class="btn btn-success btn-block btn-lg" onclick="login()">로그인</button>
+                        <button class="btn btn-success btn-block btn-lg" id="loginBtn" onclick="login()">로그인</button>
                     </div>
                     <div class="m-t-20" style="">
                         회원가입을 하시려면 <a href="${contextPath }/moveRegister">여기</a>를 클릭하세요.
@@ -116,6 +120,13 @@
 		$(document).ready(function() {
 			App.init();
 			LoginV2.init();
+
+			 $(".input-lg").keydown(function(key) {
+	                if (key.keyCode == 13) {
+	                	login();
+	                }
+	            });
+
 		});
 
 		function login() {
@@ -135,7 +146,7 @@
 				console.log("data : " + data);
 				if(data.msg != null){
 					/* alert("로그인 실패 메시지 출력") */
-					$("#warnMessage").append(data.msg);
+					$("#warnMessage").text(data.msg)
 				}else{
 					/* alert("로그인 성공! 메인 페이지 이동") */
 					window.location.href = "resident/main";
