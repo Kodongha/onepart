@@ -42,6 +42,7 @@
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="${contextPath}/resources/plugins/pace/pace.min.js"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
 	<!-- ================== END BASE JS ================== -->
 	<script type="text/javascript">
 	const PageHtmlLoader = (function () {
@@ -58,7 +59,6 @@
 
 						// 화면 그리기
 						drawHtml(menuId);
-
 					}
 				}
 			});
@@ -112,6 +112,10 @@
 <style type="text/css">
 	#content *:not(h1):not(h2):not(h3):not(h4):not(h5) {
 		font-size: 1.025em;
+	}
+
+	*{
+	font-family: 'Do Hyeon', sans-serif;
 	}
 </style>
 </head>
