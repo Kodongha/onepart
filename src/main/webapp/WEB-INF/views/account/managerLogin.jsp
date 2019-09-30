@@ -60,8 +60,12 @@
                         <input type="password" class="form-control input-lg" placeholder="비밀번호를 입력하세요."  name="managerPwd" id="managerPwd" />
                     </div>
                     <div class="checkbox m-b-20">
-                        <label id="warnMessage" style="color: red;">
-                            <!-- <input type="checkbox" /> 자동 로그인 -->
+                        <label>
+                            <input type="checkbox" /> 자동 로그인
+                        </label>
+
+                        <label id="warnMessage" style="color:red;position: absolute; top: 19px; left: -17px;">
+
                         </label>
                     </div>
                     <div class="login-buttons">
@@ -114,6 +118,12 @@
 		$(document).ready(function() {
 			App.init();
 			LoginV2.init();
+
+			 $(".input-lg").keydown(function(key) {
+	                if (key.keyCode == 13) {
+	                	login();
+	                }
+	            });
 		});
 
 
@@ -132,7 +142,7 @@
 					console.log("data : " + data);
 					if(data.msg != null){
 						/* alert("로그인 실패 메시지 출력") */
-						$("#warnMessage").append(data.msg);
+						$("#warnMessage").text(data.msg)
 					}else{
 						/* alert("로그인 성공! 메인 페이지 이동") */
 						window.location.href = "manager/main";

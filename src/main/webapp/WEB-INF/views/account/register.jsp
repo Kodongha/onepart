@@ -171,7 +171,7 @@
 								<!-- <input name="aptDetailInfoSeq" id="aptDetailInfoSeq" type="hidden">
 								<input name="dong" id="dong" type="text" class="form-control" placeholder="동 입력" style="width: 30%; display: inline-block;" />&nbsp;동&nbsp;&nbsp;
 								<input name="ho" id="ho" type="text" class="form-control" placeholder="호수 입력" style="width: 30%; display: inline-block;" />&nbsp;호&nbsp; -->
-								<table style="width: 100%; height: 30px; margin: 0 auto;">√√√
+								<table style="width: 100%; height: 30px; margin: 0 auto;">
 									<tr>
 										<td><select class="form-control input-sm" id="candidateInfoDong" required="required">
 												<option value="">원하는 동 선택</option>

@@ -422,6 +422,7 @@ public class MessengerController {
 		requestMessengerVO.setMessengerContent(messengerContent);
 
 		// 메신저 보내기 DB 저장
+		System.out.println("@@requestMessengerVO ::: " + requestMessengerVO);
 		messengerService.insertMessengerForVisitCar(requestMessengerVO);
 
 		modelAndView.setViewName("jsonView");
