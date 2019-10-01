@@ -56,11 +56,8 @@
 		<!-- 선거상세정보 div -->
 		<table style="width:95%">
 			<tr>
-				<td><h2>${ ev.electNm }</h2></td>
-				<td style="height:25px;">
+				<td><h2>${ ev.electNm }</h2>
 					<span class="badge badge-primary" style="font-size:1.25em">선거 기간</span>
-				</td>
-				<td style="height:25px;">
 					<span class="badge badge-inverse" style="font-size:1.25em">${votePercent}%</span>
 				</td>
 				<td style="width:5%"></td>
@@ -130,11 +127,8 @@
 		<!-- 선거상세정보 div -->
 		<table style="width:95%">
 			<tr>
-				<td><h2>${ gv.gnrVoteName }</h2></td>
-				<td style="height:25px;">
+				<td><h2>${ gv.gnrVoteName }</h2>
 					<span class="badge badge-primary" style="font-size:1.25em">선거 기간</span>
-				</td>
-				<td style="height:25px;">
 					<span class="badge badge-inverse" style="font-size:1.25em">${votePercent}%</span>
 				</td>
 				<td style="width:5%"></td>

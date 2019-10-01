@@ -6,6 +6,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="${contextPath }/resources/js/jquery.form.js"></script>
+<script type="text/javascript" src="${ contextPath }/resources/js/jquery.qrcode.js"></script>
+<script type="text/javascript" src="${ contextPath }/resources/js/qrcode.js"></script>
+<script type="text/javascript" src="${contextPath }/resources/js/FileSaver.js"></script>
+<script type="text/javascript" src="${contextPath }/resources/js/html2canvas.js"></script>
 </head>
 <body>
 <jsp:include page="../facility/facility_include.jsp"></jsp:include>
@@ -226,14 +230,30 @@
 						</td>
 
 					</tr>
+					<tr>
+						<td><br><br><td>
+					</tr>
+					<tr>
+						<td colspan="2" style="font-weight:bold; font-size:1.2em">QR코드</td>
+					</tr>
+					<tr>
+						<td>
+							<div style="width:200px; height:200px; border:1px solid lightgray" id="gcDiv"></div>
+						</td>
+					</tr>
 				</table>
 				<br><br><br><br>
+
 				<table style="width:90%; margin:0 auto;">
 						<tr>
-							<td><a class="btn btn-success" style="width:100%" id="btnSubmit2">등록</a></td>
-							<td style="width:5%"></td>
-							<td><a class="btn btn-danger" style="width:100%">취소</a></td>
-						</tr>
+						<td><a class="btn btn-success" style="width:100%" id="btnSubmit2">등록</a></td>
+						<td style="width:5%"></td>
+						<td><a class="btn btn-danger" style="width:100%">취소</a></td>
+						<td style="width:5%"></td>
+						<td>
+							<a class="btn btn-primary" style="width:100%" id="saveQRCODE">완료</a>
+						</td>
+					</tr>
 					</table>
 			<br><br>
 			</div>
@@ -385,19 +405,34 @@
 	            cache: false,
 	            timeout: 600000,
 	            success: function (data) {
-	            	$.ajax({
-	        			url:"/onepart/manager/menuFacility",
-	        			dataType:"html",
-	        			success:function(result){
-	        				$("#content").html(result);
-	        			}
-	        		});
+	            	console.log("seq :: " + data.facSeq);
+            		if(confirm("모바일전용 QR코드를 생성하시겠습니까?")){
+	            		$("#gcDiv").qrcode({
+							render:"table",
+							width:200,
+							height:200,
+							text:"http://192.168.200.147:8001/detailMoreReservation?facSeq="+data.facSeq
+						});
+            		};
 	            },
 	            error: function (e) {
 
 	            }
 	        });
 
+	    });
+	});
+
+	/* qr코드저장하기 */
+	$(function(){
+		$("#saveQRCODE").click(function() {
+			$.ajax({
+				url:"/onepart/manager/menuFacility",
+				dataType:"html",
+				success:function(result){
+					$("#content").html(result);
+				}
+			});
 	    });
 	});
 </script>

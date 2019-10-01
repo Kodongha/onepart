@@ -277,7 +277,7 @@ input[type=checkbox] {
 				<td style="width:2%"></td>
 				<td style="width:78%">
 					<input type="text" readonly="readonly" id="sendMessagePeoples" class="form-control pull-right">
-					<input type="text" readonly="readonly" id="sendMessagePhones" class="form-control pull-right">
+					<input type="hidden" readonly="readonly" id="sendMessagePhones" class="form-control pull-right">
 				</td>
 				<td style="width:2%"></td>
 				<td><button class="btn btn-danger" id="sendMessageReal">전송하기</button></td>

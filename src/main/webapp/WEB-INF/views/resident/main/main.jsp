@@ -38,6 +38,60 @@
 </c:if>
 <c:if test="${ sessionScope.loginUser != null }">
 <div style="width:85%; margin:0 auto">
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+	   <!-- Indicators -->
+	<ol class="carousel-indicators">
+	  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+	  <li data-target="#myCarousel" data-slide-to="1"></li>
+	  <li data-target="#myCarousel" data-slide-to="2"></li>
+	</ol>
+
+	<!-- Wrapper for slides -->
+	<div class="carousel-inner">
+	  <div class="item active">
+	  	<div class="col-md-12 p-0">
+		  	<div class="col-md-6 p-0">
+			    <img src="${contextPath}/resources/img/login-bg/bg-13.jpg" style="width:100%; height: 400px;">
+		  	</div>
+		  	<div class="col-md-6 p-0">
+		  <img src="${contextPath}/resources/img/login-bg/bg-21.jpg" style="width:100%; height: 400px;">
+		  	</div>
+	  	</div>
+	</div>
+
+	<div class="item">
+		<div class="col-md-12 p-0">
+		  	<div class="col-md-6 p-0">
+			    <img src="${contextPath}/resources/img/login-bg/bg-10.jpg" style="width:100%; height: 400px;">
+		  	</div>
+		  	<div class="col-md-6 p-0">
+			    <img src="${contextPath}/resources/img/login-bg/bg-12.jpg" style="width:100%; height: 400px;">
+		  	</div>
+	  	</div>
+	</div>
+
+	<div class="item">
+		<div class="col-md-12 p-0">
+		 	<div class="col-md-6 p-0">
+			    <img src="${contextPath}/resources/img/login-bg/bg-18.jpg" style="width:100%; height: 400px;">
+		</div>
+		<div class="col-md-6 p-0">
+			    <img src="${contextPath}/resources/img/login-bg/bg-20.jpeg" style="width:100%; height: 400px;">
+			</div>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Left and right controls -->
+	    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+	      <span class="glyphicon glyphicon-chevron-left"></span>
+	      <span class="sr-only">Previous</span>
+	    </a>
+	    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+	      <span class="glyphicon glyphicon-chevron-right"></span>
+	      <span class="sr-only">Next</span>
+	    </a>
+	  </div>
 	<br>
 	<table style="width:100%; margin-bottom:-10px;">
 		<tr>

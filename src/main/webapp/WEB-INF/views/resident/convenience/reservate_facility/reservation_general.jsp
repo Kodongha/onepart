@@ -164,6 +164,7 @@
 													<a style="font-weight:bold; color:black;" onclick="voiceInfo(1);">상세정보 </a><small> 클릭시 음성으로 들으실 수 있습니다.</small>
 													<div>
 														<textarea placeholder="${ reserv.facDetailInfo }" data-placeholder="${ reserv.facDetailInfo }" cols="5" style="resize:none; width:100%; height:80px" readonly="readonly" id="facDetailInfo"></textarea>
+														<input type="hidden" value="${ contextPath }" id="contextPath">
 													</div>
 												</div>
 												<br>
@@ -213,14 +214,14 @@
                                                  </div>
                                                  <br>
                                                  <div class="form-group">
-                                                     <a style="font-weight:bold; color:black;" onclick="voiceWrite(1);">사용목적 </a><small> 클릭시 음성으로 입력하실 수 있습니다.</small>
+                                                     <a style="font-weight:bold; color:black;" onclick="voiceWrite(1);">사용목적 </a>
                                                      <div class="controls">
                                                          <textarea id="usePurpose" style="resize:none" rows="10" cols="50" name="username" class="form-control" data-parsley-group="wizard-step-2" required></textarea>
                                                      </div>
                                                  </div>
                                                  <br>
                                                  <div class="form-group">
-                                                     <a style="font-weight:bold; color:black;" onclick="voiceWrite(2);">기타사항 </a><small> 클릭시 음성으로 입력하실 수 있습니다.</small>
+                                                     <a style="font-weight:bold; color:black;" onclick="voiceWrite(2);">기타사항 </a>
                                                      <div class="controls">
                                                          <textarea id="etc" style="resize:none" rows="10" cols="50" name="username" class="form-control" data-parsley-group="wizard-step-2" required></textarea>
                                                      </div>
@@ -432,7 +433,7 @@
 		console.log(resultData);
 
 		/* ajax를 통한 통신 */
-		$.ajax({
+		/* $.ajax({
 			url:"/onepart/resident/voiceForKaKao",
 			type:"get",
 			data:{resultData:resultData},
@@ -447,7 +448,13 @@
 				console.log("실패");
 				console.log(data);
 			}
-		});
+		}); */
+
+		var audio = new Audio();
+		var contextPath = $("#contextPath").val();
+	    audio.src = contextPath + "/resources/uploadFiles/sounds/1569837450924.mp3";
+	    audio.play();
+
 
 	}
 
