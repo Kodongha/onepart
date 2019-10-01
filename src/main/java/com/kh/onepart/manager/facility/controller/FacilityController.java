@@ -66,7 +66,7 @@ public class FacilityController {
 	}
 
 	@RequestMapping("/manager/insert_newFacility_general")
-	public String insert_newFacility_general(MultipartHttpServletRequest req, Reservation reserv, HttpServletRequest request) {
+	public ModelAndView insert_newFacility_general(ModelAndView mv, MultipartHttpServletRequest req, Reservation reserv, HttpServletRequest request) {
 		System.out.println("/menuFacility");
 		System.out.println("전송객체 : " + reserv);
 
@@ -121,8 +121,10 @@ public class FacilityController {
 
 		System.out.println("insert end... : " + facSeq);
 
+		mv.addObject("facSeq", facSeq);
+		mv.setViewName("jsonView");
 
-		return "/manager/facility/facility_new_general";
+		return mv;
 	}
 
 	@RequestMapping("/manager/newFacility_seat")
@@ -495,6 +497,18 @@ public class FacilityController {
 
 		//해당 예약 시설물 삭제하는 메소드
 		int result = fs.deleteFacliltyGeneral(facSeq);
+
+		mv.setViewName("jsonView");
+
+		return mv;
+	}
+
+	@RequestMapping("/manager/detailMoreReservation")
+	public ModelAndView detailMoreReservation(ModelAndView mv, HttpServletRequest request) {
+		System.out.println("/detailMoreReservation");
+
+		int facSeq = Integer.parseInt(request.getParameter("facSeq"));
+		System.out.println(facSeq);
 
 		mv.setViewName("jsonView");
 

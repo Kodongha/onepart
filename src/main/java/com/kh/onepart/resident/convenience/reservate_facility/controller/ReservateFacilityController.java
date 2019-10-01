@@ -260,8 +260,10 @@ public class ReservateFacilityController {
 				int read = 0;
                 byte[] bytes = new byte[1024];
                 String tempname = Long.valueOf(new Date().getTime()).toString();
+
                 f = new File(tempname + ".mp3");
                 f.createNewFile();
+
                 OutputStream outputStream = new FileOutputStream(f);
                 while ((read =is.read(bytes)) != -1) {
                     outputStream.write(bytes, 0, read);
@@ -269,13 +271,12 @@ public class ReservateFacilityController {
                 is.close();
                 System.out.println(f);
 
-
                 String root = request.getSession().getServletContext().getRealPath("resources");
         		String filePath = root + "\\uploadFiles\\reservation";
 
         		System.out.println(" f.getName() :: " +  f.getName());
 
-        		File saveFile = new File(filePath + "\\" + f.getName());
+        		//File saveFile = new File(filePath + "\\" + f.getName());
 			    System.out.println(con.getResponseCode());
 			    file.transferTo(f);
 			    mv.addObject("outputStream", f.getName());
