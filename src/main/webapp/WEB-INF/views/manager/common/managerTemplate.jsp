@@ -136,7 +136,7 @@
 
 		<!-- begin #content -->
 		<div id="content" class="content">
-
+			<jsp:include page="../main/main.jsp"/>
 		</div>
 		<!-- end #content -->
 
